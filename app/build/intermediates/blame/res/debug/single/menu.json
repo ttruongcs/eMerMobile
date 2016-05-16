@@ -1,18 +1,34 @@
 [
     {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\common_menu.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\menu\\common_menu.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_dbb.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\menu\\activity_dbb.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\menu\\menu_main.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\tasklist_menu.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\menu\\tasklist_menu.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\common_menu.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\menu\\common_menu.xml"
     },
     {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\menu\\menu_main.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\tasklist_menu.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\menu\\tasklist_menu.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\menu\\menu_main.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_dbb.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\menu\\activity_dbb.xml"
     }
 ]

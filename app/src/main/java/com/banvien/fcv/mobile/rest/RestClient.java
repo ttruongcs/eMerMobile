@@ -19,7 +19,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Created by hieu on 3/8/2016.
  */
 public final class RestClient {
-    public static final String API_BASE_URL = "http://www.banviencorp.com/"; // TODO use portalId
+    public static final String API_BASE_URL = "http://192.168.2.24:8080/"; // TODO use portalId
     private static RestClient instance = new RestClient();
 
     private Retrofit retrofit;
@@ -105,6 +105,9 @@ public final class RestClient {
     }
 
     public HomeService getHomeService() {
+        if (homeService == null) {
+            homeService = createService(HomeService.class);
+        }
         return homeService;
     }
 

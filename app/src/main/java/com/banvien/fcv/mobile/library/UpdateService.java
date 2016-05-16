@@ -28,6 +28,7 @@ import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
+import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import retrofit2.Call;
@@ -49,6 +50,7 @@ public class UpdateService {
 
 	public UpdateService(Context context) {
 		this.context = context;
+		repo = new Repo(this.context);
 	}
 	/**
 	 *
@@ -67,26 +69,11 @@ public class UpdateService {
 				deleteOutletAllDatabase(context);
 			}
 
-			String sync_url = context.getString(R.string.sync_url);
-
 			JSONObject json = null;
 			System.out.println("json "+ json);
-			if(json != null) {
-				try {
-					String error = json.getString("ERROR");
-					if(!TextUtils.isEmpty(error) && error.startsWith("auditorCode does not exist") ) {
-						errorMessage = context.getString(R.string.sync_error_nofound_auditorcode);
-					}
-				}catch (JSONException e) {
-					//ignore, no error found
-				}
-				if(errorMessage == null) {
-					//// TODO: 5/10/2016
-					Call<Map<String,Object>> call =
-							RestClient.getInstance().getHomeService().getRoute(1l);
-					fillPOSM(call);
-				}
-			}
+			Call<Map<String,Object>> call =
+					RestClient.getInstance().getHomeService().getRoute(1l);
+			fillPOSM(call);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
 			errorMessage = context.getString(R.string.general_error);
@@ -102,7 +89,7 @@ public class UpdateService {
 				if (response.isSuccess()) {
 					// request successful (status code 200, 201)
 					Map<String,Object> result = response.body();
-					List<POSMDTO> jPosms = (List<POSMDTO>)result.get(ScreenContants.POSM_LIST);
+					List<POSMDTO> jPosms = DataBinder.readPosmList(result.get(ScreenContants.POSM_LIST));
 					for(POSMDTO dto : jPosms){
 						try {
 							POSMEntity entity = POSMUtil.convertToEntity(dto);

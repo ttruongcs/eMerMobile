@@ -104,7 +104,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return outletMerDAO;
 	}
 
-	public PosmDAO getPosmDAO() {
+	public PosmDAO getPosmDAO() throws SQLException {
+		if(null == posmDAO) {
+			posmDAO = new PosmDAO(getConnectionSource(), POSMEntity.class);
+		}
 		return posmDAO;
 	}
 

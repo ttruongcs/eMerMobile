@@ -2,6 +2,97 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\butterknife-7.0.1_69fc242fa47f714268c2b76129444424c2ea47db.jar" />
+    </item>
+    <item
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.1.1_53e1879507c10b42ee583f225e38903a1f7c08c8.jar" />
+    </item>
+    <item
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.4.3\4cb3dbb0c2f75b51aa7543c53252989785a0c609\jackson-core-2.4.3.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="4cb3dbb0c2f75b51aa7543c53252989785a0c609">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\jackson-core-2.4.3_7cc72aaacfe762992478a9020f491f8016f742ed.jar" />
+    </item>
+    <item
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.1.1_402d859a2f5ae00ba954a01c8cf31488d281c8c1.jar" />
+    </item>
+    <item
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-jackson\2.0.0-beta4\114706f52f8f18479d58f5b3596a5b5489f46a6a\converter-jackson-2.0.0-beta4.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="114706f52f8f18479d58f5b3596a5b5489f46a6a">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\converter-jackson-2.0.0-beta4_dc38c74d14fc4709f338c3fbdcd3514de3555b2a.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.1.1_d0f0afd4ec2fd194754e2080ecd11a99799e43c8.jar" />
+    </item>
+    <item
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.1_7243d9f1ebd1d30c3e37ed8dbafda0ac86c05fab.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.1.1_7094b671c02561941aa0d78ea4a6680d82fe8ca6.jar" />
+    </item>
+    <item
+        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.1_160e21806fe4fcbe2b20c34d1bbde421f69a17ae.jar" />
+    </item>
+    <item
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\logging-interceptor\3.1.2\a1b4b8e4dc5f7bfa9186e79f9e267c1539a847b0\logging-interceptor-3.1.2.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="a1b4b8e4dc5f7bfa9186e79f9e267c1539a847b0">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\logging-interceptor-3.1.2_3cf6c2da91e8f78a987ec43f0d54464cd76355fb.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.1.1_794a466305d2ad6a7a86fc62ccc6414ac2a73047.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="703880406560955996b22cb757542b00840f24c9">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.google.maps.android-android-maps-utils-0.2.1_377084975050a9d6338c5f08c9c4735d360a32d9.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.1.1_5105e0a19f176e24a730aeca57a722ee7ee12fd1.jar" />
+    </item>
+    <item
         jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.j256.ormlite\ormlite-core\4.48\e579bd2905d0399af5029aaaf9817d5fa0ca88a5\ormlite-core-4.48.jar"
         jumboMode="false"
         revision="21.0.2"
@@ -9,32 +100,11 @@
         <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\ormlite-core-4.48_04b58ef302c951ec856afc010d1cb07ca7d2007b.jar" />
     </item>
     <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="703880406560955996b22cb757542b00840f24c9">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.google.maps.android-android-maps-utils-0.2.1_949d1151609d33d4706ffa8971dacb6dc931a152.jar" />
-    </item>
-    <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.1.1_ed1911e77e4ef24efeeb17bf80c2d4e61af2e737.jar" />
-    </item>
-    <item
         jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="21.0.2"
         sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
         <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.1.1_d74565e588de548826503ed2c72bac04ce600a41.jar" />
-    </item>
-    <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.j256.ormlite\ormlite-android\4.48\afa06f539a4026c10b247386312aa67404b80a16\ormlite-android-4.48.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="afa06f539a4026c10b247386312aa67404b80a16">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\ormlite-android-4.48_4553e438657c327a0efab271c16ec9f1088a858f.jar" />
     </item>
     <item
         jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.1.2\7052283359001bb108753cb0583a887d3bf94c82\okhttp-3.1.2.jar"
@@ -51,25 +121,11 @@
         <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\jackson-annotations-2.4.0_32f7430afcbb31ab378c3d7a41607925cecc7dc8.jar" />
     </item>
     <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.0.0-beta4\739e00dea1f0ac04fdb9b6160d667e23cc50a791\retrofit-2.0.0-beta4.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\okio-1.6.0_bc7f46d2d780fca349002458a6f82ce1e8baf788.jar" />
-    </item>
-    <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.1.1_402d859a2f5ae00ba954a01c8cf31488d281c8c1.jar" />
-    </item>
-    <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.1.1_a0247108eafa23490d8b41515415ffdd273430c5.jar" />
+        sha1="739e00dea1f0ac04fdb9b6160d667e23cc50a791">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\retrofit-2.0.0-beta4_ed49fc5687ed5446ad32013f9fce719ed3595046.jar" />
     </item>
     <item
         jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.4.3\feff63199be7b8f495c2f3e2096dcb6bd5e5b0b3\jackson-databind-2.4.3.jar"
@@ -79,27 +135,6 @@
         <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\jackson-databind-2.4.3_35af7a8777d933f4e70ecd7a662d5ccb842cadf2.jar" />
     </item>
     <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.4.3\4cb3dbb0c2f75b51aa7543c53252989785a0c609\jackson-core-2.4.3.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="4cb3dbb0c2f75b51aa7543c53252989785a0c609">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\jackson-core-2.4.3_7cc72aaacfe762992478a9020f491f8016f742ed.jar" />
-    </item>
-    <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\logging-interceptor\3.1.2\a1b4b8e4dc5f7bfa9186e79f9e267c1539a847b0\logging-interceptor-3.1.2.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="a1b4b8e4dc5f7bfa9186e79f9e267c1539a847b0">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\logging-interceptor-3.1.2_3cf6c2da91e8f78a987ec43f0d54464cd76355fb.jar" />
-    </item>
-    <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-jackson\2.0.0-beta4\114706f52f8f18479d58f5b3596a5b5489f46a6a\converter-jackson-2.0.0-beta4.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="114706f52f8f18479d58f5b3596a5b5489f46a6a">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\converter-jackson-2.0.0-beta4_dc38c74d14fc4709f338c3fbdcd3514de3555b2a.jar" />
-    </item>
-    <item
         jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\jars\classes.jar"
         jumboMode="false"
         revision="21.0.2"
@@ -107,39 +142,60 @@
         <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-6.5.87_624a9fa32d041209524d3b474054ce2755c7df36.jar" />
     </item>
     <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\butterknife-7.0.1_69fc242fa47f714268c2b76129444424c2ea47db.jar" />
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\okio-1.6.0_bc7f46d2d780fca349002458a6f82ce1e8baf788.jar" />
     </item>
     <item
-        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.0.0-beta4\739e00dea1f0ac04fdb9b6160d667e23cc50a791\retrofit-2.0.0-beta4.jar"
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="739e00dea1f0ac04fdb9b6160d667e23cc50a791">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\retrofit-2.0.0-beta4_ed49fc5687ed5446ad32013f9fce719ed3595046.jar" />
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.1.1_d5464862c5a15313a88d4b1d0842d82c45f89148.jar" />
     </item>
     <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.1_160e21806fe4fcbe2b20c34d1bbde421f69a17ae.jar" />
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.1.1_a0247108eafa23490d8b41515415ffdd273430c5.jar" />
     </item>
     <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\design\23.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.0.2"
-        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.1.1_53e1879507c10b42ee583f225e38903a1f7c08c8.jar" />
-    </item>
-    <item
-        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
         jumboMode="false"
         revision="21.0.2"
         sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.1_7243d9f1ebd1d30c3e37ed8dbafda0ac86c05fab.jar" />
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.1_3a0b15c84215ca4f979c3135ce9fb2af6c4ca3d0.jar" />
+    </item>
+    <item
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.1.1_ed1911e77e4ef24efeeb17bf80c2d4e61af2e737.jar" />
+    </item>
+    <item
+        jar="C:\Users\tantruong89\.gradle\caches\modules-2\files-2.1\com.j256.ormlite\ormlite-android\4.48\afa06f539a4026c10b247386312aa67404b80a16\ormlite-android-4.48.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="afa06f539a4026c10b247386312aa67404b80a16">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\ormlite-android-4.48_4553e438657c327a0efab271c16ec9f1088a858f.jar" />
+    </item>
+    <item
+        jar="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="703880406560955996b22cb757542b00840f24c9">
+        <dex dex="D:\D\FreindlandCampina\FCV_Retailer\mobile\app\build\intermediates\pre-dexed\debug\com.google.maps.android-android-maps-utils-0.2.1_949d1151609d33d4706ffa8971dacb6dc931a152.jar" />
+    </item>
+    <item
+        jar="D:\mobile\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\jars\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="D:\mobile\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-6.5.87_34178ca78d9c69f89cb45685d466c95660988a08.jar" />
     </item>
 
 </items>

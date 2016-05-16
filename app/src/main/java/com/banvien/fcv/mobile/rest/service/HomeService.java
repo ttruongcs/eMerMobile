@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  * Created by hieu on 3/10/2016.
  */
 public interface HomeService {
-    @POST("/mobile/getroute.html")
+    @POST("/mobile/metadata/getdata.html")
     Call<Map<String, Object>> getRoute(@Query("smId") Long smId);
 }

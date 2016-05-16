@@ -1,15 +1,39 @@
 [
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_out_top.xml"
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\progress_indeterminate_animation.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\progress_indeterminate_animation.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\hide_to_bottom.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\hide_to_bottom.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\jump_from_down.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\jump_from_down.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_root_show_amin.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\dialog_root_show_amin.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\progress_indeterminate_animation.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\progress_indeterminate_animation.xml"
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_out_top.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\show_from_bottom.xml",
@@ -24,40 +48,72 @@
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_fab_in.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_fade_in.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\jump_from_down.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\jump_from_down.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_snackbar_in.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\jump_to_down.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\jump_to_down.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_main_hide_amination.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\dialog_main_hide_amination.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\snackbar_hide_animation.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\snackbar_hide_animation.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_top.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\jump_from_down.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\jump_from_down.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\show_from_bottom.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\show_from_bottom.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\hide_to_bottom.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\hide_to_bottom.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_root_hide_amin.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\dialog_root_hide_amin.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\snackbar_show_animation.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\snackbar_show_animation.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_fab_in.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_main_show_amination.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\dialog_main_show_amination.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_main_hide_amination.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\dialog_main_hide_amination.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_snackbar_out.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_top.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_snackbar_in.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_root_hide_amin.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\dialog_root_hide_amin.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\snackbar_hide_animation.xml",
@@ -66,14 +122,6 @@
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\jump_to_down.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\jump_to_down.xml"
-    },
-    {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_fab_out.xml"
-    },
-    {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_bottom.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_down.xml",
@@ -88,23 +136,83 @@
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_snackbar_out.xml"
     },
     {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_main_hide_amination.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\dialog_main_hide_amination.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.1.1\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_down.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\scale_down.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_root_hide_amin.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\dialog_root_hide_amin.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_up.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\scale_up.xml"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\dialog_root_show_amin.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\dialog_root_show_amin.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_up.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\scale_up.xml"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_popup_enter.xml"
     },
     {
+        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\snackbar_show_animation.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\anim\\snackbar_show_animation.xml"
     },
     {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\progress_indeterminate_animation.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\anim\\progress_indeterminate_animation.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\anim\\abc_popup_exit.xml"
     }
 ]

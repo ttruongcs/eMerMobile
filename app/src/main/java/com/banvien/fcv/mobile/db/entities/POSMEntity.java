@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by hieu on 3/10/2016.
  */
-@DatabaseTable(tableName = "Hotzone")
+@DatabaseTable(tableName = "Posm")
 public class POSMEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;

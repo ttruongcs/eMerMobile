@@ -1,7 +1,19 @@
 [
     {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v14\\fab_label_background.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\drawable-v14\\fab_label_background.xml"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v14\\pin_bg.xml",
+        "source": "D:\\mobile\\app\\src\\main\\res\\drawable-v14\\pin_bg.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v14\\ic_edit.png",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\drawable-v14\\ic_edit.png"
+    },
+    {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v14\\ic_edit.png",
+        "source": "D:\\mobile\\app\\src\\main\\res\\drawable-v14\\ic_edit.png"
     },
     {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v14\\fab_label_background.xml",

@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
         "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\color-v23\\abc_color_highlight_material.xml",
         "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.1.1\\res\\color-v23\\abc_color_highlight_material.xml"
     }

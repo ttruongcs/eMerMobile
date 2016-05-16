@@ -25,7 +25,6 @@ import butterknife.Bind;
 public class PrepareActivity extends ActionBarActivity {
 
     private static ProgressDialog progressDialog;
-    private static UpdatingTask updateTask = null;
     private AlertDialog alertDialog;
     private Activity parentActivity;
 
@@ -71,84 +70,6 @@ public class PrepareActivity extends ActionBarActivity {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //        }
 
-    }
-
-    private class UpdatingTask extends AsyncTask<String, Void, Boolean> {
-        private Context context;
-        private String errorMessage = null;
-
-        public UpdatingTask(Context context) {
-            this.context = context;
-        }
-
-        protected void onPreExecute() {
-            progressDialog.setMessage(context.getText(R.string.updating));
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            updateTask = null;
-            dismissProgressDialog();
-            if (success) {
-                Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
-            } else {
-                if(errorMessage != null) {
-//                    MyUtils.showOKAlertDialog(parentActivity, errorMessage);
-                }else {
-                    Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();
-                }
-            }
-
-        }
-
-        protected Boolean doInBackground(final String... args) {
-            try {
-//                String auditorCode = MyUtils.readAuditorCodeFromSettings(context);
-                String auditorCode = "TCT0001";
-//                UpdateService updateService = new UpdateService(context);
-//                Map<String, String> results = updateService.updateFromServer(auditorCode, true);
-//                errorMessage = results.get("errorMessage");
-                if(errorMessage != null) {
-                    return false;
-                }
-            }catch (Exception e) {
-                Log.e("HomeActivity", e.getMessage(), e);
-                return false;
-            }
-            return true;
-        }
-    }
-
-    private void dismissProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-    private void startUpdatingTask() {
-        updateTask = new UpdatingTask(this);
-        updateTask.execute();
-    }
-
-    private void startUpdate() {
-        startUpdatingTask();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        dismissProgressDialog();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(updateTask != null &&  updateTask.getStatus().equals(AsyncTask.Status.RUNNING) && progressDialog != null) {
-            progressDialog.setMessage(this.getText(R.string.updating));
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
     }
 
 }
