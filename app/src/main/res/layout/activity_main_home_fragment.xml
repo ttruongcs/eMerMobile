@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/GridLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="1"
+    android:orientation="horizontal">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/step1_photo"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:contentDescription="@string/action_settings"
+            android:src="@drawable/img_after"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/init_newdays"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:id="@+id/name" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/init_newdays_shortdescription"
+                android:id="@+id/captionTextView" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/step2_photo"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:contentDescription="@string/action_settings"
+            android:src="@drawable/img_posm"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/audit_days"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:id="@+id/name1" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/audit_days_shortdescription"
+                android:id="@+id/captionTextView1" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/step3_photo"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:contentDescription="@string/action_settings"
+            android:src="@drawable/img_before"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/end_days"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:id="@+id/name2" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/end_days_shortdescription"
+                android:id="@+id/captionTextView2" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</GridLayout>

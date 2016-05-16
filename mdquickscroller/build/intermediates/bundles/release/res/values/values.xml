@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="md_quick_scroller"><attr name="scrollerStyle"><enum name="popup" value="0"/><enum name="holo" value="1"/><enum name="material" value="2"/></attr><attr name="scrollerBarVisible"><enum name="visible" value="0"/><enum name="invisible" value="4"/><enum name="gone" value="8"/></attr><attr name="scrollerLineVisible"><enum name="visible" value="0"/><enum name="invisible" value="4"/><enum name="gone" value="8"/></attr><attr format="dimension" name="totalWidth"/><attr format="dimension" name="scrollBarWidth"/><attr format="dimension" name="scrollBarHeight"/><attr format="color" name="scrollBarColor"/><attr format="color" name="scrollBarFocusColor"/><attr format="color" name="scrollBarFocusTransColor"/><attr format="dimension" name="scrollLineWidth"/><attr format="color" name="scrollLineColor"/><attr format="dimension" name="materialPinWidth"/><attr format="color" name="materialPinColor"/><attr format="dimension" name="materialPinTextSize"/><attr format="color" name="materialPinTextColor"/></declare-styleable>
+    <!-- From: file:/D:/D/FCV%20Project/FCV/mobile2/mdquickscroller/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">mdquickscroller</string>
+</resources>

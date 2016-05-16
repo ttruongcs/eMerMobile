@@ -1,0 +1,137 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Risky Project Location:
+-----------------------
+The tools *should* handle project locations in any directory. However,
+due to bugs, placing projects in directories containing spaces in the
+path, or characters like ", ' and &, have had issues. We're working to
+eliminate these bugs, but to save yourself headaches you may want to
+move your project to a location where this is not a problem.
+D:\D\FCV Project\FCV\mobile2
+        -                   
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\.name
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\encodings.xml
+* .idea\libraries\
+* .idea\libraries\Maven__com_google_android_android_2_3_3.xml
+* .idea\libraries\Maven__commons_codec_commons_codec_1_3.xml
+* .idea\libraries\Maven__commons_io_commons_io_1_3_2.xml
+* .idea\libraries\Maven__commons_logging_commons_logging_1_1_1.xml
+* .idea\libraries\Maven__javax_activation_activation_1_1.xml
+* .idea\libraries\Maven__javax_mail_mail_1_4.xml
+* .idea\libraries\Maven__junit_junit_4_8_2.xml
+* .idea\libraries\Maven__junit_junit_dep_4_5.xml
+* .idea\libraries\Maven__mysql_mysql_connector_java_5_1_17.xml
+* .idea\libraries\Maven__org_apache_httpcomponents_httpclient_4_0_1.xml
+* .idea\libraries\Maven__org_apache_httpcomponents_httpcore_4_0_1.xml
+* .idea\libraries\Maven__org_hamcrest_hamcrest_core_1_1.xml
+* .idea\libraries\Maven__org_hamcrest_hamcrest_library_1_1.xml
+* .idea\libraries\Maven__org_jmock_jmock_2_5_1.xml
+* .idea\libraries\Maven__org_jmock_jmock_junit4_2_5_1.xml
+* .idea\libraries\Maven__org_json_json_20080701.xml
+* .idea\libraries\Maven__org_khronos_opengl_api_gl1_1_android_2_1_r1.xml
+* .idea\libraries\Maven__org_springframework_spring_test_3_0_5_RELEASE.xml
+* .idea\libraries\Maven__org_subethamail_subethasmtp_smtp_1_2.xml
+* .idea\libraries\Maven__org_subethamail_subethasmtp_wiser_1_2.xml
+* .idea\libraries\Maven__xerces_xmlParserAPIs_2_6_2.xml
+* .idea\libraries\Maven__xpp3_xpp3_1_1_4c.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* .metadata\
+* .metadata\.lock
+* .metadata\.log
+* .metadata\.plugins\
+* .metadata\.plugins\org.eclipse.cdt.core\
+* .metadata\.plugins\org.eclipse.cdt.core\.log
+* .metadata\.plugins\org.eclipse.cdt.make.core\
+* .metadata\.plugins\org.eclipse.cdt.make.core\specs.c
+* .metadata\.plugins\org.eclipse.cdt.make.core\specs.cpp
+* .metadata\.plugins\org.eclipse.core.resources\
+* .metadata\.plugins\org.eclipse.core.resources\.root\
+* .metadata\.plugins\org.eclipse.core.resources\.root\.indexes\
+* .metadata\.plugins\org.eclipse.core.resources\.root\.indexes\history.version
+* .metadata\.plugins\org.eclipse.core.resources\.root\.indexes\properties.index
+* .metadata\.plugins\org.eclipse.core.resources\.root\.indexes\properties.version
+* .metadata\.plugins\org.eclipse.core.resources\.root\1.tree
+* .metadata\.plugins\org.eclipse.core.resources\.safetable\
+* .metadata\.plugins\org.eclipse.core.resources\.safetable\org.eclipse.core.resources
+* .metadata\.plugins\org.eclipse.core.runtime\
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.cdt.ui.prefs
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.core.resources.prefs
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.jdt.ui.prefs
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.ui.ide.prefs
+* .metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.ui.prefs
+* .metadata\.plugins\org.eclipse.e4.workbench\
+* .metadata\.plugins\org.eclipse.e4.workbench\workbench.xmi
+* .metadata\.plugins\org.eclipse.equinox.p2.ui\
+* .metadata\.plugins\org.eclipse.equinox.p2.ui\dialog_settings.xml
+* .metadata\.plugins\org.eclipse.jdt.core\
+* .metadata\.plugins\org.eclipse.jdt.core\invalidArchivesCache
+* .metadata\.plugins\org.eclipse.jdt.core\nonChainingJarsCache
+* .metadata\.plugins\org.eclipse.jdt.core\variablesAndContainers.dat
+* .metadata\.plugins\org.eclipse.jdt.ui\
+* .metadata\.plugins\org.eclipse.jdt.ui\OpenTypeHistory.xml
+* .metadata\.plugins\org.eclipse.jdt.ui\QualifiedTypeNameHistory.xml
+* .metadata\.plugins\org.eclipse.jdt.ui\dialog_settings.xml
+* .metadata\.plugins\org.eclipse.ui.workbench\
+* .metadata\.plugins\org.eclipse.ui.workbench\dialog_settings.xml
+* .metadata\.plugins\org.eclipse.ui.workbench\workingsets.xml
+* .metadata\version.ini
+* mobile.iml
+* pom.xml
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\apache-mime4j-0.3.jar => app\libs\apache-mime4j-0.3.jar
+* libs\httpclient-4.2.jar => app\libs\httpclient-4.2.jar
+* libs\httpcore-4.2.jar => app\libs\httpcore-4.2.jar
+* libs\httpmime-4.2.jar => app\libs\httpmime-4.2.jar
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

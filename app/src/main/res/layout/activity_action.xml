@@ -1,0 +1,366 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/GridLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:columnCount="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="190dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_cam"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/cam_title"
+                        android:textSize="20dp"
+                        android:textColor="#ffffff"
+                        android:id="@+id/name" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/cam_shortdescription"
+                        android:id="@+id/captionTextView" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="210dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/gps"
+                    android:layout_width="210dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_gps"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="0dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/gps_title"
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/gps_shortdescription"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="190dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/before"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_before"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/before_title"
+                        android:textSize="20dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/before_shortdescription"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="210dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/after"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_after"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/after_title"
+                        android:textSize="20dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/after_shortdescription"
+                        android:textSize="12dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="190dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/posm"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_posm"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/posm_title"
+                        android:textSize="20dp"
+                        android:textColor="#020238"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#020238"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/posm_shortdescription"
+                        android:textSize="12dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="210dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/order"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_order"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/order_title"
+                        android:textSize="20dp"
+                        android:textColor="#05034b"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#05034b"
+                        android:textSize="12dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/order_shortdescription"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="190dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/survey"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_survey"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/survey_title"
+                        android:textSize="20dp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/survey_shortdescription"
+                        android:textSize="12dp"
+                        android:textColor="#000000"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginRight="0.5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_width="210dp"
+                android:layout_height="113dp">
+
+                <ImageView
+                    android:id="@+id/note"
+                    android:layout_width="200dp"
+                    android:layout_height="180dp"
+                    android:contentDescription="@string/action_settings"
+                    android:src="@drawable/img_note"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/note_title"
+                        android:textSize="20dp"
+                        android:textColor="#ffffff"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/note_shortdescription"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </GridLayout>
+
+
+    <LinearLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f16b0c"
+        android:orientation="vertical">
+    </LinearLayout>
+
+
+</FrameLayout>
