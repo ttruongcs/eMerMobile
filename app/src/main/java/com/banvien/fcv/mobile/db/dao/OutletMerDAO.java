@@ -3,6 +3,7 @@ package com.banvien.fcv.mobile.db.dao;
 
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -22,5 +23,14 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
     public OutletMerDAO(ConnectionSource connectionSource, DatabaseTableConfig<OutletMerEntity> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
+    }
+
+    public void addOutletMerEntity(OutletMerEntity data) {
+        ELog.d("data", data.toString());
+        try {
+            create(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

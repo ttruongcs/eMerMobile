@@ -4,6 +4,7 @@ package com.banvien.fcv.mobile.db.dao;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.ConfigEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
+import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -23,5 +24,14 @@ public class ConfigDAO extends AndroidBaseDaoImpl<ConfigEntity, String> {
 
     public ConfigDAO(ConnectionSource connectionSource, DatabaseTableConfig<ConfigEntity> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
+    }
+
+    public void addConfigEntity(ConfigEntity data) {
+        ELog.d("data", data.toString());
+        try {
+            create(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

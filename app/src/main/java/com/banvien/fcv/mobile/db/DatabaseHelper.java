@@ -11,10 +11,13 @@ import com.banvien.fcv.mobile.db.dao.OutletMerDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
+import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
+import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -88,7 +91,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 	}
 
-	public CatgroupDAO getCatgroupDAO() {
+	public CatgroupDAO getCatgroupDAO() throws SQLException {
+		if(null == catgroupDAO) {
+			catgroupDAO = new CatgroupDAO(getConnectionSource(), CatgroupEntity.class);
+		}
 		return catgroupDAO;
 	}
 
@@ -96,11 +102,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return configDAO;
 	}
 
-	public HotzoneDAO getHotzoneDAO() {
+	public HotzoneDAO getHotzoneDAO() throws SQLException {
+		if(null == hotzoneDAO) {
+			hotzoneDAO = new HotzoneDAO(getConnectionSource(), HotzoneEntity.class);
+		}
 		return hotzoneDAO;
 	}
 
-	public OutletMerDAO getOutletMerDAO() {
+	public OutletMerDAO getOutletMerDAO() throws SQLException {
+		if(null == outletMerDAO) {
+			outletMerDAO = new OutletMerDAO(getConnectionSource(), OutletMerEntity.class);
+		}
 		return outletMerDAO;
 	}
 
@@ -111,11 +123,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return posmDAO;
 	}
 
-	public ProductDAO getProductDAO() {
+	public ProductDAO getProductDAO() throws SQLException {
+		if(null == productDAO) {
+			productDAO = new ProductDAO(getConnectionSource(), ProductEntity.class);
+		}
 		return productDAO;
 	}
 
-	public ProductgroupDAO getProductgroupDAO() {
+	public ProductgroupDAO getProductgroupDAO() throws SQLException {
+		if(null == productgroupDAO) {
+			productgroupDAO = new ProductgroupDAO(getConnectionSource(), ProductgroupEntity.class);
+		}
 		return productgroupDAO;
 	}
 

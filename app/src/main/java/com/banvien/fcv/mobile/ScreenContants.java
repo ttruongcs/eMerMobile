@@ -9,4 +9,8 @@ package com.banvien.fcv.mobile;
 public class ScreenContants {
     public static final String OUTLET_TASKLIST_ACTION = "com.banvien.fcv.mobile.OUTLET_TASKLIST";
     public static final String POSM_LIST = "com.banvien.fcv.mobile.POSM_LIST";
+    public static final String HOTZONE_LIST = "com.banvien.fcv.mobile.HOTZONE_LIST";
+    public static final String PRODUCT_LIST = "com.banvien.fcv.mobile.PRODUCT_LIST";
+    public static final String PRODUCTGROUP_LIST = "com.banvien.fcv.mobile.PRODUCTGROUP_LIST";
+    public static final String CATGROUP_LIST = "com.banvien.fcv.mobile.CATGROUP_LIST";
 }
