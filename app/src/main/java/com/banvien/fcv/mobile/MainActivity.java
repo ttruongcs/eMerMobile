@@ -2,16 +2,8 @@ package com.banvien.fcv.mobile;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.banvien.fcv.mobile.fragments.HomeFragment;
-import com.banvien.fcv.mobile.fragments.PrepareFragment;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseDrawerActivity {

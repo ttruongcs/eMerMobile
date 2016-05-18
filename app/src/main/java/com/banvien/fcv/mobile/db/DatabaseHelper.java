@@ -65,6 +65,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, OutletMerEntity.class);
 			TableUtils.createTable(connectionSource, POSMEntity.class);
 			TableUtils.createTable(connectionSource, ProductEntity.class);
+			TableUtils.createTable(connectionSource, CatgroupEntity.class);
+			TableUtils.createTable(connectionSource, ProductgroupEntity.class);
+			TableUtils.createTable(connectionSource, OutletEntity.class);
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
 			throw new RuntimeException(e);
@@ -83,6 +86,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, OutletMerEntity.class, true);
 			TableUtils.dropTable(connectionSource, POSMEntity.class, true);
 			TableUtils.dropTable(connectionSource, ProductEntity.class, true);
+
+			TableUtils.dropTable(connectionSource, CatgroupEntity.class, true);
+			TableUtils.dropTable(connectionSource, ProductgroupEntity.class, true);
+			TableUtils.dropTable(connectionSource, OutletEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
