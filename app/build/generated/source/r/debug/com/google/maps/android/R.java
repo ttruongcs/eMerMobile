@@ -8,20 +8,20 @@ package com.google.maps.android;
 
 public final class R {
 	public static final class attr {
-		public static final int cameraBearing = 0x7f010065;
-		public static final int cameraTargetLat = 0x7f010066;
-		public static final int cameraTargetLng = 0x7f010067;
-		public static final int cameraTilt = 0x7f010068;
-		public static final int cameraZoom = 0x7f010069;
-		public static final int mapType = 0x7f010064;
-		public static final int uiCompass = 0x7f01006b;
-		public static final int uiRotateGestures = 0x7f01006c;
-		public static final int uiScrollGestures = 0x7f01006d;
-		public static final int uiTiltGestures = 0x7f01006e;
-		public static final int uiZoomControls = 0x7f01006f;
-		public static final int uiZoomGestures = 0x7f010070;
-		public static final int useViewLifecycle = 0x7f010071;
-		public static final int zOrderOnTop = 0x7f010072;
+		public static final int cameraBearing = 0x7f01009f;
+		public static final int cameraTargetLat = 0x7f0100a0;
+		public static final int cameraTargetLng = 0x7f0100a1;
+		public static final int cameraTilt = 0x7f0100a2;
+		public static final int cameraZoom = 0x7f0100a3;
+		public static final int mapType = 0x7f01009e;
+		public static final int uiCompass = 0x7f0100a5;
+		public static final int uiRotateGestures = 0x7f0100a6;
+		public static final int uiScrollGestures = 0x7f0100a7;
+		public static final int uiTiltGestures = 0x7f0100a8;
+		public static final int uiZoomControls = 0x7f0100a9;
+		public static final int uiZoomGestures = 0x7f0100aa;
+		public static final int useViewLifecycle = 0x7f0100ab;
+		public static final int zOrderOnTop = 0x7f0100ac;
 	}
 	public static final class color {
 		public static final int common_action_bar_splitter = 0x7f0d002c;
@@ -70,12 +70,12 @@ public final class R {
 		public static final int common_signin_btn_text_pressed_light = 0x7f020076;
 	}
 	public static final class id {
-		public static final int hybrid = 0x7f0e0035;
-		public static final int none = 0x7f0e0011;
-		public static final int normal = 0x7f0e000d;
-		public static final int satellite = 0x7f0e0036;
-		public static final int terrain = 0x7f0e0037;
-		public static final int text = 0x7f0e0009;
+		public static final int hybrid = 0x7f0e0038;
+		public static final int none = 0x7f0e0012;
+		public static final int normal = 0x7f0e000e;
+		public static final int satellite = 0x7f0e0039;
+		public static final int terrain = 0x7f0e003a;
+		public static final int text = 0x7f0e000a;
 	}
 	public static final class layout {
 		public static final int text_bubble = 0x7f030044;
@@ -103,7 +103,7 @@ public final class R {
 		public static final int ClusterIcon_TextAppearance = 0x7f0a00b9;
 	}
 	public static final class styleable {
-		public static final int[] MapAttrs = { 0x7f010064, 0x7f010065, 0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a, 0x7f01006b, 0x7f01006c, 0x7f01006d, 0x7f01006e, 0x7f01006f, 0x7f010070, 0x7f010071, 0x7f010072, 0x7f010073 };
+		public static final int[] MapAttrs = { 0x7f01009e, 0x7f01009f, 0x7f0100a0, 0x7f0100a1, 0x7f0100a2, 0x7f0100a3, 0x7f0100a4, 0x7f0100a5, 0x7f0100a6, 0x7f0100a7, 0x7f0100a8, 0x7f0100a9, 0x7f0100aa, 0x7f0100ab, 0x7f0100ac, 0x7f0100ad };
 		public static final int MapAttrs_cameraBearing = 1;
 		public static final int MapAttrs_cameraTargetLat = 2;
 		public static final int MapAttrs_cameraTargetLng = 3;

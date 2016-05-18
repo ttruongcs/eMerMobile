@@ -16,9 +16,17 @@ import android.util.Log;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.beanutil.CatGroupUtil;
+import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
 import com.banvien.fcv.mobile.beanutil.POSMUtil;
+import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
+import com.banvien.fcv.mobile.beanutil.ProductUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
+import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
+import com.banvien.fcv.mobile.db.entities.ProductEntity;
+import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
@@ -73,7 +81,7 @@ public class UpdateService {
 			System.out.println("json "+ json);
 			Call<Map<String,Object>> call =
 					RestClient.getInstance().getHomeService().getRoute(1l);
-			fillPOSM(call);
+			fillMetadata(call);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
 			errorMessage = context.getString(R.string.general_error);
@@ -82,7 +90,7 @@ public class UpdateService {
 		return results;
 	}
 
-	private void fillPOSM(Call<Map<String,Object>> call){
+	private void fillMetadata(Call<Map<String,Object>> call){
 		call.enqueue(new Callback<Map<String,Object>>() {
 			@Override
 			public void onResponse(Call<Map<String,Object>> call, Response<Map<String,Object>> response) {
@@ -90,16 +98,73 @@ public class UpdateService {
 					// request successful (status code 200, 201)
 					Map<String,Object> result = response.body();
 					List<POSMDTO> jPosms = DataBinder.readPosmList(result.get(ScreenContants.POSM_LIST));
-					for(POSMDTO dto : jPosms){
-						try {
-							POSMEntity entity = POSMUtil.convertToEntity(dto);
-							repo.getPosmDAO().addPOSMEntity(entity);
-						} catch (SQLException e) {
-							ELog.d(e.getMessage(), e);
-						}
-					}
+					List<HotzoneDTO> jHotzones = DataBinder.readHotzoneList(result.get(ScreenContants.HOTZONE_LIST));
+					List<CatgroupDTO> jCatgroups = DataBinder.readCatgroupList(result.get(ScreenContants.CATGROUP_LIST));
+					List<ProductgroupDTO> jProductGroups = DataBinder.readProductgroupList(result.get(ScreenContants.PRODUCTGROUP_LIST));
+					List<ProductDTO> jProducts = DataBinder.readProductList(result.get(ScreenContants.PRODUCT_LIST));
+
+					fillPOSM(jPosms);
+					fillHotzone(jHotzones);
+					fillCatgroups(jCatgroups);
+					fillProductgroups(jProductGroups);
+					fillProduct(jProducts);
 				} else {
-					ELog.d("Sync POSM error......");
+					ELog.d("Sync error......");
+				}
+			}
+
+			private void fillPOSM(List<POSMDTO> jPosms){
+				for(POSMDTO dto : jPosms){
+					try {
+						POSMEntity entity = POSMUtil.convertToEntity(dto);
+						repo.getPosmDAO().addPOSMEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillHotzone(List<HotzoneDTO> jHotzones){
+				for(HotzoneDTO dto : jHotzones){
+					try {
+						HotzoneEntity entity = HotzoneUtil.convertToEntity(dto);
+						repo.getHotZoneDAO().addHotZoneEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillCatgroups(List<CatgroupDTO> jCatgroup){
+				for(CatgroupDTO dto : jCatgroup){
+					try {
+						CatgroupEntity entity = CatGroupUtil.convertToEntity(dto);
+						repo.getCatgroupDAO().addCatgroupEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillProductgroups(List<ProductgroupDTO> jProductgroups){
+				for(ProductgroupDTO dto : jProductgroups){
+					try {
+						ProductgroupEntity entity = ProductGroupUtil.convertToEntity(dto);
+						repo.getProductGroupDAO().addProdcutGroupEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillProduct(List<ProductDTO> jProducts){
+				for(ProductDTO dto : jProducts){
+					try {
+						ProductEntity entity = ProductUtil.convertToEntity(dto);
+						repo.getProductDAO().addProductEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
 				}
 			}
 
