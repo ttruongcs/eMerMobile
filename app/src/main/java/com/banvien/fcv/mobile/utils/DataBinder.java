@@ -82,14 +82,12 @@ public class DataBinder {
         return list;
     }
 
-    public static List<RouteScheduleInfoDTO> readRouteScheduleInfo(Object object) {
-        List<RouteScheduleInfoDTO> list = null;
+    public static RouteScheduleInfoDTO readRouteScheduleInfo(Object object) {
+        RouteScheduleInfoDTO list = null;
         try {
-            list = mapper.convertValue(object, new TypeReference<List<RouteScheduleInfoDTO>>() {
-            });
+            list = mapper.convertValue(object, RouteScheduleInfoDTO.class);
         }catch (Exception e) {
             ELog.e(e.getMessage(), e);
-            list = new ArrayList<>();
         }
         return list;
     }
