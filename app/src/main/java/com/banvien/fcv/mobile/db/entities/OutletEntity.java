@@ -16,6 +16,12 @@ public class OutletEntity implements Serializable {
     private String name;
     @DatabaseField
     private String code;
+    @DatabaseField
+    private String dCode;
+    @DatabaseField
+    private String dName;
+    @DatabaseField
+    private String typeName;
 
     public long get_id() {
         return _id;
@@ -39,5 +45,29 @@ public class OutletEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getdCode() {
+        return dCode;
+    }
+
+    public void setdCode(String dCode) {
+        this.dCode = dCode;
+    }
+
+    public String getdName() {
+        return dName;
+    }
+
+    public void setdName(String dName) {
+        this.dName = dName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

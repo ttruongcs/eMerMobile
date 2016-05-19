@@ -17,6 +17,8 @@ public class OutletMerEntity implements Serializable {
     @DatabaseField
     private String routeScheduleId;
     @DatabaseField
+    private String routeScheduleDetailId;
+    @DatabaseField
     private String dataType;
     @DatabaseField
     private String registerValue;
@@ -69,5 +71,13 @@ public class OutletMerEntity implements Serializable {
 
     public void setOutletId(String outletId) {
         this.outletId = outletId;
+    }
+
+    public String getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(String routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }
