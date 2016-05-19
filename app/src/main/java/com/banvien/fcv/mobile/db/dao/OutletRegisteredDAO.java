@@ -2,7 +2,6 @@ package com.banvien.fcv.mobile.db.dao;
 
 
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.support.ConnectionSource;

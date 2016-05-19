@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class OutletDTO implements Serializable {
     private long _id;
+    private Long outletId;
     private String name;
     private String code;
     private String dCode;
@@ -60,5 +61,13 @@ public class OutletDTO implements Serializable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public Long getOutletId() {
+        return outletId;
+    }
+
+    public void setOutletId(Long outletId) {
+        this.outletId = outletId;
     }
 }

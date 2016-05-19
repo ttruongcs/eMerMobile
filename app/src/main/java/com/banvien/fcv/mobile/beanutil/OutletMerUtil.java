@@ -19,6 +19,8 @@ public class OutletMerUtil {
         result.setDataType(item.getDataType());
         result.setRegisterValue(item.getRegisterValue());
         result.setActualValue(item.getActualValue());
+        result.setExhibitRegisteredId(item.getExhibitRegisteredId());
+        result.setExhibitRegisteredDetailId(item.getExhibitRegisteredDetailId());
         return result;
     }
 
@@ -31,6 +33,8 @@ public class OutletMerUtil {
         entity.setDataType(item.getDataType());
         entity.setRegisterValue(item.getRegisterValue());
         entity.setActualValue(item.getActualValue());
+        entity.setExhibitRegisteredId(item.getExhibitRegisteredId());
+        entity.setExhibitRegisteredDetailId(item.getExhibitRegisteredDetailId());
         return entity;
     }
 }

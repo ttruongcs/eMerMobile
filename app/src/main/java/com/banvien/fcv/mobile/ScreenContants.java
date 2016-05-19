@@ -13,4 +13,5 @@ public class ScreenContants {
     public static final String PRODUCT_LIST = "com.banvien.fcv.mobile.PRODUCT_LIST";
     public static final String PRODUCTGROUP_LIST = "com.banvien.fcv.mobile.PRODUCTGROUP_LIST";
     public static final String CATGROUP_LIST = "com.banvien.fcv.mobile.CATGROUP_LIST";
+    public static final String ROUTESCHEDULE_LIST = "com.banvien.fcv.mobile.ROUTESCHEDULE_LIST";
 }

@@ -11,6 +11,7 @@ public class OutletUtil {
     public static OutletDTO convertToDTO(OutletEntity item) {
         OutletDTO result = new OutletDTO();
         result.set_id(item.get_id());
+        result.setOutletId(item.getOutletId());
         result.setCode(item.getCode());
         result.setName(item.getName());
         result.setdCode(item.getdCode());
@@ -22,6 +23,7 @@ public class OutletUtil {
     public static OutletEntity convertToEntity(OutletDTO item) {
         OutletEntity entity = new OutletEntity();
         entity.set_id(item.get_id());
+        entity.setOutletId(item.getOutletId());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
         entity.setdCode(item.getdCode());

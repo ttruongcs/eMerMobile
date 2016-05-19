@@ -18,12 +18,16 @@ import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.CatGroupUtil;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
+import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
+import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.beanutil.POSMUtil;
 import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
 import com.banvien.fcv.mobile.beanutil.ProductUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
@@ -34,6 +38,11 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDetailDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.MOutletDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleInfoDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
@@ -64,7 +73,7 @@ public class UpdateService {
 	 *
 	 * @return errors message and task type
 	 */
-	public Map<String, String> updateFromServer(String auditorCode, boolean forceDeleteDatabase) {
+	public Map<String, String> updateFromServer(boolean forceDeleteDatabase) {
 		Map<String, String> results = new HashMap<String, String>();
 		String errorMessage = null;
 		String taskType = "STORE";
@@ -80,7 +89,7 @@ public class UpdateService {
 			JSONObject json = null;
 			System.out.println("json "+ json);
 			Call<Map<String,Object>> call =
-					RestClient.getInstance().getHomeService().getRoute(1l);
+					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
 			fillMetadata(call);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
@@ -102,6 +111,7 @@ public class UpdateService {
 					List<CatgroupDTO> jCatgroups = DataBinder.readCatgroupList(result.get(ScreenContants.CATGROUP_LIST));
 					List<ProductgroupDTO> jProductGroups = DataBinder.readProductgroupList(result.get(ScreenContants.PRODUCTGROUP_LIST));
 					List<ProductDTO> jProducts = DataBinder.readProductList(result.get(ScreenContants.PRODUCT_LIST));
+					List<RouteScheduleInfoDTO> jRouteScheduleInfo= DataBinder.readRouteScheduleInfo(result.get(ScreenContants.ROUTESCHEDULE_LIST));
 
 					fillPOSM(jPosms);
 					fillHotzone(jHotzones);
@@ -164,6 +174,63 @@ public class UpdateService {
 						repo.getProductDAO().addProductEntity(entity);
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+//			fill routeschedule, outlet, outletmer
+			private void fillRouteScheduleInfo(List<RouteScheduleInfoDTO> jRouteScheduleInfos ){
+				for(RouteScheduleInfoDTO routeScheduleInfoDTO : jRouteScheduleInfos){
+					if(routeScheduleInfoDTO.getRouteScheduleDetails() != null
+							&& routeScheduleInfoDTO.getRouteScheduleDetails().size() > 0) {
+						List<MRouteScheduleDetailDTO> mMRouteScheduleDetails = routeScheduleInfoDTO
+								.getRouteScheduleDetails();
+						for(MRouteScheduleDetailDTO mRouteScheduleDetailDTO : mMRouteScheduleDetails){
+							// Create and Insert Outlet to sqlLite
+							MOutletDTO mOutletDTO = mRouteScheduleDetailDTO.getOutlet();
+							if(mOutletDTO != null){
+								OutletDTO outlet = new OutletDTO();
+								outlet.setOutletId(mOutletDTO.getOutletId());
+								outlet.setCode(mOutletDTO.getCode());
+								outlet.setName(mOutletDTO.getName());
+								outlet.setdCode(mOutletDTO.getDistributorCode());
+								outlet.setdName(mOutletDTO.getDistributor().getName());
+								outlet.setTypeName(mOutletDTO.getOutletTypeCode());
+								try {
+									OutletEntity entity = OutletUtil.convertToEntity(outlet);
+									repo.getOutletDAO().addOutletEntity(entity);
+								} catch (SQLException e) {
+									ELog.d(e.getMessage(), e);
+								}
+							}
+							if(mOutletDTO.getExhibitRegister() != null){
+								MExhibitRegisterDTO mExhibitRegisterDTO = mOutletDTO.getExhibitRegister();
+								if(mExhibitRegisterDTO.getExhibitRegisterDetails() != null
+										&& mExhibitRegisterDTO.getExhibitRegisterDetails().size() > 0){
+									List<MExhibitRegisterDetailDTO> mExhibitRegisterDetailDTOs
+											= mExhibitRegisterDTO.getExhibitRegisterDetails();
+									for(MExhibitRegisterDetailDTO mExhibitRegisterDetailDTO
+											: mExhibitRegisterDetailDTOs){
+										OutletMerDTO outletMerDTO = new OutletMerDTO();
+										outletMerDTO.setOutletId(mOutletDTO.getOutletId());
+										outletMerDTO.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
+										outletMerDTO.setRouteScheduleDetailId
+												(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
+										outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getDataType());
+										outletMerDTO.setRegisterValue(mExhibitRegisterDetailDTO.getRegisteredValue());
+										outletMerDTO.setExhibitRegisteredId(mExhibitRegisterDTO.getExhibitRegisterId());
+										outletMerDTO.setExhibitRegisteredDetailId(mExhibitRegisterDetailDTO.getExhibitRegisterDetailId());
+
+										try {
+											OutletMerEntity entity = OutletMerUtil.convertToEntity(outletMerDTO);
+											repo.getOutletMerDAO().addOutletMerEntity(entity);
+										} catch (SQLException e) {
+											ELog.d(e.getMessage(), e);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

@@ -5,7 +5,9 @@ import android.content.Context;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
+import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletMerDAO;
+import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
@@ -53,6 +55,14 @@ public class Repo {
 
     public ProductgroupDAO getProductGroupDAO() throws SQLException {
         return databaseHelper.getProductgroupDAO();
+    }
+
+    public OutletDAO getOutletDAO() throws SQLException {
+        return databaseHelper.getOutletDAO();
+    }
+
+    public OutletRegisteredDAO getOutletRegisteredDAO() throws SQLException {
+        return databaseHelper.getOutletRegisteredDAO();
     }
 
     public void release() {

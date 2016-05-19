@@ -159,6 +159,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return outletRegisteredDAO;
 	}
 
+	public OutletDAO getOutletDAO() throws SQLException {
+		if(null == outletDAO) {
+			outletDAO = new OutletDAO(getConnectionSource(), OutletEntity.class);
+		}
+		return outletDAO;
+	}
+
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */

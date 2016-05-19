@@ -5,6 +5,7 @@ import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleInfoDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,6 +74,18 @@ public class DataBinder {
         List<ProductDTO> list = null;
         try {
             list = mapper.convertValue(object, new TypeReference<List<ProductDTO>>() {
+            });
+        }catch (Exception e) {
+            ELog.e(e.getMessage(), e);
+            list = new ArrayList<>();
+        }
+        return list;
+    }
+
+    public static List<RouteScheduleInfoDTO> readRouteScheduleInfo(Object object) {
+        List<RouteScheduleInfoDTO> list = null;
+        try {
+            list = mapper.convertValue(object, new TypeReference<List<RouteScheduleInfoDTO>>() {
             });
         }catch (Exception e) {
             ELog.e(e.getMessage(), e);

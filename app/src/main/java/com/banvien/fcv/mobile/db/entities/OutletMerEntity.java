@@ -13,11 +13,15 @@ public class OutletMerEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
-    private String outletId;
+    private Long outletId;
     @DatabaseField
-    private String routeScheduleId;
+    private Long routeScheduleId;
     @DatabaseField
-    private String routeScheduleDetailId;
+    private Long routeScheduleDetailId;
+    @DatabaseField
+    private String exhibitRegisteredId;
+    @DatabaseField
+    private String exhibitRegisteredDetailId;
     @DatabaseField
     private String dataType;
     @DatabaseField
@@ -31,14 +35,6 @@ public class OutletMerEntity implements Serializable {
 
     public void set_id(long _id) {
         this._id = _id;
-    }
-
-    public String getRouteScheduleId() {
-        return routeScheduleId;
-    }
-
-    public void setRouteScheduleId(String routeScheduleId) {
-        this.routeScheduleId = routeScheduleId;
     }
 
     public String getDataType() {
@@ -65,19 +61,43 @@ public class OutletMerEntity implements Serializable {
         this.actualValue = actualValue;
     }
 
-    public String getOutletId() {
+    public Long getOutletId() {
         return outletId;
     }
 
-    public void setOutletId(String outletId) {
+    public void setOutletId(Long outletId) {
         this.outletId = outletId;
     }
 
-    public String getRouteScheduleDetailId() {
+    public Long getRouteScheduleId() {
+        return routeScheduleId;
+    }
+
+    public void setRouteScheduleId(Long routeScheduleId) {
+        this.routeScheduleId = routeScheduleId;
+    }
+
+    public Long getRouteScheduleDetailId() {
         return routeScheduleDetailId;
     }
 
-    public void setRouteScheduleDetailId(String routeScheduleDetailId) {
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public String getExhibitRegisteredId() {
+        return exhibitRegisteredId;
+    }
+
+    public void setExhibitRegisteredId(String exhibitRegisteredId) {
+        this.exhibitRegisteredId = exhibitRegisteredId;
+    }
+
+    public String getExhibitRegisteredDetailId() {
+        return exhibitRegisteredDetailId;
+    }
+
+    public void setExhibitRegisteredDetailId(String exhibitRegisteredDetailId) {
+        this.exhibitRegisteredDetailId = exhibitRegisteredDetailId;
     }
 }

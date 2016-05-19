@@ -7,9 +7,11 @@ import java.io.Serializable;
 
 public class OutletMerDTO implements Serializable {
     private long _id;
-    private String outletId;
-    private String routeScheduleId;
-    private String routeScheduleDetailId;
+    private Long outletId;
+    private Long routeScheduleId;
+    private Long routeScheduleDetailId;
+    private String exhibitRegisteredId;
+    private String exhibitRegisteredDetailId;
     private String dataType;
     private String registerValue;
     private String actualValue;
@@ -22,19 +24,19 @@ public class OutletMerDTO implements Serializable {
         this._id = _id;
     }
 
-    public String getOutletId() {
+    public Long getOutletId() {
         return outletId;
     }
 
-    public void setOutletId(String outletId) {
+    public void setOutletId(Long outletId) {
         this.outletId = outletId;
     }
 
-    public String getRouteScheduleId() {
+    public Long getRouteScheduleId() {
         return routeScheduleId;
     }
 
-    public void setRouteScheduleId(String routeScheduleId) {
+    public void setRouteScheduleId(Long routeScheduleId) {
         this.routeScheduleId = routeScheduleId;
     }
 
@@ -62,11 +64,27 @@ public class OutletMerDTO implements Serializable {
         this.actualValue = actualValue;
     }
 
-    public String getRouteScheduleDetailId() {
+    public Long getRouteScheduleDetailId() {
         return routeScheduleDetailId;
     }
 
-    public void setRouteScheduleDetailId(String routeScheduleDetailId) {
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public String getExhibitRegisteredId() {
+        return exhibitRegisteredId;
+    }
+
+    public void setExhibitRegisteredId(String exhibitRegisteredId) {
+        this.exhibitRegisteredId = exhibitRegisteredId;
+    }
+
+    public String getExhibitRegisteredDetailId() {
+        return exhibitRegisteredDetailId;
+    }
+
+    public void setExhibitRegisteredDetailId(String exhibitRegisteredDetailId) {
+        this.exhibitRegisteredDetailId = exhibitRegisteredDetailId;
     }
 }

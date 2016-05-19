@@ -13,6 +13,8 @@ public class OutletEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
+    private Long outletId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -69,5 +71,13 @@ public class OutletEntity implements Serializable {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public Long getOutletId() {
+        return outletId;
+    }
+
+    public void setOutletId(Long outletId) {
+        this.outletId = outletId;
     }
 }
