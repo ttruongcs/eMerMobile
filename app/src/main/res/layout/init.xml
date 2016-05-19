@@ -27,11 +27,29 @@
     </LinearLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabLevel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_dialog_email" />
+        fab:menu_icon="@drawable/ic_arrow_upward_white_24dp">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabSyncTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            fab:fab_label="Sync Task"
+            android:src="@drawable/ic_sync_white_24dp" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabAddTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            fab:fab_label="Add Task"
+            android:src="@drawable/ic_add_white_24dp" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </FrameLayout>
