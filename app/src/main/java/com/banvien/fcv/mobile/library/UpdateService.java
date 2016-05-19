@@ -176,6 +176,7 @@ public class UpdateService {
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
 					}
+
 				}
 			}
 
