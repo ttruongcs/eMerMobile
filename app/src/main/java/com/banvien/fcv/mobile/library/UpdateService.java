@@ -111,13 +111,14 @@ public class UpdateService {
 					List<CatgroupDTO> jCatgroups = DataBinder.readCatgroupList(result.get(ScreenContants.CATGROUP_LIST));
 					List<ProductgroupDTO> jProductGroups = DataBinder.readProductgroupList(result.get(ScreenContants.PRODUCTGROUP_LIST));
 					List<ProductDTO> jProducts = DataBinder.readProductList(result.get(ScreenContants.PRODUCT_LIST));
-					List<RouteScheduleInfoDTO> jRouteScheduleInfo= DataBinder.readRouteScheduleInfo(result.get(ScreenContants.ROUTESCHEDULE_LIST));
+					RouteScheduleInfoDTO routeScheduleInfo = DataBinder.readRouteScheduleInfo(result.get(ScreenContants.ROUTESCHEDULE_LIST));
 
 					fillPOSM(jPosms);
 					fillHotzone(jHotzones);
 					fillCatgroups(jCatgroups);
 					fillProductgroups(jProductGroups);
 					fillProduct(jProducts);
+					fillRouteScheduleInfo(routeScheduleInfo);
 				} else {
 					ELog.d("Sync error......");
 				}
@@ -179,8 +180,7 @@ public class UpdateService {
 			}
 
 //			fill routeschedule, outlet, outletmer
-			private void fillRouteScheduleInfo(List<RouteScheduleInfoDTO> jRouteScheduleInfos ){
-				for(RouteScheduleInfoDTO routeScheduleInfoDTO : jRouteScheduleInfos){
+			private void fillRouteScheduleInfo(RouteScheduleInfoDTO routeScheduleInfoDTO ){
 					if(routeScheduleInfoDTO.getRouteScheduleDetails() != null
 							&& routeScheduleInfoDTO.getRouteScheduleDetails().size() > 0) {
 						List<MRouteScheduleDetailDTO> mMRouteScheduleDetails = routeScheduleInfoDTO
@@ -233,7 +233,7 @@ public class UpdateService {
 						}
 					}
 				}
-			}
+
 
 			@Override
 			public void onFailure(Call<Map<String,Object>> call, Throwable t) {

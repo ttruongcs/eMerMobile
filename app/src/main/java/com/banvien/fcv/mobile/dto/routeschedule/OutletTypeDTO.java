@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile.dto.routeschedule;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
  * Time: 2:04 PM
  * To change this template use File | Settings | File Templates.
  */
-public class OutletTypeDTO {
+public class OutletTypeDTO  implements Serializable {
 
     private Long outletTypeId;
     private String code;

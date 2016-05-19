@@ -1,5 +1,9 @@
 package com.banvien.fcv.mobile.dto.routeschedule;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,9 +13,10 @@ import java.util.List;
  * Time: 2:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RouteScheduleInfoDTO {
+public class RouteScheduleInfoDTO implements Serializable{
     private Long routeScheduleId;
-    private List<MRouteScheduleDetailDTO> routeScheduleDetails;
+    @JsonProperty("routeScheduleDetails")
+    private List<MRouteScheduleDetailDTO> routeScheduleDetails = new ArrayList<>();;
 
     public Long getRouteScheduleId() {
         return routeScheduleId;

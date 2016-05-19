@@ -1,6 +1,9 @@
 package com.banvien.fcv.mobile.dto.routeschedule;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +24,8 @@ public class MExhibitRegisterDTO implements Serializable {
     private Short year;
     private Short status;
     private String note;
-    private List<MExhibitRegisterDetailDTO> exhibitRegisterDetails;
+    @JsonProperty("exhibitRegisterDetails")
+    private List<MExhibitRegisterDetailDTO> exhibitRegisterDetails = new ArrayList<>();
 
     public String getExhibitRegisterId() {
         return exhibitRegisterId;
