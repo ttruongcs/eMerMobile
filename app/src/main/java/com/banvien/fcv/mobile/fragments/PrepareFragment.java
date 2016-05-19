@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
@@ -16,10 +17,18 @@ import com.banvien.fcv.mobile.library.UpdateService;
 
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
 public class PrepareFragment extends BaseFragment {
+    private static final String TAG = "HomeFragment";
+    @Bind(R.id.fabSyncTask)
+    com.github.clans.fab.FloatingActionButton fabSync;
+
+    @Bind(R.id.fabAddTask)
+    com.github.clans.fab.FloatingActionButton fabAdd;
+
 
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
@@ -28,9 +37,19 @@ public class PrepareFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.init, container, false);
         ButterKnife.bind(this, view);
-        progressDialog  = new ProgressDialog(this.getContext());
-        startUpdate();
+        bindViews();
         return view;
+    }
+
+    protected void bindViews(){
+        fabSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "sync data from server to handheld");
+                progressDialog  = new ProgressDialog(v.getContext());
+                startUpdate();
+            }
+        });
     }
 
     @Override
@@ -70,9 +89,8 @@ public class PrepareFragment extends BaseFragment {
 
         protected Boolean doInBackground(final String... args) {
             try {
-                String auditorCode = "TCT0001";
                 UpdateService updateService = new UpdateService(context);
-                Map<String, String> results = updateService.updateFromServer(auditorCode, true);
+                Map<String, String> results = updateService.updateFromServer(true);
                 errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {
                     return false;
