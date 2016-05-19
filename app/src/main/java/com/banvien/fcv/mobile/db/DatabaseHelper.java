@@ -7,7 +7,9 @@ import android.util.Log;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
+import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletMerDAO;
+import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
@@ -15,9 +17,11 @@ import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.dto.OutletRegisteredDTO;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -48,6 +52,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private PosmDAO posmDAO = null;
 	private ProductDAO productDAO = null;
 	private ProductgroupDAO productgroupDAO = null;
+	private OutletDAO outletDAO = null;
+	private OutletRegisteredDAO outletRegisteredDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -68,6 +74,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, CatgroupEntity.class);
 			TableUtils.createTable(connectionSource, ProductgroupEntity.class);
 			TableUtils.createTable(connectionSource, OutletEntity.class);
+			TableUtils.createTable(connectionSource, OutletRegisteredEntity.class);
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
 			throw new RuntimeException(e);
@@ -90,6 +97,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, CatgroupEntity.class, true);
 			TableUtils.dropTable(connectionSource, ProductgroupEntity.class, true);
 			TableUtils.dropTable(connectionSource, OutletEntity.class, true);
+			TableUtils.dropTable(connectionSource, OutletRegisteredEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -142,6 +150,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			productgroupDAO = new ProductgroupDAO(getConnectionSource(), ProductgroupEntity.class);
 		}
 		return productgroupDAO;
+	}
+
+	public OutletRegisteredDAO getOutletRegisteredDAO() throws SQLException {
+		if(null == outletRegisteredDAO) {
+			outletRegisteredDAO = new OutletRegisteredDAO(getConnectionSource(), OutletRegisteredEntity.class);
+		}
+		return outletRegisteredDAO;
 	}
 
 	/**

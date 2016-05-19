@@ -9,6 +9,7 @@ public class OutletMerDTO implements Serializable {
     private long _id;
     private String outletId;
     private String routeScheduleId;
+    private String routeScheduleDetailId;
     private String dataType;
     private String registerValue;
     private String actualValue;
@@ -59,5 +60,13 @@ public class OutletMerDTO implements Serializable {
 
     public void setActualValue(String actualValue) {
         this.actualValue = actualValue;
+    }
+
+    public String getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(String routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }

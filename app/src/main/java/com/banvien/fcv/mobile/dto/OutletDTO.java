@@ -10,6 +10,9 @@ public class OutletDTO implements Serializable {
     private long _id;
     private String name;
     private String code;
+    private String dCode;
+    private String dName;
+    private String typeName;
 
     public long get_id() {
         return _id;
@@ -33,5 +36,29 @@ public class OutletDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getdCode() {
+        return dCode;
+    }
+
+    public void setdCode(String dCode) {
+        this.dCode = dCode;
+    }
+
+    public String getdName() {
+        return dName;
+    }
+
+    public void setdName(String dName) {
+        this.dName = dName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
