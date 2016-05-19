@@ -1,6 +1,5 @@
 package com.banvien.fcv.mobile.rest.service;
 
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -12,5 +11,8 @@ import retrofit2.http.Query;
  */
 public interface HomeService {
     @POST("/mobile/metadata/getdata.html")
-    Call<Map<String, Object>> getRoute(@Query("smId") Long smId);
+    Call<Map<String, Object>> getRoute(@Query("userId") Long smId,
+                                       @Query("day") Integer day,
+                                       @Query("month") Integer month,
+                                       @Query("year") Integer year);
 }
