@@ -52,6 +52,7 @@ public class HomeFragment extends BaseFragment {
 
                 FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
                 tx.replace(R.id.content_frame, new PrepareFragment());
+                tx.addToBackStack(new HomeFragment().getClass().getName());
                 tx.commit();
             }
         });

@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
@@ -79,6 +76,13 @@ public class PrepareFragment extends BaseFragment {
             public void onClick(View v) {
                 Log.d(TAG, "sync data from server to handheld");
                 showLocationDialog(v);
+            }
+        });
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Add new task from server");
             }
         });
     }
