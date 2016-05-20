@@ -24,6 +24,7 @@ public class OutletUtil {
         result.setCityName(item.getCityName());
         result.setLat(item.getLat());
         result.setLg(item.getLg());
+        result.setStatus(item.getStatus());
         return result;
     }
 
@@ -43,6 +44,7 @@ public class OutletUtil {
         entity.setCityName(item.getCityName());
         entity.setLat(item.getLat());
         entity.setLg(item.getLg());
+        entity.setStatus(item.getStatus());
         return entity;
     }
 }

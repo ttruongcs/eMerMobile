@@ -18,12 +18,9 @@ public class BaseActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    private Repo repo;
-
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        repo = new Repo(this);
         bindViews();
     }
 

@@ -1,6 +1,5 @@
 package com.banvien.fcv.mobile.db.entities;
 
-import com.banvien.fcv.mobile.dto.routeschedule.CityDTO;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -40,6 +39,8 @@ public class OutletEntity implements Serializable {
     private BigDecimal lat;
     @DatabaseField
     private BigDecimal lg;
+    @DatabaseField
+    private String status;
 
     public long get_id() {
         return _id;
@@ -151,5 +152,13 @@ public class OutletEntity implements Serializable {
 
     public void setLg(BigDecimal lg) {
         this.lg = lg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

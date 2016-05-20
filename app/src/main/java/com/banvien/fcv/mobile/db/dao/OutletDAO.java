@@ -1,13 +1,17 @@
 package com.banvien.fcv.mobile.db.dao;
 
 
+import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
     public OutletDAO(Class<OutletEntity> dataClass) throws SQLException {
@@ -29,5 +33,19 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<OutletDTO> getOutletsWithCircumstance(String outletStatusFinished) {
+        ELog.d("data", outletStatusFinished);
+        List<OutletDTO> results = new ArrayList<>();
+        try {
+            List<OutletEntity> outletEntities = queryForAll();
+            for(OutletEntity outletEntity : outletEntities) {
+                results.add(OutletUtil.convertToDTO(outletEntity));
+            }
+        } catch (SQLException e) {
+            ELog.e(e.getMessage());
+        }
+        return results;
     }
 }

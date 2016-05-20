@@ -435,4 +435,11 @@
         <item>3</item>
     </string-array>
 
+    <!-- Outlet List -->
+    <string name="outlet_list_title">Outlet List</string>
+    <string name="outlet_status_finished">Finished</string>
+    <string name="outlet_status_doing">Doing</string>
+    <string name="outlet_status_unfinished">Unfinished</string>
+
+
 </resources>

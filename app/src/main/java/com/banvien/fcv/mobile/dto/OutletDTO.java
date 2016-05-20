@@ -1,7 +1,5 @@
 package com.banvien.fcv.mobile.dto;
 
-import com.j256.ormlite.field.DatabaseField;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -24,6 +22,7 @@ public class OutletDTO implements Serializable {
     private String cityName;
     private BigDecimal lat;
     private BigDecimal lg;
+    private String status;
 
     public long get_id() {
         return _id;
@@ -135,5 +134,13 @@ public class OutletDTO implements Serializable {
 
     public void setLg(BigDecimal lg) {
         this.lg = lg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
