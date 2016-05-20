@@ -56,5 +56,16 @@ public class HomeFragment extends BaseFragment {
                 tx.commit();
             }
         });
+
+        actionStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "change to action activity");
+
+                FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
+                tx.replace(R.id.content_frame, new OutletTabFragment());
+                tx.commit();
+            }
+        });
     }
 }
