@@ -14,7 +14,8 @@ public class ScreenContants {
     public static final String PRODUCTGROUP_LIST = "com.banvien.fcv.mobile.PRODUCTGROUP_LIST";
     public static final String CATGROUP_LIST = "com.banvien.fcv.mobile.CATGROUP_LIST";
     public static final String ROUTESCHEDULE_LIST = "com.banvien.fcv.mobile.ROUTESCHEDULE_LIST";
-    public static final String OUTLET_STATUS_FINISHED = "FINISHED";
-    public static final String OUTLET_STATUS_UNFINISHED = "UNFINISHED";
-    public static final String OUTLET_STATUS_DOING = "DOING";
+    public static final Integer OUTLET_STATUS_UNFINISHED = 0;
+    public static final Integer OUTLET_STATUS_DOING = 1;
+    public static final Integer OUTLET_STATUS_FINISHED = 2;
+    public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
 }

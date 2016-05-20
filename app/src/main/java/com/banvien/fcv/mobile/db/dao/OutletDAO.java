@@ -35,8 +35,8 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         }
     }
 
-    public List<OutletDTO> getOutletsWithCircumstance(String outletStatus) {
-        ELog.d("data", outletStatus);
+    public List<OutletDTO> getOutletsWithCircumstance(Integer outletStatus) {
+        ELog.d("data", outletStatus.toString());
         List<OutletDTO> results = new ArrayList<>();
         try {
             List<OutletEntity> outletEntities = queryForEq("status", outletStatus);

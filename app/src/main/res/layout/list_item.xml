@@ -36,7 +36,7 @@
             android:textColor="@color/primary_color_dark"
             android:paddingRight="16dp"
 
-            android:textSize="11dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/gps_distributor_label"
@@ -45,7 +45,7 @@
             android:textColor="@color/primary_color_dark"
             android:paddingRight="16dp"
 
-            android:textSize="11dp" />
+            android:textSize="15dp" />
 
     </LinearLayout>
 

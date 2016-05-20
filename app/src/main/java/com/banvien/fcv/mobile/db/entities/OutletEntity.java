@@ -40,7 +40,7 @@ public class OutletEntity implements Serializable {
     @DatabaseField
     private BigDecimal lg;
     @DatabaseField
-    private String status;
+    private Integer status;
 
     public long get_id() {
         return _id;
@@ -154,11 +154,11 @@ public class OutletEntity implements Serializable {
         this.lg = lg;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
