@@ -18,27 +18,27 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/cam_title"
             android:textSize="20dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:textColor="#ffffff"
             android:id="@+id/outletName" />
-
+        <!--android:text="@string/cam_shortdescription"-->
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:textSize="12dp"
-            android:layout_marginLeft="16dp"
+            android:textSize="15dp"
+            android:layout_marginLeft="25dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/cam_shortdescription"
+
             android:id="@+id/outletCode" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:textSize="12dp"
-            android:layout_marginLeft="16dp"
+            android:textSize="15dp"
+            android:layout_marginLeft="25dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/cam_shortdescription"
             android:id="@+id/outletAddress" />
@@ -89,14 +89,13 @@
                         android:textSize="20dp"
                         android:textColor="#ffffff"
                         android:id="@+id/name" />
-
+                    <!--android:text="@string/cam_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
                         android:textSize="12dp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/cam_shortdescription"
                         android:id="@+id/captionTextView" />
 
                 </LinearLayout>
@@ -132,14 +131,13 @@
                         android:text="@string/gps_title"
                         android:textSize="20dp"
                         android:textColor="#000000"/>
-
+                    <!--android:text="@string/gps_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textSize="12dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/gps_shortdescription"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
 
@@ -174,14 +172,13 @@
                         android:text="@string/before_title"
                         android:textSize="20dp"
                         android:textColor="#ffffff"/>
-
+                    <!--android:text="@string/before_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
                         android:textSize="12dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/before_shortdescription"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
 
@@ -216,13 +213,12 @@
                         android:text="@string/after_title"
                         android:textSize="20dp"
                         android:textColor="#ffffff"/>
-
+                    <!--android:text="@string/after_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/after_shortdescription"
                         android:textSize="12dp"/>
 
                 </LinearLayout>
@@ -258,13 +254,12 @@
                         android:text="@string/posm_title"
                         android:textSize="20dp"
                         android:textColor="#020238"/>
-
+                    <!--android:text="@string/posm_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#020238"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/posm_shortdescription"
                         android:textSize="12dp"/>
 
                 </LinearLayout>
@@ -300,14 +295,13 @@
                         android:text="@string/order_title"
                         android:textSize="20dp"
                         android:textColor="#05034b"/>
-
+                    <!--android:text="@string/order_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#05034b"
                         android:textSize="12dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/order_shortdescription"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
 
@@ -342,12 +336,11 @@
                         android:text="@string/survey_title"
                         android:textSize="20dp"
                         android:textColor="#000000" />
-
+                    <!--android:text="@string/survey_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/survey_shortdescription"
                         android:textSize="12dp"
                         android:textColor="#000000"/>
 
@@ -384,13 +377,12 @@
                         android:text="@string/note_title"
                         android:textSize="20dp"
                         android:textColor="#ffffff"/>
-
+                    <!--android:text="@string/note_shortdescription"-->
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/note_shortdescription"
                         android:textSize="12dp" />
 
                 </LinearLayout>

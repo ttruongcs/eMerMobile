@@ -1,11 +1,14 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
@@ -52,6 +55,8 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
     }
 
     public class OutletHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.item)
+        RelativeLayout item;
 
         @Bind(R.id.name_distributor_label)
         TextView outletName;
@@ -67,13 +72,22 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(OutletDTO outletDTO) {
+        public void bindViews(final OutletDTO outletDTO) {
             StringBuffer code = new StringBuffer(outletDTO.getCode() != null ? outletDTO.getCode() : "")
                     .append(outletDTO.getdCode() != null ? outletDTO.getdCode() : "");
 
             this.outletName.setText(outletDTO.getName());
             this.outletCode.setText(code);
             outletAddress.setText("ten duong");
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), ActionActivity.class);
+                    intent.putExtra("com.banvien.fcv.emer.outletId", outletDTO.getOutletId());
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

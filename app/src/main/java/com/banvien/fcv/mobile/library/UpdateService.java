@@ -80,7 +80,7 @@ public class UpdateService {
 				errorMessage = context.getString(R.string.sync_error_phone_connection);
 			}
 			if(forceDeleteDatabase) {
-				deleteOutletAllDatabase();
+//				deleteOutletAllDatabase();
 			}
 
 			JSONObject json = null;
@@ -200,6 +200,7 @@ public class UpdateService {
 							outlet.setStreet(mOutletDTO.getStreet());
 							outlet.setWard(mOutletDTO.getWard());
 							outlet.setDistrict(mOutletDTO.getDistrict());
+							outlet.setStatus(ScreenContants.OUTLET_STATUS_UNFINISHED);
 							if (mOutletDTO.getCity() != null) {
 								outlet.setCityName(mOutletDTO.getCity().getName());
 							}
