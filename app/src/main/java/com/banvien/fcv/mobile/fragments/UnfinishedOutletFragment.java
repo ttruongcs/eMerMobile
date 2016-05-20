@@ -13,6 +13,7 @@ import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.adapter.OutletListAdapter;
 import com.banvien.fcv.mobile.dto.OutletDTO;
+import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -66,6 +67,7 @@ public class UnfinishedOutletFragment extends BaseFragment {
         mData = new ArrayList<>();
 
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new OutletListAdapter(mData, UnfinishedOutletFragment.this);

@@ -42,6 +42,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        parent.getSupportActionBar().setTitle(getString(R.string.home));
     }
 
     protected void bindViews(){
@@ -52,7 +53,7 @@ public class HomeFragment extends BaseFragment {
 
                 FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
                 tx.replace(R.id.content_frame, new PrepareFragment());
-                tx.addToBackStack(new HomeFragment().getClass().getName());
+                tx.addToBackStack(TAG);
                 tx.commit();
             }
         });
@@ -64,6 +65,7 @@ public class HomeFragment extends BaseFragment {
 
                 FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
                 tx.replace(R.id.content_frame, new OutletTabFragment());
+                tx.addToBackStack(TAG);
                 tx.commit();
             }
         });

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="home">Home</string>
     <string name="hello">Hello World, SplashActivity!</string>
     <string name="app_name">eMerchandising</string>
     <string name="login_direction">Nhập mã số của bạn để đồng bộ danh sách các cửa hàng	được phân công đi kiểm tra</string>

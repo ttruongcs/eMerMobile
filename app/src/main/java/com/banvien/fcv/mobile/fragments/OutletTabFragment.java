@@ -48,7 +48,7 @@ public class OutletTabFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_outlet_tab, container, false);
 
         ButterKnife.bind(this, view);
-        parent.getSupportActionBar().setTitle(getString(R.string.outlet_list_title));
+
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -71,6 +71,8 @@ public class OutletTabFragment extends BaseFragment {
         adapter.addFragment(new UnfinishedOutletFragment(), getString(R.string.outlet_status_unfinished));
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(2);
+        parent.getSupportActionBar().setTitle(getString(R.string.outlet_status_unfinished));
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
