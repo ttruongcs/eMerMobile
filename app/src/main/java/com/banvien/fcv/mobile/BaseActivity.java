@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.banvien.fcv.mobile.db.Repo;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -17,9 +19,12 @@ public class BaseActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    private Repo repo;
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        repo = new Repo(this);
         bindViews();
     }
 
