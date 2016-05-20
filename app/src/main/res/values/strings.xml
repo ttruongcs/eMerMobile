@@ -7,6 +7,7 @@
     <string name="staff_code">Mã nhân viên</string>
     <string name="update">Cập nhật</string>
     <string name="submit_warning">Bạn có chắc chắn muốn đồng bộ?</string>
+    <string name="submit_warning_contain">Khi đồng bộ dữ liệu sẽ bị xóa và dữ liệu mới sẽ được đồng bộ về</string>
 
     <!-- home menu for outlet user -->
     <string name="task_list">Lịch phân công</string>
@@ -387,6 +388,9 @@
     <string name="pref_show_tutorial_title">Show tutorial</string>
     <string name="pref_show_tutorial_summary">Shows instructions for using the app</string>
     <string name="pref_key_map_category">map_category</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <plurals name="numberOfNewArticles">
         <item quantity="one">%d new</item>

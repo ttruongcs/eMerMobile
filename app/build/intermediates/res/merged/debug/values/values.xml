@@ -610,6 +610,8 @@
     <string name="message">Thông báo</string>
     <string name="mode_map">Map</string>
     <string name="mode_satellite">Satellite</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="note_shortdescription">Ghi chú lại những ý kiến của cửa hàng hoặc khác </string>
     <string name="note_title">Ghi chú</string>
     <string name="notes">Ghi chú</string>
@@ -789,6 +791,7 @@
     <string name="submit_store_url">http://192.168.2.24:8080/MobileWS/synchStoreAuditResult.html</string>
     <string name="submit_url">http://192.168.2.24:8080/MobileWS/synchOutletAuditResult.html</string>
     <string name="submit_warning">Bạn có chắc chắn muốn đồng bộ?</string>
+    <string name="submit_warning_contain">Khi đồng bộ dữ liệu sẽ bị xóa và dữ liệu mới sẽ được đồng bộ về</string>
     <string name="survey_shortdescription">Kiếm tra tình trạng hiện tại của cửa hàng</string>
     <string name="survey_title">Khảo sát</string>
     <string name="sync">Đồng bộ</string>

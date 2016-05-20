@@ -16,7 +16,6 @@ public class BaseActivity extends AppCompatActivity {
     @Nullable
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    protected Handler mHandler = new Handler();
 
     @Override
     public void setContentView(int layoutResID) {

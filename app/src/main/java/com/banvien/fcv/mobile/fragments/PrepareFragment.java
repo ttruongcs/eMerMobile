@@ -2,14 +2,17 @@ package com.banvien.fcv.mobile.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
@@ -41,13 +44,41 @@ public class PrepareFragment extends BaseFragment {
         return view;
     }
 
+    private void showLocationDialog(final View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setTitle(getString(R.string.submit_warning));
+        builder.setMessage(getString(R.string.submit_warning_contain));
+
+        String positiveText = getString(android.R.string.ok);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        progressDialog  = new ProgressDialog(v.getContext());
+                        startUpdate();
+                    }
+                });
+
+        String negativeText = getString(android.R.string.cancel);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
     protected void bindViews(){
         fabSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "sync data from server to handheld");
-                progressDialog  = new ProgressDialog(v.getContext());
-                startUpdate();
+                showLocationDialog(v);
             }
         });
     }
