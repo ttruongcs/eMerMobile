@@ -197,6 +197,15 @@ public class UpdateService {
 								outlet.setdCode(mOutletDTO.getDistributorCode());
 								outlet.setdName(mOutletDTO.getDistributor().getName());
 								outlet.setTypeName(mOutletDTO.getOutletTypeCode());
+								outlet.setLocationNo(mOutletDTO.getLocationNo());
+								outlet.setStreet(mOutletDTO.getStreet());
+								outlet.setWard(mOutletDTO.getWard());
+								outlet.setDistrict(mOutletDTO.getDistrict());
+								if(mOutletDTO.getCity() != null){
+									outlet.setCityName(mOutletDTO.getCity().getName());
+								}
+								outlet.setLat(mOutletDTO.getLat());
+								outlet.setLg(mOutletDTO.getLng());
 								try {
 									OutletEntity entity = OutletUtil.convertToEntity(outlet);
 									repo.getOutletDAO().addOutletEntity(entity);
