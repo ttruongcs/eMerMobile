@@ -17,6 +17,13 @@ public class OutletUtil {
         result.setdCode(item.getdCode());
         result.setdName(item.getdName());
         result.setTypeName(item.getTypeName());
+        result.setLocationNo(item.getLocationNo());
+        result.setStreet(item.getStreet());
+        result.setWard(item.getWard());
+        result.setDistrict(item.getDistrict());
+        result.setCityName(item.getCityName());
+        result.setLat(item.getLat());
+        result.setLg(item.getLg());
         return result;
     }
 
@@ -29,6 +36,13 @@ public class OutletUtil {
         entity.setdCode(item.getdCode());
         entity.setdName(item.getdName());
         entity.setTypeName(item.getTypeName());
+        entity.setLocationNo(item.getLocationNo());
+        entity.setStreet(item.getStreet());
+        entity.setWard(item.getWard());
+        entity.setDistrict(item.getDistrict());
+        entity.setCityName(item.getCityName());
+        entity.setLat(item.getLat());
+        entity.setLg(item.getLg());
         return entity;
     }
 }

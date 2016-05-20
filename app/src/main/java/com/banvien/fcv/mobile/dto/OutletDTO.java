@@ -1,6 +1,9 @@
 package com.banvien.fcv.mobile.dto;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by hieu on 3/10/2016.
@@ -14,6 +17,13 @@ public class OutletDTO implements Serializable {
     private String dCode;
     private String dName;
     private String typeName;
+    private String locationNo;
+    private String street;
+    private String district;
+    private String ward;
+    private String cityName;
+    private BigDecimal lat;
+    private BigDecimal lg;
 
     public long get_id() {
         return _id;
@@ -69,5 +79,61 @@ public class OutletDTO implements Serializable {
 
     public void setOutletId(Long outletId) {
         this.outletId = outletId;
+    }
+
+    public String getLocationNo() {
+        return locationNo;
+    }
+
+    public void setLocationNo(String locationNo) {
+        this.locationNo = locationNo;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
+    }
+
+    public BigDecimal getLg() {
+        return lg;
+    }
+
+    public void setLg(BigDecimal lg) {
+        this.lg = lg;
     }
 }
