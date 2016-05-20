@@ -10,6 +10,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,19 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public OutletEntity findById(Long outletId) {
+        try {
+            List<OutletEntity> results = queryBuilder().where().eq("outletId", outletId).query();
+            if(results.size() > 0) {
+                return results.get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public List<OutletDTO> getOutletsWithCircumstance(String outletStatus) {
