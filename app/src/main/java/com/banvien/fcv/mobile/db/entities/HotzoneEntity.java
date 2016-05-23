@@ -13,6 +13,8 @@ public class HotzoneEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
+    private Long hotZoneId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -39,5 +41,13 @@ public class HotzoneEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getHotZoneId() {
+        return hotZoneId;
+    }
+
+    public void setHotZoneId(Long hotZoneId) {
+        this.hotZoneId = hotZoneId;
     }
 }

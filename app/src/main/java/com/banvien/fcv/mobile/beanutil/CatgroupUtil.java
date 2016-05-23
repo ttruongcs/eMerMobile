@@ -13,6 +13,7 @@ public class CatgroupUtil {
         result.set_id(item.get_id());
         result.setCode(item.getCode());
         result.setName(item.getName());
+        result.setCatgroupId(item.getCatgroupId());
         return result;
     }
 
@@ -21,6 +22,7 @@ public class CatgroupUtil {
         entity.set_id(item.get_id());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
+        entity.setCatgroupId(item.getCatgroupId());
         return entity;
     }
 }

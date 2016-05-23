@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class POSMDTO implements Serializable {
     private long _id;
+    private Long posmId;
     private String name;
     private String code;
 
@@ -32,5 +33,13 @@ public class POSMDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getPosmId() {
+        return posmId;
+    }
+
+    public void setPosmId(Long posmId) {
+        this.posmId = posmId;
     }
 }

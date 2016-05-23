@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class ProductgroupDTO implements Serializable {
     private long _id;
+    private Long productGroupId;
     private String name;
     private String code;
 

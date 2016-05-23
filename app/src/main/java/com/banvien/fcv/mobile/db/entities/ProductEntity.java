@@ -13,6 +13,8 @@ public class ProductEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
+    private Long productId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -39,5 +41,13 @@ public class ProductEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

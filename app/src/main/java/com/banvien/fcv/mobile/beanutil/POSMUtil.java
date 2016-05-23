@@ -15,6 +15,7 @@ public class POSMUtil {
         result.set_id(item.get_id());
         result.setCode(item.getCode());
         result.setName(item.getName());
+        result.setPosmId(item.getPosmId());
         return result;
     }
 
@@ -23,6 +24,7 @@ public class POSMUtil {
         entity.set_id(item.get_id());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
+        entity.setPosmId(item.getPosmId());
         return entity;
     }
 }

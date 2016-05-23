@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class CatgroupDTO implements Serializable {
     private long _id;
+    private Long catgroupId;
     private String name;
     private String code;
 
@@ -33,5 +34,13 @@ public class CatgroupDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getCatgroupId() {
+        return catgroupId;
+    }
+
+    public void setCatgroupId(Long catgroupId) {
+        this.catgroupId = catgroupId;
     }
 }

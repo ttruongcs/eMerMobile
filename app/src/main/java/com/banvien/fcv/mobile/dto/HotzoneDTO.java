@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 public class HotzoneDTO implements Serializable {
     private long _id;
+    private Long hotZoneId;
     private String name;
     private String code;
 
@@ -36,5 +37,13 @@ public class HotzoneDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getHotZoneId() {
+        return hotZoneId;
+    }
+
+    public void setHotZoneId(Long hotZoneId) {
+        this.hotZoneId = hotZoneId;
     }
 }

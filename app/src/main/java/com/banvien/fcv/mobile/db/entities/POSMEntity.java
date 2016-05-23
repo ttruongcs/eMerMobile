@@ -13,6 +13,8 @@ public class POSMEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
+    private Long posmId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -39,5 +41,13 @@ public class POSMEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getPosmId() {
+        return posmId;
+    }
+
+    public void setPosmId(Long posmId) {
+        this.posmId = posmId;
     }
 }

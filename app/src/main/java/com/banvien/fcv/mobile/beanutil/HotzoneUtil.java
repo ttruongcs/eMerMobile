@@ -15,6 +15,7 @@ public class HotzoneUtil {
         result.set_id(item.get_id());
         result.setCode(item.getCode());
         result.setName(item.getName());
+        result.setHotZoneId(item.getHotZoneId());
         return result;
     }
 
@@ -23,6 +24,7 @@ public class HotzoneUtil {
         entity.set_id(item.get_id());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
+        entity.setHotZoneId(item.getHotZoneId());
         return entity;
     }
 }

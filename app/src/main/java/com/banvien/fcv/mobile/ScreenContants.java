@@ -18,4 +18,7 @@ public class ScreenContants {
     public static final Integer OUTLET_STATUS_DOING = 1;
     public static final Integer OUTLET_STATUS_FINISHED = 2;
     public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
+
+    // CONTANST FOR DATATYPE
+    public static final String POSM_DATATYPE = "com.banvien.fcv.emer.posm";
 }

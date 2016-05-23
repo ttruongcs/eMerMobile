@@ -13,6 +13,8 @@ public class CatgroupEntity implements Serializable {
     @DatabaseField(generatedId = true)
     private long _id;
     @DatabaseField
+    private Long catgroupId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -39,5 +41,13 @@ public class CatgroupEntity implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getCatgroupId() {
+        return catgroupId;
+    }
+
+    public void setCatgroupId(Long catgroupId) {
+        this.catgroupId = catgroupId;
     }
 }

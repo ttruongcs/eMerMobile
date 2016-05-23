@@ -1,12 +1,10 @@
 package com.banvien.fcv.mobile.dto;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import java.io.Serializable;
 
 public class ProductDTO implements Serializable {
     private long _id;
+    private Long productId;
     private String name;
     private String code;
 
@@ -32,5 +30,13 @@ public class ProductDTO implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }
