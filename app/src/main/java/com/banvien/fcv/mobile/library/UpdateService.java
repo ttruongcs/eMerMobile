@@ -18,6 +18,7 @@ import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.CatgroupUtil;
 import com.banvien.fcv.mobile.beanutil.CatgroupUtil;
+import com.banvien.fcv.mobile.beanutil.ComplainTypeUtil;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
@@ -27,6 +28,7 @@ import com.banvien.fcv.mobile.beanutil.ProductUtil;
 import com.banvien.fcv.mobile.db.DatabaseHelper;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
+import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -35,6 +37,7 @@ import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
+import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
@@ -108,6 +111,7 @@ public class UpdateService {
 					List<CatgroupDTO> jCatgroups = DataBinder.readCatgroupList(result.get(ScreenContants.CATGROUP_LIST));
 					List<ProductgroupDTO> jProductGroups = DataBinder.readProductgroupList(result.get(ScreenContants.PRODUCTGROUP_LIST));
 					List<ProductDTO> jProducts = DataBinder.readProductList(result.get(ScreenContants.PRODUCT_LIST));
+					List<ComplainTypeDTO> jComplainTypes = DataBinder.readComplainTypeList(result.get(ScreenContants.COMPLAINTYPE_LIST));
 					RouteScheduleInfoDTO routeScheduleInfo = DataBinder.readRouteScheduleInfo(result.get(ScreenContants.ROUTESCHEDULE_LIST));
 
 					fillPOSM(jPosms);
@@ -115,6 +119,7 @@ public class UpdateService {
 					fillCatgroups(jCatgroups);
 					fillProductgroups(jProductGroups);
 					fillProduct(jProducts);
+					fillComplainTypes(jComplainTypes);
 					fillRouteScheduleInfo(routeScheduleInfo);
 				} else {
 					ELog.d("Sync error......");
@@ -176,6 +181,17 @@ public class UpdateService {
 
 				}
 			}
+
+            private void fillComplainTypes(List<ComplainTypeDTO> jComplainTypes) {
+                for (ComplainTypeDTO dto : jComplainTypes) {
+                    try {
+                        ComplainTypeEntity entity = ComplainTypeUtil.convertToEntity(dto);
+                        repo.getComplainTypeDAO().addComplainTypeEntity(entity);
+                    } catch (SQLException e) {
+                        ELog.d(e.getMessage(), e);
+                    }
+                }
+            }
 
 			//			fill routeschedule, outlet, outletmer
 			private void fillRouteScheduleInfo(RouteScheduleInfoDTO routeScheduleInfoDTO) {

@@ -3,6 +3,7 @@ package com.banvien.fcv.mobile.db;
 import android.content.Context;
 
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
+import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
@@ -63,6 +64,10 @@ public class Repo {
 
     public OutletRegisteredDAO getOutletRegisteredDAO() throws SQLException {
         return databaseHelper.getOutletRegisteredDAO();
+    }
+
+    public ComplainTypeDAO getComplainTypeDAO() throws SQLException {
+        return databaseHelper.getComplainTypeDAO();
     }
 
     public void release() {

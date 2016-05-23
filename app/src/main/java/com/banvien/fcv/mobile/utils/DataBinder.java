@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.utils;
 
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
+import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
@@ -88,6 +89,18 @@ public class DataBinder {
             list = mapper.convertValue(object, RouteScheduleInfoDTO.class);
         }catch (Exception e) {
             ELog.e(e.getMessage(), e);
+        }
+        return list;
+    }
+
+    public static List<ComplainTypeDTO> readComplainTypeList(Object object) {
+        List<ComplainTypeDTO> list = null;
+        try {
+            list = mapper.convertValue(object, new TypeReference<List<ComplainTypeDTO>>() {
+            });
+        }catch (Exception e) {
+            ELog.e(e.getMessage(), e);
+            list = new ArrayList<>();
         }
         return list;
     }
