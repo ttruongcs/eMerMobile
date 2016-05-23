@@ -279,6 +279,8 @@ public class UpdateService {
 		TableUtils.createTable(repo.getProductGroupDAO().getConnectionSource(), ProductgroupEntity.class);
 		TableUtils.createTable(repo.getOutletDAO().getConnectionSource(), OutletEntity.class);
 		TableUtils.createTable(repo.getOutletRegisteredDAO().getConnectionSource(), OutletRegisteredEntity.class);
+
+        TableUtils.createTable(repo.getComplainTypeDAO().getConnectionSource(), ComplainTypeEntity.class);
 	}
 
 	public void deleteOutletAllDatabase() throws SQLException{
@@ -292,6 +294,8 @@ public class UpdateService {
 		TableUtils.dropTable(repo.getProductGroupDAO().getConnectionSource(), ProductgroupEntity.class, true);
 		TableUtils.dropTable(repo.getOutletDAO().getConnectionSource(), OutletEntity.class, true);
 		TableUtils.dropTable(repo.getOutletRegisteredDAO().getConnectionSource(), OutletRegisteredEntity.class, true);
+
+        TableUtils.dropTable(repo.getComplainTypeDAO().getConnectionSource(), ComplainTypeEntity.class, true);
 	}
 
 }

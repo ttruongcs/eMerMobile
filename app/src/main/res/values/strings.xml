@@ -441,5 +441,10 @@
     <string name="outlet_status_doing">Doing</string>
     <string name="outlet_status_unfinished">Unfinished</string>
 
+    <!-- Complaint -->
+    <string name="complaint">Complaint</string>
+    <string name="other_complaint">Other</string>
+    <string name="complaint_hint">Your complaint.</string>
+
 
 </resources>

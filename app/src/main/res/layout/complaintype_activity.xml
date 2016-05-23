@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lblComplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="COMPLAINT"
+        android:textSize="20dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complaint list"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:layout_below="@+id/lblComplain"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcvComplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtView"
+        android:layout_above="@+id/btnComplain" />
+
+
+    <Button
+        android:id="@+id/btnComplain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:layout_alignParentBottom="true"
+        android:theme="@style/ComplainButton" />
+
+</RelativeLayout>

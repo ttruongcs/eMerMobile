@@ -59,4 +59,21 @@
 		<item name="android:background">@drawable/fab_label_background</item>
 		<item name="android:textColor">@color/white</item>
 	</style>
+
+	<style name="ComplainButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="colorButtonNormal">@color/primary</item>
+    </style>
+
+    <style name="checkbox" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/color_orange_A200</item>
+        <item name="android:textColorSecondary">@color/primary</item>
+    </style>
+
+    <style name="MyEditTextTheme">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorControlNormal">#9e9e9e</item>
+        <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
+    </style>
+
 </resources>
