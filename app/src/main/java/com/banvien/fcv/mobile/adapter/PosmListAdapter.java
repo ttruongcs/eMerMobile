@@ -59,8 +59,6 @@ public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHo
         @Bind(R.id.posmName)
         TextView posmName;
 
-        @Bind(R.id.posmValue)
-        EditText posmValue;
 
         public PosmHolder(View itemView) {
             super(itemView);

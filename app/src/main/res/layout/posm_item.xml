@@ -27,15 +27,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primary"
             android:paddingRight="16dp"
-            android:textSize="20dp" />
+            android:textSize="14dp" />
 
-        <EditText
-            android:id="@+id/posmValue"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primary"
-            android:textAlignment="center"
-            android:textSize="20dp" />
+
 
     </LinearLayout>
 

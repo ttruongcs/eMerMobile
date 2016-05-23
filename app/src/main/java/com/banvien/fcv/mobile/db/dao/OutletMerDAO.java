@@ -42,7 +42,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         List<OutletMerDTO> results = new ArrayList<OutletMerDTO>();
         try {
             List<OutletMerEntity> outletMerEntityList = queryBuilder().where().eq("dataType", dataType).query();
-            if(results.size() > 0) {
+            if(outletMerEntityList.size() > 0) {
                 for(OutletMerEntity entity : outletMerEntityList){
                     results.add(OutletMerUtil.convertToDTO(entity));
                 }
