@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
+import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
@@ -14,6 +15,7 @@ import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
+import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -54,6 +56,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private ProductgroupDAO productgroupDAO = null;
 	private OutletDAO outletDAO = null;
 	private OutletRegisteredDAO outletRegisteredDAO = null;
+	private ComplainTypeDAO complainTypeDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,6 +78,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, ProductgroupEntity.class);
 			TableUtils.createTable(connectionSource, OutletEntity.class);
 			TableUtils.createTable(connectionSource, OutletRegisteredEntity.class);
+			TableUtils.createTable(connectionSource, ComplainTypeEntity.class);
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
 			throw new RuntimeException(e);
@@ -98,6 +102,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, ProductgroupEntity.class, true);
 			TableUtils.dropTable(connectionSource, OutletEntity.class, true);
 			TableUtils.dropTable(connectionSource, OutletRegisteredEntity.class, true);
+			TableUtils.dropTable(connectionSource, ComplainTypeEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -164,6 +169,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			outletDAO = new OutletDAO(getConnectionSource(), OutletEntity.class);
 		}
 		return outletDAO;
+	}
+
+	public ComplainTypeDAO getComplainTypeDAO() throws SQLException {
+		if(null == complainTypeDAO) {
+			complainTypeDAO = new ComplainTypeDAO(getConnectionSource(), ComplainTypeEntity.class);
+		}
+
+		return complainTypeDAO;
 	}
 
 	/**
