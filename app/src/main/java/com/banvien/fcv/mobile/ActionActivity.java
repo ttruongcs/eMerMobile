@@ -29,8 +29,8 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.outletCode)
     TextView outletCode;
 
-    @Bind(R.id.posm)
-    ImageView imgPosm;
+//    @Bind(R.id.posm)
+//    ImageView imgPosm;
 
     @Bind(R.id.outletAddress)
     TextView outletAddress;
