@@ -15,6 +15,8 @@ public class ProductEntity implements Serializable {
     @DatabaseField
     private Long productId;
     @DatabaseField
+    private Long productGroupId;
+    @DatabaseField
     private String name;
     @DatabaseField
     private String code;
@@ -49,5 +51,13 @@ public class ProductEntity implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getProductGroupId() {
+        return productGroupId;
+    }
+
+    public void setProductGroupId(Long productGroupId) {
+        this.productGroupId = productGroupId;
     }
 }

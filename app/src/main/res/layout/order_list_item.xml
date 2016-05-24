@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="6dp">
+
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Example"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+       />
+
+    <EditText
+        android:id="@+id/edNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:inputType="number"
+        android:ems="5"
+        android:theme="@style/EditTextCustomHolo"
+        android:imeOptions="actionDone"/>
+
+</LinearLayout>

@@ -78,7 +78,6 @@ public class ComplainTypeActivity extends BaseDrawerActivity {
         } catch (SQLException e) {
             ELog.e(e.getMessage(), e);
         }
-
     }
 
     public void addToMerResult(List<OutletMerDTO> dtos) {
@@ -88,7 +87,7 @@ public class ComplainTypeActivity extends BaseDrawerActivity {
             }
             Toast.makeText(ComplainTypeActivity.this, "Send success", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
-            e.printStackTrace();
+            ELog.d("Can not add complaint to mer result", e);
         }
     }
 

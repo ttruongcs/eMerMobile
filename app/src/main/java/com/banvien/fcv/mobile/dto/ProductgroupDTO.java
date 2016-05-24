@@ -34,4 +34,12 @@ public class ProductgroupDTO implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public Long getProductGroupId() {
+        return productGroupId;
+    }
+
+    public void setProductGroupId(Long productGroupId) {
+        this.productGroupId = productGroupId;
+    }
 }

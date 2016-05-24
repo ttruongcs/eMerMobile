@@ -76,4 +76,8 @@
         <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
     </style>
 
+	<style name="EditTextCustomHolo" parent="android:Widget.EditText">
+        <item name="colorControlNormal">@color/aluminum</item>
+	</style>
+
 </resources>

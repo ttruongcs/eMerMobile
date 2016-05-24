@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
 import com.banvien.fcv.mobile.utils.ColorGenerator;
@@ -95,7 +96,7 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), ActionActivity.class);
-                    intent.putExtra("com.banvien.fcv.emer.outletId", outletDTO.getOutletId());
+                    intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                     view.getContext().startActivity(intent);
                 }
             });

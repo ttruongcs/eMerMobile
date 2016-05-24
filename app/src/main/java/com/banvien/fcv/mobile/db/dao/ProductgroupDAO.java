@@ -1,13 +1,19 @@
 package com.banvien.fcv.mobile.db.dao;
 
 
+import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.dao.GenericRawResults;
+import com.j256.ormlite.dao.RawRowMapper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hieu on 8/03/2016.
@@ -32,5 +38,36 @@ public class ProductgroupDAO extends AndroidBaseDaoImpl<ProductgroupEntity, Stri
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getAllName() {
+        List<String> results = new ArrayList<>();
+        try {
+            GenericRawResults<String> rawResults = queryRaw("SELECT name FROM Productgroup", new RawRowMapper<String>() {
+                @Override
+                public String mapRow(String[] columnNames, String[] resultColumns) throws SQLException {
+                    return resultColumns[0];
+                }
+            });
+            results = rawResults.getResults();
+        } catch (SQLException e) {
+            ELog.d("Find entity not working", e);
+        }
+
+        return results;
+    }
+
+    public List<ProductgroupDTO> findAll() {
+        List<ProductgroupDTO> result = new ArrayList<>();
+        try {
+            List<ProductgroupEntity> entities = queryForAll();
+
+            for(ProductgroupEntity entity : entities) {
+                result.add(ProductGroupUtil.convertToDTO(entity));
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
     }
 }
