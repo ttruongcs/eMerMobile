@@ -23,9 +23,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Linh Nguyen on 5/20/2016.
- */
 public class DoingOutletFragment extends BaseFragment {
     @Bind(R.id.rvOutletList)
     RecyclerView recyclerView;

@@ -43,12 +43,8 @@ public class PosmActivity extends BaseDrawerActivity {
         bindViews();
         try {
             mData = findPOSMRegistered();
-
-
-
             recyclerView.setHasFixedSize( true );
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
-            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter = new PosmListAdapter(mData, repo);
             recyclerView.setAdapter(adapter);
         } catch (SQLException e) {
