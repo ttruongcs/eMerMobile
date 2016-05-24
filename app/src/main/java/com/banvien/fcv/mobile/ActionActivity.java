@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,11 +9,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
+import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
 
@@ -22,6 +25,7 @@ import butterknife.ButterKnife;
 
 public class ActionActivity extends BaseDrawerActivity {
     private static final String TAG = "ActionActivity";
+    private static Long outletId;
     private Repo repo;
     @Bind(R.id.outletName)
     TextView outletName;
@@ -35,12 +39,15 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.outletAddress)
     TextView outletAddress;
 
+    @Bind(R.id.order)
+    ImageView orderStep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repo = new Repo(this);
         setContentView(R.layout.activity_action);
-        Long outletId = this.getIntent().getLongExtra("com.banvien.fcv.emer.outletId", 0l);
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         bindViews();
         try {
             fillOutletInfo(2l);
@@ -48,6 +55,20 @@ public class ActionActivity extends BaseDrawerActivity {
             Log.e(TAG, "Error when get Outlet Information");
         }
         setInitialConfiguration();
+    }
+
+    @Override
+    protected void bindViews() {
+        super.bindViews();
+        orderStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
     }
 
     private void setInitialConfiguration() {

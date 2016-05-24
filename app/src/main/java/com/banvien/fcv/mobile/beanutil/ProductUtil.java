@@ -13,6 +13,8 @@ public class ProductUtil {
     public static ProductDTO convertToDTO(ProductEntity item) {
         ProductDTO result = new ProductDTO();
         result.set_id(item.get_id());
+        result.setProductId(item.getProductId());
+        result.setProductGroupId(item.getProductGroupId());
         result.setCode(item.getCode());
         result.setName(item.getName());
         return result;
@@ -21,6 +23,8 @@ public class ProductUtil {
     public static ProductEntity convertToEntity(ProductDTO item) {
         ProductEntity entity = new ProductEntity();
         entity.set_id(item.get_id());
+        entity.setProductId(item.getProductId());
+        entity.setProductGroupId(item.getProductGroupId());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
         return entity;

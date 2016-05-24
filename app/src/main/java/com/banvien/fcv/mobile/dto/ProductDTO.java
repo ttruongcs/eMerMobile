@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class ProductDTO implements Serializable {
     private long _id;
     private Long productId;
+    private Long productGroupId;
     private String name;
     private String code;
 
@@ -38,5 +39,13 @@ public class ProductDTO implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getProductGroupId() {
+        return productGroupId;
+    }
+
+    public void setProductGroupId(Long productGroupId) {
+        this.productGroupId = productGroupId;
     }
 }
