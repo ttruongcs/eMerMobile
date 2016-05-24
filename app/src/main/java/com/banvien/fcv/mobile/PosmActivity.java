@@ -29,10 +29,8 @@ import butterknife.Bind;
 public class PosmActivity extends BaseDrawerActivity {
     private static final String TAG = "PosmActivity";
     private Repo repo;
-    private View rootView;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private List<POSMDTO> mData;
+    private List<OutletMerDTO> mData;
 
     @Bind(R.id.posmList)
     RecyclerView recyclerView;
@@ -51,7 +49,7 @@ public class PosmActivity extends BaseDrawerActivity {
             recyclerView.setHasFixedSize( true );
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
             recyclerView.setLayoutManager(layoutManager);
-            adapter = new PosmListAdapter(mData, this);
+            adapter = new PosmListAdapter(mData, repo);
             recyclerView.setAdapter(adapter);
         } catch (SQLException e) {
             Log.e(TAG, "Error when get Outlet Information");
@@ -76,28 +74,7 @@ public class PosmActivity extends BaseDrawerActivity {
 
     }
 
-    private List<POSMDTO> findPOSMRegistered() throws SQLException {
-        List<POSMDTO> results = new ArrayList<>();
-        List<OutletMerDTO> outletMerDTOList = repo.getOutletMerDAO().findByDataType(ScreenContants.POSM_DATATYPE);
-        if(outletMerDTOList != null && outletMerDTOList.size() > 0) {
-            for(OutletMerDTO outletMerDTO : outletMerDTOList) {
-                results.add(repo.getPosmDAO().findByCode(outletMerDTO.getRegisterValue()));
-            }
-        }
-        return results;
+    private List<OutletMerDTO> findPOSMRegistered() throws SQLException {
+        return repo.getOutletMerDAO().findByDataType(ScreenContants.POSM_DATATYPE);
     }
-
-    private void reloadPOSMList() {
-        mData.clear();
-        try {
-            List<POSMDTO> posmDTOs = findPOSMRegistered();
-            if(posmDTOs.size() > 0) {
-                mData.addAll(posmDTOs);
-            }
-            adapter.notifyDataSetChanged();
-        } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
-        }
-    }
-
 }

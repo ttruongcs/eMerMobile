@@ -3,20 +3,30 @@ package com.banvien.fcv.mobile.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletDTO;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
+import com.banvien.fcv.mobile.utils.ColorGenerator;
+import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.TextDrawable;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,10 +36,16 @@ import butterknife.ButterKnife;
  */
 public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHolder> {
 
-    private List<POSMDTO> mData;
+    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private TextDrawable.IBuilder mDrawableBuilder;
+    private List<OutletMerDTO> mData;
+    private Repo repo;
 
-    public PosmListAdapter(List<POSMDTO> posmDTOs, Activity activity) {
+    public PosmListAdapter(List<OutletMerDTO> posmDTOs, Repo repo) {
         this.mData = posmDTOs;
+        this.repo = repo;
+        mDrawableBuilder = TextDrawable.builder()
+                .round();
     }
 
     public PosmListAdapter() {};
@@ -59,24 +75,26 @@ public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHo
         @Bind(R.id.posmName)
         TextView posmName;
 
+        @Bind(R.id.imagePosm)
+        ImageView imagePosm;
 
         public PosmHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final POSMDTO posmDTO) {
-
-            this.posmName.setText(posmDTO.getName());
-
-//            item.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(view.getContext(), ActionActivity.class);
-//                    intent.putExtra("com.banvien.fcv.emer.outletId", outletDTO.getOutletId());
-//                    view.getContext().startActivity(intent);
-//                }
-//            });
+        public void bindViews(final OutletMerDTO outletMerDTO) {
+            POSMDTO posm = new POSMDTO();
+            try {
+                posm = repo.getPosmDAO().findByCode(outletMerDTO.getRegisterValue());
+                posmName.setText(posm.getName());
+                Random r = new Random();
+                TextDrawable drawable = mDrawableBuilder.build(String.valueOf(posm.getName().charAt(0)).toUpperCase(), mColorGenerator.getColor(posm.getName() + r.nextInt()));
+                imagePosm.setImageDrawable(drawable);
+            } catch (SQLException e) {
+                ELog.d("Error when biding OutletMer", e);
+            }
+            this.posmName.setText(posm.getName());
         }
     }
 }

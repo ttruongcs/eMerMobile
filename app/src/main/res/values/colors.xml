@@ -72,4 +72,7 @@
 
     <color name="green">#00FF00</color>
     <color name="thumbColor">#66aaaaaa</color>
+    <color name="separator_line">#ECECEC</color>
+    <color name="title">#222222</color>
+    <color name="subtitle">#999999</color>
 </resources>

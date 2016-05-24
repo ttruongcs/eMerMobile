@@ -242,7 +242,7 @@ public class UpdateService {
 									outletMerDTO.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
 									outletMerDTO.setRouteScheduleDetailId
 											(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
-									outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getDataType());
+									outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getType());
 									outletMerDTO.setRegisterValue(mExhibitRegisterDetailDTO.getRegisteredValue());
 									outletMerDTO.setExhibitRegisteredId(mExhibitRegisterDTO.getExhibitRegisterId());
 									outletMerDTO.setExhibitRegisteredDetailId(mExhibitRegisterDetailDTO.getExhibitRegisterDetailId());
