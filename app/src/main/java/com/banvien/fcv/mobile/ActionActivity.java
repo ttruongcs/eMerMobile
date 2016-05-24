@@ -39,8 +39,8 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.outletAddress)
     TextView outletAddress;
 
-    @Bind(R.id.order)
-    ImageView orderStep;
+//    @Bind(R.id.order)
+//    ImageView orderStep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +57,19 @@ public class ActionActivity extends BaseDrawerActivity {
         setInitialConfiguration();
     }
 
-    @Override
-    protected void bindViews() {
-        super.bindViews();
-        orderStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
-                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                ELog.d("Outlet Id", String.valueOf(outletId));
-                startActivity(intent);
-            }
-        });
-    }
+//    @Override
+//    protected void bindViews() {
+//        super.bindViews();
+//        orderStep.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+//                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+//                ELog.d("Outlet Id", String.valueOf(outletId));
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
