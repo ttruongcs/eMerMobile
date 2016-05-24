@@ -10,13 +10,19 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ComplainTypeAdapter;
+import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.Utils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 
@@ -46,13 +52,14 @@ public class ComplainTypeActivity extends BaseDrawerActivity {
         initRecyclerView();
     }
 
-
     private void initRecyclerView() {
         mData = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
+
         layoutManager = new LinearLayoutManager(this.getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ComplainTypeAdapter(mData, btnSendComplaint);
+
+        adapter = new ComplainTypeAdapter(mData, btnSendComplaint, this);
         recyclerView.setAdapter(adapter);
 
         loadComplainTypes();
@@ -66,12 +73,23 @@ public class ComplainTypeActivity extends BaseDrawerActivity {
             if(complainTypeDTOs.size() > 0) {
                 mData.addAll(complainTypeDTOs);
             }
-            mData.add(new ComplainTypeDTO());
+            mData.add(new ComplainTypeDTO()); //Create empty object for creating edittext
             adapter.notifyDataSetChanged();
         } catch (SQLException e) {
             ELog.e(e.getMessage(), e);
         }
 
+    }
+
+    public void addToMerResult(List<OutletMerDTO> dtos) {
+        try {
+            for(OutletMerDTO outletMerDTO : dtos) {
+                this.repo.getOutletMerDAO().addOutletMerEntity(OutletMerUtil.convertToEntity(outletMerDTO));
+            }
+            Toast.makeText(ComplainTypeActivity.this, "Send success", Toast.LENGTH_LONG).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

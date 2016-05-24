@@ -22,4 +22,7 @@ public class ScreenContants {
 
     // CONTANST FOR DATATYPE
     public static final String POSM_DATATYPE = "com.banvien.fcv.emer.posm";
+    public static final String COMPLAINTYPE = "ComplainType";
+    public static final String COMPLAIN = "Complain";
+
 }

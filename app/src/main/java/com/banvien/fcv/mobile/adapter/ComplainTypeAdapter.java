@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,9 +21,12 @@ import com.banvien.fcv.mobile.ComplainTypeActivity;
 import com.banvien.fcv.mobile.MainActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -38,14 +42,17 @@ import butterknife.ButterKnife;
 public class ComplainTypeAdapter extends RecyclerView.Adapter {
     private static final int TYPE_CHECKBOX = 1;
     private static final int TYPE_EDIT = 2;
+
+    private ComplainTypeActivity activity;
     private List<ComplainTypeDTO> mData;
     private Button btnSendComplaint;
     private Set<Long> complaintTypes = new HashSet<>();
     private String complainContent = "";
 
-    public ComplainTypeAdapter(List<ComplainTypeDTO> mData, Button button) {
+    public ComplainTypeAdapter(List<ComplainTypeDTO> mData, Button button, ComplainTypeActivity activity) {
         this.mData = mData;
         this.btnSendComplaint = button;
+        this.activity = activity;
     }
 
     @Override
@@ -88,12 +95,12 @@ public class ComplainTypeAdapter extends RecyclerView.Adapter {
                 complainHolder.editText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                        complainContent = s.toString();
+
                     }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                        complainContent = s.toString();
                     }
 
                     @Override
@@ -108,10 +115,25 @@ public class ComplainTypeAdapter extends RecyclerView.Adapter {
         btnSendComplaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, Object> item = new HashMap<String, Object>();
-                item.put("complainType", complaintTypes);
-                item.put("complain", complainContent);
-                ELog.d("info", item.toString());
+                List<OutletMerDTO> outletMerDTOs = new ArrayList<OutletMerDTO>();
+                for(Long complainTypeId : complaintTypes) {
+                    OutletMerDTO outletMerDTO = new OutletMerDTO();
+                    outletMerDTO.setDataType(ScreenContants.COMPLAINTYPE);
+                    outletMerDTO.setActualValue(String.valueOf(complainTypeId));
+
+                    outletMerDTO.setOutletId(1l);   // Todo: Hard code
+                    outletMerDTOs.add(outletMerDTO);
+                }
+
+                if(complainContent != null && !complainContent.equals("")) {
+                    OutletMerDTO outletMerDTO = new OutletMerDTO();
+                    outletMerDTO.setDataType(ScreenContants.COMPLAIN);
+                    outletMerDTO.setActualValue(complainContent);
+                    outletMerDTO.setOutletId(1l); // Todo: Hard code
+                    outletMerDTOs.add(outletMerDTO);
+                }
+
+                activity.addToMerResult(outletMerDTOs);
             }
         });
 

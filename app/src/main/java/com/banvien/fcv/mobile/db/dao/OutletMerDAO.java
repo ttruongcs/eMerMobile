@@ -6,6 +6,7 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -53,4 +54,5 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
         return results;
     }
+
 }
