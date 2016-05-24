@@ -55,4 +55,17 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return results;
     }
 
+
+    public OutletMerDTO findByOutletMerId(long outletMerId) {
+        try {
+            List<OutletMerEntity> outletMerEntityList = queryBuilder().where().eq("_id", outletMerId).query();
+            if(outletMerEntityList.size() > 0) {
+                return OutletMerUtil.convertToDTO(outletMerEntityList.get(0));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

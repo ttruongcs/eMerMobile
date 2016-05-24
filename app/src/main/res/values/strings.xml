@@ -384,6 +384,8 @@
     <string name="pref_true_north_summary">Compass will face true north instead of magnetic north
     </string>
 
+    <string name="action_title">All Contents Merchandisng</string>
+    <string name="posm_title_merchandising">Posm Merchandisng</string>
     <string name="pref_about_category_title">About</string>
     <string name="pref_show_tutorial_title">Show tutorial</string>
     <string name="pref_show_tutorial_summary">Shows instructions for using the app</string>

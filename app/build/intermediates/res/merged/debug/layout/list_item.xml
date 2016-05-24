@@ -25,28 +25,28 @@
             android:id="@+id/name_distributor_label"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary"
+            android:textColor="@color/title"
             android:paddingRight="16dp"
-
-            android:textSize="20dp" />
+            android:textSize="19dp" />
 
         <TextView
             android:id="@+id/address_distributor_label"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_color_dark"
+            android:textColor="@color/subtitle"
             android:paddingRight="16dp"
 
-            android:textSize="15dp" />
+            android:textSize="11dp" />
 
         <TextView
             android:id="@+id/gps_distributor_label"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_color_dark"
+            android:textColor="@color/subtitle"
             android:paddingRight="16dp"
 
-            android:textSize="15dp" />
+            android:textSize="11dp" />
+
 
     </LinearLayout>
 

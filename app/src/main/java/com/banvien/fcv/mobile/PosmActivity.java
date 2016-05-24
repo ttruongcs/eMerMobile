@@ -9,18 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.banvien.fcv.mobile.adapter.OutletListAdapter;
 import com.banvien.fcv.mobile.adapter.PosmListAdapter;
-import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.OutletEntity;
-import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
-import com.banvien.fcv.mobile.dto.POSMDTO;
-import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -56,7 +49,7 @@ public class PosmActivity extends BaseDrawerActivity {
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.pref_about_category_title);
+        getSupportActionBar().setTitle(R.string.posm_title_merchandising);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

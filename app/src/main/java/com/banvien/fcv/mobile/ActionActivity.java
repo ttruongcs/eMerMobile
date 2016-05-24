@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
@@ -28,6 +29,9 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.outletCode)
     TextView outletCode;
 
+    @Bind(R.id.posm)
+    ImageView imgPosm;
+
     @Bind(R.id.outletAddress)
     TextView outletAddress;
 
@@ -49,7 +53,7 @@ public class ActionActivity extends BaseDrawerActivity {
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.pref_about_category_title);
+        getSupportActionBar().setTitle(R.string.action_title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +87,18 @@ public class ActionActivity extends BaseDrawerActivity {
 
     private String buildOutletAdress(String locationNum, String street, String ward, String cityName){
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(locationNum).append(", ");
-        stringBuffer.append(street).append(" ");
-        stringBuffer.append(ward).append(" ");
-        stringBuffer.append(cityName);
+        if(null != locationNum) {
+            stringBuffer.append(locationNum).append(",  ");
+        }
+        if(null != street) {
+            stringBuffer.append(street).append("   ");
+        }
+        if(null != ward) {
+            stringBuffer.append(ward).append("   ");
+        }
+        if(null != cityName) {
+            stringBuffer.append(cityName);
+        }
         return stringBuffer.toString();
     }
-
 }

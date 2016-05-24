@@ -8,6 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
@@ -78,6 +81,9 @@ public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHo
         @Bind(R.id.imagePosm)
         ImageView imagePosm;
 
+        @Bind(R.id.posmValue)
+        CheckBox posmValue;
+
         public PosmHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -89,8 +95,30 @@ public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHo
                 posm = repo.getPosmDAO().findByCode(outletMerDTO.getRegisterValue());
                 posmName.setText(posm.getName());
                 Random r = new Random();
-                TextDrawable drawable = mDrawableBuilder.build(String.valueOf(posm.getName().charAt(0)).toUpperCase(), mColorGenerator.getColor(posm.getName() + r.nextInt()));
+                TextDrawable drawable = mDrawableBuilder.build(String.valueOf(posm.getName()
+                        .charAt(0)).toUpperCase(), mColorGenerator.getColor(posm.getName() + r.nextInt()));
                 imagePosm.setImageDrawable(drawable);
+
+                posmValue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            try {
+                                OutletMerDTO dbOutletMer = repo.getOutletMerDAO().findByOutletMerId(outletMerDTO.get_id());
+                                if (dbOutletMer != null) {
+                                    POSMDTO posm = repo.getPosmDAO().findByCode(outletMerDTO.getRegisterValue());
+                                    dbOutletMer.setActualValue(posm.getCode());
+
+                                    repo.getOutletMerDAO().update(OutletMerUtil.convertToEntity(dbOutletMer));
+                                    ELog.e("Update OutletMer Success");
+                                }
+                            } catch (SQLException e) {
+                                ELog.e("POSM Activity", e);
+                            }
+                        }
+                    }
+                });
+
             } catch (SQLException e) {
                 ELog.d("Error when biding OutletMer", e);
             }
