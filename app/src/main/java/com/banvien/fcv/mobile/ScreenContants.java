@@ -23,23 +23,42 @@ public class ScreenContants {
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
 
     // CONTANST FOR DATATYPE
-    public static final String POSM_DATATYPE = "com.banvien.fcv.emer.posm";
-    public static final String COMPLAINTYPE = "ComplainType";
-    public static final String COMPLAIN = "Complain";
-    public static final String ORDER = "emer.order";
+    public static final String POSM_TYPE = "POSM";
+    public static final String COMPLAINTYPE = "COMPLAINTYPE";
+    public static final String COMPLAIN = "COMPLAIN";
+    public static final String ORDER = "ORDER";
+
+    //HOTZONE
+    public static final String HOTZONE = "HOTZONE";
+    public static final String HOTZONE_BEFORE = "HOTZONE_BEFORE";
+    public static final String HOTZONE_AFTER = "HOTZONE_AFTER";
+
+    //MHS
+    public static final String MHS = "MHS";
+    public static final String MHS_BEFORE = "MHS_BEFORE";
+    public static final String MHS_AFTER = "MHS_AFTER";
+
+    //EIE
+    public static final String EIE_BEFORE = "EIE_BEFORE";
+    public static final String EIE_AFTER = "EIE_AFTER";
+
+    //FACING
+    public static final String FACING_BEFORE = "FACING_BEFORE";
+    public static final String FACING_AFTER = "FACING_AFTER";
+
 
     // DATATYPE IMAGE
 
     //BEFORE
-    public static final String IMAGE_BEFORE_OVERVIEW = "com.banvien.fcv.emer.image.before.overview";
-    public static final String IMAGE_BEFORE_TOOL =  "com.banvien.fcv.emer.image.before.tool";
-    public static final String IMAGE_BEFORE_UNIFORM =  "com.banvien.fcv.emer.image.before.uniform";
-    public static final String IMAGE_BEFORE_POSM =  "com.banvien.fcv.emer.image.before.posm";
+    public static final String IMAGE_BEFORE_OVERVIEW = "IMAGE_BEFORE_OVERVIEW";
+    public static final String IMAGE_BEFORE_TOOL =  "IMAGE_BEFORE_TOOL";
+    public static final String IMAGE_BEFORE_UNIFORM =  "IMAGE_BEFORE_UNIFORM";
+    public static final String IMAGE_BEFORE_POSM =  "IMAGE_BEFORE_POSM";
 
     //AFTER
-    public static final String IMAGE_AFTER_OVERVIEW = "com.banvien.fcv.emer.image.after.overview";
-    public static final String IMAGE_AFTER_TOOL =  "com.banvien.fcv.emer.image.after.tool";
-    public static final String IMAGE_AFTER_UNIFORM =  "com.banvien.fcv.emer.image.after.uniform";
-    public static final String IMAGE_AFTER_POSM =  "com.banvien.fcv.emer.image.after.posm";
+    public static final String IMAGE_AFTER_OVERVIEW = "IMAGE_AFTER_OVERVIEW";
+    public static final String IMAGE_AFTER_TOOL =  "IMAGE_AFTER_TOOL";
+    public static final String IMAGE_AFTER_UNIFORM =  "IMAGE_AFTER_UNIFORM";
+    public static final String IMAGE_AFTER_POSM =  "IMAGE_AFTER_POSM";
 
 }
