@@ -8,6 +8,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -87,4 +88,46 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return null;
     }
 
+    public boolean checkExistByReferenceValue(String referenceValue, Long outletId) {
+        try {
+            Long numRows = queryBuilder().where().eq("referenceValue", referenceValue).and().eq("outletId", outletId).countOf();
+
+            if(numRows > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return false;
+    }
+
+    public void updateOutletMerEntity(OutletMerEntity outletMerEntity) {
+        ELog.d("Update", outletMerEntity.toString());
+        try {
+            UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+            updateBuilder.where().eq("referenceValue", outletMerEntity.getReferenceValue())
+                    .and().eq("outletId", outletMerEntity.getOutletId());
+            updateBuilder.updateColumnValue("actualValue", outletMerEntity.getActualValue());
+            updateBuilder.update();
+        } catch (SQLException e) {
+            ELog.d("Can't update outlet mer", e);
+        }
+    }
+
+    public List<OutletMerDTO> findOrderByOutletId(String order, Long outletId) {
+        ELog.d("Data", order + ", " + outletId );
+        List<OutletMerDTO> results = new ArrayList<>();
+        try {
+            List<OutletMerEntity> entities = queryBuilder().where().eq("dataType", order)
+                    .and().eq("outletId", outletId).query();
+
+            for(OutletMerEntity outletMerEntity : entities) {
+                results.add(OutletMerUtil.convertToDTO(outletMerEntity));
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return results;
+    }
 }

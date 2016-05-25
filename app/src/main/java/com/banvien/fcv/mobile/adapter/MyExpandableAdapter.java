@@ -14,9 +14,13 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.OrderActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.utils.ELog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +36,17 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ProductgroupDTO> sections;
     private Map<String, List<ProductDTO>> products;
+    private Map<String, String> orderInfos;
     private LayoutInflater inflater;
+    private Long outletId;
 
-    public MyExpandableAdapter(Context context, List<ProductgroupDTO> sections, Map<String, List<ProductDTO>> products) {
+    public MyExpandableAdapter(Context context, List<ProductgroupDTO> sections,
+                               Map<String, List<ProductDTO>> products, Map<String, String> orderInfos, Long outletId) {
         this.context = context;
         this.sections = sections;
         this.products = products;
+        this.outletId = outletId;
+        this.orderInfos = orderInfos;
         inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -98,14 +107,24 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textViewChild = (TextView) convertView.findViewById(R.id.tvProductName);
-        EditText editText = (EditText)convertView.findViewById(R.id.edNumber);
         textViewChild.setText(childText.getName());
+
+        EditText editText = (EditText)convertView.findViewById(R.id.edNumber);
+        if(childText.getProductId().toString() != null) {
+            editText.setText(orderInfos.get(childText.getProductId().toString()));
+        }
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE) {
-                    Toast.makeText(context, childText.getProductId() + ": " + v.getText().toString(), Toast.LENGTH_SHORT).show();
+                    OutletMerDTO outletMerDTO = new OutletMerDTO();
+                    outletMerDTO.setDataType(ScreenContants.ORDER);
+                    outletMerDTO.setActualValue(v.getText().toString());
+                    outletMerDTO.setOutletId(outletId);
+                    outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
+                    insertOrUpdateData(outletMerDTO);
+
                     return true;
                 }
                 return false;
@@ -120,13 +139,30 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
                 if(!hasFocus) {
                     numberInput = (EditText) v;
                     if(!numberInput.getText().toString().equals("")) {
-                        Toast.makeText(context,childText.getProductId() + ": " + numberInput.getText().toString(), Toast.LENGTH_SHORT).show();
+                        OutletMerDTO outletMerDTO = new OutletMerDTO();
+                        outletMerDTO.setDataType(ScreenContants.ORDER);
+                        outletMerDTO.setActualValue(numberInput.getText().toString());
+                        outletMerDTO.setOutletId(outletId);
+                        outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
+
+                        insertOrUpdateData(outletMerDTO);
                     }
                 }
             }
         });
 
         return convertView;
+    }
+
+    private void insertOrUpdateData(OutletMerDTO outletMerDTO) {
+        boolean isExist = ((OrderActivity)context).checkProductExist(outletMerDTO);
+        if(!isExist) {
+            ((OrderActivity)context).addOrder(outletMerDTO);
+            ELog.d("insert", "Product is not exist in mer result");
+        } else {
+            ((OrderActivity)context).updateOrder(outletMerDTO);
+            ELog.d("Update", "product is existed in mer result");
+        }
     }
 
     @Override
