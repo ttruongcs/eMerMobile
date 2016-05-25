@@ -21,7 +21,6 @@ import com.banvien.fcv.mobile.utils.ELog;
 import java.sql.SQLException;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class ActionActivity extends BaseDrawerActivity {

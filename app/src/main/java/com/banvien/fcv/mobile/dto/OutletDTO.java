@@ -23,6 +23,7 @@ public class OutletDTO implements Serializable {
     private BigDecimal lat;
     private BigDecimal lg;
     private Integer status;
+    private Long routeScheduleId;
 
     public long get_id() {
         return _id;
@@ -142,5 +143,13 @@ public class OutletDTO implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getRouteScheduleId() {
+        return routeScheduleId;
+    }
+
+    public void setRouteScheduleId(Long routeScheduleId) {
+        this.routeScheduleId = routeScheduleId;
     }
 }

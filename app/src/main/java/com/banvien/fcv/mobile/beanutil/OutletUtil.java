@@ -25,6 +25,7 @@ public class OutletUtil {
         result.setLat(item.getLat());
         result.setLg(item.getLg());
         result.setStatus(item.getStatus());
+        result.setRouteScheduleId(item.getRouteScheduleId());
         return result;
     }
 
@@ -45,6 +46,7 @@ public class OutletUtil {
         entity.setLat(item.getLat());
         entity.setLg(item.getLg());
         entity.setStatus(item.getStatus());
+        entity.setRouteScheduleId(item.getRouteScheduleId());
         return entity;
     }
 }

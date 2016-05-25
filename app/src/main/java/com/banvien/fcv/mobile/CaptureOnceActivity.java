@@ -1,6 +1,8 @@
 package com.banvien.fcv.mobile;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -76,7 +78,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri() );
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
@@ -89,7 +91,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             outletMerEntity.setOutletId(outletId);
             outletMerEntity.setDataType(captureType);
             outletMerEntity.setActualValue(urlImage);
-
+            outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
             try {
                 repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
             } catch (SQLException e) {
@@ -109,14 +111,13 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_PICTURES), outlet.getCode());
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), outlet.getCode());
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                ELog.d("CS185Pics", "failed to create directory");
+                ELog.d(outlet.getCode(), "failed to create directory");
                 return null;
             }
         }
@@ -124,7 +125,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         // Create a media file name
         Random r = new Random();
         urlImage = mediaStorageDir.getPath() + File.separator
-                + (outlet.getCode() + r.nextInt()).toString();
+                + (outlet.getCode() + r.nextInt() + ".jpg").toString();
         File mediaFile = new File(urlImage);
         return mediaFile;
     }

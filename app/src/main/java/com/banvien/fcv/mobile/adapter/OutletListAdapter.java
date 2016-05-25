@@ -89,7 +89,8 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                     , outletDTO.getWard(), outletDTO.getCityName()));
 
             Random r = new Random();
-            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(outletDTO.getName().charAt(0)).toUpperCase(), mColorGenerator.getColor(outletDTO.getName() + r.nextInt()));
+            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(outletDTO.getName()
+                    .charAt(0)).toUpperCase(), mColorGenerator.getColor(outletDTO.getName() + r.nextInt()));
             imageOutlet.setImageDrawable(drawable);
 
             item.setOnClickListener(new View.OnClickListener() {

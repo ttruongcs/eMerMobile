@@ -222,6 +222,7 @@ public class UpdateService {
 							}
 							outlet.setLat(mOutletDTO.getLat());
 							outlet.setLg(mOutletDTO.getLng());
+							outlet.setRouteScheduleId(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
 							try {
 								OutletEntity entity = OutletUtil.convertToEntity(outlet);
 								repo.getOutletDAO().addOutletEntity(entity);
