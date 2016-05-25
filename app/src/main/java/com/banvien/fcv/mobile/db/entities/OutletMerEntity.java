@@ -28,6 +28,8 @@ public class OutletMerEntity implements Serializable {
     private String registerValue;
     @DatabaseField
     private String actualValue;
+    @DatabaseField
+    private String referenceValue;
 
     public long get_id() {
         return _id;
@@ -99,5 +101,13 @@ public class OutletMerEntity implements Serializable {
 
     public void setExhibitRegisteredDetailId(String exhibitRegisteredDetailId) {
         this.exhibitRegisteredDetailId = exhibitRegisteredDetailId;
+    }
+
+    public String getReferenceValue() {
+        return referenceValue;
+    }
+
+    public void setReferenceValue(String referenceValue) {
+        this.referenceValue = referenceValue;
     }
 }

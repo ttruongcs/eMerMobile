@@ -15,6 +15,7 @@ public class OutletMerDTO implements Serializable {
     private String dataType;
     private String registerValue;
     private String actualValue;
+    private String referenceValue;
 
     public long get_id() {
         return _id;
@@ -86,5 +87,13 @@ public class OutletMerDTO implements Serializable {
 
     public void setExhibitRegisteredDetailId(String exhibitRegisteredDetailId) {
         this.exhibitRegisteredDetailId = exhibitRegisteredDetailId;
+    }
+
+    public String getReferenceValue() {
+        return referenceValue;
+    }
+
+    public void setReferenceValue(String referenceValue) {
+        this.referenceValue = referenceValue;
     }
 }
