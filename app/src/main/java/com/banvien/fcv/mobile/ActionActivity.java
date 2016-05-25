@@ -43,6 +43,9 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.btnOrder)
     Button orderStep;
 
+    @Bind(R.id.btnCapture)
+    Button btnCapture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,16 @@ public class ActionActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PosmActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
+
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CaptureActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);

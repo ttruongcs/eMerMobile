@@ -78,7 +78,7 @@ public final class R {
 		public static final int text = 0x7f0e000a;
 	}
 	public static final class layout {
-		public static final int text_bubble = 0x7f03004f;
+		public static final int text_bubble = 0x7f030050;
 	}
 	public static final class string {
 		public static final int common_google_play_services_enable_button = 0x7f070016;

@@ -170,11 +170,11 @@ public final class R {
 		public static final int common_open_on_phone = 0x7f07002c;
 		public static final int common_signin_button_text = 0x7f07002d;
 		public static final int common_signin_button_text_long = 0x7f07002e;
-		public static final int create_calendar_message = 0x7f07004d;
-		public static final int create_calendar_title = 0x7f07004e;
-		public static final int decline = 0x7f070053;
-		public static final int store_picture_message = 0x7f07011f;
-		public static final int store_picture_title = 0x7f070120;
+		public static final int create_calendar_message = 0x7f07004f;
+		public static final int create_calendar_title = 0x7f070050;
+		public static final int decline = 0x7f070055;
+		public static final int store_picture_message = 0x7f070122;
+		public static final int store_picture_title = 0x7f070123;
 		public static final int wallet_buy_button_place_holder = 0x7f070030;
 	}
 	public static final class style {

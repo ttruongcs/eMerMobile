@@ -283,6 +283,15 @@
     <string name="init_step4_shortdescription">Chụp hình cửa hàng đầu tiên trước khi vào</string>
 
 
+    <!--PICTURE Activity-->
+    <string name="overview">Overview</string>
+    <string name="tool">Tool</string>
+    <string name="before">Trước TB</string>
+    <string name="after">Sau TB</string>
+    <string name="uniform">Đồng phục</string>
+
+
+
 
     <string name="pref_key_gps_category">gps_category</string>
     <string name="pref_key_auto_start_gps">auto_start_gps</string>
