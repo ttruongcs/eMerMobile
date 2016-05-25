@@ -34,8 +34,8 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.outletCode)
     TextView outletCode;
 
-//    @Bind(R.id.posm)
-//    ImageView imgPosm;
+    @Bind(R.id.btnPOSM)
+    Button btnPOSM;
 
     @Bind(R.id.outletAddress)
     TextView outletAddress;
@@ -65,6 +65,16 @@ public class ActionActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
+
+        btnPOSM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PosmActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);

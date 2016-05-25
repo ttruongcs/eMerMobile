@@ -54,6 +54,7 @@
         android:gravity="center"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btnCapture"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/shadow"
@@ -63,6 +64,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/btnGPS"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -73,6 +75,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/btnBefore"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -83,7 +86,6 @@
             android:textColor="#fff" />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/layoutButton"
         android:layout_width="fill_parent"
@@ -93,6 +95,7 @@
         android:gravity="center"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/btnAfter"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/shadow3"
@@ -102,6 +105,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/btnComplaint"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -112,6 +116,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:id="@+id/btnOrder"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -119,6 +124,36 @@
             android:drawableTop="@drawable/ic_shopping_basket_white_24dp"
             android:paddingTop="20dp"
             android:text="@string/order_title"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutButton2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutButton"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnPOSM"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/shadow3"
+            android:drawableTop="@drawable/ic_view_carousel_white_24dp"
+            android:paddingTop="20dp"
+            android:text="@string/after_title"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnSurvey"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shadow6"
+            android:drawableTop="@drawable/ic_record_voice_over_white_24dp"
+            android:paddingTop="20dp"
+            android:text="@string/complaint"
             android:textColor="#fff" />
     </LinearLayout>
 

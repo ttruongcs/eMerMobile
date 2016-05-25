@@ -7,6 +7,7 @@ import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -43,6 +44,24 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         List<OutletMerDTO> results = new ArrayList<OutletMerDTO>();
         try {
             List<OutletMerEntity> outletMerEntityList = queryBuilder().where().eq("dataType", dataType).query();
+            if(outletMerEntityList.size() > 0) {
+                for(OutletMerEntity entity : outletMerEntityList){
+                    results.add(OutletMerUtil.convertToDTO(entity));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    public List<OutletMerDTO> findByDataTypeAndOutlet(String dataType, Long outletId) {
+        List<OutletMerDTO> results = new ArrayList<OutletMerDTO>();
+        try {
+            Where where = queryBuilder().where();
+            where.and(where.eq("dataType", dataType), where.eq("outletId", outletId));
+            List<OutletMerEntity> outletMerEntityList = where.query();
             if(outletMerEntityList.size() > 0) {
                 for(OutletMerEntity entity : outletMerEntityList){
                     results.add(OutletMerUtil.convertToDTO(entity));

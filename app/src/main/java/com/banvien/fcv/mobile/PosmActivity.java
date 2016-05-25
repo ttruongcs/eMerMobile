@@ -24,6 +24,7 @@ public class PosmActivity extends BaseDrawerActivity {
     private Repo repo;
     private RecyclerView.Adapter adapter;
     private List<OutletMerDTO> mData;
+    private static Long outletId;
 
     @Bind(R.id.posmList)
     RecyclerView recyclerView;
@@ -33,9 +34,10 @@ public class PosmActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         repo = new Repo(this);
         setContentView(R.layout.posm_activity);
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         bindViews();
         try {
-            mData = findPOSMRegistered();
+            mData = findPOSMRegistered(outletId);
             recyclerView.setHasFixedSize( true );
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter = new PosmListAdapter(mData, repo);
@@ -63,7 +65,7 @@ public class PosmActivity extends BaseDrawerActivity {
 
     }
 
-    private List<OutletMerDTO> findPOSMRegistered() throws SQLException {
-        return repo.getOutletMerDAO().findByDataType(ScreenContants.POSM_DATATYPE);
+    private List<OutletMerDTO> findPOSMRegistered(Long outletId) throws SQLException {
+        return repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.POSM_DATATYPE, outletId);
     }
 }
