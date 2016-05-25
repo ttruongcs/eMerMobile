@@ -7,7 +7,9 @@ import android.util.DisplayMetrics;
 import android.widget.ExpandableListView;
 
 import com.banvien.fcv.mobile.adapter.MyExpandableAdapter;
+import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.utils.ELog;
@@ -25,6 +27,7 @@ import butterknife.Bind;
  */
 public class OrderActivity extends BaseDrawerActivity {
     private static final String TAG = "OrderActivity";
+    private static Long outletId;
 
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -36,6 +39,7 @@ public class OrderActivity extends BaseDrawerActivity {
     private MyExpandableAdapter adapter;
     private List<ProductgroupDTO> sections;
     private Map<String, List<ProductDTO>> products;
+    private Map<String, String> orderInfos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,13 +48,32 @@ public class OrderActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         sections = new ArrayList<>();
         products = new HashMap<>();
+        orderInfos = new HashMap<>();
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
 
-        initProductData();
+        initOrderData();
         onFreshList();
 
         fixSizeExpandableList();
-        adapter = new MyExpandableAdapter(this, sections, products);
+        adapter = new MyExpandableAdapter(this, sections, products, orderInfos, outletId);
         expandableListView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int groupCount = adapter.getGroupCount();
+        for (int i= 0; i< groupCount; i++) {
+            expandableListView.expandGroup(i);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(repo != null) {
+            repo.release();
+        }
     }
 
     private void onFreshList() {
@@ -65,7 +88,7 @@ public class OrderActivity extends BaseDrawerActivity {
     }
 
     private void reloadProductData() {
-        initProductData();
+        initOrderData();
         adapter.notifyDataSetChanged();
     }
 
@@ -86,7 +109,7 @@ public class OrderActivity extends BaseDrawerActivity {
         return (int) (pixels * scale + 0.5f);
     }
 
-    private void initProductData() {
+    private void initOrderData() {
         try {
             sections = this.repo.getProductGroupDAO().findAll(); //Get all name of product group
 
@@ -94,26 +117,44 @@ public class OrderActivity extends BaseDrawerActivity {
                 List<ProductDTO> productDTOs = this.repo.getProductDAO().findByProductGroupId(productgroupDTO.getProductGroupId());
                 products.put(productgroupDTO.getName(), productDTOs);
             }
-            ELog.d("result", products.toString());
+
+            /*Get all outlet mer result by outlet id and dataType*/
+            List<OutletMerDTO> outletMerDTOs = this.repo.getOutletMerDAO().findOrderByOutletId(ScreenContants.ORDER, outletId);
+            if(outletMerDTOs.size() > 0) {
+                for(OutletMerDTO outletMerDTO : outletMerDTOs) {
+                    orderInfos.put(outletMerDTO.getReferenceValue(), outletMerDTO.getActualValue());
+                }
+            }
+            ELog.d("map", orderInfos.toString());
         } catch (SQLException e) {
             ELog.d("Không thể lấy dữ liệu", e);
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        int groupCount = adapter.getGroupCount();
-        for (int i= 0; i< groupCount; i++) {
-            expandableListView.expandGroup(i);
+    public void addOrder(OutletMerDTO outletMerDTO) {
+        try {
+            this.repo.getOutletMerDAO().addOutletMerEntity(OutletMerUtil.convertToEntity(outletMerDTO));
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(repo != null) {
-            repo.release();
+    public void updateOrder(OutletMerDTO outletMerDTO) {
+        try {
+            this.repo.getOutletMerDAO().updateOutletMerEntity(OutletMerUtil.convertToEntity(outletMerDTO));
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
         }
+    }
+
+    public boolean checkProductExist(OutletMerDTO outletMerDTO) {
+        boolean isExist = false;
+        try {
+            isExist = this.repo.getOutletMerDAO().checkExistByReferenceValue(outletMerDTO.getReferenceValue(), outletMerDTO.getOutletId());
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return isExist;
     }
 }

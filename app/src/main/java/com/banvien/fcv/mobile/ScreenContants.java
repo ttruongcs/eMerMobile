@@ -24,5 +24,6 @@ public class ScreenContants {
     public static final String POSM_DATATYPE = "com.banvien.fcv.emer.posm";
     public static final String COMPLAINTYPE = "ComplainType";
     public static final String COMPLAIN = "Complain";
+    public static final String ORDER = "emer.order";
 
 }
