@@ -32,7 +32,7 @@ import butterknife.Bind;
 
 public class CaptureActivity extends BaseDrawerActivity {
     private static final String TAG = "CaptureActivity";
-
+    private static Long outletId;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     public static final int MEDIA_TYPE_IMAGE = 1;
     File CS185Pics;
@@ -58,6 +58,7 @@ public class CaptureActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_activity);
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
     }
 
     @Override
@@ -66,59 +67,13 @@ public class CaptureActivity extends BaseDrawerActivity {
         btnOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                Intent intent = new Intent(getApplicationContext(), CaptureOnceActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                intent.putExtra(ScreenContants.CAPTURE_TYPE, ScreenContants.IMAGE_BEFORE_OVERVIEW);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
             }
         });
-    }
-
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    public void dispatchTakePictureIntent(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri() );
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            Image captured and saved to fileUri specified in the Intent
-            Toast.makeText(this, "Image saved to:" + data.getData(), Toast.LENGTH_LONG).show();
-
-        }
-
-    }
-
-    /** Create a file Uri for saving an image or video */
-    private static Uri getOutputMediaFileUri(){
-        return Uri.fromFile( getOutputMediaFile());
-    }
-
-    /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "CS185Pics");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                Log.d("CS185Pics", "failed to create directory");
-                return null;
-            }
-        }
-
-        // Create a media file name
-        File mediaFile = new File(mediaStorageDir.getPath() + File.separator + "photo.jpg");
-        return mediaFile;
     }
 
 }

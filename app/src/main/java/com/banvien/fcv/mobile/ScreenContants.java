@@ -19,11 +19,26 @@ public class ScreenContants {
     public static final Integer OUTLET_STATUS_DOING = 1;
     public static final Integer OUTLET_STATUS_FINISHED = 2;
     public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
+    public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
 
     // CONTANST FOR DATATYPE
     public static final String POSM_DATATYPE = "com.banvien.fcv.emer.posm";
     public static final String COMPLAINTYPE = "ComplainType";
     public static final String COMPLAIN = "Complain";
     public static final String ORDER = "emer.order";
+
+    // DATATYPE IMAGE
+
+    //BEFORE
+    public static final String IMAGE_BEFORE_OVERVIEW = "com.banvien.fcv.emer.image.before.overview";
+    public static final String IMAGE_BEFORE_TOOL =  "com.banvien.fcv.emer.image.before.tool";
+    public static final String IMAGE_BEFORE_UNIFORM =  "com.banvien.fcv.emer.image.before.uniform";
+    public static final String IMAGE_BEFORE_POSM =  "com.banvien.fcv.emer.image.before.posm";
+
+    //AFTER
+    public static final String IMAGE_AFTER_OVERVIEW = "com.banvien.fcv.emer.image.after.overview";
+    public static final String IMAGE_AFTER_TOOL =  "com.banvien.fcv.emer.image.after.tool";
+    public static final String IMAGE_AFTER_UNIFORM =  "com.banvien.fcv.emer.image.after.uniform";
+    public static final String IMAGE_AFTER_POSM =  "com.banvien.fcv.emer.image.after.posm";
 
 }
