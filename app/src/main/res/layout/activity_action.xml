@@ -139,8 +139,8 @@
             android:id="@+id/btnPOSM"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/shadow3"
-            android:drawableTop="@drawable/ic_view_carousel_white_24dp"
+            android:background="@drawable/shadow"
+            android:drawableTop="@drawable/ic_widgets_white_24dp"
             android:paddingTop="20dp"
             android:text="@string/posm_title"
             android:textColor="#fff" />

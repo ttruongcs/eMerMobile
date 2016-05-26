@@ -22,6 +22,6 @@
         android:layout_gravity="bottom|end"
         fab:fab_size="normal"
         fab:backgroundTint="@color/primary"
-        android:src="@android:drawable/ic_menu_camera" />
+        android:src="@drawable/ic_camera_enhance_white_24dp" />
 
 </FrameLayout>

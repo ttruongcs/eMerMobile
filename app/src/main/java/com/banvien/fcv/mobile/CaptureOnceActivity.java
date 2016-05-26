@@ -14,12 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
-import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -30,11 +28,11 @@ import butterknife.Bind;
 
 public class CaptureOnceActivity extends BaseDrawerActivity {
     private static Long outletId;
+    private static Long posmId;
     private static String captureType;
     private static String urlImage;
     private static OutletEntity outlet;
     private Repo repo;
-    File CS185Pics;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -50,6 +48,10 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
+        if(captureType != ScreenContants.IMAGE_AFTER_POSM
+                || captureType != ScreenContants.IMAGE_BEFORE_POSM ) {
+            posmId = this.getIntent().getLongExtra(ScreenContants.KEY_POSM_ID, 0l);
+        }
         try {
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
@@ -86,19 +88,23 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             OutletMerEntity outletMerEntity = new OutletMerEntity();
             outletMerEntity.setOutletId(outletId);
             outletMerEntity.setDataType(captureType);
             outletMerEntity.setActualValue(urlImage);
             outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
+            if(captureType != ScreenContants.IMAGE_AFTER_POSM
+                    || captureType != ScreenContants.IMAGE_BEFORE_POSM ) {
+                outletMerEntity.setReferenceValue(posmId.toString());
+            }
             try {
                 repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
         }
-
     }
 
     /** Create a file Uri for saving an image or video */
