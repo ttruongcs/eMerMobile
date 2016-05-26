@@ -48,6 +48,9 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.btnAfter)
     Button btnAfter;
 
+    @Bind(R.id.btnComplaint)
+    Button btnComplain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +103,16 @@ public class ActionActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AfterDisplayActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
+
+        btnComplain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ComplainTypeActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);

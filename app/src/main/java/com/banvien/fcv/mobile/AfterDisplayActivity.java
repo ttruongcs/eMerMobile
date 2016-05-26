@@ -28,13 +28,13 @@ import butterknife.Bind;
  * Created by Linh Nguyen on 5/25/2016.
  */
 public class AfterDisplayActivity extends BaseDrawerActivity {
-    private static final String TAG = "TAG";
+    private static final String TAG = "AfterDisplayActivity";
     private static Long outletId;
 
     @Bind(R.id.spinner)
     Spinner spinner;
 
-    @Bind(R.id.swipe_refresh_layout)
+    @Bind(R.id.swipe_refresh_after)
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Bind(R.id.rcvAfterDisplay)
@@ -43,7 +43,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private Repo repo;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private List<OutletMerDTO> posmList;
+    private List<OutletMerDTO> hotzoneList;
     private List<OutletMerDTO> productList;
 
     @Override
@@ -52,12 +52,49 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_after_display);
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
-        posmList = new ArrayList<>();
+        hotzoneList = new ArrayList<>();
         productList = new ArrayList<>();
 
         bindDatas();
+        bindSwipeRefresh();
+        if(productList.size() <= 0) {
+            OutletMerDTO outletMerDTO = new OutletMerDTO();
+            outletMerDTO.setActualValue("Test");
+            OutletMerDTO outletMerDTO2 = new OutletMerDTO();
+            outletMerDTO2.setActualValue("Test value");
+
+            productList.add(outletMerDTO);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+            productList.add(outletMerDTO2);
+
+
+        }
         initSpinner();
         initRecyclerView();
+    }
+
+    private void bindSwipeRefresh() {
+        swipeRefreshLayout.setColorSchemeColors(R.color.wallet_holo_blue_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //reloadProductData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -74,7 +111,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         final List<String> spinnerName = new ArrayList<>();
         final List<Long> spinnerId = new ArrayList<>();
 
-        for (OutletMerDTO outletMerDTO : posmList) {
+        for (OutletMerDTO outletMerDTO : hotzoneList) {
             spinnerName.add(outletMerDTO.getRegisterValue());
             spinnerId.add(outletMerDTO.get_id());
         }
@@ -98,10 +135,10 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private void bindDatas() {
         // Get all mer result by outletId and type
         try {
-            posmList = this.repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.POSM_TYPE, outletId);
+            hotzoneList = this.repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.HOTZONE, outletId);
             productList = this.repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.MHS, outletId);
         } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
+            ELog.d("Can not get data from server", e);
         }
     }
 
