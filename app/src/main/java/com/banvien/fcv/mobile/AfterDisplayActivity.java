@@ -89,6 +89,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private void initSpinner() {
         final List<String> spinnerName = new ArrayList<>();
         final List<Long> spinnerId = new ArrayList<>();
+        Map<String, String> mapForSearch = new HashMap<>();
         int positionSelected = 0;
         try {
             spinnerName.add(getString(R.string.select_one));
@@ -98,13 +99,14 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                 HotzoneDTO hotzoneDTO = this.repo.getHotZoneDAO().findByCode(outletMerDTO.getRegisterValue());
                 spinnerName.add(hotzoneDTO.getName());
                 spinnerId.add(hotzoneDTO.getHotZoneId());
+                mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getName());
             }
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, spinnerName);
             arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinner.setAdapter(arrayAdapter);
 
-            positionSelected = findHotzoneSelected(arrayAdapter);
+            positionSelected = findHotzoneSelected(arrayAdapter, mapForSearch);
             spinner.setSelection(positionSelected);
 
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,14 +126,13 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         }
     }
 
-    private int findHotzoneSelected(ArrayAdapter arrayAdapter) {
+    private int findHotzoneSelected(ArrayAdapter arrayAdapter, Map<String, String> mapForSearch) {
         int result = 0;
         try {
             OutletMerDTO outletMerDTO = this.repo.getOutletMerDAO().
                     findByDataTypeAndOutlet(ScreenContants.HOTZONE_AFTER, outletId).get(0);
             if(outletMerDTO != null) {
-                HotzoneDTO hotzoneDTO = this.repo.getHotZoneDAO().findByCode(outletMerDTO.getRegisterValue());
-                result = arrayAdapter.getPosition(hotzoneDTO.getName());
+                result = arrayAdapter.getPosition(mapForSearch.get(outletMerDTO.getRegisterValue()));
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
