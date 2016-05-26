@@ -19,6 +19,7 @@ public class ScreenContants {
     public static final Integer OUTLET_STATUS_DOING = 1;
     public static final Integer OUTLET_STATUS_FINISHED = 2;
     public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
+    public static final String KEY_POSM_ID = "com.banvien.fcv.emer.posmid";
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
 
@@ -27,6 +28,8 @@ public class ScreenContants {
     public static final String COMPLAINTYPE = "COMPLAINTYPE";
     public static final String COMPLAIN = "COMPLAIN";
     public static final String ORDER = "ORDER";
+    public static final String PRODUCT_ID = "productId";
+    public static final String CODE = "code";
 
     //HOTZONE
     public static final String HOTZONE = "HOTZONE";
@@ -48,17 +51,13 @@ public class ScreenContants {
 
 
     // DATATYPE IMAGE
-
+    public static final String IMAGE_OVERVIEW = "IMAGE_OVERVIEW";
+    public static final String IMAGE_TOOL =  "IMAGE_TOOL";
+    public static final String IMAGE_UNIFORM =  "IMAGE_UNIFORM";
     //BEFORE
-    public static final String IMAGE_BEFORE_OVERVIEW = "IMAGE_BEFORE_OVERVIEW";
-    public static final String IMAGE_BEFORE_TOOL =  "IMAGE_BEFORE_TOOL";
-    public static final String IMAGE_BEFORE_UNIFORM =  "IMAGE_BEFORE_UNIFORM";
     public static final String IMAGE_BEFORE_POSM =  "IMAGE_BEFORE_POSM";
 
     //AFTER
-    public static final String IMAGE_AFTER_OVERVIEW = "IMAGE_AFTER_OVERVIEW";
-    public static final String IMAGE_AFTER_TOOL =  "IMAGE_AFTER_TOOL";
-    public static final String IMAGE_AFTER_UNIFORM =  "IMAGE_AFTER_UNIFORM";
     public static final String IMAGE_AFTER_POSM =  "IMAGE_AFTER_POSM";
 
 }
