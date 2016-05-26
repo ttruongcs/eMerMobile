@@ -30,6 +30,7 @@ public class ScreenContants {
     public static final String ORDER = "ORDER";
     public static final String PRODUCT_ID = "productId";
     public static final String CODE = "code";
+    public static final String DATA_TYPE = "dataType";
 
     //HOTZONE
     public static final String HOTZONE = "HOTZONE";

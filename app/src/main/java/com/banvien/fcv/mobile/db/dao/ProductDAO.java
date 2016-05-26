@@ -1,12 +1,16 @@
 package com.banvien.fcv.mobile.db.dao;
 
 
+import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.ProductUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -64,5 +68,19 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         }
 
         return result;
+    }
+
+    public ProductDTO findByProductId(Long productId) {
+        ProductEntity entity = new ProductEntity();
+        try {
+            QueryBuilder<ProductEntity, String> queryBuilder = queryBuilder();
+            queryBuilder.where().eq(ScreenContants.PRODUCT_ID, productId);
+            PreparedQuery<ProductEntity> preparedQuery = queryBuilder.prepare();
+            entity = queryForFirst(preparedQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ProductUtil.convertToDTO(entity);
     }
 }

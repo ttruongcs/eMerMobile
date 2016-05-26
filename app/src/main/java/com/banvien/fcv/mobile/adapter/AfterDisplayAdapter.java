@@ -11,8 +11,12 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
+import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.utils.ELog;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -25,10 +29,12 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
 
     private AfterDisplayActivity activity;
     private List<OutletMerDTO> mData;
+    private Repo repo;
 
-    public AfterDisplayAdapter(AfterDisplayActivity activity, List<OutletMerDTO> outletMerDTOs) {
+    public AfterDisplayAdapter(AfterDisplayActivity activity, List<OutletMerDTO> outletMerDTOs, Repo repo) {
         this.activity = activity;
         this.mData = outletMerDTOs;
+        this.repo = repo;
     }
 
     @Override
@@ -64,17 +70,25 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
         }
 
         public void bindViews(final OutletMerDTO outletMerDTO) {
-            productName.setText(outletMerDTO.getRegisterValue());
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked) {
-                        Toast.makeText(activity.getApplicationContext(), outletMerDTO.getActualValue() +  " is checked", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(activity.getApplicationContext(), outletMerDTO.getActualValue() +  " is uncheck", Toast.LENGTH_SHORT).show();
+            ProductDTO productDTO = new ProductDTO();
+            try {
+                productDTO = repo.getProductDAO().findByProductId(Long.valueOf(outletMerDTO.getRegisterValue()));
+                productName.setText(productDTO.getName());
+
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(isChecked) {
+                            Toast.makeText(activity.getApplicationContext(), outletMerDTO.getActualValue() +  " is checked", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(activity.getApplicationContext(), outletMerDTO.getActualValue() +  " is uncheck", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
+            } catch (SQLException e) {
+                ELog.d("Can't get product from server", e);
+            }
+
 
         }
     }

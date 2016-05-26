@@ -14,13 +14,17 @@ import android.widget.Toast;
 import com.banvien.fcv.mobile.adapter.AfterDisplayAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.Bind;
 
@@ -57,31 +61,6 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
 
         bindDatas();
         bindSwipeRefresh();
-        if(productList.size() <= 0) {
-            OutletMerDTO outletMerDTO = new OutletMerDTO();
-            outletMerDTO.setActualValue("Test");
-            OutletMerDTO outletMerDTO2 = new OutletMerDTO();
-            outletMerDTO2.setActualValue("Test value");
-
-            productList.add(outletMerDTO);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-            productList.add(outletMerDTO2);
-
-
-        }
         initSpinner();
         initRecyclerView();
     }
@@ -102,7 +81,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AfterDisplayAdapter(this, productList);
+        adapter = new AfterDisplayAdapter(this, productList, repo);
         recyclerView.setAdapter(adapter);
 
     }
@@ -111,9 +90,17 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         final List<String> spinnerName = new ArrayList<>();
         final List<Long> spinnerId = new ArrayList<>();
 
-        for (OutletMerDTO outletMerDTO : hotzoneList) {
-            spinnerName.add(outletMerDTO.getRegisterValue());
-            spinnerId.add(outletMerDTO.get_id());
+        spinnerName.add(getString(R.string.select_one));
+        spinnerId.add(-1l);
+
+        try {
+            for (OutletMerDTO outletMerDTO : hotzoneList) {
+                HotzoneDTO hotzoneDTO = this.repo.getHotZoneDAO().findByCode(outletMerDTO.getRegisterValue());
+                spinnerName.add(hotzoneDTO.getName());
+                spinnerId.add(hotzoneDTO.getHotZoneId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, spinnerName);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -122,14 +109,58 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), spinnerId.get(position).toString() + ", " + spinnerName.get(position), Toast.LENGTH_SHORT).show();
+                if(position != 0) {
+                    addAfterHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
+                    Toast.makeText(view.getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+                }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+    }
+
+    private void addAfterHotzone(OutletMerDTO dto, Long hotzoneId) {
+        OutletMerDTO insertItem = bindHotzoneData(dto, hotzoneId);
+
+        try {
+
+            this.repo.getOutletMerDAO().addAfterHotzone(insertItem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private OutletMerDTO bindHotzoneData(OutletMerDTO dto, Long hotzoneId) {
+        OutletMerDTO insertItem = new OutletMerDTO();
+        insertItem.setReferenceValue(String.valueOf(dto.get_id()));
+        insertItem.setDataType(ScreenContants.HOTZONE_AFTER);
+        insertItem.setExhibitRegisteredDetailId(dto.getExhibitRegisteredDetailId());
+        insertItem.setExhibitRegisteredId(dto.getExhibitRegisteredId());
+        insertItem.setOutletId(dto.getOutletId());
+        insertItem.setRegisterValue(dto.getRegisterValue());
+        insertItem.setRouteScheduleDetailId(dto.getRouteScheduleDetailId());
+        insertItem.setRouteScheduleId(dto.getRouteScheduleId());
+        insertItem.setActualValue(String.valueOf(hotzoneId));
+
+        return insertItem;
+    }
+
+    private boolean checkHotzoneExist(Map<String, Object> properties) {
+        boolean isExist = false;
+        try {
+            isExist = this.repo.getOutletMerDAO().checkExistByProperties(properties);
+            if(isExist) {
+                ELog.d("ex", "Exist");
+            } else {
+                ELog.d("ex", "Not exist");
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return isExist;
     }
 
     private void bindDatas() {
