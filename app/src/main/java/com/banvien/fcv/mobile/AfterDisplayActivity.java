@@ -89,36 +89,54 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private void initSpinner() {
         final List<String> spinnerName = new ArrayList<>();
         final List<Long> spinnerId = new ArrayList<>();
-
-        spinnerName.add(getString(R.string.select_one));
-        spinnerId.add(-1l);
-
+        int positionSelected = 0;
         try {
+            spinnerName.add(getString(R.string.select_one));
+            spinnerId.add(-1l);
+
             for (OutletMerDTO outletMerDTO : hotzoneList) {
                 HotzoneDTO hotzoneDTO = this.repo.getHotZoneDAO().findByCode(outletMerDTO.getRegisterValue());
                 spinnerName.add(hotzoneDTO.getName());
                 spinnerId.add(hotzoneDTO.getHotZoneId());
             }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, spinnerName);
+            arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            spinner.setAdapter(arrayAdapter);
+
+            positionSelected = findHotzoneSelected(arrayAdapter);
+            spinner.setSelection(positionSelected);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(position != 0) {
+                        addAfterHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, spinnerName);
-        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
+    }
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0) {
-                    addAfterHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
-                    Toast.makeText(view.getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
-                }
+    private int findHotzoneSelected(ArrayAdapter arrayAdapter) {
+        int result = 0;
+        try {
+            OutletMerDTO outletMerDTO = this.repo.getOutletMerDAO().
+                    findByDataTypeAndOutlet(ScreenContants.HOTZONE_AFTER, outletId).get(0);
+            if(outletMerDTO != null) {
+                HotzoneDTO hotzoneDTO = this.repo.getHotZoneDAO().findByCode(outletMerDTO.getRegisterValue());
+                result = arrayAdapter.getPosition(hotzoneDTO.getName());
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
     }
 
     private void addAfterHotzone(OutletMerDTO dto, Long hotzoneId) {

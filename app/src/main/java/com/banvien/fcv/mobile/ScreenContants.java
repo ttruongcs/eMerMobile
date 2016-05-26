@@ -31,6 +31,7 @@ public class ScreenContants {
     public static final String PRODUCT_ID = "productId";
     public static final String CODE = "code";
     public static final String DATA_TYPE = "dataType";
+    public static final String REFERENCE_VALUE = "referenceValue";
 
     //HOTZONE
     public static final String HOTZONE = "HOTZONE";
@@ -49,6 +50,9 @@ public class ScreenContants {
     //FACING
     public static final String FACING_BEFORE = "FACING_BEFORE";
     public static final String FACING_AFTER = "FACING_AFTER";
+
+    //Product
+    public static final String PRODUCT_AFTER = "PRODUCT_AFTER";
 
 
     // DATATYPE IMAGE

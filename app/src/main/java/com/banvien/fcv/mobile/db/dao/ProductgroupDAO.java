@@ -43,7 +43,8 @@ public class ProductgroupDAO extends AndroidBaseDaoImpl<ProductgroupEntity, Stri
     public List<String> getAllName() {
         List<String> results = new ArrayList<>();
         try {
-            GenericRawResults<String> rawResults = queryRaw("SELECT name FROM Productgroup", new RawRowMapper<String>() {
+            GenericRawResults<String> rawResults = queryRaw("SELECT name FROM Productgroup",
+                    new RawRowMapper<String>() {
                 @Override
                 public String mapRow(String[] columnNames, String[] resultColumns) throws SQLException {
                     return resultColumns[0];

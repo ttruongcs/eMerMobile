@@ -4,10 +4,13 @@ package com.banvien.fcv.mobile.db.dao;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
+import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.stmt.UpdateBuilder;
@@ -91,9 +94,13 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return null;
     }
 
-    public boolean checkExistByReferenceValue(String referenceValue, Long outletId) {
+    public boolean checkExistByReferenceValue(String dataType, String referenceValue, Long outletId) {
         try {
-            Long numRows = queryBuilder().where().eq("referenceValue", referenceValue).and().eq("outletId", outletId).countOf();
+            ELog.d("dataType", dataType);
+            ELog.d("rerenceValue", referenceValue);
+            ELog.d("outletId", String.valueOf(outletId));
+            Long numRows = queryBuilder().where().eq(ScreenContants.DATA_TYPE, dataType).and()
+                    .eq(ScreenContants.REFERENCE_VALUE, referenceValue).and().eq("outletId", outletId).countOf();
 
             if(numRows > 0) {
                 return true;
@@ -173,5 +180,38 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateOutletMer(OutletMerDTO outletMerDTO, String actualValue) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            updateBuilder.where().eq("referenceValue", outletMerDTO.get_id());
+            updateBuilder.updateColumnValue("actualValue", actualValue);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OutletMerDTO findReferencedDisplay(String productAfter, long id) {
+        OutletMerDTO result = new OutletMerDTO();
+        OutletMerEntity item = new OutletMerEntity();
+        QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
+
+        try {
+            queryBuilder.where().eq(ScreenContants.DATA_TYPE, productAfter).and().eq(ScreenContants.REFERENCE_VALUE, id);
+            PreparedQuery<OutletMerEntity> preparedQuery = queryBuilder.prepare();
+            item = queryForFirst(preparedQuery);
+            ELog.d("productAfter", productAfter);
+            ELog.d("id", String.valueOf(id));
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        if(item != null) {
+            result = OutletMerUtil.convertToDTO(item);
+        }
+
+        return result;
     }
 }

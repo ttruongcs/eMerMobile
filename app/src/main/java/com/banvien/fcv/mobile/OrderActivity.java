@@ -150,7 +150,7 @@ public class OrderActivity extends BaseDrawerActivity {
     public boolean checkProductExist(OutletMerDTO outletMerDTO) {
         boolean isExist = false;
         try {
-            isExist = this.repo.getOutletMerDAO().checkExistByReferenceValue(outletMerDTO.getReferenceValue(), outletMerDTO.getOutletId());
+            isExist = this.repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.ORDER ,outletMerDTO.getReferenceValue(), outletMerDTO.getOutletId());
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
