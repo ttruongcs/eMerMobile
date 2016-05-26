@@ -66,6 +66,6 @@ public class PosmActivity extends BaseDrawerActivity {
     }
 
     private List<OutletMerDTO> findPOSMRegistered(Long outletId) throws SQLException {
-        return repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.POSM_DATATYPE, outletId);
+        return repo.getOutletMerDAO().findByDataTypeAndOutlet(ScreenContants.POSM_TYPE, outletId);
     }
 }

@@ -142,19 +142,9 @@
             android:background="@drawable/shadow3"
             android:drawableTop="@drawable/ic_view_carousel_white_24dp"
             android:paddingTop="20dp"
-            android:text="@string/after_title"
+            android:text="@string/posm_title"
             android:textColor="#fff" />
 
-        <Button
-            android:id="@+id/btnSurvey"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/shadow6"
-            android:drawableTop="@drawable/ic_record_voice_over_white_24dp"
-            android:paddingTop="20dp"
-            android:text="@string/complaint"
-            android:textColor="#fff" />
     </LinearLayout>
 
 
