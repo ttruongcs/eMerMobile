@@ -8,8 +8,8 @@ import butterknife.ButterKnife.ViewBinder;
 public class BaseActivity$$ViewBinder<T extends com.banvien.fcv.mobile.BaseActivity> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findOptionalView(source, 2131624101, null);
-    target.toolbar = finder.castView(view, 2131624101, "field 'toolbar'");
+    view = finder.findOptionalView(source, 2131624118, null);
+    target.toolbar = finder.castView(view, 2131624118, "field 'toolbar'");
   }
 
   @Override public void unbind(T target) {

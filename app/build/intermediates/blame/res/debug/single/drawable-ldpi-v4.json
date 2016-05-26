@@ -1,18 +1,34 @@
 [
     {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "D:\\mobile\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\sprite_check.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\drawable-ldpi\\sprite_check.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\sprite_check.png",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\sprite_check.png"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow6.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow6.xml"
     },
     {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\sprite_check.png",
-        "source": "D:\\mobile\\app\\src\\main\\res\\drawable-ldpi\\sprite_check.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow1.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow1.xml"
+    },
+    {
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow.xml"
+    },
+    {
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow3.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow3.xml"
+    },
+    {
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow2.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow2.xml"
+    },
+    {
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\shadow5.xml",
+        "source": "D:\\Android\\eMerMobile\\app\\src\\main\\res\\drawable-ldpi\\shadow5.xml"
     }
 ]

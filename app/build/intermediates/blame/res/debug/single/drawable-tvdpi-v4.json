@@ -1,34 +1,18 @@
 [
     {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_standard_off_client.png",
-        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_standard_off_client.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_small_off_client.png",
+        "source": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_small_off_client.png"
     },
     {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_small_off_client.png",
-        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_small_off_client.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_medium_off_client.png",
+        "source": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_medium_off_client.png"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_standard_off_client.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_standard_off_client.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_standard_off_client.png",
+        "source": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_standard_off_client.png"
     },
     {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_medium_off_client.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_medium_off_client.png"
-    },
-    {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_small_off_client.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_small_off_client.png"
-    },
-    {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_tall_off_client.png",
-        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_tall_off_client.png"
-    },
-    {
-        "merged": "D:\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_medium_off_client.png",
-        "source": "D:\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_medium_off_client.png"
-    },
-    {
-        "merged": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_tall_off_client.png",
-        "source": "D:\\D\\FreindlandCampina\\FCV_Retailer\\mobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_tall_off_client.png"
+        "merged": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\res\\merged\\debug\\drawable-tvdpi-v4\\ic_plusone_tall_off_client.png",
+        "source": "D:\\Android\\eMerMobile\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.5.87\\res\\drawable-tvdpi\\ic_plusone_tall_off_client.png"
     }
 ]
