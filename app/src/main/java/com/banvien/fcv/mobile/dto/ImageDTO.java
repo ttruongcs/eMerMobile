@@ -12,6 +12,8 @@ public class ImageDTO implements Serializable {
 
     private Long _id;
     private Bitmap image;
+    private String imagePath;
+    private boolean checked;
 
     public Long get_id() {
         return _id;
@@ -27,5 +29,21 @@ public class ImageDTO implements Serializable {
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

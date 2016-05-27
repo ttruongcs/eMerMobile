@@ -60,11 +60,18 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-
         imageView.setImageBitmap(this.imageDTOs.get(position).getImage());
+        if(!this.imageDTOs.get(position).isChecked()) {
+            imageView.setAlpha(1f);
+        } else {
+            imageView.setAlpha(0.3f);
+        }
+
 
         return imageView;
     }
+
+
 
     private class CheckableLayout extends FrameLayout implements Checkable {
 
@@ -97,5 +104,7 @@ public class ImageAdapter extends BaseAdapter {
         public void toggle() {
             setChecked(!mChecked);
         }
+
+
     }
 }

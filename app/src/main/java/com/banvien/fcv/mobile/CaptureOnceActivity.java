@@ -11,11 +11,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
@@ -42,7 +44,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     private static OutletEntity outlet;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
-    private List<ResolveInfo> mApps;
+    private ImageAdapter adapter;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -53,7 +55,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadApps();
         setContentView(R.layout.capturelist);
         setInitialConfiguration();
         repo = new Repo(this);
@@ -72,13 +73,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         bindGallery();
     }
 
-    private void loadApps() {
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        mApps = getPackageManager().queryIntentActivities(mainIntent, 0);
-    }
-
     private void bindGallery() {
         String posmId = null;
         List<OutletMerDTO> images = new ArrayList<>();
@@ -89,20 +83,90 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         }
 
         this.imageDTOs = loadGallery(images);
-        final ImageAdapter adapter = new ImageAdapter(this, imageDTOs);
+        adapter = new ImageAdapter(this, imageDTOs);
         this.gridListImage.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-        this.gridListImage.setMultiChoiceModeListener(new MultiChoiceModeListener(gridListImage));
+        this.gridListImage.setMultiChoiceModeListener(new GridView.MultiChoiceModeListener() {
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle("Select Items");
+                mode.setSubtitle("One item selected");
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.action_menu, menu);
+
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_remover:
+                        Toast.makeText(getApplicationContext(), "Remove Success", Toast.LENGTH_SHORT).show();
+                        removeImageFromGallery();
+                        mode.finish();
+                        break;
+                }
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                for(ImageDTO imageDTO : imageDTOs) {
+                    if(imageDTO.isChecked()) {
+                        imageDTO.setChecked(false);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id,
+                                                  boolean checked) {
+                int selectCount = gridListImage.getCheckedItemCount();
+                imageDTOs.get(position).setChecked(checked);
+                adapter.notifyDataSetChanged();
+                switch (selectCount) {
+                    case 1:
+                        mode.setSubtitle("One item selected");
+                        break;
+                    default:
+                        mode.setSubtitle("" + selectCount + " items selected");
+                        break;
+                }
+            }
+        });
 
         this.gridListImage.setAdapter(adapter);
 
-//        gridListImage.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                imageDTOs.remove(position);
-//                adapter.notifyDataSetChanged();
-//                return false;
-//            }
-//        });
+    }
+
+    private void removeImageFromGallery() {
+        List<ImageDTO> deletedImages = new ArrayList<>();
+        try {
+            for(ImageDTO imageDTO : imageDTOs) {
+                if(imageDTO.isChecked()) {
+                    String photoUri = Environment.getExternalStorageDirectory().getAbsolutePath() + imageDTO.getImagePath();
+                    File image = new File(photoUri);
+                    if(image.exists()) {
+                        image.delete(); //Delete from external storage
+                        this.repo.getOutletMerDAO().deleteImageFromId(imageDTO.get_id()); //Delete from database
+                        imageDTOs.remove(imageDTO); //Delete from view
+
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        ELog.d("File is not exist");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
@@ -116,6 +180,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(outletMerDTO.get_id());
                 imageDTO.setImage(bitmap);
+                imageDTO.setImagePath(outletMerDTO.getActualValue());
                 imageDTOs.add(imageDTO);
             }
         }
@@ -147,7 +212,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
-
     }
 
     @Override
