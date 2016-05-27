@@ -1,4 +1,5 @@
 package com.banvien.fcv.mobile;
+
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -60,8 +61,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
-        if(captureType != ScreenContants.IMAGE_AFTER_POSM
-                || captureType != ScreenContants.IMAGE_BEFORE_POSM ) {
+        if (captureType != ScreenContants.IMAGE_AFTER_POSM
+                || captureType != ScreenContants.IMAGE_BEFORE_POSM) {
             posmId = this.getIntent().getLongExtra(ScreenContants.KEY_POSM_ID, 0l);
         }
         try {
@@ -117,8 +118,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-                for(ImageDTO imageDTO : imageDTOs) {
-                    if(imageDTO.isChecked()) {
+                for (ImageDTO imageDTO : imageDTOs) {
+                    if (imageDTO.isChecked()) {
                         imageDTO.setChecked(false);
                     }
                 }
@@ -147,33 +148,39 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     }
 
     private void removeImageFromGallery() {
-        List<ImageDTO> deletedImages = new ArrayList<>();
+        List<ImageDTO> removedImages = new ArrayList<>();
         try {
-            for(ImageDTO imageDTO : imageDTOs) {
-                if(imageDTO.isChecked()) {
-                    String photoUri = Environment.getExternalStorageDirectory().getAbsolutePath() + imageDTO.getImagePath();
+            for (int i = 0; i < imageDTOs.size(); i++) {
+                if (imageDTOs.get(i).isChecked()) {
+                    String photoUri = Environment.getExternalStorageDirectory().getAbsolutePath() + imageDTOs.get(i).getImagePath();
                     File image = new File(photoUri);
-                    if(image.exists()) {
+                    if (image.exists()) {
+                        removedImages.add(imageDTOs.get(i));
+                        this.repo.getOutletMerDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
                         image.delete(); //Delete from external storage
-                        this.repo.getOutletMerDAO().deleteImageFromId(imageDTO.get_id()); //Delete from database
-                        imageDTOs.remove(imageDTO); //Delete from view
-
-                        adapter.notifyDataSetChanged();
                     } else {
                         ELog.d("File is not exist");
                     }
                 }
             }
+
+            for(ImageDTO imageDTO : removedImages) {
+                imageDTOs.remove(imageDTO);
+
+            }
+            adapter.notifyDataSetChanged();
+
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            ELog.d(e.getMessage(), e);
         }
     }
 
     private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for(OutletMerDTO outletMerDTO : images) {
+        for (OutletMerDTO outletMerDTO : images) {
             File image = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + outletMerDTO.getActualValue());
-            if(image.exists()) {
+            if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
@@ -223,8 +230,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             outletMerEntity.setDataType(captureType);
             outletMerEntity.setActualValue(urlImage);
             outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
-            if(captureType != ScreenContants.IMAGE_AFTER_POSM
-                    || captureType != ScreenContants.IMAGE_BEFORE_POSM ) {
+            if (captureType != ScreenContants.IMAGE_AFTER_POSM
+                    || captureType != ScreenContants.IMAGE_BEFORE_POSM) {
                 outletMerEntity.setReferenceValue(posmId.toString());
             }
             try {
@@ -235,13 +242,17 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         }
     }
 
-    /** Create a file Uri for saving an image or video */
-    private static Uri getOutputMediaFileUri(){
-        return Uri.fromFile( getOutputMediaFile());
+    /**
+     * Create a file Uri for saving an image or video
+     */
+    private static Uri getOutputMediaFileUri() {
+        return Uri.fromFile(getOutputMediaFile());
     }
 
-    /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(){
+    /**
+     * Create a File for saving an image or video
+     */
+    private static File getOutputMediaFile() {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
@@ -249,8 +260,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
         // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 ELog.d(outlet.getCode(), "failed to create directory");
                 return null;
             }

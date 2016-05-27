@@ -269,7 +269,6 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
     public void deleteImageFromId(Long id) {
         try {
-            ELog.d("id", id.toString());
             DeleteBuilder<OutletMerEntity, String> deleteBuilder = deleteBuilder();
             deleteBuilder.where().eq("_id", id);
             deleteBuilder.delete();
