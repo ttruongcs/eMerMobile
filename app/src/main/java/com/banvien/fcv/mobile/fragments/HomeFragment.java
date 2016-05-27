@@ -69,5 +69,17 @@ public class HomeFragment extends BaseFragment {
                 tx.commit();
             }
         });
+
+        endStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "change to sync activity");
+
+                FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
+                tx.replace(R.id.content_frame, new SyncEndFragment());
+                tx.addToBackStack(TAG);
+                tx.commit();
+            }
+        });
     }
 }
