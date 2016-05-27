@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.banvien.fcv.mobile.AfterDisplayActivity;
+import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
@@ -25,15 +24,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Linh Nguyen on 5/25/2016.
+ * Created by Linh Nguyen on 5/27/2016.
  */
-public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapter.ItemHolder> {
-
-    private AfterDisplayActivity activity;
+public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdapter.ItemHolder> {
+    private BeforeDisplayActivity activity;
     private List<OutletMerDTO> mData;
     private Repo repo;
 
-    public AfterDisplayAdapter(AfterDisplayActivity activity, List<OutletMerDTO> outletMerDTOs, Repo repo) {
+    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<OutletMerDTO> outletMerDTOs, Repo repo) {
         this.activity = activity;
         this.mData = outletMerDTOs;
         this.repo = repo;
@@ -72,12 +70,13 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
         }
 
         public void bindViews(final OutletMerDTO outletMerDTO) {
-            ProductDTO productDTO = new ProductDTO();
+            ProductDTO productDTO;
             try {
                 productDTO = repo.getProductDAO().findByProductId(Long.valueOf(outletMerDTO.getRegisterValue()));
                 productName.setText(productDTO.getName());
                 OutletMerDTO checkedObject = repo.getOutletMerDAO()
-                        .findReferencedDisplay(ScreenContants.MHS_AFTER, outletMerDTO.get_id());
+                        .findReferencedDisplay(ScreenContants.MHS_BEFORE, outletMerDTO.get_id());
+
                 if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
                     checkBox.setChecked(true);
                 }
@@ -89,13 +88,13 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
                         if(isChecked) {
                             boolean isExist = checkProductExist(outletMerDTO);
                             if(!isExist) {
-                                addProductAfterData(outletMerDTO);
+                                addProductBeforeData(outletMerDTO);
                             } else {
                                 actualValue = outletMerDTO.getRegisterValue();
-                                updateProductAfter(outletMerDTO, actualValue);
+                                updateProductBefore(outletMerDTO, actualValue);
                             }
                         } else {
-                            updateProductAfter(outletMerDTO, actualValue);
+                            updateProductBefore(outletMerDTO, actualValue);
                         }
                     }
                 });
@@ -104,7 +103,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
             }
         }
 
-        private void updateProductAfter(OutletMerDTO outletMerDTO, String actualValue) {
+        private void updateProductBefore(OutletMerDTO outletMerDTO, String actualValue) {
             try {
                 repo.getOutletMerDAO().updateOutletMer(outletMerDTO, actualValue);
             } catch (SQLException e) {
@@ -112,12 +111,12 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
             }
         }
 
-        private void addProductAfterData(OutletMerDTO outletMerDTO) {
+        private void addProductBeforeData(OutletMerDTO outletMerDTO) {
             OutletMerDTO insertItem = bindData(outletMerDTO);
             try {
                 repo.getOutletMerDAO().addOutletMerEntity(OutletMerUtil.convertToEntity(insertItem));
             } catch (SQLException e) {
-                ELog.d("Can't insert product after item", e);
+                ELog.d("Can't insert product before item", e);
             }
 
         }
@@ -126,7 +125,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
             OutletMerDTO data = new OutletMerDTO();
             data.setReferenceValue(String.valueOf(outletMerDTO.get_id()));
             data.setActualValue(outletMerDTO.getRegisterValue());
-            data.setDataType(ScreenContants.MHS_AFTER);
+            data.setDataType(ScreenContants.MHS_BEFORE);
             data.setExhibitRegisteredDetailId(outletMerDTO.getExhibitRegisteredDetailId());
             data.setExhibitRegisteredId(outletMerDTO.getExhibitRegisteredId());
             data.setOutletId(outletMerDTO.getOutletId());
@@ -140,7 +139,8 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
         public boolean checkProductExist(OutletMerDTO outletMerDTO) {
             boolean isExist = false;
             try {
-                isExist = repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.MHS_AFTER, String.valueOf(outletMerDTO.get_id()), outletMerDTO.getOutletId());
+                isExist = repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.MHS_BEFORE,
+                        String.valueOf(outletMerDTO.get_id()), outletMerDTO.getOutletId());
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }

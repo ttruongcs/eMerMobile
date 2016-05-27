@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.banvien.fcv.mobile.adapter.AfterDisplayAdapter;
+import com.banvien.fcv.mobile.adapter.BeforeDisplayAdapter;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
@@ -31,19 +31,19 @@ import java.util.Map;
 import butterknife.Bind;
 
 /**
- * Created by Linh Nguyen on 5/25/2016.
+ * Created by Linh Nguyen on 5/27/2016.
  */
-public class AfterDisplayActivity extends BaseDrawerActivity {
-    private static final String TAG = "AfterDisplayActivity";
+public class BeforeDisplayActivity extends BaseDrawerActivity {
+    private static final String TAG = "BeforeDisplayActivity";
     private static Long outletId;
 
     @Bind(R.id.spinner)
     Spinner spinner;
 
-    @Bind(R.id.swipe_refresh_after)
+    @Bind(R.id.swipe_refresh_before)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.rcvAfterDisplay)
+    @Bind(R.id.rcvBeforeDisplay)
     RecyclerView recyclerView;
 
     @Bind(R.id.edFacing)
@@ -61,7 +61,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_after_display);
+        setContentView(R.layout.activity_before_display);
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         hotzoneList = new ArrayList<>();
@@ -78,8 +78,8 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     protected void bindViews() {
         super.bindViews();
         try {
-            String facingValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_AFTER, outletId);
-            String eieValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_AFTER, outletId);;
+            String facingValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_BEFORE, outletId);
+            String eieValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_BEFORE, outletId);;
 
             if(facingValue != null) {
                 edFacing.setText(facingValue);
@@ -93,7 +93,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if(actionId == EditorInfo.IME_ACTION_DONE) {
                         OutletMerDTO outletMerDTO = new OutletMerDTO();
-                        outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
+                        outletMerDTO.setDataType(ScreenContants.FACING_BEFORE);
                         outletMerDTO.setActualValue(v.getText().toString());
                         outletMerDTO.setOutletId(outletId);
                         insertOrUpdateData(outletMerDTO);
@@ -112,7 +112,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                         numberInput = (EditText) v;
                         if(!numberInput.getText().toString().equals("")) {
                             OutletMerDTO outletMerDTO = new OutletMerDTO();
-                            outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
+                            outletMerDTO.setDataType(ScreenContants.FACING_BEFORE);
                             outletMerDTO.setActualValue(numberInput.getText().toString());
                             outletMerDTO.setOutletId(outletId);
                             insertOrUpdateData(outletMerDTO);
@@ -126,7 +126,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if(actionId == EditorInfo.IME_ACTION_DONE) {
                         OutletMerDTO outletMerDTO = new OutletMerDTO();
-                        outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
+                        outletMerDTO.setDataType(ScreenContants.EIE_BEFORE);
                         outletMerDTO.setActualValue(v.getText().toString());
                         outletMerDTO.setOutletId(outletId);
                         insertOrUpdateData(outletMerDTO);
@@ -145,7 +145,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                         numberInput = (EditText) v;
                         if(!numberInput.getText().toString().equals("")) {
                             OutletMerDTO outletMerDTO = new OutletMerDTO();
-                            outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
+                            outletMerDTO.setDataType(ScreenContants.EIE_BEFORE);
                             outletMerDTO.setActualValue(numberInput.getText().toString());
                             outletMerDTO.setOutletId(outletId);
                             insertOrUpdateData(outletMerDTO);
@@ -205,7 +205,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AfterDisplayAdapter(this, productList, repo);
+        adapter = new BeforeDisplayAdapter(this, productList, repo);
         recyclerView.setAdapter(adapter);
 
     }
@@ -237,7 +237,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(position != 0) {
-                        addAfterHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
+                        addBeforeHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
                     }
                 }
                 @Override
@@ -254,7 +254,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         int result = 0;
         try {
             List<OutletMerDTO> outletMerDTOs = this.repo.getOutletMerDAO().
-                    findByDataTypeAndOutlet(ScreenContants.HOTZONE_AFTER, outletId);
+                    findByDataTypeAndOutlet(ScreenContants.HOTZONE_BEFORE, outletId);
 
             if(outletMerDTOs.size() > 0 && outletMerDTOs.get(0) != null) {
                 result = arrayAdapter.getPosition(mapForSearch.get(outletMerDTOs.get(0).getRegisterValue()));
@@ -265,15 +265,15 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         return result;
     }
 
-    private void addAfterHotzone(OutletMerDTO dto, Long hotzoneId) {
+    private void addBeforeHotzone(OutletMerDTO dto, Long hotzoneId) {
         OutletMerDTO insertItem = bindHotzoneData(dto, hotzoneId);
         Map<String, Object> properties = new HashMap<>();
 
         properties.put(ScreenContants.DATA_TYPE, insertItem.getDataType());
         properties.put("outletId", insertItem.getOutletId());
         properties.put(ScreenContants.REFERENCE_VALUE, insertItem.getReferenceValue());
-        if(!checkHotzoneExist(properties)) {
 
+        if(!checkHotzoneExist(properties)) {
             try {
                 this.repo.getOutletMerDAO().addHotzoneDisplay(insertItem);
             } catch (SQLException e) {
@@ -283,12 +283,13 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
             ELog.d("After hotzone", "Nothing change");
         }
 
+
     }
 
     private OutletMerDTO bindHotzoneData(OutletMerDTO dto, Long hotzoneId) {
         OutletMerDTO insertItem = new OutletMerDTO();
         insertItem.setReferenceValue(String.valueOf(dto.get_id()));
-        insertItem.setDataType(ScreenContants.HOTZONE_AFTER);
+        insertItem.setDataType(ScreenContants.HOTZONE_BEFORE);
         insertItem.setExhibitRegisteredDetailId(dto.getExhibitRegisteredDetailId());
         insertItem.setExhibitRegisteredId(dto.getExhibitRegisteredId());
         insertItem.setOutletId(dto.getOutletId());

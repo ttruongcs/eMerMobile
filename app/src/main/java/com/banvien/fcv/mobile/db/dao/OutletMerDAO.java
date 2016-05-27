@@ -96,9 +96,6 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
     public boolean checkExistByReferenceValue(String dataType, String referenceValue, Long outletId) {
         try {
-            ELog.d("dataType", dataType);
-            ELog.d("rerenceValue", referenceValue);
-            ELog.d("outletId", String.valueOf(outletId));
             Long numRows = queryBuilder().where().eq(ScreenContants.DATA_TYPE, dataType).and()
                     .eq(ScreenContants.REFERENCE_VALUE, referenceValue).and().eq("outletId", outletId).countOf();
 
@@ -168,15 +165,14 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return isExist;
     }
 
-    public void addAfterHotzone(OutletMerDTO dto) {
+    public void addHotzoneDisplay(OutletMerDTO dto) {
         try {
             DeleteBuilder<OutletMerEntity, String> deleteBuilder = deleteBuilder();
-            deleteBuilder.where().eq(ScreenContants.DATA_TYPE, ScreenContants.HOTZONE_AFTER)
+            deleteBuilder.where().eq(ScreenContants.DATA_TYPE, dto.getDataType())
                     .and().eq("outletId", dto.getOutletId());
             deleteBuilder.delete();
 
             create(OutletMerUtil.convertToEntity(dto));
-            ELog.d("hotzone", "Add success");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -210,6 +206,39 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
         if(item != null) {
             result = OutletMerUtil.convertToDTO(item);
+        }
+
+        return result;
+    }
+
+    public void updateFacingOrEIE(String dataType, OutletMerEntity outletMerEntity) {
+        ELog.d("Update", outletMerEntity.toString());
+        try {
+            UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+            updateBuilder.where().eq("dataType", dataType)
+                    .and().eq("outletId", outletMerEntity.getOutletId());
+            updateBuilder.updateColumnValue("actualValue", outletMerEntity.getActualValue());
+            updateBuilder.update();
+        } catch (SQLException e) {
+            ELog.d("Can't update outlet mer", e);
+        }
+    }
+
+    public String findActualValueByDataType(String dataType, Long outletId) {
+        String result = null;
+        OutletMerEntity item = new OutletMerEntity();
+        QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
+
+        try {
+            queryBuilder.where().eq("dataType", dataType).and().eq("outletId", outletId);
+            PreparedQuery<OutletMerEntity> preparedQuery = queryBuilder.prepare();
+            item = queryForFirst(preparedQuery);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        if(item != null) {
+            result = item.getActualValue();
         }
 
         return result;
