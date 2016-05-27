@@ -242,7 +242,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return result;
     }
 
-    public List<OutletMerDTO> findImageByDataType(String captureType, Long outletId, String posmId) {
+    public List<OutletMerDTO> findImageByDataType(String captureType, Long outletId, Long posmId) {
         List<OutletMerDTO> result = new ArrayList<>();
         QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
         Where where = queryBuilder.where();

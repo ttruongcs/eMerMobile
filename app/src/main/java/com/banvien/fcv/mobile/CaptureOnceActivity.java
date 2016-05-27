@@ -61,8 +61,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
-        if (captureType != ScreenContants.IMAGE_AFTER_POSM
-                || captureType != ScreenContants.IMAGE_BEFORE_POSM) {
+        if (captureType == ScreenContants.IMAGE_AFTER_POSM
+                || captureType == ScreenContants.IMAGE_BEFORE_POSM) {
             posmId = this.getIntent().getLongExtra(ScreenContants.KEY_POSM_ID, 0l);
         }
         try {
@@ -75,7 +75,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     }
 
     private void bindGallery() {
-        String posmId = null;
         List<OutletMerDTO> images = new ArrayList<>();
         try {
             images = this.repo.getOutletMerDAO().findImageByDataType(captureType, outletId, posmId);
