@@ -1,6 +1,6 @@
 package com.banvien.fcv.mobile;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,20 +8,28 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.dto.ImageDTO;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.MultiChoiceModeListener;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -33,6 +41,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     private static String urlImage;
     private static OutletEntity outlet;
     private Repo repo;
+    private List<ImageDTO> imageDTOs;
+    private List<ResolveInfo> mApps;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -43,6 +53,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadApps();
         setContentView(R.layout.capturelist);
         setInitialConfiguration();
         repo = new Repo(this);
@@ -57,6 +68,59 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
         }
+
+        bindGallery();
+    }
+
+    private void loadApps() {
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        mApps = getPackageManager().queryIntentActivities(mainIntent, 0);
+    }
+
+    private void bindGallery() {
+        String posmId = null;
+        List<OutletMerDTO> images = new ArrayList<>();
+        try {
+            images = this.repo.getOutletMerDAO().findImageByDataType(captureType, outletId, posmId);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        this.imageDTOs = loadGallery(images);
+        final ImageAdapter adapter = new ImageAdapter(this, imageDTOs);
+        this.gridListImage.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        this.gridListImage.setMultiChoiceModeListener(new MultiChoiceModeListener(gridListImage));
+
+        this.gridListImage.setAdapter(adapter);
+
+//        gridListImage.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                imageDTOs.remove(position);
+//                adapter.notifyDataSetChanged();
+//                return false;
+//            }
+//        });
+    }
+
+    private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
+        List<ImageDTO> imageDTOs = new ArrayList<>();
+        for(OutletMerDTO outletMerDTO : images) {
+            File image = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + outletMerDTO.getActualValue());
+            if(image.exists()) {
+                ImageDTO imageDTO = new ImageDTO();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
+                imageDTO.set_id(outletMerDTO.get_id());
+                imageDTO.setImage(bitmap);
+                imageDTOs.add(imageDTO);
+            }
+        }
+
+        return imageDTOs;
     }
 
     @Override

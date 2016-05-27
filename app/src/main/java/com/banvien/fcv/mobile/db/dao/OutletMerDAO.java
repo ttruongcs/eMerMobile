@@ -198,8 +198,6 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             queryBuilder.where().eq(ScreenContants.DATA_TYPE, productAfter).and().eq(ScreenContants.REFERENCE_VALUE, id);
             PreparedQuery<OutletMerEntity> preparedQuery = queryBuilder.prepare();
             item = queryForFirst(preparedQuery);
-            ELog.d("productAfter", productAfter);
-            ELog.d("id", String.valueOf(id));
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
@@ -239,6 +237,31 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
         if(item != null) {
             result = item.getActualValue();
+        }
+
+        return result;
+    }
+
+    public List<OutletMerDTO> findImageByDataType(String captureType, Long outletId, String posmId) {
+        List<OutletMerDTO> result = new ArrayList<>();
+        QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
+        Where where = queryBuilder.where();
+
+        try {
+            where.eq(ScreenContants.DATA_TYPE, captureType);
+            where.and().eq(ScreenContants.OUTLETID, outletId);
+
+            if(posmId != null) {
+                where.and().eq(ScreenContants.REFERENCE_VALUE, posmId);
+            }
+            List<OutletMerEntity> entities = where.query();
+
+
+            for(OutletMerEntity outletMerEntity : entities) {
+                result.add(OutletMerUtil.convertToDTO(outletMerEntity));
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
         }
 
         return result;

@@ -32,6 +32,7 @@ public class ScreenContants {
     public static final String CODE = "code";
     public static final String DATA_TYPE = "dataType";
     public static final String REFERENCE_VALUE = "referenceValue";
+    public static final String OUTLETID = "outletId";
 
     //HOTZONE
     public static final String HOTZONE = "HOTZONE";

@@ -131,6 +131,16 @@ public class ActionActivity extends BaseDrawerActivity {
                 startActivity(intent);
             }
         });
+
+        btnComplain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ComplainTypeActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
     }
 
     private void setInitialConfiguration() {
