@@ -54,6 +54,9 @@ public class ActionActivity extends BaseDrawerActivity {
     @Bind(R.id.btnBefore)
     Button btnBefore;
 
+    @Bind(R.id.btnGPS)
+    Button btnGPS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +139,16 @@ public class ActionActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ComplainTypeActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                ELog.d("Outlet Id", String.valueOf(outletId));
+                startActivity(intent);
+            }
+        });
+
+        btnGPS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);

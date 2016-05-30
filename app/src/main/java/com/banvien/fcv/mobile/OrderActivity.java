@@ -141,7 +141,7 @@ public class OrderActivity extends BaseDrawerActivity {
 
     public void updateOrder(OutletMerDTO outletMerDTO) {
         try {
-            this.repo.getOutletMerDAO().updateOutletMerEntity(OutletMerUtil.convertToEntity(outletMerDTO));
+            this.repo.getOutletMerDAO().updateOrderMer(OutletMerUtil.convertToEntity(outletMerDTO));
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }

@@ -58,13 +58,31 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="MHS"/>
-
-                <TextView
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:text="0/0"
-                    android:gravity="center"/>
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvCountChecked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/" />
+                    <TextView
+                        android:id="@+id/tvCountTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0" />
+                </LinearLayout>
+
+
 
                 <TextView
                     android:layout_width="match_parent"

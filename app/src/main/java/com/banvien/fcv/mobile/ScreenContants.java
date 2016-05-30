@@ -23,6 +23,8 @@ public class ScreenContants {
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
     public static final Integer OUTLET_MER_ACTIVE = 1;
+    public static final String INCREASE_VALUE = "INCREASE";
+    public static final String DECREASE_VALUE = "DECREASE";
 
     // CONTANST FOR DATATYPE
     public static final String POSM_TYPE = "POSM";
@@ -66,5 +68,8 @@ public class ScreenContants {
 
     //AFTER
     public static final String IMAGE_AFTER_POSM =  "IMAGE_AFTER_POSM";
+
+    //GPS
+    public static final String GPS = "GPS";
 
 }
