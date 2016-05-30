@@ -276,4 +276,37 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             ELog.d(e.getMessage(), e);
         }
     }
+
+
+    public List<OutletMerDTO> findByOutletId(Long outletId) {
+        try {
+            List<OutletMerDTO> results = new ArrayList<>();
+            List<OutletMerEntity> outletMerEntityList = queryBuilder().where().eq("outletId", outletId).query();
+            if(outletMerEntityList.size() > 0) {
+                for(OutletMerEntity outletMerEntity : outletMerEntityList) {
+                    results.add(OutletMerUtil.convertToDTO(outletMerEntity));
+                }
+            }
+            return results;
+        } catch (SQLException e) {
+            ELog.d("Error findByOutletId in OutletMerDAO");
+        }
+        return null;
+    }
+
+    public List<OutletMerDTO> findToSync() {
+        try {
+            List<OutletMerDTO> results = new ArrayList<>();
+            List<OutletMerEntity> outletMerEntityList = queryForAll();
+            if(outletMerEntityList.size() > 0) {
+                for(OutletMerEntity outletMerEntity : outletMerEntityList) {
+                    results.add(OutletMerUtil.convertToDTO(outletMerEntity));
+                }
+            }
+            return results;
+        } catch (SQLException e) {
+            ELog.d("Error findByOutletId in OutletMerDAO");
+        }
+        return null;
+    }
 }

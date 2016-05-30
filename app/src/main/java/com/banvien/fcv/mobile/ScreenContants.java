@@ -22,6 +22,7 @@ public class ScreenContants {
     public static final String KEY_POSM_ID = "com.banvien.fcv.emer.posmid";
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
+    public static final Integer OUTLET_MER_ACTIVE = 1;
 
     // CONTANST FOR DATATYPE
     public static final String POSM_TYPE = "POSM";

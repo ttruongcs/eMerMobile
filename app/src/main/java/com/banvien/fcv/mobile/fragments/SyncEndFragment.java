@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.library.UpdateService;
 
 import java.util.Map;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class SyncEndFragment extends BaseFragment {
     private static final String TAG = "SyncEndFragment";
+    private static Long outletId;
     @Bind(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
@@ -71,7 +73,7 @@ public class SyncEndFragment extends BaseFragment {
         fabSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "sync data from server to handheld");
+                Log.d(TAG, "sync data to server from handheld");
                 showLocationDialog(v);
             }
         });
@@ -114,8 +116,8 @@ public class SyncEndFragment extends BaseFragment {
 
         protected Boolean doInBackground(final String... args) {
             try {
-                UpdateService updateService = new UpdateService(context);
-                Map<String, String> results = updateService.updateFromServer(true);
+                SyncService syncService = new SyncService(context, outletId);
+                Map<String, String> results = syncService.syncToServer(true);
                 errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {
                     return false;
