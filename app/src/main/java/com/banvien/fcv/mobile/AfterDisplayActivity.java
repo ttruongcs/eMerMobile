@@ -52,6 +52,12 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     @Bind(R.id.edEIE)
     EditText edEIE;
 
+    @Bind(R.id.tvCountChecked)
+    TextView tvCountChecked;
+
+    @Bind(R.id.tvCountTotal)
+    TextView tvCountTotal;
+
     private Repo repo;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -201,13 +207,13 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     }
 
     private void initRecyclerView() {
+        tvCountTotal.setText(String.valueOf(productList.size()));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AfterDisplayAdapter(this, productList, repo);
         recyclerView.setAdapter(adapter);
-
     }
 
     private void initSpinner() {
@@ -324,6 +330,18 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         } catch (SQLException e) {
             ELog.d("Can not get data from server", e);
         }
+    }
+
+    public void setTvCountChecked(String type) {
+        ELog.d("type",type);
+        int countChecked = 0;
+        if(type.equals(ScreenContants.INCREASE_VALUE)) {
+            countChecked = Integer.valueOf(tvCountChecked.getText().toString()) + 1;
+
+        } else if(type.equals(ScreenContants.DECREASE_VALUE)) {
+            countChecked = Integer.valueOf(tvCountChecked.getText().toString()) - 1;
+        }
+        tvCountChecked.setText(String.valueOf(countChecked));
     }
 
     @Override

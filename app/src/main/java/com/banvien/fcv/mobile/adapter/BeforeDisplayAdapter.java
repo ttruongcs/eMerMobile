@@ -78,6 +78,7 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
                         .findReferencedDisplay(ScreenContants.MHS_BEFORE, outletMerDTO.get_id());
 
                 if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
+                    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
                     checkBox.setChecked(true);
                 }
 
@@ -86,6 +87,7 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         String actualValue = null;
                         if(isChecked) {
+                            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
                             boolean isExist = checkProductExist(outletMerDTO);
                             if(!isExist) {
                                 addProductBeforeData(outletMerDTO);
@@ -94,6 +96,7 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
                                 updateProductBefore(outletMerDTO, actualValue);
                             }
                         } else {
+                            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
                             updateProductBefore(outletMerDTO, actualValue);
                         }
                     }

@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
  * Created by Linh Nguyen on 5/25/2016.
  */
 public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapter.ItemHolder> {
-
     private AfterDisplayActivity activity;
     private List<OutletMerDTO> mData;
     private Repo repo;
@@ -78,6 +77,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
                 OutletMerDTO checkedObject = repo.getOutletMerDAO()
                         .findReferencedDisplay(ScreenContants.MHS_AFTER, outletMerDTO.get_id());
                 if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
+                    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
                     checkBox.setChecked(true);
                 }
 
@@ -86,6 +86,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         String actualValue = null;
                         if(isChecked) {
+                            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
                             boolean isExist = checkProductExist(outletMerDTO);
                             if(!isExist) {
                                 addProductAfterData(outletMerDTO);
@@ -94,6 +95,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
                                 updateProductAfter(outletMerDTO, actualValue);
                             }
                         } else {
+                            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
                             updateProductAfter(outletMerDTO, actualValue);
                         }
                     }

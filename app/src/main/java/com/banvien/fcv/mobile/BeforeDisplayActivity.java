@@ -57,6 +57,11 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     private RecyclerView.LayoutManager layoutManager;
     private List<OutletMerDTO> hotzoneList;
     private List<OutletMerDTO> productList;
+    @Bind(R.id.tvCountChecked)
+    TextView tvCountChecked;
+
+    @Bind(R.id.tvCountTotal)
+    TextView tvCountTotal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -201,6 +206,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     }
 
     private void initRecyclerView() {
+        tvCountTotal.setText(String.valueOf(productList.size()));
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
         layoutManager = new LinearLayoutManager(this);
@@ -342,5 +348,17 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         edFacing.clearFocus();
         edEIE.setFocusableInTouchMode(false);
         edEIE.clearFocus();
+    }
+
+    public void setTvCountChecked(String type) {
+        ELog.d("type",type);
+        int countChecked = 0;
+        if(type.equals(ScreenContants.INCREASE_VALUE)) {
+            countChecked = Integer.valueOf(tvCountChecked.getText().toString()) + 1;
+
+        } else if(type.equals(ScreenContants.DECREASE_VALUE)) {
+            countChecked = Integer.valueOf(tvCountChecked.getText().toString()) - 1;
+        }
+        tvCountChecked.setText(String.valueOf(countChecked));
     }
 }
