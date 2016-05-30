@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.library.UpdateService;
 
+import java.io.File;
 import java.util.Map;
 
 import butterknife.Bind;

@@ -178,7 +178,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
         for (OutletMerDTO outletMerDTO : images) {
-            File image = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + outletMerDTO.getActualValue());
+            File image = new File(outletMerDTO.getActualValue());
             if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();
                 BitmapFactory.Options options = new BitmapFactory.Options();
@@ -229,8 +229,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             outletMerEntity.setDataType(captureType);
             outletMerEntity.setActualValue(urlImage);
             outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
-            if (captureType != ScreenContants.IMAGE_AFTER_POSM
-                    || captureType != ScreenContants.IMAGE_BEFORE_POSM) {
+            if (captureType == ScreenContants.IMAGE_AFTER_POSM
+                    || captureType == ScreenContants.IMAGE_BEFORE_POSM) {
                 outletMerEntity.setReferenceValue(posmId.toString());
             }
             try {

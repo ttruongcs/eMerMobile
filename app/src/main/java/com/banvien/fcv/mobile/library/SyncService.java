@@ -1,41 +1,53 @@
 package com.banvien.fcv.mobile.library;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.command.OutletMerResultCommand;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
+import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
+import com.banvien.fcv.mobile.utils.FileUtils;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class SyncService {
 
 	private Context context;
 	private Repo repo;
 	private Long outletId;
+	private OutletDTO outlet;
 	private static final String TAG = "SyncService";
 
-	public SyncService(Context context, Long outletId) {
+	public SyncService(Context context, Long outletId) throws SQLException {
 		this.context = context;
 		this.outletId = outletId;
+//		this.outlet = OutletUtil.convertToDTO(repo.getOutletDAO().findById(outletId));
 		repo = new Repo(this.context);
 	}
 	/**
@@ -51,24 +63,44 @@ public class SyncService {
 			if(!CheckNetworkConnection.isConnectionAvailable(context)){
 				errorMessage = context.getString(R.string.sync_error_phone_connection);
 			}
-			OutletMerResultCommand FINAL = buildDataToSync();
-			Call<OutletMerResultCommand> call = RestClient.getInstance().getHomeService().syncDataToServer(FINAL);
-			call.enqueue(new Callback<OutletMerResultCommand>() {
-				@Override
-				public void onResponse(Call<OutletMerResultCommand> call, Response<OutletMerResultCommand> response) {
-
-				}
-
-				@Override
-				public void onFailure(Call<OutletMerResultCommand> call, Throwable t) {
-
-				}
-			});
+			File file = new File(Environment.getExternalStorageDirectory(), "445124424/445124424815270562.jpg");
+			Uri fileUri = Uri.fromFile(file);
+			uploadFile(file);
+//			OutletMerResultCommand FINAL = buildDataToSync();
+//			Call<OutletMerResultCommand> call = RestClient.getInstance().getHomeService().syncDataToServer(FINAL);
+//			call.enqueue(new Callback<OutletMerResultCommand>() {
+//				@Override
+//				public void onResponse(Call<OutletMerResultCommand> call, Response<OutletMerResultCommand> response) {
+//
+//				}
+//
+//				@Override
+//				public void onFailure(Call<OutletMerResultCommand> call, Throwable t) {
+//
+//				}
+//			});
 		}catch (Exception e){
 			Log.e(TAG, "error when sync data to server", e);
 		}
 		results.put("taskType", taskType);
 		return results;
+	}
+
+
+	private void uploadFile(File file) {
+		RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), file);
+		Call<Map<String, Object>> call = RestClient.getInstance().getHomeService().editUser(fbody);
+		call.enqueue(new Callback<Map<String, Object>>() {
+			@Override
+			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+
+			}
+
+			@Override
+			public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+			}
+		});
 	}
 
 	private OutletMerResultCommand buildDataToSync() throws SQLException {

@@ -3,6 +3,7 @@ package com.banvien.fcv.mobile.rest;
 import com.banvien.fcv.mobile.rest.service.HomeService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
 
@@ -44,8 +45,11 @@ public final class RestClient {
                 if (authToken != null) {
                     requestBuilder.header("Authorization", authToken);
                 }
-                requestBuilder.header("Content-Type", "application/json")
-                        .method(original.method(), original.body());
+                String contentType = original.header("Content-Type");
+                if (contentType == null) {
+                    requestBuilder.header("Content-Type", "application/json")
+                            .method(original.method(), original.body());
+                }
 
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
@@ -97,6 +101,7 @@ public final class RestClient {
     private ObjectMapper createObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        objectMapper.enable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         return objectMapper;
     }
 
