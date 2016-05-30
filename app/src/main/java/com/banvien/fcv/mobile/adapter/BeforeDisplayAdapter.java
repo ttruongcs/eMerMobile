@@ -105,7 +105,7 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
 
         private void updateProductBefore(OutletMerDTO outletMerDTO, String actualValue) {
             try {
-                repo.getOutletMerDAO().updateOutletMer(outletMerDTO, actualValue);
+                repo.getOutletMerDAO().updateMHStMer(outletMerDTO, actualValue);
             } catch (SQLException e) {
                 ELog.d("Can't set actual value to null", e);
             }

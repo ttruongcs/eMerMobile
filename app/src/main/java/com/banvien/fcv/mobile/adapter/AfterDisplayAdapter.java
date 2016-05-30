@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
 import com.banvien.fcv.mobile.R;
@@ -106,7 +105,7 @@ public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapte
 
         private void updateProductAfter(OutletMerDTO outletMerDTO, String actualValue) {
             try {
-                repo.getOutletMerDAO().updateOutletMer(outletMerDTO, actualValue);
+                repo.getOutletMerDAO().updateMHStMer(outletMerDTO, actualValue);
             } catch (SQLException e) {
                 ELog.d("Can't set actual value to null", e);
             }

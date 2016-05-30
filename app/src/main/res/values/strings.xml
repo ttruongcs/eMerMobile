@@ -459,5 +459,8 @@
 
     <string name="select_one">Select one</string>
 
+    <!--Map-->
+    <string name="current_position">Current position</string>
+
 
 </resources>

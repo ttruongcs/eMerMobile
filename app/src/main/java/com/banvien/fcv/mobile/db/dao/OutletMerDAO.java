@@ -43,7 +43,16 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         try {
             create(data);
         } catch (SQLException e) {
-            e.printStackTrace();
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
+    public void updateOutletMerEntity(OutletMerEntity data) {
+        ELog.d("data", data.toString());
+        try {
+            update(data);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
         }
     }
 
@@ -108,7 +117,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return false;
     }
 
-    public void updateOutletMerEntity(OutletMerEntity outletMerEntity) {
+    public void updateOrderMer(OutletMerEntity outletMerEntity) {
         ELog.d("Update", outletMerEntity.toString());
         try {
             UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
@@ -160,9 +169,36 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            ELog.d(e.getMessage(), e);
         }
         return isExist;
+    }
+
+    public OutletMerDTO findByProperties(Map<String, Object> properties) {
+        OutletMerDTO outletMerDTO = new OutletMerDTO();
+        int count = 0;
+        try {
+            QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
+            Where where = queryBuilder.where();
+
+            for (Map.Entry<String, Object> entry : properties.entrySet()) {
+                count++;
+                if(count < properties.size()) {
+                    where.eq(entry.getKey(), entry.getValue()).and();
+                } else {
+                    where.eq(entry.getKey(), entry.getValue());
+                }
+            }
+            PreparedQuery<OutletMerEntity> preparedQuery = where.prepare();
+            OutletMerEntity entity = queryForFirst(preparedQuery);
+            if(entity != null) {
+                outletMerDTO = OutletMerUtil.convertToDTO(entity);
+            }
+
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return outletMerDTO;
     }
 
     public void addHotzoneDisplay(OutletMerDTO dto) {
@@ -178,7 +214,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
-    public void updateOutletMer(OutletMerDTO outletMerDTO, String actualValue) {
+    public void updateMHStMer(OutletMerDTO outletMerDTO, String actualValue) {
         UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
         try {
             updateBuilder.where().eq("referenceValue", outletMerDTO.get_id());

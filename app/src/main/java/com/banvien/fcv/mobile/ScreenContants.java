@@ -67,4 +67,7 @@ public class ScreenContants {
     //AFTER
     public static final String IMAGE_AFTER_POSM =  "IMAGE_AFTER_POSM";
 
+    //GPS
+    public static final String GPS = "GPS";
+
 }
