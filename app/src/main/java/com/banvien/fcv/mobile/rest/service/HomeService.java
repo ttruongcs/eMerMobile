@@ -40,5 +40,5 @@ public interface HomeService {
 
     @Multipart
     @POST ("/mobile/image/sync.html")
-    Call<Map<String, Object>> editUser (@Part("file") RequestBody file);
+    Call<Map<String, Object>> editUser (@Part MultipartBody.Part file);
 }
