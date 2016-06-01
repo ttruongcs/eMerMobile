@@ -103,7 +103,7 @@ public class UpdateService {
 		call.enqueue(new Callback<Map<String, Object>>() {
 			@Override
 			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-				if (response.isSuccess()) {
+//				if (response.isSuccess()) {
 					// request successful (status code 200, 201)
 					Map<String, Object> result = response.body();
 					List<POSMDTO> jPosms = DataBinder.readPosmList(result.get(ScreenContants.POSM_LIST));
@@ -121,9 +121,9 @@ public class UpdateService {
 					fillProduct(jProducts);
 					fillComplainTypes(jComplainTypes);
 					fillRouteScheduleInfo(routeScheduleInfo);
-				} else {
-					ELog.d("Sync error......");
-				}
+//				} else {
+//					ELog.d("Sync error......");
+//				}
 			}
 
 			private void fillPOSM(List<POSMDTO> jPosms) {

@@ -63,7 +63,7 @@ public class SyncService {
 			if(!CheckNetworkConnection.isConnectionAvailable(context)){
 				errorMessage = context.getString(R.string.sync_error_phone_connection);
 			}
-			File file = new File(Environment.getExternalStorageDirectory(), "445124424/445124424815270562.jpg");
+			File file = new File("/storage/emulated/0/445124424/445124424-491567686.jpg");
 			Uri fileUri = Uri.fromFile(file);
 			uploadFile(file);
 //			OutletMerResultCommand FINAL = buildDataToSync();
@@ -88,8 +88,23 @@ public class SyncService {
 
 
 	private void uploadFile(File file) {
-		RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), file);
-		Call<Map<String, Object>> call = RestClient.getInstance().getHomeService().editUser(fbody);
+		RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+		RequestBody requestBody = new MultipartBody.Builder()
+				.setType(MultipartBody.FORM)
+				.addFormDataPart("title", "Square Logo")
+				.addFormDataPart("image", "logo-square.png",
+						RequestBody.create(MediaType.parse("image/*"), file))
+				.build();
+
+
+		MultipartBody.Part partBody =  MultipartBody.Part.createFormData(
+				"file",
+				file.getName(),
+				requestBody);
+
+
+		Call<Map<String, Object>> call = RestClient.getInstance().getHomeService().editUser(partBody);
 		call.enqueue(new Callback<Map<String, Object>>() {
 			@Override
 			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
@@ -98,7 +113,7 @@ public class SyncService {
 
 			@Override
 			public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-
+				Log.e("Upload error:", t.getMessage());
 			}
 		});
 	}
