@@ -6,15 +6,21 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.library.UpdateService;
+import com.banvien.fcv.mobile.utils.ELog;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -23,13 +29,21 @@ import butterknife.ButterKnife;
 
 public class PrepareFragment extends BaseFragment {
     private static final String TAG = "HomeFragment";
+    private static final int COMPLETED = 100;
+
     @Bind(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
     @Bind(R.id.fabAddTask)
     com.github.clans.fab.FloatingActionButton fabAdd;
 
+    @Bind(R.id.tvInfoBar)
+    TextView tvInfoBar;
 
+    @Bind(R.id.circularBar)
+    ProgressBar pBar;
+
+    private Repo repo;
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
 
@@ -37,7 +51,10 @@ public class PrepareFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.init, container, false);
         ButterKnife.bind(this, view);
+        repo = new Repo(this.getContext());
+        pBar.setVisibility(View.GONE);
         bindViews();
+
         return view;
     }
 
@@ -90,8 +107,30 @@ public class PrepareFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private void updateCicularBar() {
+        pBar.setProgress(COMPLETED);
+        try {
+            int count = repo.getOutletDAO().countAllOutlet();
+            if(count > 0) {
+                pBar.setVisibility(View.VISIBLE);
+                tvInfoBar.setText(Html.fromHtml(String.valueOf(count) + " outlet(s)<br/> updated"));
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(repo != null) {
+            repo.release();
+        }
+    }
+
     private class UpdatingTask extends AsyncTask<String, Void, Boolean> {
         private Context context;
         private String errorMessage = null;
@@ -141,6 +180,7 @@ public class PrepareFragment extends BaseFragment {
     private void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+
         }
     }
     private void startUpdatingTask() {

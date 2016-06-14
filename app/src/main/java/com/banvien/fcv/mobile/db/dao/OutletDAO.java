@@ -6,10 +6,12 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -60,5 +62,16 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
             ELog.e(e.getMessage());
         }
         return results;
+    }
+
+    public int countAllOutlet() {
+        List<OutletEntity> result = new ArrayList<>();
+        try {
+            result  = queryForAll();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result.size();
     }
 }
