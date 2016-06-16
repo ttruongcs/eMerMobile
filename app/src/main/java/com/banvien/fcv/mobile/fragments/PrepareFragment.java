@@ -37,12 +37,6 @@ public class PrepareFragment extends BaseFragment {
     @Bind(R.id.fabAddTask)
     com.github.clans.fab.FloatingActionButton fabAdd;
 
-    @Bind(R.id.tvInfoBar)
-    TextView tvInfoBar;
-
-    @Bind(R.id.circularBar)
-    ProgressBar pBar;
-
     private Repo repo;
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
@@ -52,7 +46,6 @@ public class PrepareFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.init, container, false);
         ButterKnife.bind(this, view);
         repo = new Repo(this.getContext());
-        pBar.setVisibility(View.GONE);
         bindViews();
 
         return view;
@@ -107,20 +100,6 @@ public class PrepareFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    private void updateCicularBar() {
-        pBar.setProgress(COMPLETED);
-        try {
-            int count = repo.getOutletDAO().countAllOutlet();
-            if(count > 0) {
-                pBar.setVisibility(View.VISIBLE);
-                tvInfoBar.setText(Html.fromHtml(String.valueOf(count) + " outlet(s)<br/> updated"));
-            }
-        } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
-        }
-
     }
 
     @Override

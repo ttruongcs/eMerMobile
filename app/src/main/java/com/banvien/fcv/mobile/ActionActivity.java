@@ -67,7 +67,7 @@ public class ActionActivity extends BaseDrawerActivity {
         try {
             fillOutletInfo(2l);
         } catch (SQLException e) {
-            Log.e(TAG, "Error when get Outlet Information");
+            Log.e(TAG, "Error when get Outlet Information!");
         }
         setInitialConfiguration();
     }

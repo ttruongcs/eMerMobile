@@ -127,7 +127,7 @@ public class OrderActivity extends BaseDrawerActivity {
             }
             ELog.d("map", orderInfos.toString());
         } catch (SQLException e) {
-            ELog.d("Không thể lấy dữ liệu", e);
+            ELog.d("Không thể lấy dữ liệu!", e);
         }
     }
 
