@@ -20,6 +20,8 @@ public class MExhibitRegisterDetailDTO implements Serializable {
     private Short priority;
     private Boolean multiValue;
     private String registeredValue;
+    private String referenceValue;
+    private String outletModelName;
 
     public String getExhibitRegisterDetailId() {
         return exhibitRegisterDetailId;
@@ -99,5 +101,21 @@ public class MExhibitRegisterDetailDTO implements Serializable {
 
     public void setRegisteredValue(String registeredValue) {
         this.registeredValue = registeredValue;
+    }
+
+    public String getReferenceValue() {
+        return referenceValue;
+    }
+
+    public void setReferenceValue(String referenceValue) {
+        this.referenceValue = referenceValue;
+    }
+
+    public String getOutletModelName() {
+        return outletModelName;
+    }
+
+    public void setOutletModelName(String outletModelName) {
+        this.outletModelName = outletModelName;
     }
 }
