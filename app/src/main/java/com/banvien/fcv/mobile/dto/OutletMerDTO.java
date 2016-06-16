@@ -10,6 +10,8 @@ public class OutletMerDTO implements Serializable {
     private Long outletId;
     private Long routeScheduleId;
     private Long routeScheduleDetailId;
+    private Long outletModelId;
+    private String outletModelName;
     private String exhibitRegisteredId;
     private String exhibitRegisteredDetailId;
     private String dataType;
@@ -95,5 +97,21 @@ public class OutletMerDTO implements Serializable {
 
     public void setReferenceValue(String referenceValue) {
         this.referenceValue = referenceValue;
+    }
+
+    public Long getOutletModelId() {
+        return outletModelId;
+    }
+
+    public void setOutletModelId(Long outletModelId) {
+        this.outletModelId = outletModelId;
+    }
+
+    public String getOutletModelName() {
+        return outletModelName;
+    }
+
+    public void setOutletModelName(String outletModelName) {
+        this.outletModelName = outletModelName;
     }
 }

@@ -17,6 +17,10 @@ public class OutletMerEntity implements Serializable {
     @DatabaseField
     private Long routeScheduleId;
     @DatabaseField
+    private Long outletModelId;
+    @DatabaseField
+    private String outletModelName;
+    @DatabaseField
     private Long routeScheduleDetailId;
     @DatabaseField
     private String exhibitRegisteredId;
@@ -109,5 +113,21 @@ public class OutletMerEntity implements Serializable {
 
     public void setReferenceValue(String referenceValue) {
         this.referenceValue = referenceValue;
+    }
+
+    public Long getOutletModelId() {
+        return outletModelId;
+    }
+
+    public void setOutletModelId(Long outletModelId) {
+        this.outletModelId = outletModelId;
+    }
+
+    public String getOutletModelName() {
+        return outletModelName;
+    }
+
+    public void setOutletModelName(String outletModelName) {
+        this.outletModelName = outletModelName;
     }
 }

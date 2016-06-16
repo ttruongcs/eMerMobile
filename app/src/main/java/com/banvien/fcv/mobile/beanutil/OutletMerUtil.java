@@ -37,6 +37,8 @@ public class OutletMerUtil {
         entity.setExhibitRegisteredId(item.getExhibitRegisteredId());
         entity.setExhibitRegisteredDetailId(item.getExhibitRegisteredDetailId());
         entity.setReferenceValue(item.getReferenceValue());
+        entity.setOutletModelId(item.getOutletModelId());
+        entity.setOutletModelName(item.getOutletModelName());
         return entity;
     }
 }

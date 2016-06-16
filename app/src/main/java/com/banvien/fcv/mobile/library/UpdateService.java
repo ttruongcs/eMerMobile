@@ -243,10 +243,12 @@ public class UpdateService {
 									outletMerDTO.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
 									outletMerDTO.setRouteScheduleDetailId
 											(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
-									outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getType());
-									outletMerDTO.setRegisterValue(mExhibitRegisterDetailDTO.getRegisteredValue());
+									outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getDataType());
+									outletMerDTO.setRegisterValue(mExhibitRegisterDetailDTO.getReferenceValue());
 									outletMerDTO.setExhibitRegisteredId(mExhibitRegisterDTO.getExhibitRegisterId());
 									outletMerDTO.setExhibitRegisteredDetailId(mExhibitRegisterDetailDTO.getExhibitRegisterDetailId());
+									outletMerDTO.setOutletModelId(mExhibitRegisterDetailDTO.getOutletModelId());
+									outletMerDTO.setOutletModelName(mExhibitRegisterDetailDTO.getOutletModelName());
 
 									try {
 										OutletMerEntity entity = OutletMerUtil.convertToEntity(outletMerDTO);
