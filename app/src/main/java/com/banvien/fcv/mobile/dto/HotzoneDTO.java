@@ -46,4 +46,14 @@ public class HotzoneDTO implements Serializable {
     public void setHotZoneId(Long hotZoneId) {
         this.hotZoneId = hotZoneId;
     }
+
+    @Override
+    public String toString() {
+        return "HotzoneDTO{" +
+                "_id=" + _id +
+                ", hotZoneId=" + hotZoneId +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

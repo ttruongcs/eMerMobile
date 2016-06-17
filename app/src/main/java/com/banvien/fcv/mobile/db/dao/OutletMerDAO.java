@@ -6,6 +6,7 @@ import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.dao.GenericRawResults;
@@ -19,6 +20,7 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -344,5 +346,40 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             ELog.d("Error findByOutletId in OutletMerDAO");
         }
         return null;
+    }
+
+    public List<BeforeDisplayDTO> findOutletModelByOutletId(Long outletId) {
+        List<BeforeDisplayDTO> result = new ArrayList<>();
+
+        try {
+            List<OutletMerEntity> outletModels = queryBuilder().distinct()
+                    .selectColumns("outletModelId").selectColumns("outletModelName").where().eq("outletId", outletId).query();
+
+            if(outletModels.size() > 0) {
+                for(OutletMerEntity entity : outletModels) {
+                    BeforeDisplayDTO beforeDisplayDTO = new BeforeDisplayDTO();
+                    beforeDisplayDTO.setOutletModelId(entity.getOutletModelId());
+                    beforeDisplayDTO.setOutletModelName(entity.getOutletModelName());
+
+                    Map<String, Object> properties = new HashMap<>();
+                    properties.put("outletId", outletId);
+                    properties.put("outletModelId", entity.getOutletModelId());
+                    properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS);
+                    List<OutletMerEntity> mhsEntities = queryForFieldValues(properties);
+
+                    ELog.d(mhsEntities.toString());
+
+                    if(mhsEntities.size() > 0) {
+                        beforeDisplayDTO.setMhs(OutletMerUtil.convertToDTO(mhsEntities.get(0)));
+                    }
+                    result.add(beforeDisplayDTO);
+
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result;
     }
 }

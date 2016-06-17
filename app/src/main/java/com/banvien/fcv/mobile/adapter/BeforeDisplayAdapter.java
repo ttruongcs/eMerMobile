@@ -28,12 +28,12 @@ import butterknife.ButterKnife;
  */
 public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdapter.ItemHolder> {
     private BeforeDisplayActivity activity;
-    private List<OutletMerDTO> mData;
+    private List<ProductDTO> mData;
     private Repo repo;
 
-    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<OutletMerDTO> outletMerDTOs, Repo repo) {
+    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs, Repo repo) {
         this.activity = activity;
-        this.mData = outletMerDTOs;
+        this.mData = productDTOs;
         this.repo = repo;
     }
 
@@ -47,8 +47,10 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
+        ELog.d("haha", String.valueOf(position));
         ItemHolder itemHolder = holder;
         itemHolder.bindViews(mData.get(position));
+
     }
 
     @Override
@@ -69,39 +71,37 @@ public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdap
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final OutletMerDTO outletMerDTO) {
-            ProductDTO productDTO;
+        public void bindViews(final ProductDTO productDTO) {
             try {
-                productDTO = repo.getProductDAO().findByProductId(Long.valueOf(outletMerDTO.getRegisterValue()));
                 productName.setText(productDTO.getName());
-                OutletMerDTO checkedObject = repo.getOutletMerDAO()
-                        .findReferencedDisplay(ScreenContants.MHS_BEFORE, outletMerDTO.get_id());
+//                OutletMerDTO checkedObject = repo.getOutletMerDAO()
+//                        .findReferencedDisplay(ScreenContants.MHS_BEFORE, outletMerDTO.get_id());
 
-                if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
-                    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-                    checkBox.setChecked(true);
-                }
-
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        String actualValue = null;
-                        if(isChecked) {
-                            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-                            boolean isExist = checkProductExist(outletMerDTO);
-                            if(!isExist) {
-                                addProductBeforeData(outletMerDTO);
-                            } else {
-                                actualValue = outletMerDTO.getRegisterValue();
-                                updateProductBefore(outletMerDTO, actualValue);
-                            }
-                        } else {
-                            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
-                            updateProductBefore(outletMerDTO, actualValue);
-                        }
-                    }
-                });
-            } catch (SQLException e) {
+//                if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
+//                //    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
+//                    checkBox.setChecked(true);
+//                }
+//
+//                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        String actualValue = null;
+//                        if(isChecked) {
+//                //            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
+//                            boolean isExist = checkProductExist(outletMerDTO);
+//                            if(!isExist) {
+//                                addProductBeforeData(outletMerDTO);
+//                            } else {
+//                                actualValue = outletMerDTO.getRegisterValue();
+//                                updateProductBefore(outletMerDTO, actualValue);
+//                            }
+//                        } else {
+//                //            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
+//                            updateProductBefore(outletMerDTO, actualValue);
+//                        }
+//                    }
+//                });
+            } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
         }

@@ -48,4 +48,15 @@ public class ProductDTO implements Serializable {
     public void setProductGroupId(Long productGroupId) {
         this.productGroupId = productGroupId;
     }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "_id=" + _id +
+                ", productId=" + productId +
+                ", productGroupId=" + productGroupId +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }

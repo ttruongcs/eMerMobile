@@ -114,4 +114,22 @@ public class OutletMerDTO implements Serializable {
     public void setOutletModelName(String outletModelName) {
         this.outletModelName = outletModelName;
     }
+
+    @Override
+    public String toString() {
+        return "OutletMerDTO{" +
+                "_id=" + _id +
+                ", outletId=" + outletId +
+                ", routeScheduleId=" + routeScheduleId +
+                ", routeScheduleDetailId=" + routeScheduleDetailId +
+                ", outletModelId=" + outletModelId +
+                ", outletModelName='" + outletModelName + '\'' +
+                ", exhibitRegisteredId='" + exhibitRegisteredId + '\'' +
+                ", exhibitRegisteredDetailId='" + exhibitRegisteredDetailId + '\'' +
+                ", dataType='" + dataType + '\'' +
+                ", registerValue='" + registerValue + '\'' +
+                ", actualValue='" + actualValue + '\'' +
+                ", referenceValue='" + referenceValue + '\'' +
+                '}';
+    }
 }

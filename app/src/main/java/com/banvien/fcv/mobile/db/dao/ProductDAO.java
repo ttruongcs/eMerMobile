@@ -16,6 +16,7 @@ import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,5 +83,23 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         }
 
         return ProductUtil.convertToDTO(entity);
+    }
+
+    public List<ProductDTO> findByCodes(String[] mhsCode) {
+        List<ProductDTO> result = new ArrayList<>();
+        List<String> dataConditions = Arrays.asList(mhsCode);
+        try {
+            List<ProductEntity> entities = queryBuilder().where().in("code", dataConditions).query();
+            if(entities.size() > 0) {
+                for(ProductEntity entity : entities) {
+                    result.add(ProductUtil.convertToDTO(entity));
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+
+        return result;
     }
 }

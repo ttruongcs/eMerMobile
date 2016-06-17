@@ -3,18 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_before"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:weightSum="5">
 
             <TextView
-                android:id="@+id/tvBeforeLabel"
+                android:id="@+id/tvOutletModelName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sữa nước ụ DBB"
@@ -85,7 +80,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Có (Chọn v)"
+                    android:text="@string/number"
                     android:layout_weight="1"
                     android:gravity="right"/>
 
@@ -95,7 +90,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcvBeforeDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -117,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Facing"/>
+                    android:text="@string/total_facing"/>
 
                 <EditText
                     android:id="@+id/edFacing"
@@ -166,6 +161,5 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

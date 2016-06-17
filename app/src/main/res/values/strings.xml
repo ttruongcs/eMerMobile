@@ -462,5 +462,8 @@
     <!--Map-->
     <string name="current_position">Current position</string>
 
+    <string name="number">Số lượng</string>
+    <string name="total_facing">Tổng facing</string>
+
 
 </resources>
