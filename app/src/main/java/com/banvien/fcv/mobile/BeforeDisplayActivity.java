@@ -17,6 +17,7 @@ import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,9 +60,9 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(
                 this.getApplicationContext(), R.drawable.bubble_blue), false, false));
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new MySpeedScrollManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        ELog.d("before", beforeDisplayDTOs.toString());
+        recyclerView.setNestedScrollingEnabled(false);
         adapter = new BeforeOutletModelAdapter(this, beforeDisplayDTOs, hotzoneDTOs, repo, outletId);
         recyclerView.setAdapter(adapter);
 

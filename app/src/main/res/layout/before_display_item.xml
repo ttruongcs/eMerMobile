@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/tvMHS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".3"
+        android:text="Hello"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="6dp" />
+
+    <EditText
+        android:id="@+id/edMHS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".7"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:background="@drawable/textboxwithborder"/>
+
+
+</LinearLayout>

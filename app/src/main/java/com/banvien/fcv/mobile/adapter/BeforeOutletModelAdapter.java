@@ -1,15 +1,16 @@
 package com.banvien.fcv.mobile.adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,10 +23,7 @@ import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
-import com.banvien.fcv.mobile.utils.CustomLinearLayoutManager;
-import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.google.android.gms.analytics.ecommerce.Product;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -80,8 +78,8 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
         @Bind(R.id.spinner)
         Spinner spinner;
 
-        @Bind(R.id.rcvBeforeDisplay)
-        RecyclerView recyclerView;
+        @Bind(R.id.lvBeforeDisplay)
+        ListView listView;
 
         @Bind(R.id.edFacing)
         EditText edFacing;
@@ -92,15 +90,11 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
         @Bind(R.id.tvOutletModelName)
         TextView tvOutletModelName;
 
-        RecyclerView.Adapter adapter;
-        RecyclerView.LayoutManager layoutManager;
-
         @Bind(R.id.tvCountChecked)
         TextView tvCountChecked;
 
         @Bind(R.id.tvCountTotal)
         TextView tvCountTotal;
-
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -116,31 +110,49 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
 
         private void initRecyclerView(BeforeDisplayDTO dto) {
             List<ProductDTO> productDTOs = convertToMHS(dto);
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setProductGroupId(1l);
-            productDTO.setProductId(5l);
-            productDTO.set_id(3);
-            productDTO.setCode("cdd");
-            productDTO.setName("Sua test");
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
-            productDTOs.add(productDTO);
+//            ProductDTO productDTO = new ProductDTO();
+//            productDTO.setProductGroupId(1l);
+//            productDTO.setProductId(5l);
+//            productDTO.set_id(3);
+//            productDTO.setCode("cdd");
+//            productDTO.setName("Sua test");
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
+//            productDTOs.add(productDTO);
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.addItemDecoration(new DividerItemDecoration(activity, null));
-            layoutManager = new CustomLinearLayoutManager(itemView.getContext(), 1, false);
-            recyclerView.setLayoutManager(layoutManager);
-            ELog.d("so luong product", String.valueOf(productDTOs.size()));
-            adapter = new BeforeDisplayAdapter(activity, productDTOs, repo);
-            recyclerView.setAdapter(adapter);
+            BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, repo);
+            listView.setAdapter(adapter);
+            listView.setScrollbarFadingEnabled(false);
+
+            listView.setOnTouchListener(new ListView.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int action = event.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            // Disallow ScrollView to intercept touch events.
+                            v.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            // Allow ScrollView to intercept touch events.
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+
+                    // Handle ListView touch events.
+                    v.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
         private List<ProductDTO> convertToMHS(BeforeDisplayDTO dto) {

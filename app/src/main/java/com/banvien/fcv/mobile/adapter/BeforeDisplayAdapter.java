@@ -1,11 +1,14 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
@@ -26,48 +29,52 @@ import butterknife.ButterKnife;
 /**
  * Created by Linh Nguyen on 5/27/2016.
  */
-public class BeforeDisplayAdapter extends RecyclerView.Adapter<BeforeDisplayAdapter.ItemHolder> {
+public class BeforeDisplayAdapter extends BaseAdapter {
     private BeforeDisplayActivity activity;
     private List<ProductDTO> mData;
     private Repo repo;
+    private LayoutInflater mInflater;
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs, Repo repo) {
         this.activity = activity;
         this.mData = productDTOs;
         this.repo = repo;
+        mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.after_display_item, parent, false);
-        ItemHolder itemHolder = new ItemHolder(v);
-
-        return itemHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(ItemHolder holder, int position) {
-        ELog.d("haha", String.valueOf(position));
-        ItemHolder itemHolder = holder;
-        itemHolder.bindViews(mData.get(position));
-
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return mData.size();
     }
 
-    public class ItemHolder extends RecyclerView.ViewHolder {
+    @Override
+    public Object getItem(int position) {
+        return mData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = mInflater.inflate(R.layout.before_display_item, null);
+        ItemHolder itemHolder = new ItemHolder(v);
+        itemHolder.bindViews(mData.get(position));
+
+        return v;
+    }
+
+    public class ItemHolder  {
 
         @Bind(R.id.tvMHS)
         TextView productName;
 
-        @Bind(R.id.checkBox)
-        CheckBox checkBox;
+        @Bind(R.id.edMHS)
+        EditText editText;
 
         public ItemHolder(View itemView) {
-            super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
