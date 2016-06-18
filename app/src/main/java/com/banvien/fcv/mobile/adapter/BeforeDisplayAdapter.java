@@ -2,9 +2,13 @@ package com.banvien.fcv.mobile.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,7 +25,9 @@ import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,12 +40,22 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private List<ProductDTO> mData;
     private Repo repo;
     private LayoutInflater mInflater;
+    private Set<String> mhsCodes;
+    private EditText edFacing;
+    private Long outletId;
+    private Long outletModelId;
+    private String totalFacing;
 
-    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs, Repo repo) {
+    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs
+            , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
         this.activity = activity;
         this.mData = productDTOs;
+        this.edFacing = edFacing;
         this.repo = repo;
-        mInflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.outletId = outletId;
+        this.outletModelId = outletModelId;
+        mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mhsCodes = new HashSet<>();
     }
 
     @Override
@@ -66,13 +82,13 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         return v;
     }
 
-    public class ItemHolder  {
+    public class ItemHolder {
 
         @Bind(R.id.tvMHS)
         TextView productName;
 
         @Bind(R.id.edMHS)
-        EditText editText;
+        EditText editMHS;
 
         public ItemHolder(View itemView) {
             ButterKnife.bind(this, itemView);
@@ -81,35 +97,104 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         public void bindViews(final ProductDTO productDTO) {
             try {
                 productName.setText(productDTO.getName());
-//                OutletMerDTO checkedObject = repo.getOutletMerDAO()
-//                        .findReferencedDisplay(ScreenContants.MHS_BEFORE, outletMerDTO.get_id());
 
-//                if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
-//                //    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-//                    checkBox.setChecked(true);
-//                }
-//
-//                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        String actualValue = null;
-//                        if(isChecked) {
-//                //            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-//                            boolean isExist = checkProductExist(outletMerDTO);
-//                            if(!isExist) {
-//                                addProductBeforeData(outletMerDTO);
-//                            } else {
-//                                actualValue = outletMerDTO.getRegisterValue();
-//                                updateProductBefore(outletMerDTO, actualValue);
-//                            }
-//                        } else {
-//                //            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
-//                            updateProductBefore(outletMerDTO, actualValue);
-//                        }
-//                    }
-//                });
+                bindEvents(productDTO);
             } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
+            }
+        }
+
+        private void bindEvents(final ProductDTO productDTO) {
+            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        try {
+                            int quantity = Integer.parseInt(v.getText().toString());
+                            if (quantity > 0) {
+                                mhsCodes.add(productDTO.getCode());
+                                if (totalFacing != null && v.getText().toString() != "") {
+                                    int facing = Integer.valueOf(totalFacing)
+                                            + Integer.valueOf(v.getText().toString());
+                                    edFacing.setText(Integer.toString(facing));
+                                    addActualValue(facing);
+                                } else {
+                                    if (v.getText().toString() != "") {
+                                        edFacing.setText(v.getText().toString());
+                                        addActualValue(Integer.valueOf(v.getText().toString()));
+                                    }
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+
+                        }
+
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            editMHS.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    EditText numberInput;
+
+                    if (!hasFocus) {
+                        numberInput = (EditText) v;
+                        try {
+                            int quantity = Integer.parseInt(numberInput.getText().toString());
+                            if (quantity > 0) {
+                                mhsCodes.add(productDTO.getCode());
+                                if (totalFacing != null && numberInput.getText().toString() != "") {
+                                    int facing = Integer.valueOf(totalFacing) + Integer.valueOf(numberInput.getText().toString());
+                                    edFacing.setText(Integer.toString(facing));
+                                    addActualValue(facing);
+                                } else {
+                                    if (numberInput.getText().toString() != "") {
+                                        edFacing.setText(numberInput.getText().toString());
+                                        addActualValue(Integer.valueOf(numberInput.getText().toString()));
+                                    }
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+
+                        }
+                    }
+                }
+            });
+
+            editMHS.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    try {
+                        totalFacing = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
+                        ELog.d("totalFacing", totalFacing);
+                    } catch (SQLException e) {
+                        ELog.d(e.getMessage(), e);
+                    }
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+        }
+
+        private void addActualValue(int facing) {
+            try {
+                repo.getOutletMerDAO().updateActualValue(outletId, outletModelId
+                        , ScreenContants.FACING, String.valueOf(facing));
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
             }
         }
 

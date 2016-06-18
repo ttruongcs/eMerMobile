@@ -83,86 +83,86 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     @Override
     protected void bindViews() {
         super.bindViews();
-        try {
-            String facingValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_AFTER, outletId);
-            String eieValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_AFTER, outletId);;
-
-            if(facingValue != null) {
-                edFacing.setText(facingValue);
-            }
-            if(eieValue != null) {
-                edEIE.setText(eieValue);
-            }
-
-            edFacing.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if(actionId == EditorInfo.IME_ACTION_DONE) {
-                        OutletMerDTO outletMerDTO = new OutletMerDTO();
-                        outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
-                        outletMerDTO.setActualValue(v.getText().toString());
-                        outletMerDTO.setOutletId(outletId);
-                        insertOrUpdateData(outletMerDTO);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            edFacing.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    EditText numberInput;
-
-                    if(!hasFocus) {
-                        numberInput = (EditText) v;
-                        if(!numberInput.getText().toString().equals("")) {
-                            OutletMerDTO outletMerDTO = new OutletMerDTO();
-                            outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
-                            outletMerDTO.setActualValue(numberInput.getText().toString());
-                            outletMerDTO.setOutletId(outletId);
-                            insertOrUpdateData(outletMerDTO);
-                        }
-                    }
-                }
-            });
-
-            edEIE.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if(actionId == EditorInfo.IME_ACTION_DONE) {
-                        OutletMerDTO outletMerDTO = new OutletMerDTO();
-                        outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
-                        outletMerDTO.setActualValue(v.getText().toString());
-                        outletMerDTO.setOutletId(outletId);
-                        insertOrUpdateData(outletMerDTO);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            edEIE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    EditText numberInput;
-
-                    if(!hasFocus) {
-                        numberInput = (EditText) v;
-                        if(!numberInput.getText().toString().equals("")) {
-                            OutletMerDTO outletMerDTO = new OutletMerDTO();
-                            outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
-                            outletMerDTO.setActualValue(numberInput.getText().toString());
-                            outletMerDTO.setOutletId(outletId);
-                            insertOrUpdateData(outletMerDTO);
-                        }
-                    }
-                }
-            });
-
-        } catch (Exception e) {
-            ELog.d(e.getMessage(), e);
-        }
+//        try {
+//            String facingValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_AFTER, outletId);
+//            String eieValue = this.repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_AFTER, outletId);;
+//
+//            if(facingValue != null) {
+//                edFacing.setText(facingValue);
+//            }
+//            if(eieValue != null) {
+//                edEIE.setText(eieValue);
+//            }
+//
+//            edFacing.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                    if(actionId == EditorInfo.IME_ACTION_DONE) {
+//                        OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                        outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
+//                        outletMerDTO.setActualValue(v.getText().toString());
+//                        outletMerDTO.setOutletId(outletId);
+//                        insertOrUpdateData(outletMerDTO);
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
+//
+//            edFacing.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    EditText numberInput;
+//
+//                    if(!hasFocus) {
+//                        numberInput = (EditText) v;
+//                        if(!numberInput.getText().toString().equals("")) {
+//                            OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                            outletMerDTO.setDataType(ScreenContants.FACING_AFTER);
+//                            outletMerDTO.setActualValue(numberInput.getText().toString());
+//                            outletMerDTO.setOutletId(outletId);
+//                            insertOrUpdateData(outletMerDTO);
+//                        }
+//                    }
+//                }
+//            });
+//
+//            edEIE.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                    if(actionId == EditorInfo.IME_ACTION_DONE) {
+//                        OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                        outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
+//                        outletMerDTO.setActualValue(v.getText().toString());
+//                        outletMerDTO.setOutletId(outletId);
+//                        insertOrUpdateData(outletMerDTO);
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
+//
+//            edEIE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    EditText numberInput;
+//
+//                    if(!hasFocus) {
+//                        numberInput = (EditText) v;
+//                        if(!numberInput.getText().toString().equals("")) {
+//                            OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                            outletMerDTO.setDataType(ScreenContants.EIE_AFTER);
+//                            outletMerDTO.setActualValue(numberInput.getText().toString());
+//                            outletMerDTO.setOutletId(outletId);
+//                            insertOrUpdateData(outletMerDTO);
+//                        }
+//                    }
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            ELog.d(e.getMessage(), e);
+//        }
     }
 
     private void insertOrUpdateData(OutletMerDTO outletMerDTO) {

@@ -19,6 +19,7 @@ import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
@@ -103,32 +104,17 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
 
         public void bindView(BeforeDisplayDTO beforeDisplayDTO) {
             tvOutletModelName.setText(beforeDisplayDTO.getOutletModelName());
-            bindModelView();
-            initSpinner();
+            bindModelView(beforeDisplayDTO);
+            initSpinner(beforeDisplayDTO);
             initRecyclerView(beforeDisplayDTO);
         }
 
         private void initRecyclerView(BeforeDisplayDTO dto) {
             List<ProductDTO> productDTOs = convertToMHS(dto);
-//            ProductDTO productDTO = new ProductDTO();
-//            productDTO.setProductGroupId(1l);
-//            productDTO.setProductId(5l);
-//            productDTO.set_id(3);
-//            productDTO.setCode("cdd");
-//            productDTO.setName("Sua test");
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
-//            productDTOs.add(productDTO);
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
-            BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, repo);
+            BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
+                    , repo, outletId, dto.getOutletModelId());
             listView.setAdapter(adapter);
             listView.setScrollbarFadingEnabled(false);
 
@@ -170,7 +156,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
             return results;
         }
 
-        private void initSpinner() {
+        private void initSpinner(final BeforeDisplayDTO dto) {
             final List<String> spinnerName = new ArrayList<>();
             final List<Long> spinnerId = new ArrayList<>();
             Map<String, String> mapForSearch = new HashMap<>();
@@ -196,6 +182,12 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(position != 0) {
+                            try {
+                                repo.getOutletMerDAO().updateActualValue(
+                                        outletId, dto.getOutletModelId(), ScreenContants.HOTZONE, spinnerName.get(position));
+                            } catch (SQLException e) {
+                                ELog.d(e.getMessage(), e);
+                            }
                             //addBeforeHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
                         }
                     }
@@ -209,10 +201,10 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
             }
         }
 
-        private void bindModelView() {
+        private void bindModelView(BeforeDisplayDTO displayDTO) {
             try {
-                String facingValue = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_BEFORE, outletId);
-                String eieValue = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_BEFORE, outletId);;
+                String facingValue = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_BEFORE, outletId, displayDTO.getOutletModelId());
+                String eieValue = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.EIE_BEFORE, outletId, displayDTO.getOutletModelId());;
 
                 if(facingValue != null) {
                     edFacing.setText(facingValue);

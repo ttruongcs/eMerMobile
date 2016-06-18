@@ -104,7 +104,7 @@
             <ListView
                 android:id="@+id/lvBeforeDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
@@ -123,27 +123,27 @@
             android:background="@drawable/border_top"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:weightSum="3">
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".2"
                 android:text="@string/total_facing" />
 
             <EditText
                 android:id="@+id/edFacing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight=".8"
                 android:gravity="center"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:theme="@style/EditTextCustomHolo" />
+                android:background="@drawable/full_border_transparent" />
 
 
         </LinearLayout>
@@ -153,15 +153,15 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:weightSum="3">
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".2"
                 android:text="EIE" />
 
 
@@ -169,12 +169,12 @@
                 android:id="@+id/edEIE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight=".8"
                 android:gravity="center"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:theme="@style/EditTextCustomHolo" />
+                android:background="@drawable/full_border_transparent"   />
 
         </LinearLayout>
 
