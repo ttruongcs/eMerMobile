@@ -116,10 +116,27 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
 
         private void initRecyclerView(BeforeDisplayDTO dto) {
             List<ProductDTO> productDTOs = convertToMHS(dto);
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductGroupId(1l);
+            productDTO.setProductId(5l);
+            productDTO.set_id(3);
+            productDTO.setCode("cdd");
+            productDTO.setName("Sua test");
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+            productDTOs.add(productDTO);
+
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             recyclerView.setHasFixedSize(true);
             recyclerView.addItemDecoration(new DividerItemDecoration(activity, null));
-            layoutManager = new CustomLinearLayoutManager(activity);
+            layoutManager = new CustomLinearLayoutManager(itemView.getContext(), 1, false);
             recyclerView.setLayoutManager(layoutManager);
             ELog.d("so luong product", String.valueOf(productDTOs.size()));
             adapter = new BeforeDisplayAdapter(activity, productDTOs, repo);

@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -56,7 +57,8 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
 
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, null));
+        recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(
+                this.getApplicationContext(), R.drawable.bubble_blue), false, false));
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         ELog.d("before", beforeDisplayDTOs.toString());
