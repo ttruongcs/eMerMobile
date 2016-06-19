@@ -176,7 +176,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return isExist;
     }
 
-    public OutletMerDTO findByProperties(Map<String, Object> properties) {
+    public OutletMerDTO findFirstResultByProperties(Map<String, Object> properties) {
         OutletMerDTO outletMerDTO = new OutletMerDTO();
         int count = 0;
         try {
