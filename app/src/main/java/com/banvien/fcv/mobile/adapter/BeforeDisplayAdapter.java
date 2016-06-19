@@ -22,11 +22,14 @@ import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.sql.Constants;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.Bind;
@@ -40,7 +43,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private List<ProductDTO> mData;
     private Repo repo;
     private LayoutInflater mInflater;
-    private Set<String> mhsCodes;
+    private Map<String, Integer> mhsCodes;
     private EditText edFacing;
     private Long outletId;
     private Long outletModelId;
@@ -55,7 +58,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         this.outletId = outletId;
         this.outletModelId = outletModelId;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mhsCodes = new HashSet<>();
+        this.mhsCodes = new HashMap<>();
     }
 
     @Override
@@ -112,18 +115,22 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         try {
                             int quantity = Integer.parseInt(v.getText().toString());
                             if (quantity > 0) {
-                                mhsCodes.add(productDTO.getCode());
-                                if (totalFacing != null && v.getText().toString() != "") {
-                                    int facing = Integer.valueOf(totalFacing)
-                                            + Integer.valueOf(v.getText().toString());
-                                    edFacing.setText(Integer.toString(facing));
-                                    addActualValue(facing);
-                                } else {
-                                    if (v.getText().toString() != "") {
-                                        edFacing.setText(v.getText().toString());
-                                        addActualValue(Integer.valueOf(v.getText().toString()));
-                                    }
-                                }
+                                mhsCodes.put(productDTO.getCode(), + quantity);
+                                ELog.d("quantity", mhsCodes.toString());
+                                addMhs(mhsCodes);
+
+
+//                                if (totalFacing != null && v.getText().toString() != "") {
+//                                    int facing = Integer.valueOf(totalFacing)
+//                                            + Integer.valueOf(v.getText().toString());
+//                                    edFacing.setText(Integer.toString(facing));
+//                                    addActualValue(facing);
+//                                } else {
+//                                    if (v.getText().toString() != "") {
+//                                        edFacing.setText(v.getText().toString());
+//                                        addActualValue(Integer.valueOf(v.getText().toString()));
+//                                    }
+//                                }
                             }
                         } catch (NumberFormatException e) {
 
@@ -139,27 +146,41 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     EditText numberInput;
-
+                    numberInput = (EditText) v;
                     if (!hasFocus) {
-                        numberInput = (EditText) v;
                         try {
                             int quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
-                                mhsCodes.add(productDTO.getCode());
-                                if (totalFacing != null && numberInput.getText().toString() != "") {
-                                    int facing = Integer.valueOf(totalFacing) + Integer.valueOf(numberInput.getText().toString());
-                                    edFacing.setText(Integer.toString(facing));
-                                    addActualValue(facing);
-                                } else {
-                                    if (numberInput.getText().toString() != "") {
-                                        edFacing.setText(numberInput.getText().toString());
-                                        addActualValue(Integer.valueOf(numberInput.getText().toString()));
-                                    }
-                                }
+                                mhsCodes.put(productDTO.getCode(), + quantity);
+                                ELog.d("quantity", mhsCodes.toString());
+                                addMhs(mhsCodes);
+//                                if (totalFacing != null && numberInput.getText().toString() != "") {
+//                                    int facing = Integer.valueOf(totalFacing) + Integer.valueOf(numberInput.getText().toString());
+//                                    edFacing.setText(Integer.toString(facing));
+//                                    addActualValue(facing);
+//                                } else {
+//                                    if (numberInput.getText().toString() != "") {
+//                                        edFacing.setText(numberInput.getText().toString());
+//                                        addActualValue(Integer.valueOf(numberInput.getText().toString()));
+//                                    }
+//                                }
                             }
                         } catch (NumberFormatException e) {
 
                         }
+                    } else if(hasFocus) {
+//                        try {
+//                            if (numberInput.getText().toString() != "" && Integer.valueOf(numberInput.getText().toString()) > 0) {
+//                                totalFacing = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
+//                                int newFacing = Integer.valueOf(totalFacing) - Integer.valueOf(numberInput.getText().toString());
+//                                edFacing.setText(Integer.toString(newFacing));
+//                                ELog.d("Oke");
+//                            }
+//                        } catch (NumberFormatException e) {
+//
+//                        } catch (SQLException e) {
+//                            ELog.d(e.getMessage(), e);
+//                        }
                     }
                 }
             });
@@ -167,12 +188,12 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             editMHS.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    try {
-                        totalFacing = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
-                        ELog.d("totalFacing", totalFacing);
-                    } catch (SQLException e) {
-                        ELog.d(e.getMessage(), e);
-                    }
+//                    try {
+//                        totalFacing = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
+//                        ELog.d("totalFacing", totalFacing);
+//                    } catch (SQLException e) {
+//                        ELog.d(e.getMessage(), e);
+//                    }
                 }
 
                 @Override
@@ -187,6 +208,23 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             });
 
 
+        }
+
+        private void addMhs(Map<String, Integer> mhsCodes) {
+            String mhsValue = "";
+
+            try {
+                if(mhsCodes.size() > 0) {
+                    for(String key : mhsCodes.keySet()) {
+                        mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
+                    }
+                    mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
+                    ELog.d("mhs","value: " + mhsValue);
+                    repo.getOutletMerDAO().updateActualValue(outletId, outletModelId, ScreenContants.MHS, mhsValue);
+                }
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
         }
 
         private void addActualValue(int facing) {

@@ -18,4 +18,9 @@ public class MainActivity extends BaseDrawerActivity {
         tx.replace(R.id.content_frame, new HomeFragment());
         tx.commit();
     }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        super.setToolbarTitle(title);
+    }
 }

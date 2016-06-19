@@ -393,4 +393,5 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             ELog.d(e.getMessage(), e);
         }
     }
+
 }

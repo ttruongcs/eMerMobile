@@ -42,7 +42,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        parent.getSupportActionBar().setTitle(getString(R.string.home));
+        parent.setToolbarTitle(getString(R.string.home));
     }
 
     protected void bindViews(){
