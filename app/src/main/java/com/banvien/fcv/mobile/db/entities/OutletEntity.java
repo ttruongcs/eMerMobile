@@ -43,6 +43,8 @@ public class OutletEntity implements Serializable {
     private Integer status;
     @DatabaseField
     private Long routeScheduleId;
+    @DatabaseField
+    private Long routeScheduleDetailId;
 
     public long get_id() {
         return _id;
@@ -170,5 +172,13 @@ public class OutletEntity implements Serializable {
 
     public void setRouteScheduleId(Long routeScheduleId) {
         this.routeScheduleId = routeScheduleId;
+    }
+
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }
