@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile;
 
+import com.j256.ormlite.stmt.query.In;
+
 /**
  * Created by Ban Vien Ltd.
  * User: Vien Nguyen (vien.nguyen@banvien.com)
@@ -71,5 +73,48 @@ public class ScreenContants {
 
     //GPS
     public static final String GPS = "GPS";
+
+
+    // TYPE OF NODE STEP
+        // HOME
+    public static final String HOME_STEP_STARTDAY = "HOME_STARTDAY";
+    public static final String HOME_STEP_INOUTLET = "HOME_INOUTLET";
+    public static final String HOME_STEP_ENDDAY = "HOME_ENDDAY";
+
+            // HOME_STARTDAY
+    public static final String HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG = "HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG";
+    public static final String HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON = "HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON";
+    public static final String HOME_STEP_STARTDAY_CHUPHINHDONGPHUC = "HOME_STEP_STARTDAY_CHUPHINHDONGPHUC";
+    public static final String HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU = "HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU";
+    public static final String HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN = "HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN";
+    public static final String HOME_STEP_STARTDAY_XACNHANLAMVIEC = "HOME_STEP_STARTDAY_XACNHANLAMVIEC";
+
+            // HOME_STARTDAY
+    public static final String HOME_STEP_INOUTLET_CHECKIN = "HOME_STEP_INOUTLET_CHECKIN";
+    public static final String HOME_STEP_INOUTLET_CHUPANHOVERVIEW = "HOME_STEP_INOUTLET_CHUPANHOVERVIEW";
+    public static final String HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE = "HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE";
+    public static final String HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC = "HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC";
+    public static final String HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU = "HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU";
+    public static final String HOME_STEP_INOUTLET_HUTHANGDATHANG = "HOME_STEP_INOUTLET_HUTHANGDATHANG";
+    public static final String HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG = "HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG";
+    public static final String HOME_STEP_INOUTLET_KHAOSATPOSM = "HOME_STEP_INOUTLET_KHAOSATPOSM";
+    public static final String HOME_STEP_INOUTLET_GHINHANKHIEUNAI = "HOME_STEP_INOUTLET_GHINHANKHIEUNAI";
+
+            // ENDAY
+    public static final String HOME_STEP_ENDDAY_CHUPHINHCUOINGAY = "HOME_STEP_ENDDAY_CHUPHINHCUOINGAY";
+    public static final String HOME_STEP_ENDDAY_DONGBOKETQUA = "HOME_STEP_ENDDAY_DONGBOKETQUA";
+
+
+            //HOME_STARTDAY
+//    public static final String STARTDAY_STEP_STARTDAY = "HOME_STARTDAY";
+//    public static final String STARTDAY_STEP_INOUTLET = "HOME_INOUTLET";
+//    public static final String STARTDAY_STEP_ENDDAY = "HOME_ENDDAY";
+
+    // STATUS OF TREE STEP
+    public static final Integer STATUS_STEP_DONE = 2;
+    public static final Integer STATUS_STEP_INPROGRESS = 1;
+    public static final Integer STATUS_STEP_NOTYET = 0;
+
+
 
 }

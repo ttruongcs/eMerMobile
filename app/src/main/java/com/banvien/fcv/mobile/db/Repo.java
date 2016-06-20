@@ -12,6 +12,11 @@ import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
+import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
+import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
+import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
+import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
+import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
@@ -68,6 +73,22 @@ public class Repo {
 
     public ComplainTypeDAO getComplainTypeDAO() throws SQLException {
         return databaseHelper.getComplainTypeDAO();
+    }
+
+    public StatusHomeDAO getStatusHomeDAO() throws SQLException {
+        return databaseHelper.getStatusHomeDAO();
+    }
+
+    public StatusStartDayDAO getStartDayDAO() throws SQLException {
+        return databaseHelper.getStatusStartDayDAO();
+    }
+
+    public StatusInOutletDAO getStatusInOutletDAO() throws SQLException {
+        return databaseHelper.getStatusInOutletDAO();
+    }
+
+    public StatusEndDayDAO getStatusEndDayDAO() throws SQLException {
+        return databaseHelper.getStatusEndDayDAO();
     }
 
     public void release() {

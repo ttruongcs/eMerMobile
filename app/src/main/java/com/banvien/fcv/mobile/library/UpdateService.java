@@ -25,6 +25,7 @@ import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.beanutil.POSMUtil;
 import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
 import com.banvien.fcv.mobile.beanutil.ProductUtil;
+import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
 import com.banvien.fcv.mobile.db.DatabaseHelper;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
@@ -36,6 +37,7 @@ import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
@@ -44,6 +46,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.StatusHomeDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MOutletDTO;
@@ -88,6 +91,7 @@ public class UpdateService {
 
 			JSONObject json = null;
 			System.out.println("json "+ json);
+			configStatusHome();
 			Call<Map<String,Object>> call =
 					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
 			fillMetadata(call);
@@ -97,6 +101,14 @@ public class UpdateService {
 		}
 		results.put("taskType", taskType);
 		return results;
+	}
+
+	private void configStatusHome() throws SQLException {
+		StatusHomeDTO statusHomeDTO = new StatusHomeDTO();
+		statusHomeDTO.setChuanBiDauNgay(ScreenContants.STATUS_STEP_INPROGRESS);
+		statusHomeDTO.setTrongCuaHang(ScreenContants.STATUS_STEP_NOTYET);
+		statusHomeDTO.setKetThucCuoiNgay(ScreenContants.STATUS_STEP_NOTYET);
+		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
 
 	private void fillMetadata(Call<Map<String,Object>> call){

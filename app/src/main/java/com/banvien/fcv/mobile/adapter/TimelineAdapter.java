@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.HomeActivity;
+import com.banvien.fcv.mobile.InOutletHomeActivity;
+import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 
 import java.util.List;
@@ -28,11 +36,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
     public static final double PIC_RATIO_VALUE = 4.0;
 
     List<TimelineDTO> mData;
-    HomeActivity activity;
+    Activity activity;
 
-    public TimelineAdapter(List<TimelineDTO> data, HomeActivity homeActivity) {
+    public TimelineAdapter(List<TimelineDTO> data, Activity activity) {
         this.mData = data;
-        this.activity = homeActivity;
+        this.activity = activity;
     }
 
     @Override
@@ -53,6 +61,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         itemHolder.tvTimeline.setText(mData.get(position).getTitle());
         itemHolder.tvDetail.setText(mData.get(position).getDetail());
         itemHolder.tvOrder.setText(mData.get(position).getOrder());
+        itemHolder.stepCode.setText(mData.get(position).getType());
 
         if(position == 0) {
             itemHolder.viewTop.getLayoutParams().width = 0;
@@ -83,7 +92,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         return mData.size();
     }
 
-    public int containerHeight(HomeActivity activity) {
+    public int containerHeight(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -119,9 +128,97 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         @Bind(R.id.card_view)
         CardView cardView;
 
+        @Bind(R.id.stepCode)
+        TextView stepCode;
+
         public ItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (stepCode.getText().toString()) {
+                        // HOME
+                        case ScreenContants.HOME_STEP_STARTDAY :
+                            Intent startDayIntent = new Intent(v.getContext(), StartDayActivity.class);
+                            v.getContext().startActivity(startDayIntent);
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET :
+                            Intent inOutletIntent = new Intent(v.getContext(), InOutletHomeActivity.class);
+                            v.getContext().startActivity(inOutletIntent);
+                            break;
+                        case ScreenContants.HOME_STEP_ENDDAY:
+                            Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);
+                            v.getContext().startActivity(endDayIntent);
+                            break;
+
+                        // START DAY
+                        case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :
+                            Intent prepareIntent = new Intent(v.getContext(), PrepareActivity.class);
+                            v.getContext().startActivity(prepareIntent);
+                            break;
+                        case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
+                            // todo
+                            break;
+
+
+                        // IN OUTLET
+                        case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW :
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG :
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
+                            // todo
+                            break;
+
+
+
+                        // END DAY
+                        case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
+                            // todo
+                            break;
+                        case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
+                            // todo
+                            break;
+
+                        default:
+                            // todo
+                            break;
+                    }
+                }
+            });
         }
     }
 }

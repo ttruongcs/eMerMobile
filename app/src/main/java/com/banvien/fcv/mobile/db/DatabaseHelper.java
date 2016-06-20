@@ -14,6 +14,10 @@ import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
+import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
+import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
+import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
+import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
@@ -23,7 +27,12 @@ import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
+import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
+import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
+import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.OutletRegisteredDTO;
+import com.banvien.fcv.mobile.dto.StatusHomeDTO;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -57,6 +66,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private OutletDAO outletDAO = null;
 	private OutletRegisteredDAO outletRegisteredDAO = null;
 	private ComplainTypeDAO complainTypeDAO = null;
+	private StatusHomeDAO statusHomeDAO = null;
+	private StatusStartDayDAO statusStartDayDAO = null;
+	private StatusInOutletDAO statusInOutletDAO = null;
+	private StatusEndDayDAO statusEndDayDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -79,11 +92,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, OutletEntity.class);
 			TableUtils.createTable(connectionSource, OutletRegisteredEntity.class);
 			TableUtils.createTable(connectionSource, ComplainTypeEntity.class);
+			TableUtils.createTable(connectionSource, StatusHomeEntity.class);
+
+			TableUtils.createTable(connectionSource, StatusStartDayEntity.class);
+			TableUtils.createTable(connectionSource, StatusInOutletEntity.class);
+			TableUtils.createTable(connectionSource, StatusEndDayEntity.class);
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
 			throw new RuntimeException(e);
 		}
 	}
+
 
 	/**
 	 * This is called when your application is upgraded and it has a higher version number. This allows you to adjust
@@ -103,6 +122,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, OutletEntity.class, true);
 			TableUtils.dropTable(connectionSource, OutletRegisteredEntity.class, true);
 			TableUtils.dropTable(connectionSource, ComplainTypeEntity.class, true);
+			TableUtils.dropTable(connectionSource, StatusHomeEntity.class, true);
+
+			TableUtils.dropTable(connectionSource, StatusStartDayEntity.class, true);
+			TableUtils.dropTable(connectionSource, StatusInOutletEntity.class, true);
+			TableUtils.dropTable(connectionSource, StatusEndDayEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -177,6 +201,38 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 
 		return complainTypeDAO;
+	}
+
+	public StatusHomeDAO getStatusHomeDAO() throws SQLException {
+		if(null == statusHomeDAO) {
+			statusHomeDAO = new StatusHomeDAO(getConnectionSource(), StatusHomeEntity.class);
+		}
+
+		return statusHomeDAO;
+	}
+
+	public StatusStartDayDAO getStatusStartDayDAO() throws SQLException {
+		if(null == statusStartDayDAO) {
+			statusStartDayDAO = new StatusStartDayDAO(getConnectionSource(), StatusStartDayEntity.class);
+		}
+
+		return statusStartDayDAO;
+	}
+
+	public StatusInOutletDAO getStatusInOutletDAO() throws SQLException {
+		if(null == statusInOutletDAO) {
+			statusInOutletDAO = new StatusInOutletDAO(getConnectionSource(), StatusInOutletEntity.class);
+		}
+
+		return statusInOutletDAO;
+	}
+
+	public StatusEndDayDAO getStatusEndDayDAO() throws SQLException {
+		if(null == statusEndDayDAO) {
+			statusEndDayDAO = new StatusEndDayDAO(getConnectionSource(), StatusEndDayEntity.class);
+		}
+
+		return statusEndDayDAO;
 	}
 
 	/**

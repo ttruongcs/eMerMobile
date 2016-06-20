@@ -85,7 +85,7 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/google_white"
                     tools:text="This saturday"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     />
 
@@ -97,7 +97,16 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/google_white"
                     tools:text="Detail"
-                    android:textSize="16dp"
+                    android:textSize="12dp"
+                    />
+
+                <TextView
+                    android:id="@+id/stepCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"
                     />
 
             </LinearLayout>
