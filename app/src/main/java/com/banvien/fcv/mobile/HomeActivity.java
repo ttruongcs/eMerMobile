@@ -49,7 +49,7 @@ public class HomeActivity extends BaseDrawerActivity {
                 statusHome = null;
             }
         } catch (SQLException e) {
-            ELog.d("Error when get CONFIG");
+            ELog.d("Error when get CONFIG!");
         }
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

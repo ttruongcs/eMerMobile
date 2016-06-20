@@ -72,30 +72,30 @@ public class BaseDrawerActivity extends BaseActivity {
     }
 
     protected void setupHeader() {
-//        toggle = new ActionBarDrawerToggle(
-//                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-//            public void onDrawerOpened(View drawerView) {
-//                if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            drawerLayout.closeDrawer(GravityCompat.START);
-//                        }
-//                    });
-//                }
-//            }
-//            public void onDrawerClosed(View drawerView) {
-//                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        drawerLayout.openDrawer(GravityCompat.START);
-//                    }
-//                });
-//            }
-//        };
-//
-//        drawerLayout.setDrawerListener(toggle);
-//        toggle.syncState();
+        toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            public void onDrawerOpened(View drawerView) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        }
+                    });
+                }
+            }
+            public void onDrawerClosed(View drawerView) {
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        drawerLayout.openDrawer(GravityCompat.START);
+                    }
+                });
+            }
+        };
+
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
     }
 
     protected void replaceFragmentContent(Fragment fragment) {
