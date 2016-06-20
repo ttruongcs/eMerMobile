@@ -1,6 +1,8 @@
 package com.banvien.fcv.mobile;
 
 import android.graphics.Point;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -25,8 +27,14 @@ public class BaseDrawerActivity extends BaseActivity {
     ActionBarDrawerToggle toggle;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentViewWithoutInject(R.layout.activity_drawer);
+
+    }
+
+    @Override
     public void setContentView(int layoutResID) {
-        super.setContentViewWithoutInject(R.layout.activity_drawer);
 
         if (layoutResID > 0) {
             ViewGroup viewGroup = (ViewGroup) findViewById(R.id.content_frame);
@@ -58,31 +66,36 @@ public class BaseDrawerActivity extends BaseActivity {
         return true;
     }
 
-    protected void setupHeader() {
-        toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            public void onDrawerOpened(View drawerView) {
-                if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            drawerLayout.closeDrawer(GravityCompat.START);
-                        }
-                    });
-                }
-            }
-            public void onDrawerClosed(View drawerView) {
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
-                });
-            }
-        };
+    @Override
+    protected void setToolbarTitle(String title) {
+        super.setToolbarTitle(title);
+    }
 
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+    protected void setupHeader() {
+//        toggle = new ActionBarDrawerToggle(
+//                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+//            public void onDrawerOpened(View drawerView) {
+//                if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            drawerLayout.closeDrawer(GravityCompat.START);
+//                        }
+//                    });
+//                }
+//            }
+//            public void onDrawerClosed(View drawerView) {
+//                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        drawerLayout.openDrawer(GravityCompat.START);
+//                    }
+//                });
+//            }
+//        };
+//
+//        drawerLayout.setDrawerListener(toggle);
+//        toggle.syncState();
     }
 
     protected void replaceFragmentContent(Fragment fragment) {

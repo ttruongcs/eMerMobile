@@ -54,6 +54,7 @@ public class ScreenContants {
     public static final String EIE_AFTER = "EIE_AFTER";
 
     //FACING
+    public static final String FACING = "FACING";
     public static final String FACING_BEFORE = "FACING_BEFORE";
     public static final String FACING_AFTER = "FACING_AFTER";
 

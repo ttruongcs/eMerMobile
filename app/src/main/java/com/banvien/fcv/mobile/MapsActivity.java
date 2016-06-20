@@ -65,7 +65,7 @@ public class MapsActivity extends FragmentActivity  {
         try {
             properties.put(ScreenContants.DATA_TYPE, ScreenContants.GPS);
             properties.put(ScreenContants.OUTLETID, outletId);
-            OutletMerDTO outletMerDTO = repo.getOutletMerDAO().findByProperties(properties);
+            OutletMerDTO outletMerDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
 
             if(outletMerDTO.get_id() <= 0) {
                 OutletMerDTO gpsDTO = new OutletMerDTO();

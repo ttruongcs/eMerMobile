@@ -176,7 +176,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return isExist;
     }
 
-    public OutletMerDTO findByProperties(Map<String, Object> properties) {
+    public OutletMerDTO findFirstResultByProperties(Map<String, Object> properties) {
         OutletMerDTO outletMerDTO = new OutletMerDTO();
         int count = 0;
         try {
@@ -260,13 +260,13 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
-    public String findActualValueByDataType(String dataType, Long outletId) {
+    public String findActualValueByDataType(String dataType, Long outletId, Long outletModelId) {
         String result = null;
         OutletMerEntity item = new OutletMerEntity();
         QueryBuilder<OutletMerEntity, String> queryBuilder = queryBuilder();
 
         try {
-            queryBuilder.where().eq("dataType", dataType).and().eq("outletId", outletId);
+            queryBuilder.where().eq("dataType", dataType).and().eq("outletId", outletId).and().eq("outletModelId", outletModelId);
             PreparedQuery<OutletMerEntity> preparedQuery = queryBuilder.prepare();
             item = queryForFirst(preparedQuery);
         } catch (SQLException e) {
@@ -382,4 +382,16 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
 
         return result;
     }
+
+    public void updateActualValue(Long outletId, Long outletModelId,String dataType, String s) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, dataType);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
 }

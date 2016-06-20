@@ -13,6 +13,7 @@ public class BeforeDisplayDTO implements Serializable {
     private String outletModelName;
     private OutletMerDTO mhs;
 
+
     public Long getOutletModelId() {
         return outletModelId;
     }
