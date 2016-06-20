@@ -78,6 +78,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         List<OutletMerDTO> images = new ArrayList<>();
         try {
             images = this.repo.getOutletMerDAO().findImageByDataType(captureType, outletId, posmId);
+
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
@@ -151,7 +152,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         try {
             for (int i = 0; i < imageDTOs.size(); i++) {
                 if (imageDTOs.get(i).isChecked()) {
-                    String photoUri = Environment.getExternalStorageDirectory().getAbsolutePath() + imageDTOs.get(i).getImagePath();
+                    String photoUri = imageDTOs.get(i).getImagePath();
+
                     File image = new File(photoUri);
                     if (image.exists()) {
                         removedImages.add(imageDTOs.get(i));
@@ -255,7 +257,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), outlet.getCode());
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/" + outlet.getCode());
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
@@ -268,8 +270,14 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         Random r = new Random();
         urlImage = mediaStorageDir.getPath() + File.separator
                 + (outlet.getCode() + r.nextInt() + ".jpg").toString();
+        ELog.d("imageUrl", urlImage);
         File mediaFile = new File(urlImage);
         return mediaFile;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindGallery();
+    }
 }
