@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +14,7 @@ import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.dto.ImageDTO;
@@ -26,8 +28,10 @@ public class ImageAdapter extends BaseAdapter {
 
     private Context context;
     private List<ImageDTO> imageDTOs;
+    private final LayoutInflater mInflater;
 
     public ImageAdapter(Context context, List<ImageDTO> imageDTOs) {
+        mInflater = LayoutInflater.from(context);
         this.context = context;
         this.imageDTOs = imageDTOs;
     }
@@ -49,18 +53,20 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        CheckableLayout checkableLayout;
+        View v = convertView;
         ImageView imageView;
 
-        if(convertView == null) {
-            imageView = new ImageView(this.context);
-            imageView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if(v == null) {
+            v = mInflater.inflate(R.layout.grid_item, parent, false);
+            v.setTag(R.id.picture, v.findViewById(R.id.picture));
+            v.setTag(R.id.text, v.findViewById(R.id.text));
 
-        } else {
-            imageView = (ImageView) convertView;
         }
+
+        imageView = (ImageView) v.getTag(R.id.picture);
+
         imageView.setImageBitmap(this.imageDTOs.get(position).getImage());
+
         if(!this.imageDTOs.get(position).isChecked()) {
             imageView.setAlpha(1f);
         } else {
@@ -68,7 +74,7 @@ public class ImageAdapter extends BaseAdapter {
         }
 
 
-        return imageView;
+        return v;
     }
 
 
