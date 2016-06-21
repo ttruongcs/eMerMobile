@@ -37,6 +37,7 @@ import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
@@ -207,6 +208,14 @@ public class UpdateService {
 
 			//			fill routeschedule, outlet, outletmer
 			private void fillRouteScheduleInfo(RouteScheduleInfoDTO routeScheduleInfoDTO) {
+				RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
+                routeScheduleEntity.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
+				try {
+					repo.getRouteScheduleDAO().create(routeScheduleEntity);
+				} catch (SQLException e) {
+					ELog.d(e.getMessage(), e);
+				}
+
 				if (routeScheduleInfoDTO.getRouteScheduleDetails() != null
 						&& routeScheduleInfoDTO.getRouteScheduleDetails().size() > 0) {
 					List<MRouteScheduleDetailDTO> mMRouteScheduleDetails = routeScheduleInfoDTO

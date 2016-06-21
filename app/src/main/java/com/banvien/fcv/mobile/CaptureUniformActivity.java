@@ -23,6 +23,7 @@ import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.CaptureUniformDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
+    private RouteScheduleDTO routeScheduleDTO;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -57,7 +59,18 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
         setInitialConfiguration();
         repo = new Repo(this);
 
+        routeScheduleDTO = getRouteSchedule();
         bindGallery();
+    }
+
+    private RouteScheduleDTO getRouteSchedule() {
+        RouteScheduleDTO result = new RouteScheduleDTO();
+        try {
+            result = this.repo.getRouteScheduleDAO().findRoute();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
     }
 
     private void bindGallery() {
@@ -215,7 +228,11 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
             CaptureUniformEntity uniformEntity = new CaptureUniformEntity();
             uniformEntity.setPathImage(urlImage);
             uniformEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            uniformEntity.setRouteScheduleId(1l); //Todo Need fix hard code
+
+            if(routeScheduleDTO != null) {
+                uniformEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+            }
+
             try {
                 repo.getCaptureUniformDAO().create(uniformEntity);
             } catch (SQLException e) {
@@ -264,5 +281,13 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         bindGallery();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(repo != null) {
+            repo.release();
+        }
     }
 }
