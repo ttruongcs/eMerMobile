@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
@@ -18,6 +19,7 @@ import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
+import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
@@ -70,6 +72,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private StatusStartDayDAO statusStartDayDAO = null;
 	private StatusInOutletDAO statusInOutletDAO = null;
 	private StatusEndDayDAO statusEndDayDAO = null;
+	private CaptureUniformDAO captureUniformDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -83,20 +86,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
 			Log.i(TAG, "onCreate");
-			TableUtils.createTable(connectionSource, HotzoneEntity.class);
-			TableUtils.createTable(connectionSource, OutletMerEntity.class);
-			TableUtils.createTable(connectionSource, POSMEntity.class);
-			TableUtils.createTable(connectionSource, ProductEntity.class);
-			TableUtils.createTable(connectionSource, CatgroupEntity.class);
-			TableUtils.createTable(connectionSource, ProductgroupEntity.class);
-			TableUtils.createTable(connectionSource, OutletEntity.class);
-			TableUtils.createTable(connectionSource, OutletRegisteredEntity.class);
-			TableUtils.createTable(connectionSource, ComplainTypeEntity.class);
-			TableUtils.createTable(connectionSource, StatusHomeEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, HotzoneEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, OutletMerEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, POSMEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, ProductEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, CatgroupEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, ProductgroupEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, OutletEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, OutletRegisteredEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, ComplainTypeEntity.class);
+            TableUtils.createTableIfNotExists(connectionSource, CaptureUniformEntity.class);
 
-			TableUtils.createTable(connectionSource, StatusStartDayEntity.class);
-			TableUtils.createTable(connectionSource, StatusInOutletEntity.class);
-			TableUtils.createTable(connectionSource, StatusEndDayEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, StatusHomeEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, StatusStartDayEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, StatusInOutletEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, StatusEndDayEntity.class);
+
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
 			throw new RuntimeException(e);
@@ -127,6 +132,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, StatusStartDayEntity.class, true);
 			TableUtils.dropTable(connectionSource, StatusInOutletEntity.class, true);
 			TableUtils.dropTable(connectionSource, StatusEndDayEntity.class, true);
+			TableUtils.dropTable(connectionSource, CaptureUniformEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -235,6 +241,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return statusEndDayDAO;
 	}
 
+	public CaptureUniformDAO getCaptureUniformDAO() throws SQLException {
+		if(null == captureUniformDAO) {
+			captureUniformDAO = new CaptureUniformDAO(getConnectionSource(), CaptureUniformEntity.class);
+		}
+
+		return captureUniformDAO;
+	}
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */

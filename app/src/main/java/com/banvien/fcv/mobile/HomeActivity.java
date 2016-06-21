@@ -41,6 +41,7 @@ public class HomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         repo = new Repo(this);
+        repo.getDatabaseHelper().getWritableDatabase(); //Create database and table
         try {
             StatusHomeEntity statusHomeEntity = repo.getStatusHomeDAO().getConfigStatusHome();
             if(statusHomeEntity != null){

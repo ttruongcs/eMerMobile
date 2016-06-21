@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 
+import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
@@ -34,6 +35,7 @@ public class Repo {
     public DatabaseHelper getDatabaseHelper() {
         return databaseHelper;
     }
+
 
     public CatgroupDAO getCatgroupDAO() throws SQLException {
         return databaseHelper.getCatgroupDAO();
@@ -89,6 +91,10 @@ public class Repo {
 
     public StatusEndDayDAO getStatusEndDayDAO() throws SQLException {
         return databaseHelper.getStatusEndDayDAO();
+    }
+
+    public CaptureUniformDAO getCaptureUniformDAO() throws SQLException {
+        return databaseHelper.getCaptureUniformDAO();
     }
 
     public void release() {

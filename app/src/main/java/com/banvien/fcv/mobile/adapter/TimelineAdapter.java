@@ -15,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.HomeActivity;
 import com.banvien.fcv.mobile.InOutletHomeActivity;
@@ -22,6 +23,7 @@ import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
+import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 
 import java.util.List;
@@ -160,7 +162,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             // todo
                             break;
                         case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
-                            // todo
+                            Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
+                            v.getContext().startActivity(uniformIntent);
                             break;
                         case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
                             // todo

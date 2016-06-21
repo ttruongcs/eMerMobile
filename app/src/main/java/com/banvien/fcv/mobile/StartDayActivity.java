@@ -89,7 +89,7 @@ public class StartDayActivity extends BaseDrawerActivity {
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
@@ -120,7 +120,7 @@ public class StartDayActivity extends BaseDrawerActivity {
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
