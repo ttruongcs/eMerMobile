@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
@@ -26,6 +28,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.text.SimpleDateFormat;
+
+import butterknife.Bind;
 
 /**
  * Created by Linh Nguyen on 5/30/2016.
@@ -47,6 +53,7 @@ public class CustomMapFragment extends SupportMapFragment implements GoogleApiCl
     private Location mCurrentLocation;
     private int curMapTypeIndex = 1;
     private GoogleMap googleMap;
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -102,7 +109,7 @@ public class CustomMapFragment extends SupportMapFragment implements GoogleApiCl
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 googleMap.setMyLocationEnabled(true);
-                googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                googleMap.getUiSettings().setMyLocationButtonEnabled(false);
             } else {
                 ELog.d("permission", "You don't have permission!");
             }
@@ -174,4 +181,11 @@ public class CustomMapFragment extends SupportMapFragment implements GoogleApiCl
         }
     }
 
+    public void setInfo(TextView tvTime, TextView tvGps) {
+        long date = System.currentTimeMillis();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy h:mm a");
+        String dateString = sdf.format(date);
+        tvTime.setText(getString(R.string.time) + ": " + dateString);
+    }
 }
