@@ -15,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.HomeActivity;
@@ -156,7 +157,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
                         // START DAY
                         case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
-                            // todo
+                            Intent toolIntent = new Intent(v.getContext(), CaptureToolActivity.class);
+                            v.getContext().startActivity(toolIntent);
                             break;
                         case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
                             // todo

@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 
+import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
@@ -100,6 +101,10 @@ public class Repo {
 
     public RouteScheduleDAO getRouteScheduleDAO() throws SQLException {
         return databaseHelper.getRouteScheduleDAO();
+    }
+
+    public CaptureToolDAO getCaptureToolDAO() throws SQLException {
+        return  databaseHelper.getCaptureToolDAO();
     }
 
     public void release() {
