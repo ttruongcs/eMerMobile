@@ -29,19 +29,18 @@ public class BaseDrawerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentViewWithoutInject(R.layout.activity_drawer);
-
     }
 
     @Override
     public void setContentView(int layoutResID) {
-
+        setContentViewWithoutInject(R.layout.activity_drawer);
         if (layoutResID > 0) {
             ViewGroup viewGroup = (ViewGroup) findViewById(R.id.content_frame);
             LayoutInflater.from(this).inflate(layoutResID, viewGroup, true);
         }
 
         bindViews();
+        setupToolbar();
         setupHeader();
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();

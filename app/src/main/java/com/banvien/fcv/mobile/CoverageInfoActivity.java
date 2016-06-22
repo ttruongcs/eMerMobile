@@ -3,8 +3,12 @@ package com.banvien.fcv.mobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.banvien.fcv.mobile.utils.ELog;
 
 import butterknife.Bind;
 
