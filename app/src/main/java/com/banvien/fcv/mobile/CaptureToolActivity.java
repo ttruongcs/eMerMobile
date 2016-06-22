@@ -259,7 +259,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         String dateString = sdf.format(date);
 
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/tool/" + dateString);
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), ScreenContants.CAPTURE_TOOL_PATH + dateString);
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
