@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
+import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.HomeActivity;
 import com.banvien.fcv.mobile.InOutletHomeActivity;
@@ -147,8 +148,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             v.getContext().startActivity(startDayIntent);
                             break;
                         case ScreenContants.HOME_STEP_INOUTLET :
-                            Intent inOutletIntent = new Intent(v.getContext(), InOutletHomeActivity.class);
-                            v.getContext().startActivity(inOutletIntent);
+                            Intent coverageActivity = new Intent(v.getContext(), CoverageInfoActivity.class);
+                            v.getContext().startActivity(coverageActivity);
                             break;
                         case ScreenContants.HOME_STEP_ENDDAY:
                             Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);

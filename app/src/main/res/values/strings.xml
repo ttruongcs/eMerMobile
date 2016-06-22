@@ -545,5 +545,11 @@
     <string name="time">Thời gian</string>
     <string name="gps">Gps</string>
 
+    <!-- Coverage -->
+    <string name="today">Hôm nay</string>
+    <string name="gone">Đã đi</string>
+    <string name="total">Tổng cộng</string>
+    <string name="listOutlet">Danh sách cửa hàng</string>
+
 
 </resources>
