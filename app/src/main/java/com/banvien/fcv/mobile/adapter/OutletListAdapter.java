@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ActionActivity;
+import com.banvien.fcv.mobile.InOutletHomeActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.OutletDTO;
@@ -30,9 +32,9 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private TextDrawable.IBuilder mDrawableBuilder;
     private List<OutletDTO> mData;
-    private BaseFragment fragment;
+    private Fragment fragment;
 
-    public OutletListAdapter(List<OutletDTO> outletDTOs, BaseFragment fragment) {
+    public OutletListAdapter(List<OutletDTO> outletDTOs, Fragment fragment) {
         this.mData = outletDTOs;
         this.fragment = fragment;
     }
@@ -96,7 +98,7 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), ActionActivity.class);
+                    Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
                     intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                     view.getContext().startActivity(intent);
                 }
