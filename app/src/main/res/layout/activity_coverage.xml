@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPaddingLeft="8dp"
+        app:contentPaddingRight="8dp"
+        app:contentPaddingTop="32dp"
+        app:contentPaddingBottom="16dp"
+        app:cardBackgroundColor="@color/primary_kanban">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvToday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/tvTodayNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_below="@id/tvToday"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvGone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gone"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/tvGoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_below="@id/tvGone"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/tvTotalNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_below="@id/tvTotal"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnFind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/findlist"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="@string/listOutlet"
+            android:textSize="20dp"
+            android:layout_below="@+id/btnFind"
+            android:layout_centerInParent="true"
+            android:textColor="@color/primary_kanban"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
