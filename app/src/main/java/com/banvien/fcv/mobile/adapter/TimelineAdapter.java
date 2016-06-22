@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.CardView;
@@ -9,12 +10,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
@@ -24,9 +27,13 @@ import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
+import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
+import com.banvien.fcv.mobile.utils.ELog;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -38,12 +45,14 @@ import butterknife.ButterKnife;
 public class TimelineAdapter extends RecyclerView.Adapter {
     public static final double PIC_RATIO_VALUE = 4.0;
 
+    Repo repo;
     List<TimelineDTO> mData;
     Activity activity;
 
     public TimelineAdapter(List<TimelineDTO> data, Activity activity) {
         this.mData = data;
         this.activity = activity;
+
     }
 
     @Override
@@ -140,6 +149,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    repo = new Repo(v.getContext());
                     switch (stepCode.getText().toString()) {
                         // HOME
                         case ScreenContants.HOME_STEP_STARTDAY :
@@ -161,7 +171,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             v.getContext().startActivity(toolIntent);
                             break;
                         case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
-                            // todo
+                            try {
+                                showAlertBox(v);
+                            } catch (SQLException e) {
+                                ELog.d("Error when go to choice first outlet");
+                            }
                             break;
                         case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
                             Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
@@ -224,6 +238,52 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+        }
+
+        private void showAlertBox(final View v) throws SQLException {
+            android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
+            builderSingle.setTitle("Chọn một cửa hàng : ");
+            List<OutletDTO> outletList = repo.getOutletDAO().findAll();
+            final ArrayAdapter<OutletDTO> arrayAdapter = new ArrayAdapter<OutletDTO>(
+                    v.getContext(),
+                    android.R.layout.select_dialog_singlechoice);
+            arrayAdapter.addAll(outletList);
+
+            builderSingle.setNegativeButton(
+                    "cancel",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+            builderSingle.setAdapter(
+                    arrayAdapter,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            OutletDTO outletDTO = arrayAdapter.getItem(which);
+                            android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
+                                    v.getContext());
+                            builderInner.setMessage(outletDTO.getName());
+                            builderInner.setTitle("Your Selected Item is");
+                            builderInner.setPositiveButton(
+                                    "Ok",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(
+                                                DialogInterface dialog,
+                                                int which) {
+                                            Intent firstIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
+                                            v.getContext().startActivity(firstIntent);
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            builderInner.show();
+                        }
+                    });
+            builderSingle.show();
         }
     }
 }

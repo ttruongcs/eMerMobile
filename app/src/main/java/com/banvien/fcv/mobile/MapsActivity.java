@@ -108,7 +108,7 @@ public class MapsActivity extends FragmentActivity  {
     }
 
     private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -9,6 +9,7 @@ import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
+import com.banvien.fcv.mobile.db.dao.OutletFirstImagesDAO;
 import com.banvien.fcv.mobile.db.dao.OutletMerDAO;
 import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
@@ -101,6 +102,10 @@ public class Repo {
 
     public RouteScheduleDAO getRouteScheduleDAO() throws SQLException {
         return databaseHelper.getRouteScheduleDAO();
+    }
+
+    public OutletFirstImagesDAO getOutletFirstImagesDAO() throws SQLException {
+        return databaseHelper.getOutletFirstImagesDAO();
     }
 
     public CaptureToolDAO getCaptureToolDAO() throws SQLException {

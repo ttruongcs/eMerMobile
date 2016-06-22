@@ -49,7 +49,7 @@ public class PosmActivity extends BaseDrawerActivity {
     }
 
     private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.posm_title_merchandising);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

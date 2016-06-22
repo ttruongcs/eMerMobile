@@ -157,7 +157,7 @@ public class ActionActivity extends BaseDrawerActivity {
     }
 
     private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.action_title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -19,31 +19,30 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
-import com.banvien.fcv.mobile.dto.CaptureToolDTO;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
+import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
+import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.Bind;
 
-/**
- * Created by Linh Nguyen on 6/21/2016.
- */
-public class CaptureToolActivity extends BaseDrawerActivity {
+public class CaptureFirstOutletActivity extends BaseDrawerActivity {
+    private static Long outletId;
+    private static Long routeScheduleDetailId;
     private static String urlImage;
+    private static OutletEntity outlet;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
-    private RouteScheduleDTO routeScheduleDTO;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -56,26 +55,22 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         setInitialConfiguration();
+        routeScheduleDetailId = 1l;
         repo = new Repo(this);
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        try {
+            outlet = repo.getOutletDAO().findById(outletId);
+        } catch (SQLException e) {
+            ELog.d("Error when findById Outlet");
+        }
 
-        routeScheduleDTO = getRouteSchedule();
         bindGallery();
     }
 
-    private RouteScheduleDTO getRouteSchedule() {
-        RouteScheduleDTO result = new RouteScheduleDTO();
-        try {
-            result = this.repo.getRouteScheduleDAO().findRoute();
-        } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
-        }
-        return result;
-    }
-
     private void bindGallery() {
-        List<CaptureToolDTO> images = new ArrayList<>();
+        List<OutletFirstImagesDTO> images = new ArrayList<>();
         try {
-            images = this.repo.getCaptureToolDAO().findAll();
+            images = this.repo.getOutletFirstImagesDAO().findByRouteScheduleDetailId(routeScheduleDetailId);
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
@@ -155,7 +150,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
                     File image = new File(photoUri);
                     if (image.exists()) {
                         removedImages.add(imageDTOs.get(i));
-                        this.repo.getCaptureToolDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
+                        this.repo.getOutletMerDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
                         image.delete(); //Delete from external storage
                     } else {
                         ELog.d("File is not exist");
@@ -175,18 +170,18 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         }
     }
 
-    private List<ImageDTO> loadGallery(List<CaptureToolDTO> images) {
+    private List<ImageDTO> loadGallery(List<OutletFirstImagesDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (CaptureToolDTO captureToolDTO : images) {
-            File image = new File(captureToolDTO.getPathImage());
+        for (OutletFirstImagesDTO outletFirstImages : images) {
+            File image = new File(outletFirstImages.getImagePath());
             if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
                 Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-                imageDTO.set_id(captureToolDTO.get_id());
+                imageDTO.set_id(outletFirstImages.get_id());
                 imageDTO.setImage(bitmap);
-                imageDTO.setImagePath(captureToolDTO.getPathImage());
+                imageDTO.setImagePath(outletFirstImages.getImagePath());
                 imageDTOs.add(imageDTO);
             }
         }
@@ -224,16 +219,11 @@ public class CaptureToolActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureToolEntity captureToolEntity = new CaptureToolEntity();
-            captureToolEntity.setPathImage(urlImage);
-            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-
-            if(routeScheduleDTO != null) {
-                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
-            }
-
+            OutletFirstImagesEntity outletFirstImagesEntity = new OutletFirstImagesEntity();
+            outletFirstImagesEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+            outletFirstImagesEntity.setPathImage(urlImage);
             try {
-                repo.getCaptureToolDAO().create(captureToolEntity);
+                repo.getOutletFirstImagesDAO().addOutletFirstEntity(outletFirstImagesEntity);
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
@@ -253,16 +243,12 @@ public class CaptureToolActivity extends BaseDrawerActivity {
     private static File getOutputMediaFile() {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
-        long date = System.currentTimeMillis();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String dateString = sdf.format(date);
-
-
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/tool/" + dateString);
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/" + routeScheduleDetailId.toString());
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
+                ELog.d(outlet.getCode(), "failed to create directory");
                 return null;
             }
         }
@@ -270,7 +256,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         // Create a media file name
         Random r = new Random();
         urlImage = mediaStorageDir.getPath() + File.separator
-                + (System.currentTimeMillis() + r.nextInt() + ".jpg").toString();
+                + (routeScheduleDetailId.toString() + r.nextInt() + ".jpg").toString();
         ELog.d("imageUrl", urlImage);
         File mediaFile = new File(urlImage);
         return mediaFile;
@@ -280,13 +266,5 @@ public class CaptureToolActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         bindGallery();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(repo != null) {
-            repo.release();
-        }
     }
 }

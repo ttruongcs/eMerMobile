@@ -79,13 +79,13 @@ public class StartDayActivity extends BaseDrawerActivity {
                     , getString(R.string.motachuphinhcongcudungcu), getString(R.string.stepchuphinhcongcudungcu)
                     , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU, statusStartDay.getChupHinhCongCuDungCu());
 
-            TimelineDTO step5 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
-                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
-                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, statusStartDay.getChupHinhCuaHangDauTien());
-
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.xacnhanlamviec)
+            TimelineDTO step5 = new TimelineDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
                     , ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC, statusStartDay.getXacNhanLamViec());
+
+            TimelineDTO step6 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
+                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
+                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, statusStartDay.getChupHinhCuaHangDauTien());
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -110,13 +110,13 @@ public class StartDayActivity extends BaseDrawerActivity {
                     , getString(R.string.motachuphinhcongcudungcu), getString(R.string.stepchuphinhcongcudungcu)
                     , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU, ScreenContants.STATUS_STEP_NOTYET);
 
-            TimelineDTO step5 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
-                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
-                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, ScreenContants.STATUS_STEP_NOTYET);
-
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.xacnhanlamviec)
+            TimelineDTO step5 = new TimelineDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
                     , ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC, ScreenContants.STATUS_STEP_NOTYET);
+
+            TimelineDTO step6 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
+                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
+                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, ScreenContants.STATUS_STEP_NOTYET);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);

@@ -208,7 +208,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     }
 
     private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
     }
 
     // intiating camera
