@@ -152,4 +152,9 @@ public class OutletDTO implements Serializable {
     public void setRouteScheduleId(Long routeScheduleId) {
         this.routeScheduleId = routeScheduleId;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

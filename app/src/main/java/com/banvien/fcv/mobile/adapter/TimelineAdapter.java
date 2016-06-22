@@ -267,7 +267,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             OutletDTO outletDTO = arrayAdapter.getItem(which);
                             android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
                                     v.getContext());
-                            builderInner.setMessage(outletDTO.getName());
+                            builderInner.setMessage(outletDTO.getCode());
                             builderInner.setTitle("Your Selected Item is");
                             builderInner.setPositiveButton(
                                     "Ok",

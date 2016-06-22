@@ -50,6 +50,21 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         return null;
     }
 
+    public List<OutletDTO> findAll() {
+        List<OutletDTO> outletResult = new ArrayList<>();
+        try {
+            List<OutletEntity> results = queryForAll();
+            if(results.size() > 0) {
+                for(OutletEntity outletEntity : results){
+                    outletResult.add(OutletUtil.convertToDTO(outletEntity));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return outletResult;
+    }
+
     public List<OutletDTO> getOutletsWithCircumstance(Integer outletStatus) {
         ELog.d("data", outletStatus.toString());
         List<OutletDTO> results = new ArrayList<>();
