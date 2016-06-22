@@ -1,17 +1,14 @@
 package com.banvien.fcv.mobile.fragments;
 
-import android.app.FragmentManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.R;
 
 import butterknife.Bind;
@@ -61,12 +58,12 @@ public class HomeFragment extends BaseFragment {
         actionStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "change to action activity");
-
-                FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
-                tx.replace(R.id.content_frame, new OutletTabFragment());
-                tx.addToBackStack(TAG);
-                tx.commit();
+//                Log.d(TAG, "change to action activity");
+//
+//                FragmentTransaction tx = parent.getSupportFragmentManager().beginTransaction();
+//                tx.replace(R.id.content_frame, new OutletTabActivity());
+//                tx.addToBackStack(TAG);
+//                tx.commit();
             }
         });
 

@@ -80,7 +80,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private StatusEndDayDAO statusEndDayDAO = null;
 	private CaptureUniformDAO captureUniformDAO = null;
     private RouteScheduleDAO routeScheduleDAO = null;
-	private OutletFirstImagesDAO outletFirstImagesDAO = null;
+    private OutletFirstImagesDAO outletFirstImagesDAO = null;
 	private CaptureToolDAO captureToolDAO = null;
 
 	public DatabaseHelper(Context context) {
@@ -107,7 +107,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, CaptureUniformEntity.class);
             TableUtils.createTableIfNotExists(connectionSource, RouteScheduleEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureToolEntity.class);
-			TableUtils.createTableIfNotExists(connectionSource, OutletFirstImagesEntity.class);
+            TableUtils.createTableIfNotExists(connectionSource, OutletFirstImagesEntity.class);
 
 			TableUtils.createTableIfNotExists(connectionSource, StatusHomeEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, StatusStartDayEntity.class);
@@ -139,8 +139,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, OutletEntity.class, true);
 			TableUtils.dropTable(connectionSource, OutletRegisteredEntity.class, true);
 			TableUtils.dropTable(connectionSource, ComplainTypeEntity.class, true);
-			TableUtils.dropTable(connectionSource, OutletFirstImagesEntity.class, true);
-			TableUtils.dropTable(connectionSource, StatusHomeEntity.class, true);
+            TableUtils.dropTable(connectionSource, OutletFirstImagesEntity.class, true);
+            TableUtils.dropTable(connectionSource, StatusHomeEntity.class, true);
 
 			TableUtils.dropTable(connectionSource, StatusStartDayEntity.class, true);
 			TableUtils.dropTable(connectionSource, StatusInOutletEntity.class, true);
