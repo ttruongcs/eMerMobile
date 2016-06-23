@@ -119,7 +119,7 @@ public class ScreenContants {
     //Image path
     public static final String CAPTURE_UNIFORM_PATH = "fcvImage/uniform/";
     public static final String CAPTURE_TOOL_PATH = "fcvImage/tool/";
-
+    public static final String CAPTURE_FIRST_OUTLET = "fcvImage/firstOutlet/";
 
 
 }

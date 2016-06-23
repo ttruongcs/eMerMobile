@@ -3,6 +3,9 @@ package com.banvien.fcv.mobile.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -143,7 +146,15 @@ public class PrepareFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Add new task from server");
-                showAlertBox(v);
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+                try {
+                    v.getContext().startActivity(whatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+//                    Toast.makeText("Whatsapp have not been installed.");
+                }
             }
         });
     }

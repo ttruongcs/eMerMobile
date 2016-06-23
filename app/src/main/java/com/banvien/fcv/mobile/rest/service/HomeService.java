@@ -5,6 +5,7 @@ import android.database.Observable;
 import com.banvien.fcv.mobile.command.OutletMerResultCommand;
 import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
+import com.banvien.fcv.mobile.dto.TypeFile;
 
 import java.util.Map;
 
@@ -40,5 +41,5 @@ public interface HomeService {
 
     @Multipart
     @POST ("/mobile/image/sync.html")
-    Call<Map<String, Object>> editUser (@Part MultipartBody.Part file);
+    Call<ResponseBody> upload(@Part("fileToUpload2\"; filename=\"image1.jpg\";") RequestBody file2);
 }

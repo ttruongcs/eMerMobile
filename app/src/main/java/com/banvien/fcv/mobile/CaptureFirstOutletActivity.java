@@ -25,6 +25,7 @@ import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -55,10 +56,13 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         setInitialConfiguration();
-        routeScheduleDetailId = 1l;
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
+            RouteScheduleDTO routeScheduleDTO = repo.getRouteScheduleDAO().findRoute();
+            if(routeScheduleDTO != null){
+                routeScheduleDetailId = routeScheduleDTO.getRouteScheduleId();
+            }
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
@@ -244,7 +248,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/" + routeScheduleDetailId.toString());
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), ScreenContants.CAPTURE_FIRST_OUTLET + outlet.getCode());
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
@@ -255,8 +259,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
 
         // Create a media file name
         Random r = new Random();
-        urlImage = mediaStorageDir.getPath() + File.separator
-                + (routeScheduleDetailId.toString() + r.nextInt() + ".jpg").toString();
+        urlImage = mediaStorageDir.getPath() + File.separator + (r.nextInt() + ".jpg").toString();
         ELog.d("imageUrl", urlImage);
         File mediaFile = new File(urlImage);
         return mediaFile;

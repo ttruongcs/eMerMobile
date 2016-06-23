@@ -6,11 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.banvien.fcv.mobile.adapter.TimelineAdapter;
+import com.banvien.fcv.mobile.adapter.TimelineInOutletAdapter;
 import com.banvien.fcv.mobile.beanutil.StatusInOutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.dto.StatusInOutletDTO;
-import com.banvien.fcv.mobile.dto.TimelineDTO;
+import com.banvien.fcv.mobile.dto.TimelineInOutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
     RecyclerView recyclerView;
 
     private Repo repo;
-
+    private Long outletId;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private StatusInOutletDTO statusInOutlet;
@@ -39,6 +40,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
+        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
             StatusInOutletEntity statusInOutletEntity = repo.getStatusInOutletDAO().getConfigStatusInOutletHome();
             if(statusInOutletEntity != null){
@@ -52,48 +54,44 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(buildTreeStep(), this);
+        adapter = new TimelineInOutletAdapter(buildTreeStep(), this);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<TimelineDTO> buildTreeStep() {
-        List<TimelineDTO> timelineDTOs = new ArrayList<>();
+    private List<TimelineInOutletDTO> buildTreeStep() {
+        List<TimelineInOutletDTO> timelineDTOs = new ArrayList<>();
         if(statusInOutlet != null){
-            TimelineDTO step1 = new TimelineDTO(getString(R.string.checkin)
+            TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
                     , getString(R.string.motacheckin), getString(R.string.stepcheckin)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, statusInOutlet.getCheckIn());
+                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, statusInOutlet.getCheckIn(), outletId);
 
-            TimelineDTO step2 = new TimelineDTO(getString(R.string.chupanhoverview)
+            TimelineInOutletDTO step2 = new TimelineInOutletDTO(getString(R.string.chupanhoverview)
                     , getString(R.string.motachupanhoverview), getString(R.string.stepchupanhoverview)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, statusInOutlet.getChupAnhOverview());
+                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, statusInOutlet.getChupAnhOverview(), outletId);
 
-            TimelineDTO step3 = new TimelineDTO(getString(R.string.xemthongtindangkyvalichsueie)
+            TimelineInOutletDTO step3 = new TimelineInOutletDTO(getString(R.string.xemthongtindangkyvalichsueie)
                     , getString(R.string.motaxemthongtindangkyvalichsueie), getString(R.string.stepxemthongtindangkyvalichsueie)
-                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, statusInOutlet.getXemThongTinDangKyLichSuEIE());
+                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, statusInOutlet.getXemThongTinDangKyLichSuEIE(), outletId);
 
-            TimelineDTO step4 = new TimelineDTO(getString(R.string.khaosattrungbaytruoc)
+            TimelineInOutletDTO step4 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaytruoc)
                     , getString(R.string.motakhaosattrungbaytruoc), getString(R.string.stepmotakhaosattrungbaytruoc)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, statusInOutlet.getKhaoSatTrungBayTruoc());
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, statusInOutlet.getKhaoSatTrungBayTruoc(), outletId);
 
-            TimelineDTO step5 = new TimelineDTO(getString(R.string.khaosattrungbaysau)
+            TimelineInOutletDTO step5 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaysau)
                     , getString(R.string.motakhaosattrungbaysau), getString(R.string.stepkhaosattrungbaysau)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, statusInOutlet.getKhaoSatTrungBaySau());
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, statusInOutlet.getKhaoSatTrungBaySau(), outletId);
 
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.huthangdathang)
+            TimelineInOutletDTO step6 = new TimelineInOutletDTO(getString(R.string.huthangdathang)
                     , getString(R.string.motahuthangdathang), getString(R.string.stephuthangdathang)
-                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, statusInOutlet.getHutHangDatHang());
+                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, statusInOutlet.getHutHangDatHang(), outletId);
 
-            TimelineDTO step7 = new TimelineDTO(getString(R.string.khaosatdichvukhachhang)
+            TimelineInOutletDTO step7 = new TimelineInOutletDTO(getString(R.string.khaosatdichvukhachhang)
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSatDichVuKhachHang());
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSatDichVuKhachHang(), outletId);
 
-            TimelineDTO step8 = new TimelineDTO(getString(R.string.xacnhanlamviec)
+            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, statusInOutlet.getKhaoSatPOSM());
-
-            TimelineDTO step9 = new TimelineDTO(getString(R.string.ghinhankhieunai)
-                    , getString(R.string.motaghinhankhieunai), getString(R.string.stepghinhankhieunai)
-                    , ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI, statusInOutlet.getGhiNhanKhieuNai());
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, statusInOutlet.getKhaoSatPOSM(), outletId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -103,43 +101,38 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
             timelineDTOs.add(step8);
-            timelineDTOs.add(step9);
         } else {
-            TimelineDTO step1 = new TimelineDTO(getString(R.string.checkin)
+            TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
                     , getString(R.string.motacheckin), getString(R.string.stepcheckin)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, ScreenContants.STATUS_STEP_INPROGRESS);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, ScreenContants.STATUS_STEP_INPROGRESS, outletId);
 
-            TimelineDTO step2 = new TimelineDTO(getString(R.string.chupanhoverview)
+            TimelineInOutletDTO step2 = new TimelineInOutletDTO(getString(R.string.chupanhoverview)
                     , getString(R.string.motachupanhoverview), getString(R.string.stepchupanhoverview)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step3 = new TimelineDTO(getString(R.string.xemthongtindangkyvalichsueie)
+            TimelineInOutletDTO step3 = new TimelineInOutletDTO(getString(R.string.xemthongtindangkyvalichsueie)
                     , getString(R.string.motaxemthongtindangkyvalichsueie), getString(R.string.stepxemthongtindangkyvalichsueie)
-                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step4 = new TimelineDTO(getString(R.string.khaosattrungbaytruoc)
+            TimelineInOutletDTO step4 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaytruoc)
                     , getString(R.string.motakhaosattrungbaytruoc), getString(R.string.stepmotakhaosattrungbaytruoc)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step5 = new TimelineDTO(getString(R.string.khaosattrungbaysau)
+            TimelineInOutletDTO step5 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaysau)
                     , getString(R.string.motakhaosattrungbaysau), getString(R.string.stepkhaosattrungbaysau)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.huthangdathang)
+            TimelineInOutletDTO step6 = new TimelineInOutletDTO(getString(R.string.huthangdathang)
                     , getString(R.string.motahuthangdathang), getString(R.string.stephuthangdathang)
-                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step7 = new TimelineDTO(getString(R.string.khaosatdichvukhachhang)
+            TimelineInOutletDTO step7 = new TimelineInOutletDTO(getString(R.string.khaosatdichvukhachhang)
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
-            TimelineDTO step8 = new TimelineDTO(getString(R.string.xacnhanlamviec)
+            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, ScreenContants.STATUS_STEP_NOTYET);
-
-            TimelineDTO step9 = new TimelineDTO(getString(R.string.ghinhankhieunai)
-                    , getString(R.string.motaghinhankhieunai), getString(R.string.stepghinhankhieunai)
-                    , ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI, ScreenContants.STATUS_STEP_NOTYET);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, ScreenContants.STATUS_STEP_NOTYET, outletId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -149,7 +142,6 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
             timelineDTOs.add(step8);
-            timelineDTOs.add(step9);
         }
 
         return timelineDTOs;

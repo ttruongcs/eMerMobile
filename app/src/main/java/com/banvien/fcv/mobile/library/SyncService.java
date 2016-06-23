@@ -11,6 +11,7 @@ import com.banvien.fcv.mobile.command.OutletMerResultCommand;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
+import com.banvien.fcv.mobile.dto.TypeFile;
 import com.banvien.fcv.mobile.dto.syncdto.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
@@ -63,7 +64,7 @@ public class SyncService {
 			if(!CheckNetworkConnection.isConnectionAvailable(context)){
 				errorMessage = context.getString(R.string.sync_error_phone_connection);
 			}
-			File file = new File("/storage/emulated/0/445124424/445124424-491567686.jpg");
+			File file = new File("/storage/emulated/0/445124424/445124424-1238280458.jpg");
 			Uri fileUri = Uri.fromFile(file);
 			uploadFile(file);
 //			OutletMerResultCommand FINAL = buildDataToSync();
@@ -88,31 +89,30 @@ public class SyncService {
 
 
 	private void uploadFile(File file) {
-		RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-		RequestBody requestBody = new MultipartBody.Builder()
-				.setType(MultipartBody.FORM)
-				.addFormDataPart("title", "Square Logo")
-				.addFormDataPart("image", "logo-square.png",
-						RequestBody.create(MediaType.parse("image/*"), file))
-				.build();
+		RequestBody requestFile =
+				RequestBody.create(MediaType.parse("multipart/form-data"), file);
+		// MultipartBody.Part is used to send also the actual file name
+		MultipartBody.Part body =
+				MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
+		// add another part within the multipart request
+		String descriptionString = "hello, this is description speaking";
+		RequestBody description =
+				RequestBody.create(
+						MediaType.parse("multipart/form-data"), descriptionString);
 
-		MultipartBody.Part partBody =  MultipartBody.Part.createFormData(
-				"file",
-				file.getName(),
-				requestBody);
-
-
-		Call<Map<String, Object>> call = RestClient.getInstance().getHomeService().editUser(partBody);
-		call.enqueue(new Callback<Map<String, Object>>() {
+		// finally, execute the request
+		Call<ResponseBody> call = RestClient.getInstance().getHomeService().upload(requestFile);
+		call.enqueue(new Callback<ResponseBody>() {
 			@Override
-			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-
+			public void onResponse(Call<ResponseBody> call,
+								   Response<ResponseBody> response) {
+				Log.v("Upload", "success");
 			}
 
 			@Override
-			public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+			public void onFailure(Call<ResponseBody> call, Throwable t) {
 				Log.e("Upload error:", t.getMessage());
 			}
 		});

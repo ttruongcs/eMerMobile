@@ -98,9 +98,19 @@ public class MapsActivity extends FragmentActivity  {
             public void onClick(View v) {
                 double lat = mapFragment.getLocation().getLatitude();
                 double log = mapFragment.getLocation().getLongitude();
+
+                Location locationA = new Location("point A");
+                locationA.setLatitude(lat);
+                locationA.setLongitude(log);
+                Location locationB = new Location("point B");
+                locationB.setLatitude(10.765820);
+                locationB.setLongitude(106.706238);
+                float distance = locationA.distanceTo(locationB) ;
+
+
                 tvGps.setText(String.valueOf(lat));
 
-                Toast.makeText(v.getContext(), String.valueOf(lat), Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
 
 
             }

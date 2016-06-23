@@ -3,7 +3,6 @@ package com.banvien.fcv.mobile.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -15,29 +14,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
-import com.banvien.fcv.mobile.HomeActivity;
-import com.banvien.fcv.mobile.InOutletHomeActivity;
 import com.banvien.fcv.mobile.MapsActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
+import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
-import com.banvien.fcv.mobile.dto.StatusHomeDTO;
-import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
+import com.banvien.fcv.mobile.dto.TimelineInOutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -49,14 +44,14 @@ import butterknife.ButterKnife;
 /**
  * Created by Linh Nguyen on 6/14/2016.
  */
-public class TimelineAdapter extends RecyclerView.Adapter {
+public class TimelineInOutletAdapter extends RecyclerView.Adapter {
     public static final double PIC_RATIO_VALUE = 4.0;
 
     Repo repo;
-    List<TimelineDTO> mData;
+    List<TimelineInOutletDTO> mData;
     Activity activity;
 
-    public TimelineAdapter(List<TimelineDTO> data, Activity activity) {
+    public TimelineInOutletAdapter(List<TimelineInOutletDTO> data, Activity activity) {
         this.mData = data;
         this.activity = activity;
 
@@ -64,7 +59,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_item_inoutlet, parent, false);
         ItemHolder itemHolder = new ItemHolder(v);
 
         return itemHolder;
@@ -81,6 +76,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         itemHolder.tvDetail.setText(mData.get(position).getDetail());
         itemHolder.tvOrder.setText(mData.get(position).getOrder());
         itemHolder.stepCode.setText(mData.get(position).getType());
+        itemHolder.outletId.setText(mData.get(position).getOutletId().toString());
 
         if(position == 0) {
             itemHolder.viewTop.getLayoutParams().width = 0;
@@ -150,6 +146,9 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         @Bind(R.id.stepCode)
         TextView stepCode;
 
+        @Bind(R.id.outletId)
+        TextView outletId;
+
         public ItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -158,58 +157,37 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     repo = new Repo(v.getContext());
                     try {
-                        StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
-                        StatusStartDayEntity statusStartDay = repo.getStartDayDAO().getConfigStartDayHome();
-                        StatusEndDayEntity statusEndDay = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
+                        StatusInOutletEntity statusInOutlet = repo.getStatusInOutletDAO().getConfigStatusInOutletHome();
 
                         switch (stepCode.getText().toString()) {
-                            // HOME
-                            case ScreenContants.HOME_STEP_STARTDAY :
-                                Intent startDayIntent = new Intent(v.getContext(), StartDayActivity.class);
-                                v.getContext().startActivity(startDayIntent);
+                            // IN OUTLET
+                            case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
+                                Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
+                                mapsIntent.putExtra(ScreenContants.OUTLETID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(mapsIntent);
                                 break;
-                            case ScreenContants.HOME_STEP_INOUTLET :
-                                Intent coverageActivity = new Intent(v.getContext(), CoverageInfoActivity.class);
-                                v.getContext().startActivity(coverageActivity);
-                                break;
-                            case ScreenContants.HOME_STEP_ENDDAY:
-                                Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);
-                                v.getContext().startActivity(endDayIntent);
-                                break;
-
-                            // START DAY
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
-                                Intent toolIntent = new Intent(v.getContext(), CaptureToolActivity.class);
-                                v.getContext().startActivity(toolIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
-                                try {
-                                    showAlertBox(v);
-                                } catch (SQLException e) {
-                                    ELog.d("Error when go to choice first outlet");
-                                }
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
-                                Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
-                                v.getContext().startActivity(uniformIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
+                            case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
                                 // todo
                                 break;
-                            case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :
-                                Intent prepareIntent = new Intent(v.getContext(), PrepareActivity.class);
-                                v.getContext().startActivity(prepareIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
+                            case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
                                 // todo
                                 break;
-
-
-                            // END DAY
-                            case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
+                            case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
                                 // todo
                                 break;
-                            case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
+                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:
+                                // todo
+                                break;
+                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM:
+                                // todo
+                                break;
+                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
+                                // todo
+                                break;
+                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
+                                // todo
+                                break;
+                            case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
                                 // todo
                                 break;
 
@@ -217,8 +195,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 // todo
                                 break;
                         }
-                    } catch (SQLException e) {
-                        ELog.d("Message log :can find config home activity");
+                    } catch(SQLException e){
+                        ELog.d("Message log :can find config In Outlet activity");
                     }
                 }
             });
