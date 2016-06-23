@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -40,6 +41,8 @@ public class OrderActivity extends BaseDrawerActivity {
     private List<ProductgroupDTO> sections;
     private Map<String, List<ProductDTO>> products;
     private Map<String, String> orderInfos;
+    private String[] shortageCodes;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,10 +52,13 @@ public class OrderActivity extends BaseDrawerActivity {
         sections = new ArrayList<>();
         products = new HashMap<>();
         orderInfos = new HashMap<>();
+
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
 
         initOrderData();
         onFreshList();
+
+
 
         fixSizeExpandableList();
         adapter = new MyExpandableAdapter(this, sections, products, orderInfos, outletId);
@@ -63,6 +69,8 @@ public class OrderActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         int groupCount = adapter.getGroupCount();
+
+        adapter.notifyDataSetChanged();
         for (int i= 0; i< groupCount; i++) {
             expandableListView.expandGroup(i);
         }
@@ -110,11 +118,19 @@ public class OrderActivity extends BaseDrawerActivity {
     }
 
     private void initOrderData() {
+        int i = 0;
         try {
+            sharedPreferences = getSharedPreferences(ScreenContants.MyPREFERENCES, MODE_PRIVATE);
+            shortageCodes = new String[sharedPreferences.getAll().size()];
+            for(String key : sharedPreferences.getAll().keySet()) {
+                ELog.d(key + ": " + sharedPreferences.getAll().get(key));
+                shortageCodes[i] = key;
+                i++;
+            }
             sections = this.repo.getProductGroupDAO().findAll(); //Get all name of product group
 
             for(ProductgroupDTO productgroupDTO : sections) {
-                List<ProductDTO> productDTOs = this.repo.getProductDAO().findByProductGroupId(productgroupDTO.getProductGroupId());
+                List<ProductDTO> productDTOs = this.repo.getProductDAO().findByProductGroupId(productgroupDTO.getProductGroupId(), shortageCodes);
                 products.put(productgroupDTO.getName(), productDTOs);
             }
 
@@ -157,4 +173,6 @@ public class OrderActivity extends BaseDrawerActivity {
 
         return isExist;
     }
+
+
 }

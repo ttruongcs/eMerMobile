@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -42,6 +43,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     private RecyclerView.LayoutManager layoutManager;
     private List<BeforeDisplayDTO> beforeDisplayDTOs;
     private List<HotzoneDTO> hotzoneDTOs;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         beforeDisplayDTOs = new ArrayList<>();
         hotzoneDTOs = new ArrayList<>();
+        sharedPreferences = getSharedPreferences(ScreenContants.MyPREFERENCES, MODE_PRIVATE);
 
         bindDatas();
         initRecyclerView();
@@ -65,6 +68,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new BeforeOutletModelAdapter(this, beforeDisplayDTOs, hotzoneDTOs, repo, outletId);
         recyclerView.setAdapter(adapter);
+
 
     }
 
@@ -92,6 +96,12 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ELog.d("Hello", "Hello");
+
+        for(String key : sharedPreferences.getAll().keySet()) {
+            ELog.d(key + ": " + sharedPreferences.getAll().get(key));
+        }
+
     }
 
 }

@@ -57,10 +57,26 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         return productDTOs;
     }
 
-    public List<ProductDTO> findByProductGroupId(Long id) {
+    public List<ProductDTO> findByProductGroupId(Long id, String[] shortageCodes) {
+        if(shortageCodes.length <= 0) {
+            return new ArrayList<ProductDTO>();
+        }
+
         List<ProductDTO> result = new ArrayList<>();
         try {
-            List<ProductEntity> entities = queryForEq("productGroupId", id);
+            QueryBuilder<ProductEntity, String> queryBuilder = queryBuilder();
+            Where<ProductEntity, String> where = queryBuilder.where();
+
+
+            if(shortageCodes.length > 0) {
+                for(int i = 0; i < shortageCodes.length; i++) {
+                    where.eq("code", shortageCodes[i]);
+                }
+                where.or(shortageCodes.length);
+            }
+            where.eq("productGroupId", id);
+            where.and(2);
+            List<ProductEntity> entities = where.query();
             for(ProductEntity entity : entities) {
                 result.add(ProductUtil.convertToDTO(entity));
             }

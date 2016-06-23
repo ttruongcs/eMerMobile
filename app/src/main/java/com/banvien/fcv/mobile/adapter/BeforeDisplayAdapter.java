@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -15,17 +16,17 @@ import android.widget.TextView;
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,13 +40,15 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
     private BeforeDisplayActivity activity;
     private List<ProductDTO> mData;
+    private Map<String, Integer> mhsCodes;
     private Repo repo;
     private LayoutInflater mInflater;
-    private Map<String, Integer> mhsCodes;
     private EditText edFacing;
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
@@ -55,8 +58,11 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         this.repo = repo;
         this.outletId = outletId;
         this.outletModelId = outletModelId;
+
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
+        sharedPreferences = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
     }
 
     @Override
@@ -87,6 +93,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         return v;
     }
 
+
     public class ItemHolder {
 
         @Bind(R.id.tvMHS)
@@ -100,16 +107,39 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final ProductDTO productDTO) {
+            if(sharedPreferences == null || sharedPreferences.getAll().size() <= 0) {
+                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                editor.apply();
+            }
+
             try {
-                ELog.d("productCode", productDTO.getCode());
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
                     editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode())));
+                    checkShortageExist(productDTO.getCode());
+
+
                 }
                 bindEvents(productDTO);
             } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
+        }
+
+        private void checkShortageExist(String code) {
+            int modelPrefId = sharedPreferences.getInt(code, -1);
+
+            if(modelPrefId != -1) {
+                if(modelPrefId == outletModelId) {
+                    editor.remove(code);
+                    editor.apply();
+                } else {
+                    editor.putInt(code, Integer.valueOf(outletModelId.toString()));
+                    editor.apply();
+                }
+
+            }
+
         }
 
         private Map<String, Integer> loadMhs() {
@@ -133,7 +163,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                ELog.d(e.getMessage(), e);
             }
 
             return result;
@@ -148,9 +178,11 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(v.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
-
+                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
+                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                                editor.apply();
                             } else {
 
                             }
@@ -176,8 +208,11 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
+                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
+                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                                editor.apply();
                             } else {
 
                             }
@@ -217,6 +252,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             if(mhsCodes.size() > 0) {
                 for(String key : mhsCodes.keySet()) {
                     sum += mhsCodes.get(key);
+
                 }
             } else {
                 sum = 0;
@@ -257,6 +293,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
         /*Init total facing show on screen*/
         public String loadTotalFacing() {
+            ELog.d("outletId", String.valueOf(outletId));
             String result = null;
             try {
                 result = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);

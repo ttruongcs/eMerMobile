@@ -127,5 +127,8 @@ public class ScreenContants {
     public static final String DOING = "DOING";
     public static final String FINISHED = "FINISHED";
 
+    //Shared Preferences
+    public static final String MyPREFERENCES = "shortagePrefs";
+
 
 }

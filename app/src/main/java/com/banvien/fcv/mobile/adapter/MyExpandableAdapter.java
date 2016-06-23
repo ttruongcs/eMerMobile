@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -109,47 +111,55 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         TextView textViewChild = (TextView) convertView.findViewById(R.id.tvProductName);
         textViewChild.setText(childText.getName());
 
-        EditText editText = (EditText)convertView.findViewById(R.id.edNumber);
-        if(childText.getProductId().toString() != null) {
-            editText.setText(orderInfos.get(childText.getProductId().toString()));
-        }
+        CheckBox cbShortage = (CheckBox) convertView.findViewById(R.id.cbShortage);
 
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        cbShortage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
-                    OutletMerDTO outletMerDTO = new OutletMerDTO();
-                    outletMerDTO.setDataType(ScreenContants.ORDER);
-                    outletMerDTO.setActualValue(v.getText().toString());
-                    outletMerDTO.setOutletId(outletId);
-                    outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
-                    insertOrUpdateData(outletMerDTO);
-
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                EditText numberInput;
-
-                if(!hasFocus) {
-                    numberInput = (EditText) v;
-                    if(!numberInput.getText().toString().equals("")) {
-                        OutletMerDTO outletMerDTO = new OutletMerDTO();
-                        outletMerDTO.setDataType(ScreenContants.ORDER);
-                        outletMerDTO.setActualValue(numberInput.getText().toString());
-                        outletMerDTO.setOutletId(outletId);
-                        outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
-
-                        insertOrUpdateData(outletMerDTO);
-                    }
+            public void onClick(View v) {
+                if ( ((CheckBox)v).isChecked() ) {
+                    Toast.makeText(v.getContext(), childText.getName() + " checked", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v.getContext(), childText.getName() + " unchecked", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if(actionId == EditorInfo.IME_ACTION_DONE) {
+//                    OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                    outletMerDTO.setDataType(ScreenContants.ORDER);
+//                    outletMerDTO.setActualValue(v.getText().toString());
+//                    outletMerDTO.setOutletId(outletId);
+//                    outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
+//                    insertOrUpdateData(outletMerDTO);
+//
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//
+//        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                EditText numberInput;
+//
+//                if(!hasFocus) {
+//                    numberInput = (EditText) v;
+//                    if(!numberInput.getText().toString().equals("")) {
+//                        OutletMerDTO outletMerDTO = new OutletMerDTO();
+//                        outletMerDTO.setDataType(ScreenContants.ORDER);
+//                        outletMerDTO.setActualValue(numberInput.getText().toString());
+//                        outletMerDTO.setOutletId(outletId);
+//                        outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
+//
+//                        insertOrUpdateData(outletMerDTO);
+//                    }
+//                }
+//            }
+//        });
 
         return convertView;
     }
