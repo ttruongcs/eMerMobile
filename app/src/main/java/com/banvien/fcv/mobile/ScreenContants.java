@@ -74,6 +74,7 @@ public class ScreenContants {
 
     //GPS
     public static final String GPS = "GPS";
+    public static final Float GPS_DISTANCE = 50f;
 
 
     // TYPE OF NODE STEP

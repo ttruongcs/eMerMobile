@@ -145,7 +145,6 @@ public class PrepareFragment extends BaseFragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Add new task from server");
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                 whatsappIntent.setType("text/plain");
                 whatsappIntent.setPackage("com.whatsapp");
@@ -155,6 +154,7 @@ public class PrepareFragment extends BaseFragment {
                 } catch (android.content.ActivityNotFoundException ex) {
 //                    Toast.makeText("Whatsapp have not been installed.");
                 }
+                Log.d(TAG, "Add new task from server");
             }
         });
     }

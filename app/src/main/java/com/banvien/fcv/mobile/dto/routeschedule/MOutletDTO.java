@@ -34,8 +34,8 @@ public class MOutletDTO implements Serializable {
     private Timestamp createdDate;
     private Timestamp modifiedDate;
     private Integer primaryUsed;
-    private BigDecimal lat;
-    private BigDecimal lng;
+    private Double lat;
+    private Double lng;
     private String distributorCode;
     private String cityCode;
     private String outletTypeCode;
@@ -217,19 +217,19 @@ public class MOutletDTO implements Serializable {
         this.primaryUsed = primaryUsed;
     }
 
-    public BigDecimal getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(BigDecimal lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public BigDecimal getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(BigDecimal lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 
