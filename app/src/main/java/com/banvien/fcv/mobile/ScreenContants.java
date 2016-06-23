@@ -121,6 +121,7 @@ public class ScreenContants {
     public static final String CAPTURE_UNIFORM_PATH = "fcvImage/uniform/";
     public static final String CAPTURE_TOOL_PATH = "fcvImage/tool/";
     public static final String CAPTURE_FIRST_OUTLET = "fcvImage/firstOutlet/";
+    public static final String CAPTURE_ENDDAY = "fcvImage/endday/";
     public static final String CAPTURE_OVERVIEW = "fcvImage/overview/";
 
     public static final String UNFINISH = "UNFINISH";

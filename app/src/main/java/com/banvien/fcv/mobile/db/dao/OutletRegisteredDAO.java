@@ -33,4 +33,11 @@ public class OutletRegisteredDAO extends AndroidBaseDaoImpl<OutletRegisteredEnti
             e.printStackTrace();
         }
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Outlet Registered");
+            deleteBuilder().delete();
+        }
+    }
 }

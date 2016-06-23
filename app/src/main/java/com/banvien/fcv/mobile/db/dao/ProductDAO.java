@@ -118,4 +118,11 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
 
         return result;
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Product");
+            deleteBuilder().delete();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.banvien.fcv.mobile.db.dao.CaptureOverviewDAO;
@@ -12,6 +13,7 @@ import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
+import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
 import com.banvien.fcv.mobile.db.dao.OutletFirstImagesDAO;
 import com.banvien.fcv.mobile.db.dao.OutletMerDAO;
 import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
@@ -29,6 +31,7 @@ import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -84,6 +87,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private RouteScheduleDAO routeScheduleDAO = null;
     private OutletFirstImagesDAO outletFirstImagesDAO = null;
 	private CaptureToolDAO captureToolDAO = null;
+	private OutletEndDayImagesDAO outletEndDayImagesDAO = null;
 	private CaptureOverviewDAO captureOverviewDAO = null;
 
 	public DatabaseHelper(Context context) {
@@ -111,6 +115,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, RouteScheduleEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureToolEntity.class);
             TableUtils.createTableIfNotExists(connectionSource, OutletFirstImagesEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, OutletEndDayImagesEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureOverviewEntity.class);
 
 			TableUtils.createTableIfNotExists(connectionSource, StatusHomeEntity.class);
@@ -144,6 +149,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, OutletRegisteredEntity.class, true);
 			TableUtils.dropTable(connectionSource, ComplainTypeEntity.class, true);
             TableUtils.dropTable(connectionSource, OutletFirstImagesEntity.class, true);
+			TableUtils.dropTable(connectionSource, OutletEndDayImagesEntity.class, true);
             TableUtils.dropTable(connectionSource, StatusHomeEntity.class, true);
 
 			TableUtils.dropTable(connectionSource, StatusStartDayEntity.class, true);
@@ -152,6 +158,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, CaptureUniformEntity.class, true);
             TableUtils.dropTable(connectionSource, RouteScheduleEntity.class, true);
 			TableUtils.dropTable(connectionSource, CaptureToolEntity.class, true);
+
             TableUtils.dropTable(connectionSource, CaptureOverviewEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
@@ -283,6 +290,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 
 		return outletFirstImagesDAO;
+	}
+
+	public OutletEndDayImagesDAO getOutletEndDayImagesDAO() throws SQLException {
+		if(null == outletEndDayImagesDAO) {
+			outletEndDayImagesDAO = new OutletEndDayImagesDAO(getConnectionSource(), OutletEndDayImagesEntity.class);
+		}
+
+		return outletEndDayImagesDAO;
 	}
 
 	public CaptureToolDAO getCaptureToolDAO() throws SQLException {

@@ -5,6 +5,8 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -46,5 +48,12 @@ public class StatusStartDayDAO extends AndroidBaseDaoImpl<StatusStartDayEntity, 
         }
         if(result.size() == 0) return null;
         return result.get(0);
+    }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Status Start Day");
+            deleteBuilder().delete();
+        }
     }
 }

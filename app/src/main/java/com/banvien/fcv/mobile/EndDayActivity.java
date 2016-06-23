@@ -83,9 +83,6 @@ public class EndDayActivity extends BaseDrawerActivity {
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
-
-            timelineDTOs.add(step1);
-            timelineDTOs.add(step2);
         }
 
         if(timelineDTOs.size() > 0) {

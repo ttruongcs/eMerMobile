@@ -46,4 +46,11 @@ public class StatusEndDayDAO extends AndroidBaseDaoImpl<StatusEndDayEntity, Stri
         if(result.size() == 0) return null;
         return result.get(0);
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Status End Day");
+            deleteBuilder().delete();
+        }
+    }
 }

@@ -49,4 +49,11 @@ public class ComplainTypeDAO extends AndroidBaseDaoImpl<ComplainTypeEntity, Stri
         }
         return result;
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Complain Type");
+            deleteBuilder().delete();
+        }
+    }
 }

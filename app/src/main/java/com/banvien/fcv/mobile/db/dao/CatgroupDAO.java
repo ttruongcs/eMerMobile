@@ -34,4 +34,11 @@ public class CatgroupDAO extends AndroidBaseDaoImpl<CatgroupEntity, String> {
             e.printStackTrace();
         }
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data CatGroup");
+            deleteBuilder().delete();
+        }
+    }
 }

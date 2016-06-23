@@ -54,4 +54,11 @@ public class CaptureToolDAO extends AndroidBaseDaoImpl<CaptureToolEntity, String
             ELog.d(e.getMessage(), e);
         }
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Capture Tool");
+            deleteBuilder().delete();
+        }
+    }
 }

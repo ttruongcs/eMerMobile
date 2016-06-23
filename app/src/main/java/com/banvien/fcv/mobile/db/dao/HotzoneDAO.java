@@ -48,4 +48,11 @@ public class HotzoneDAO extends AndroidBaseDaoImpl<HotzoneEntity, String> {
         }
         return HotzoneUtil.convertToDTO(entity);
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Hotzone");
+            deleteBuilder().delete();
+        }
+    }
 }
