@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.banvien.fcv.mobile.db.dao.CaptureOverviewDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
@@ -22,6 +23,7 @@ import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
+import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
@@ -82,6 +84,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private RouteScheduleDAO routeScheduleDAO = null;
     private OutletFirstImagesDAO outletFirstImagesDAO = null;
 	private CaptureToolDAO captureToolDAO = null;
+	private CaptureOverviewDAO captureOverviewDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -108,6 +111,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, RouteScheduleEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureToolEntity.class);
             TableUtils.createTableIfNotExists(connectionSource, OutletFirstImagesEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, CaptureOverviewEntity.class);
 
 			TableUtils.createTableIfNotExists(connectionSource, StatusHomeEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, StatusStartDayEntity.class);
@@ -148,6 +152,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, CaptureUniformEntity.class, true);
             TableUtils.dropTable(connectionSource, RouteScheduleEntity.class, true);
 			TableUtils.dropTable(connectionSource, CaptureToolEntity.class, true);
+            TableUtils.dropTable(connectionSource, CaptureOverviewEntity.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -287,6 +292,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 		return captureToolDAO;
 	}
+
+    public CaptureOverviewDAO getCaptureOverviewDAO() throws SQLException {
+        if(null == captureOverviewDAO) {
+            captureOverviewDAO = new CaptureOverviewDAO(getConnectionSource(), CaptureOverviewEntity.class);
+        }
+
+        return captureOverviewDAO;
+    }
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */

@@ -17,6 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
+import com.banvien.fcv.mobile.CaptureOverviewActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
@@ -204,7 +205,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(mapsIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
-                                // todo
+                                Intent overviewIntent = new Intent(v.getContext(), CaptureOverviewActivity.class);
+                                overviewIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(overviewIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
                                 // todo

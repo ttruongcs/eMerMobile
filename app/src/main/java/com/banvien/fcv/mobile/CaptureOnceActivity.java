@@ -90,8 +90,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
 
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                mode.setTitle("Select Items");
-                mode.setSubtitle("One item selected");
+                mode.setTitle(getString(R.string.select_items));
+                mode.setSubtitle(getString(R.string.selected, 1));
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.action_menu, menu);
 
@@ -134,10 +134,10 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
                 adapter.notifyDataSetChanged();
                 switch (selectCount) {
                     case 1:
-                        mode.setSubtitle("One item selected");
+                        mode.setSubtitle(getString(R.string.selected, 1));
                         break;
                     default:
-                        mode.setSubtitle("" + selectCount + " items selected");
+                        mode.setSubtitle("" + getString(R.string.selected, selectCount));
                         break;
                 }
             }

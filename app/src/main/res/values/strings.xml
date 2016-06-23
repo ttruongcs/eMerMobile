@@ -551,5 +551,9 @@
     <string name="total">Tổng cộng</string>
     <string name="listOutlet">Danh sách cửa hàng</string>
 
+    <!-- Capture Image -->
+    <string name="select_items">Chọn hình ảnh</string>
+    <string name="selected">%1$d hình đã được chọn</string>
+
 
 </resources>

@@ -20,7 +20,7 @@ public class CaptureToolUtil {
     public static CaptureToolEntity convertToEntity(CaptureToolDTO dto) {
         CaptureToolEntity captureToolEntity = new CaptureToolEntity();
         captureToolEntity.set_id(dto.get_id());
-        captureToolEntity.setRouteScheduleId(captureToolEntity.getRouteScheduleId());
+        captureToolEntity.setRouteScheduleId(dto.getRouteScheduleId());
         captureToolEntity.setPathImage(dto.getPathImage());
         captureToolEntity.setCreatedDate(dto.getCreatedDate());
 

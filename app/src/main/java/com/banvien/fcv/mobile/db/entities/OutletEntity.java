@@ -36,9 +36,9 @@ public class OutletEntity implements Serializable {
     @DatabaseField
     private String cityName;
     @DatabaseField
-    private BigDecimal lat;
+    private Double lat;
     @DatabaseField
-    private BigDecimal lg;
+    private Double lg;
     @DatabaseField
     private Integer status;
     @DatabaseField
@@ -142,19 +142,19 @@ public class OutletEntity implements Serializable {
         this.cityName = cityName;
     }
 
-    public BigDecimal getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(BigDecimal lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public BigDecimal getLg() {
+    public Double getLg() {
         return lg;
     }
 
-    public void setLg(BigDecimal lg) {
+    public void setLg(Double lg) {
         this.lg = lg;
     }
 

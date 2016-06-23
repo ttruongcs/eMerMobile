@@ -27,8 +27,8 @@ public class MultiChoiceModeListener implements GridView.MultiChoiceModeListener
     }
 
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mode.setTitle("Select Items");
-        mode.setSubtitle("One item selected");
+        mode.setTitle("Chọn hình ảnh");
+        mode.setSubtitle("1 hình được chọn");
         return true;
     }
 
@@ -51,10 +51,10 @@ public class MultiChoiceModeListener implements GridView.MultiChoiceModeListener
         imageDTOs.get(position).setChecked(checked);
         switch (selectCount) {
             case 1:
-                mode.setSubtitle("One item selected");
+                mode.setSubtitle("Chọn hình ảnh");
                 break;
             default:
-                mode.setSubtitle("" + selectCount + " items selected");
+                mode.setSubtitle("" + selectCount + "đã được chọn");
                 break;
         }
     }
