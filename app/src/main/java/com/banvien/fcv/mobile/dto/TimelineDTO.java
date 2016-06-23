@@ -9,6 +9,8 @@ public class TimelineDTO {
     private String order;
     private String type;
     private int isDone;    //0: Not done, 1: Continue, 2: Done
+    private boolean isHeader;
+    private boolean isFooter;
 
     public TimelineDTO() {};
 
@@ -58,5 +60,21 @@ public class TimelineDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    public void setHeader(boolean header) {
+        isHeader = header;
+    }
+
+    public boolean isFooter() {
+        return isFooter;
+    }
+
+    public void setFooter(boolean footer) {
+        isFooter = footer;
     }
 }

@@ -11,14 +11,6 @@
         android:layout_height="match_parent"
         android:layout_marginRight="-1dp">
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/tvOrder"
-            android:layout_centerHorizontal="true"
-            android:background="#4CAF50"
-            android:id="@+id/view2" />
-
         <TextView
             android:id="@+id/tvOrder"
             android:layout_width="wrap_content"
@@ -112,7 +104,7 @@
 
 
 
-            </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
 
 
 

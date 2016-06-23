@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -51,6 +52,9 @@ import butterknife.ButterKnife;
  */
 public class TimelineAdapter extends RecyclerView.Adapter {
     public static final double PIC_RATIO_VALUE = 4.0;
+    private final int HEADER_ITEM = 0;
+    private final int NORMAL_ITEM = 1;
+    private final int FOOTER_ITEM = 2;
 
     Repo repo;
     List<TimelineDTO> mData;
@@ -64,10 +68,22 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_item, parent, false);
-        ItemHolder itemHolder = new ItemHolder(v);
+        if(viewType == 0) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_layout_header_item, parent, false);
+            ItemHolder itemHolder = new ItemHolder(v);
 
-        return itemHolder;
+            return itemHolder;
+        } else if(viewType == 1) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_item, parent, false);
+            ItemHolder itemHolder = new ItemHolder(v);
+
+            return itemHolder;
+        } else  {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timeline_layout_footer_item, parent, false);
+            ItemHolder itemHolder = new ItemHolder(v);
+
+            return itemHolder;
+        }
     }
 
     @Override
@@ -75,33 +91,48 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         ItemHolder itemHolder = (ItemHolder) holder;
 
         int height = this.containerHeight(activity);
-        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, height);
-        itemHolder.linearLayout.setLayoutParams(params);
+        itemHolder.linearLayout.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         itemHolder.tvTimeline.setText(mData.get(position).getTitle());
         itemHolder.tvDetail.setText(mData.get(position).getDetail());
         itemHolder.tvOrder.setText(mData.get(position).getOrder());
         itemHolder.stepCode.setText(mData.get(position).getType());
 
-        if(position == 0) {
-            itemHolder.viewTop.getLayoutParams().width = 0;
-        } else if(position > 0) {
-            if(mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2 ) {
-                itemHolder.cardView.setAlpha(1f);
-                itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle);
-                itemHolder.viewTop.setBackgroundResource(R.color.color_blog);
-                itemHolder.viewBottom.setBackgroundResource(R.color.color_blog);
-                itemHolder.arrow.setVisibility(View.VISIBLE);
+        ELog.d("position", String.valueOf(position));
 
-            } else {
-                itemHolder.cardView.setAlpha(0.3f);
-                itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle_not_done);
-                itemHolder.viewTop.setBackgroundResource(R.color.red_500);
-                itemHolder.viewBottom.setBackgroundResource(R.color.red_500);
-                itemHolder.arrow.setVisibility(View.GONE);
+        if (mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2) {
+            itemHolder.cardView.setAlpha(1f);
+            itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle);
+            switch (holder.getItemViewType()) {
+                case HEADER_ITEM:
+                    itemHolder.viewBottom.setBackgroundResource(R.color.color_blog);
+                    break;
+                case NORMAL_ITEM:
+                    itemHolder.viewTop.setBackgroundResource(R.color.color_blog);
+                    itemHolder.viewBottom.setBackgroundResource(R.color.color_blog);
+                    break;
+                case FOOTER_ITEM:
+                    itemHolder.viewTop.setBackgroundResource(R.color.color_blog);
+                    break;
             }
-            if(position == mData.size() - 1) {
-                itemHolder.viewBottom.getLayoutParams().width = 0;
+
+            itemHolder.arrow.setVisibility(View.VISIBLE);
+
+        } else {
+            itemHolder.cardView.setAlpha(0.3f);
+            itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle_not_done);
+            switch (holder.getItemViewType()) {
+                case HEADER_ITEM:
+                    itemHolder.viewBottom.setBackgroundResource(R.color.red_500);
+                    break;
+                case NORMAL_ITEM:
+                    itemHolder.viewTop.setBackgroundResource(R.color.red_500);
+                    itemHolder.viewBottom.setBackgroundResource(R.color.red_500);
+                    break;
+                case FOOTER_ITEM:
+                    itemHolder.viewTop.setBackgroundResource(R.color.red_500);
+                    break;
             }
+            itemHolder.arrow.setVisibility(View.GONE);
         }
 
     }
@@ -109,6 +140,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (mData.get(position).isHeader() ? 0 : (mData.get(position).isFooter() ? 2 : 1 ));
     }
 
     public int containerHeight(Activity activity) {
@@ -132,9 +168,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         @Bind(R.id.rlv2)
         RelativeLayout arrow;
 
+        @Nullable
         @Bind(R.id.view2)
         View viewTop;
 
+        @Nullable
         @Bind(R.id.view)
         View viewBottom;
 
@@ -270,5 +308,6 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     });
             builderSingle.show();
         }
+
     }
 }

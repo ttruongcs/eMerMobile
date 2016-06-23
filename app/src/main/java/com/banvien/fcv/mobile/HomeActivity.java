@@ -89,6 +89,11 @@ public class HomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(endDay);
         }
 
+        if(timelineDTOs.size() > 0) {
+            timelineDTOs.get(0).setHeader(true);
+            timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
+        }
+
         return timelineDTOs;
     }
 }

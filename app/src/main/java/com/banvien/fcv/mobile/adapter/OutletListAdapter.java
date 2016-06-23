@@ -33,10 +33,12 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
     private TextDrawable.IBuilder mDrawableBuilder;
     private List<OutletDTO> mData;
     private Fragment fragment;
+    private String flag;
 
-    public OutletListAdapter(List<OutletDTO> outletDTOs, Fragment fragment) {
+    public OutletListAdapter(List<OutletDTO> outletDTOs, Fragment fragment, String flag) {
         this.mData = outletDTOs;
         this.fragment = fragment;
+        this.flag = flag;
     }
 
     public OutletListAdapter() {};
@@ -98,9 +100,11 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
-                    intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-                    view.getContext().startActivity(intent);
+                    if(flag.equals(ScreenContants.UNFINISH)) {
+                        Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
+                        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+                        view.getContext().startActivity(intent);
+                    }
                 }
             });
         }

@@ -126,6 +126,11 @@ public class StartDayActivity extends BaseDrawerActivity {
             timelineDTOs.add(step6);
         }
 
+        if(timelineDTOs.size() > 0) {
+            timelineDTOs.get(0).setHeader(true);
+            timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
+        }
+
         return timelineDTOs;
     }
 }
