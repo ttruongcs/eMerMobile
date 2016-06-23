@@ -71,4 +71,11 @@ public class ProductgroupDAO extends AndroidBaseDaoImpl<ProductgroupEntity, Stri
         }
         return result;
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Product Group");
+            deleteBuilder().delete();
+        }
+    }
 }

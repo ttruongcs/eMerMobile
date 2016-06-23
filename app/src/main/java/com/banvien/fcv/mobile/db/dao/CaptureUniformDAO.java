@@ -55,4 +55,11 @@ public class CaptureUniformDAO extends AndroidBaseDaoImpl<CaptureUniformEntity, 
             ELog.d(e.getMessage(), e);
         }
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Capture Uniform");
+            deleteBuilder().delete();
+        }
+    }
 }

@@ -34,4 +34,10 @@ public class ConfigDAO extends AndroidBaseDaoImpl<ConfigEntity, String> {
             e.printStackTrace();
         }
     }
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Config");
+            deleteBuilder().delete();
+        }
+    }
 }

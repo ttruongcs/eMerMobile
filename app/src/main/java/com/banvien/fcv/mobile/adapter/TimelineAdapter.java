@@ -18,6 +18,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.CaptureEndDayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
@@ -245,7 +246,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
                             // END DAY
                             case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
-                                // todo
+                                Intent captureEndDay = new Intent(v.getContext(), CaptureEndDayActivity.class);
+                                v.getContext().startActivity(captureEndDay);
                                 break;
                             case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
                                 // todo

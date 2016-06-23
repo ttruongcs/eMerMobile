@@ -89,4 +89,11 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
 
         return result.size();
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Outlet");
+            deleteBuilder().delete();
+        }
+    }
 }

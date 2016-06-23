@@ -47,4 +47,11 @@ public class StatusInOutletDAO extends AndroidBaseDaoImpl<StatusInOutletEntity, 
         if(result.size() == 0) return null;
         return result.get(0);
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Status In Outlet");
+            deleteBuilder().delete();
+        }
+    }
 }

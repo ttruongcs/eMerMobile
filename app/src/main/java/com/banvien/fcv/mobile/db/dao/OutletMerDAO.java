@@ -394,4 +394,11 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Outlet Mer Result");
+            deleteBuilder().delete();
+        }
+    }
+
 }

@@ -86,5 +86,11 @@ public class OutletFirstImagesDAO extends AndroidBaseDaoImpl<OutletFirstImagesEn
         }
     }
 
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data Capture First Images");
+            deleteBuilder().delete();
+        }
+    }
 
 }

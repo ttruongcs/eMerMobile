@@ -63,4 +63,11 @@ public class PosmDAO extends AndroidBaseDaoImpl<POSMEntity, String> {
         }
         return null;
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Data POSM ");
+            deleteBuilder().delete();
+        }
+    }
 }

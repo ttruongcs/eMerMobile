@@ -92,6 +92,7 @@ public class UpdateService {
 
 			JSONObject json = null;
 			System.out.println("json "+ json);
+			clearData();
 			configStatusHome();
 			Call<Map<String,Object>> call =
 					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
@@ -102,6 +103,27 @@ public class UpdateService {
 		}
 		results.put("taskType", taskType);
 		return results;
+	}
+
+	private void clearData() throws SQLException {
+		repo.getOutletEndDayImagesDAO().clearData();
+		repo.getStatusHomeDAO().clearData();
+		repo.getRouteScheduleDAO().clearData();
+		repo.getOutletFirstImagesDAO().clearData();
+		repo.getCaptureToolDAO().clearData();
+		repo.getCatgroupDAO().clearData();
+		repo.getComplainTypeDAO().clearData();
+		repo.getHotZoneDAO().clearData();
+		repo.getCaptureUniformDAO().clearData();
+		repo.getPosmDAO().clearData();
+		repo.getProductDAO().clearData();
+		repo.getProductGroupDAO().clearData();
+		repo.getStartDayDAO().clearData();
+		repo.getStatusEndDayDAO().clearData();
+		repo.getStatusInOutletDAO().clearData();
+		repo.getOutletMerDAO().clearData();
+		repo.getOutletRegisteredDAO().clearData();
+		repo.getOutletDAO().clearData();
 	}
 
 	private void configStatusHome() throws SQLException {
@@ -291,35 +313,4 @@ public class UpdateService {
 			}
 		});
 	}
-
-	public void createAllTableOnDatabases() throws SQLException{
-		Log.i(TAG, "delete create Outlet Database..");
-		TableUtils.createTable(repo.getHotZoneDAO().getConnectionSource(), HotzoneEntity.class);
-		TableUtils.createTable(repo.getOutletMerDAO().getConnectionSource(), OutletMerEntity.class);
-		TableUtils.createTable(repo.getPosmDAO().getConnectionSource(), POSMEntity.class);
-		TableUtils.createTable(repo.getProductDAO().getConnectionSource(), ProductEntity.class);
-
-		TableUtils.createTable(repo.getCatgroupDAO().getConnectionSource(), CatgroupEntity.class);
-		TableUtils.createTable(repo.getProductGroupDAO().getConnectionSource(), ProductgroupEntity.class);
-		TableUtils.createTable(repo.getOutletDAO().getConnectionSource(), OutletEntity.class);
-		TableUtils.createTable(repo.getOutletRegisteredDAO().getConnectionSource(), OutletRegisteredEntity.class);
-
-        TableUtils.createTable(repo.getComplainTypeDAO().getConnectionSource(), ComplainTypeEntity.class);
-	}
-
-	public void deleteOutletAllDatabase() throws SQLException{
-		Log.i(TAG, "delete All Outlet Database..");
-		TableUtils.dropTable(repo.getHotZoneDAO().getConnectionSource(), HotzoneEntity.class, true);
-		TableUtils.dropTable(repo.getOutletMerDAO().getConnectionSource(), OutletMerEntity.class, true);
-		TableUtils.dropTable(repo.getPosmDAO().getConnectionSource(), POSMEntity.class, true);
-		TableUtils.dropTable(repo.getProductDAO().getConnectionSource(), ProductEntity.class, true);
-
-		TableUtils.dropTable(repo.getCatgroupDAO().getConnectionSource(), CatgroupEntity.class, true);
-		TableUtils.dropTable(repo.getProductGroupDAO().getConnectionSource(), ProductgroupEntity.class, true);
-		TableUtils.dropTable(repo.getOutletDAO().getConnectionSource(), OutletEntity.class, true);
-		TableUtils.dropTable(repo.getOutletRegisteredDAO().getConnectionSource(), OutletRegisteredEntity.class, true);
-
-        TableUtils.dropTable(repo.getComplainTypeDAO().getConnectionSource(), ComplainTypeEntity.class, true);
-	}
-
 }

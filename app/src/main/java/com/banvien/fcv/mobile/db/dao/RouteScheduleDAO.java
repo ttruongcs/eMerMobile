@@ -43,4 +43,11 @@ public class RouteScheduleDAO extends AndroidBaseDaoImpl<RouteScheduleEntity, St
 
         return result;
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Route Schedule");
+            deleteBuilder().delete();
+        }
+    }
 }
