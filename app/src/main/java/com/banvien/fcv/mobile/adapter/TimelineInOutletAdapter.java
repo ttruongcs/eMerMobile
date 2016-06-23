@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureOverviewActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
@@ -23,6 +24,7 @@ import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.MapsActivity;
+import com.banvien.fcv.mobile.OrderActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
@@ -213,7 +215,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 // todo
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
-                                // todo
+                                Intent orderIntent = new Intent(v.getContext(), OrderActivity.class);
+                                orderIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(orderIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:
                                 // todo
@@ -225,7 +229,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 // todo
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
-                                // todo
+                                Intent beforeIntent = new Intent(v.getContext(), BeforeDisplayActivity.class);
+                                beforeIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(beforeIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
                                 // todo

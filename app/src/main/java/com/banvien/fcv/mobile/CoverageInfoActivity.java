@@ -25,8 +25,8 @@ public class CoverageInfoActivity extends BaseDrawerActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coverage);
-
         bindViews();
+//        setToolbarTitle(getString(R.string.outlet_list));
         bindEvent();
     }
 

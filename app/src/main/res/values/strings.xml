@@ -555,5 +555,7 @@
     <string name="select_items">Chọn hình ảnh</string>
     <string name="selected">%1$d hình đã được chọn</string>
 
+    <string name="outlet_list">Danh sách cửa hàng</string>
+
 
 </resources>
