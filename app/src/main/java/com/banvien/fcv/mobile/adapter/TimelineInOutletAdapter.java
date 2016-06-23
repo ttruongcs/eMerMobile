@@ -200,7 +200,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                             // IN OUTLET
                             case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
                                 Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
-                                mapsIntent.putExtra(ScreenContants.OUTLETID, Long.valueOf(outletId.getText().toString()));
+                                mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
                                 v.getContext().startActivity(mapsIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:

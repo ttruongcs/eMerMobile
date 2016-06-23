@@ -20,8 +20,8 @@ public class OutletDTO implements Serializable {
     private String district;
     private String ward;
     private String cityName;
-    private BigDecimal lat;
-    private BigDecimal lg;
+    private Double lat;
+    private Double lg;
     private Integer status;
     private Long routeScheduleId;
 
@@ -121,19 +121,19 @@ public class OutletDTO implements Serializable {
         this.cityName = cityName;
     }
 
-    public BigDecimal getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(BigDecimal lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public BigDecimal getLg() {
+    public Double getLg() {
         return lg;
     }
 
-    public void setLg(BigDecimal lg) {
+    public void setLg(Double lg) {
         this.lg = lg;
     }
 

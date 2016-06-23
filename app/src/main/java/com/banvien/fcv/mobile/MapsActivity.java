@@ -103,16 +103,13 @@ public class MapsActivity extends FragmentActivity  {
                 locationA.setLatitude(lat);
                 locationA.setLongitude(log);
                 Location locationB = new Location("point B");
-                locationB.setLatitude(10.765820);
-                locationB.setLongitude(106.706238);
+                locationB.setLatitude(outletDTO.getLat());
+                locationB.setLongitude(outletDTO.getLg());
                 float distance = locationA.distanceTo(locationB) ;
-
-
                 tvGps.setText(String.valueOf(lat));
-
-                Toast.makeText(v.getContext(), String.valueOf(distance), Toast.LENGTH_SHORT).show();
-
-
+                if(distance <= ScreenContants.GPS_DISTANCE){
+                    Toast.makeText(v.getContext(), "Khoang Cach < " + distance, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -134,7 +131,6 @@ public class MapsActivity extends FragmentActivity  {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         addOrUpdateGPS();
     }
 
