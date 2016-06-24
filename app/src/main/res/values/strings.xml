@@ -448,9 +448,9 @@
 
     <!-- Outlet List -->
     <string name="outlet_list_title">Outlet List</string>
-    <string name="outlet_status_finished">Completed</string>
-    <string name="outlet_status_doing">Doing</string>
-    <string name="outlet_status_unfinished">Not Start</string>
+    <string name="outlet_status_finished">Hoàn thành</string>
+    <string name="outlet_status_doing">Đang làm</string>
+    <string name="outlet_status_unfinished">Chưa xong</string>
 
     <!-- Complaint -->
     <string name="complaint">Complaint</string>
@@ -575,6 +575,10 @@
     <string name="cotaicuahang">Có</string>
     <string name="find_simple_warning">Bạn đang ở chức năng tìm kiếm</string>
     <string name="find_warning">Bạn đang ở chức năng tìm kiếm nâng cao</string>
+    <string name="add_outlet_finded">Danh sách cửa hàng được tìm</string>
+    <string name="select_outlet">Chọn cửa hàng</string>
+    <string name="find_outlet">Tìm cửa hàng</string>
+    <string name="find_failed">Chưa đủ dữ liệu tìm kiếm</string>
 
 
 </resources>

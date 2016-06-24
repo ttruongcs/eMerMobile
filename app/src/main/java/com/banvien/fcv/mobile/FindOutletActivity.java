@@ -73,7 +73,5 @@ public class FindOutletActivity extends BaseDrawerActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, StartDayActivity.class);
-        startActivity(intent);
     }
 }

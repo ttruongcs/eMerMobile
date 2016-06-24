@@ -6,8 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
+import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.utils.ELog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -29,14 +36,29 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
     @Bind(R.id.fabAdvanceSearch)
     FloatingActionButton fabAdvanceSearch;
 
+    @Bind(R.id.edOutletCode)
+    EditText edOutletCode;
+
+    @Bind(R.id.btnFindOutlet)
+    Button btnFindOutlet;
+
+    @Bind(R.id.switcher)
+    ViewSwitcher viewSwitcher;
+
+    @Bind(R.id.tvAddOutlet)
+    TextView tvAddOutlet;
+
+    Repo repo;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_outlet_simple);
+        repo = new Repo(this);
 
         bindViews();
+        //initOutletData();
         bindEvents();
-
     }
 
     private void bindEvents() {
@@ -67,12 +89,25 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                 startActivity(intent);
             }
         });
+
+        btnFindOutlet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String outletCode = edOutletCode.getText().toString().trim();
+                if(!outletCode.equals("")) {
+                    new AnimationUtils();
+                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+                    tvAddOutlet.setText("Tomato");
+                    viewSwitcher.showNext();
+                } else {
+                    Toast.makeText(v.getContext(), getString(R.string.find_failed), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, StartDayActivity.class);
-        startActivity(intent);
     }
 }
