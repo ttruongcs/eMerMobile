@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -13,10 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.banvien.fcv.mobile.adapter.AddOutletAdapter;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -48,6 +57,15 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
     @Bind(R.id.tvAddOutlet)
     TextView tvAddOutlet;
 
+    @Bind(R.id.rcvAddOutlet)
+    RecyclerView recyclerView;
+
+    @Bind(R.id.srlAddOutlet)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     Repo repo;
 
     @Override
@@ -57,7 +75,6 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
         repo = new Repo(this);
 
         bindViews();
-        //initOutletData();
         bindEvents();
     }
 
@@ -95,13 +112,34 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
             public void onClick(View v) {
                 String outletCode = edOutletCode.getText().toString().trim();
                 if(!outletCode.equals("")) {
-                    new AnimationUtils();
-                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
-                    tvAddOutlet.setText("Tomato");
-                    viewSwitcher.showNext();
+                    try {
+                        List<OutletEntity> outletEntities = repo.getOutletDAO().findByCode(outletCode);
+
+                        if(outletEntities.size() > 0) {
+                            initRecycleview(outletEntities);
+
+                            new AnimationUtils();
+                            viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+                            viewSwitcher.showNext();
+                        } else {
+                            Toast.makeText(v.getContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (SQLException e) {
+                        ELog.e(e.getMessage(), e);
+                    }
+
                 } else {
                     Toast.makeText(v.getContext(), getString(R.string.find_failed), Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            private void initRecycleview(List<OutletEntity> outletEntities) {
+                recyclerView.setHasFixedSize(true);
+                recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
+                layoutManager = new MySpeedScrollManager(getBaseContext());
+                recyclerView.setLayoutManager(layoutManager);
+                adapter = new AddOutletAdapter(getBaseContext(), outletEntities);
+                recyclerView.setAdapter(adapter);
             }
         });
     }

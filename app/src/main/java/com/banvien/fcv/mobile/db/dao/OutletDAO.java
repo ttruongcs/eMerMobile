@@ -96,4 +96,18 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
             deleteBuilder().delete();
         }
     }
+
+    public List<OutletEntity> findByCode(String outletCode) {
+        List<OutletEntity> entities = new ArrayList<>();
+
+        QueryBuilder<OutletEntity, String> queryBuilder = queryBuilder();
+        try {
+            queryBuilder.where().like("code", outletCode);
+            entities = queryBuilder.query();
+        } catch (SQLException e) {
+            ELog.e(e.getMessage(), e);
+        }
+
+        return entities;
+    }
 }
