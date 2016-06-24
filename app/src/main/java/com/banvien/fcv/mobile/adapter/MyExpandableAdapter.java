@@ -22,9 +22,11 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.ShortageProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -117,6 +119,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if ( ((CheckBox)v).isChecked() ) {
+                    ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
+                    shortageProductDTO.setProductCode(childText.getCode());
+                    shortageProductDTO.setOutletId(outletId);
+                    shortageProductDTO.setCreatedDate(new Date(System.currentTimeMillis()));
+
                     Toast.makeText(v.getContext(), childText.getName() + " checked", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(v.getContext(), childText.getName() + " unchecked", Toast.LENGTH_SHORT).show();

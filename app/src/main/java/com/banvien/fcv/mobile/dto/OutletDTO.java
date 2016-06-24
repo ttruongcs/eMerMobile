@@ -24,6 +24,7 @@ public class OutletDTO implements Serializable {
     private Double lg;
     private Integer status;
     private Long routeScheduleId;
+    private Long routeScheduleDetailId;
 
     public long get_id() {
         return _id;
@@ -153,8 +154,34 @@ public class OutletDTO implements Serializable {
         this.routeScheduleId = routeScheduleId;
     }
 
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
     @Override
     public String toString() {
-        return name;
+        return "OutletDTO{" +
+                "_id=" + _id +
+                ", outletId=" + outletId +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", dCode='" + dCode + '\'' +
+                ", dName='" + dName + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", locationNo='" + locationNo + '\'' +
+                ", street='" + street + '\'' +
+                ", district='" + district + '\'' +
+                ", ward='" + ward + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", lat=" + lat +
+                ", lg=" + lg +
+                ", status=" + status +
+                ", routeScheduleId=" + routeScheduleId +
+                ", routeScheduleDetailId=" + routeScheduleDetailId +
+                '}';
     }
 }

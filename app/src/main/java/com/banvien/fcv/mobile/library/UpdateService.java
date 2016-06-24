@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.Log;
@@ -106,6 +107,10 @@ public class UpdateService {
 	}
 
 	private void clearData() throws SQLException {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
 		repo.getOutletEndDayImagesDAO().clearData();
 		repo.getStatusHomeDAO().clearData();
 		repo.getRouteScheduleDAO().clearData();
@@ -124,6 +129,8 @@ public class UpdateService {
 		repo.getOutletMerDAO().clearData();
 		repo.getOutletRegisteredDAO().clearData();
 		repo.getOutletDAO().clearData();
+        repo.getShortageProductDAO().clearData();
+        repo.getCaptureOverviewDAO().clearData();
 	}
 
 	private void configStatusHome() throws SQLException {
@@ -265,7 +272,8 @@ public class UpdateService {
 							}
 							outlet.setLat(mOutletDTO.getLat());
 							outlet.setLg(mOutletDTO.getLng());
-							outlet.setRouteScheduleId(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
+							outlet.setRouteScheduleDetailId(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
+                            outlet.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
 							try {
 								OutletEntity entity = OutletUtil.convertToEntity(outlet);
 								repo.getOutletDAO().addOutletEntity(entity);

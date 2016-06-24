@@ -54,4 +54,11 @@ public class CaptureOverviewDAO extends AndroidBaseDaoImpl<CaptureOverviewEntity
             ELog.d(e.getMessage(), e);
         }
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            ELog.d("clear Status End Day");
+            deleteBuilder().delete();
+        }
+    }
 }

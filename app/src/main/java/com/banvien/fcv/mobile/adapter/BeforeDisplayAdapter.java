@@ -107,10 +107,10 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final ProductDTO productDTO) {
-            if(sharedPreferences == null || sharedPreferences.getAll().size() <= 0) {
-                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                editor.apply();
-            }
+            editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+            editor.apply();
+
+            ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
 
             try {
                 productName.setText(productDTO.getName());

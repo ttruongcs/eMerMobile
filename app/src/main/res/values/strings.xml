@@ -448,9 +448,9 @@
 
     <!-- Outlet List -->
     <string name="outlet_list_title">Outlet List</string>
-    <string name="outlet_status_finished">Finished</string>
+    <string name="outlet_status_finished">Completed</string>
     <string name="outlet_status_doing">Doing</string>
-    <string name="outlet_status_unfinished">Unfinished</string>
+    <string name="outlet_status_unfinished">Not Start</string>
 
     <!-- Complaint -->
     <string name="complaint">Complaint</string>

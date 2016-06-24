@@ -18,6 +18,7 @@ import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
 import com.banvien.fcv.mobile.db.dao.RouteScheduleDAO;
+import com.banvien.fcv.mobile.db.dao.ShortageProductDAO;
 import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
@@ -120,6 +121,10 @@ public class Repo {
 
     public CaptureOverviewDAO getCaptureOverviewDAO() throws SQLException {
         return  databaseHelper.getCaptureOverviewDAO();
+    }
+
+    public ShortageProductDAO getShortageProductDAO() throws SQLException {
+        return  databaseHelper.getShortageProductDAO();
     }
 
     public void release() {

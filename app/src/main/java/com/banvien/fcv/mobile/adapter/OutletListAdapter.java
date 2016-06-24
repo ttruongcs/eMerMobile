@@ -17,6 +17,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
 import com.banvien.fcv.mobile.utils.ColorGenerator;
+import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.TextDrawable;
 
 import java.util.List;
@@ -87,6 +88,7 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
         }
 
         public void bindViews(final OutletDTO outletDTO) {
+            ELog.d("outlet", outletDTO.toString());
             this.outletName.setText(outletDTO.getName());
             this.outletCode.setText(buildOutletCode(outletDTO.getCode(), outletDTO.getdCode()));
             this.outletAddress.setText(buildOutletAdress(outletDTO.getLocationNo(), outletDTO.getStreet()
