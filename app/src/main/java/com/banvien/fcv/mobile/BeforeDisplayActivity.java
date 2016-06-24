@@ -44,6 +44,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     private List<BeforeDisplayDTO> beforeDisplayDTOs;
     private List<HotzoneDTO> hotzoneDTOs;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferenceBefores;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

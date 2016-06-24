@@ -3,8 +3,6 @@ package com.banvien.fcv.mobile;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -96,12 +94,4 @@ public class BaseDrawerActivity extends BaseActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
     }
-
-    protected void replaceFragmentContent(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-    }
-
 }

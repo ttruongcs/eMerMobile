@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +38,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private RecyclerView.LayoutManager layoutManager;
     private List<AfterDisplayDTO> afterDisplayDTOs;
     private List<HotzoneDTO> hotzoneDTOs;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         afterDisplayDTOs = new ArrayList<>();
         hotzoneDTOs = new ArrayList<>();
-
+        sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
         bindDatas();
         initRecyclerView();
     }
@@ -58,7 +60,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         layoutManager = new MySpeedScrollManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
-        adapter = new AfterOutletModelAdapter(this, afterDisplayDTOs, hotzoneDTOs, repo, outletId);
+        adapter = new AfterOutletModelAdapter(this, afterDisplayDTOs, hotzoneDTOs, repo, outletId, sharedPreferences);
         recyclerView.setAdapter(adapter);
 
     }

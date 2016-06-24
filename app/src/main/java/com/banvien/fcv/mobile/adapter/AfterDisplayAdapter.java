@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,9 +51,10 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
+    private SharedPreferences sharedPreferences;
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<ProductDTO> productDTOs
-            , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
+            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences) {
         this.activity = activity;
         this.mData = productDTOs;
         this.edFacing = edFacing;
@@ -60,6 +62,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         this.outletId = outletId;
         this.outletModelId = outletModelId;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        sharedPreferences = preferences;
         this.mhsCodes = new HashMap<>();
     }
 
@@ -93,6 +96,9 @@ public class AfterDisplayAdapter extends BaseAdapter {
 
     public class ItemHolder {
 
+        @Bind(R.id.tvBefore)
+        TextView tvBefore;
+
         @Bind(R.id.tvMHS)
         TextView productName;
 
@@ -117,7 +123,8 @@ public class AfterDisplayAdapter extends BaseAdapter {
                     } else {
                         chHave.setChecked(false);
                     }
-
+                    String beforeValueMhs = sharedPreferences.getAll().get(productDTO.getCode()).toString();
+                    tvBefore.setText(beforeValueMhs);
                 }
                 bindEvents(productDTO);
             } catch (Exception e) {

@@ -49,6 +49,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private String totalFacing;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferenceBefores;
+    private SharedPreferences.Editor editorBefore;
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
@@ -63,6 +65,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         this.mhsCodes = new HashMap<>();
         sharedPreferences = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        sharedPreferenceBefores = this.activity.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
+        editorBefore = sharedPreferenceBefores.edit();
     }
 
     @Override
@@ -109,6 +113,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         public void bindViews(final ProductDTO productDTO) {
             editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
             editor.apply();
+            editorBefore.putInt(productDTO.getCode(), 0);
+            editorBefore.apply();
 
             ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
 
@@ -186,6 +192,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             } else {
 
                             }
+                            editorBefore.putInt(productDTO.getCode(), quantity);
+                            editorBefore.apply();
                             addMhs(mhsCodes);
                             calculateFacing(mhsCodes);
                         } catch (NumberFormatException e) {
@@ -216,6 +224,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             } else {
 
                             }
+                            editorBefore.putInt(productDTO.getCode(), quantity);
+                            editorBefore.apply();
                             addMhs(mhsCodes);
                             calculateFacing(mhsCodes);
                         } catch (NumberFormatException e) {
