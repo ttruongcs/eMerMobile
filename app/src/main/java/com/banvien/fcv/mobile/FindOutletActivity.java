@@ -1,13 +1,17 @@
 package com.banvien.fcv.mobile;
 
+import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.utils.DateDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -17,6 +21,7 @@ import butterknife.Bind;
  * Created by Linh Nguyen on 6/24/2016.
  */
 public class FindOutletActivity extends BaseDrawerActivity {
+    private static final int DILOG_ID = 0;
 
     @Bind(R.id.fabMenu)
     FloatingActionMenu fabMenu;
@@ -29,6 +34,9 @@ public class FindOutletActivity extends BaseDrawerActivity {
 
     @Bind(R.id.fabAdvanceSearch)
     FloatingActionButton fabAdvanceSearch;
+
+    @Bind(R.id.edDate)
+    EditText edDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +74,28 @@ public class FindOutletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), getString(R.string.find_warning), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        edDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        edDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    DateDialog dialog = DateDialog.newInstance(v);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    dialog.show(ft, "DatePicker");
+                }
             }
         });
     }
