@@ -51,6 +51,8 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
+    private SharedPreferences sharedPreferenceOrders;
+    private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<ProductDTO> productDTOs
@@ -63,6 +65,8 @@ public class AfterDisplayAdapter extends BaseAdapter {
         this.outletModelId = outletModelId;
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         sharedPreferences = preferences;
+        sharedPreferenceOrders = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedPreferenceOrders.edit();
         this.mhsCodes = new HashMap<>();
     }
 
@@ -113,24 +117,43 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final ProductDTO productDTO) {
+            ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
             try {
                 ELog.d("productCode", productDTO.getCode());
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
                     editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode()).getNumberOfFace()));
+                    checkShortageExist(productDTO.getCode());
                     if(mhsCodes.get(productDTO.getCode()).getYesNo() > 0) {
                         chHave.setChecked(true);
                     } else {
                         chHave.setChecked(false);
                     }
-                    String beforeValueMhs = sharedPreferences.getAll().get(productDTO.getCode()).toString();
-                    tvBefore.setText(beforeValueMhs);
                 }
+                String beforeValueMhs = sharedPreferences.getAll().get(productDTO.getCode()).toString();
+                tvBefore.setText(beforeValueMhs);
                 bindEvents(productDTO);
             } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
         }
+
+        private void checkShortageExist(String code) {
+            int modelPrefId = sharedPreferences.getInt(code, -1);
+
+            if(modelPrefId != -1) {
+                if(modelPrefId == outletModelId) {
+                    editor.remove(code);
+                    editor.apply();
+                } else {
+                    editor.putInt(code, Integer.valueOf(outletModelId.toString()));
+                    editor.apply();
+                }
+
+            }
+
+        }
+
 
         private Map<String, AfterItemDTO> loadMhs() {
             Map<String, AfterItemDTO> result = new HashMap<>();
@@ -180,9 +203,11 @@ public class AfterDisplayAdapter extends BaseAdapter {
                                 afterItem.setYesNo(1);
                                 afterItem.setNumberOfFace(quantity);
                                 mhsCodes.put(productDTO.getCode(),  afterItem);
-
+                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
+                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                                editor.apply();
                             } else {
 
                             }
@@ -216,8 +241,11 @@ public class AfterDisplayAdapter extends BaseAdapter {
                                 afterItem.setYesNo(1);
                                 afterItem.setNumberOfFace(quantity);
                                 mhsCodes.put(productDTO.getCode(), afterItem);
+                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
+                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                                editor.apply();
                             } else {
 
                             }

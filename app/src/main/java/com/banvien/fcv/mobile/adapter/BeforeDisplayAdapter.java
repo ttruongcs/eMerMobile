@@ -47,8 +47,6 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferenceBefores;
     private SharedPreferences.Editor editorBefore;
 
@@ -63,8 +61,6 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
-        sharedPreferences = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         sharedPreferenceBefores = this.activity.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
         editorBefore = sharedPreferenceBefores.edit();
     }
@@ -111,41 +107,18 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final ProductDTO productDTO) {
-            editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-            editor.apply();
             editorBefore.putInt(productDTO.getCode(), 0);
             editorBefore.apply();
-
-            ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
 
             try {
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
                     editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode())));
-                    checkShortageExist(productDTO.getCode());
-
-
                 }
                 bindEvents(productDTO);
             } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
-        }
-
-        private void checkShortageExist(String code) {
-            int modelPrefId = sharedPreferences.getInt(code, -1);
-
-            if(modelPrefId != -1) {
-                if(modelPrefId == outletModelId) {
-                    editor.remove(code);
-                    editor.apply();
-                } else {
-                    editor.putInt(code, Integer.valueOf(outletModelId.toString()));
-                    editor.apply();
-                }
-
-            }
-
         }
 
         private Map<String, Integer> loadMhs() {
@@ -184,11 +157,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(v.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
-                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
-                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                                editor.apply();
                             } else {
 
                             }
@@ -216,11 +186,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
-                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
-                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                                editor.apply();
                             } else {
 
                             }
@@ -282,9 +249,9 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
-                    repo.getOutletMerDAO().updateActualValue(outletId, outletModelId, ScreenContants.MHS, mhsValue);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue);
                 } else {
-                    repo.getOutletMerDAO().updateActualValue(outletId, outletModelId, ScreenContants.MHS, null);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId, null);
                 }
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
