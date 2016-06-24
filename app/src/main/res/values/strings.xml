@@ -573,6 +573,8 @@
     <string name="soluongtruoc">SL trước</string>
     <string name="soluongtrungbaysauke">Trên kệ</string>
     <string name="cotaicuahang">Có</string>
+    <string name="find_simple_warning">Bạn đang ở chức năng tìm kiếm</string>
+    <string name="find_warning">Bạn đang ở chức năng tìm kiếm nâng cao</string>
 
 
 </resources>

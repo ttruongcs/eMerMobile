@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="Mã cửa hàng"
-                            android:textColor="@color/kanban_input_text"
+
                             android:textStyle="bold" />
 
 
@@ -91,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="@string/outlet_name"
-                            android:textColor="@color/kanban_input_text"
+
                             android:textStyle="bold" />
 
 
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="@string/address"
-                            android:textColor="@color/kanban_input_text"
+
                             android:textStyle="bold" />
 
 
@@ -139,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="@string/distributor_name"
-                            android:textColor="@color/kanban_input_text"
+
                             android:textStyle="bold" />
 
 
@@ -163,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             android:text="@string/day"
-                            android:textColor="@color/kanban_input_text"
+
                             android:textStyle="bold" />
 
 
