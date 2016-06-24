@@ -580,6 +580,12 @@
     <string name="find_outlet">Tìm cửa hàng</string>
     <string name="find_failed">Chưa đủ dữ liệu tìm kiếm</string>
     <string name="no_result_found">Không tìm thấy kết quả</string>
+    <string name="dialog_delete_outlet_title">Xóa cửa hàng đã có trong kế hoạch?</string>
+    <string name="dialog_delete_outlet">Bạn đã chọn một cửa hàng đã được phân công kế hoạch vào ngày khác.
+        \nChọn \"Đồng ý\" để thêm cửa hàng vào lịch làm việc hôm nay và xóa cửa hàng khỏi kế hoạch đã có.
+        \nHoặc chọn \"Hủy bỏ\" để thêm cửa hàng vào lịch làm việc hôm nay và vẫn giữ lịch trình đã được sắp xếp trước.
+    </string>
+    <string name="cancel">Hủy bỏ</string>
 
 
 </resources>

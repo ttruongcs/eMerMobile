@@ -1,13 +1,17 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.banvien.fcv.mobile.FindOutletSimpleActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 
@@ -21,10 +25,10 @@ import butterknife.ButterKnife;
  */
 public class AddOutletAdapter extends RecyclerView.Adapter {
     private List<OutletEntity> mData;
-    private Context context;
+    private FindOutletSimpleActivity activity;
 
-    public AddOutletAdapter(Context context, List<OutletEntity> entities) {
-        this.context = context;
+    public AddOutletAdapter(FindOutletSimpleActivity activity, List<OutletEntity> entities) {
+        this.activity = activity;
         this.mData = entities;
     }
 
@@ -62,6 +66,41 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
 
         public void bindViews(OutletEntity outletEntity) {
             tvAddOutlet.setText(outletEntity.getName());
+            cbAddOutlet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked) {
+                        showDialog();
+                    }
+                }
+            });
+        }
+
+        private void showDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setTitle(activity.getString(R.string.dialog_delete_outlet_title));
+            builder.setMessage(activity.getString(R.string.dialog_delete_outlet));
+
+            String positiveText = activity.getString(R.string.accept);
+            builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            String negativeText = activity.getString(R.string.cancel);
+            builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
     }
 }

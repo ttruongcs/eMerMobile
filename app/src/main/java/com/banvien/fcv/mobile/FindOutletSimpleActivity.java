@@ -133,15 +133,17 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                 }
             }
 
-            private void initRecycleview(List<OutletEntity> outletEntities) {
-                recyclerView.setHasFixedSize(true);
-                recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
-                layoutManager = new MySpeedScrollManager(getBaseContext());
-                recyclerView.setLayoutManager(layoutManager);
-                adapter = new AddOutletAdapter(getBaseContext(), outletEntities);
-                recyclerView.setAdapter(adapter);
-            }
+
         });
+    }
+
+    private void initRecycleview(List<OutletEntity> outletEntities) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
+        layoutManager = new MySpeedScrollManager(getBaseContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new AddOutletAdapter(this, outletEntities);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
