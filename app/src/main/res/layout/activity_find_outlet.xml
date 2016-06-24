@@ -208,7 +208,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                app:fab_label="@string/advanced_search"
+                app:fab_label="@string/search_advance"
                 android:src="@drawable/ic_zoom_in"
                 app:menu_labels_position="right"
                 app:menu_openDirection="up"/>

@@ -566,6 +566,7 @@
     <string name="outlet_name">Tên cửa hàng</string>
     <string name="day">Ngày</string>
     <string name="search">Tìm kiếm</string>
+    <string name="search_advance">Tìm kiếm nâng cao</string>
 
 
     <!--After Display Activity-->

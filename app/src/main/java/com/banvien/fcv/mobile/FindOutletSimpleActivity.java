@@ -1,11 +1,13 @@
 package com.banvien.fcv.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.Bind;
@@ -13,18 +15,23 @@ import butterknife.Bind;
 /**
  * Created by Linh Nguyen on 6/24/2016.
  */
-public class AddOutletActivity extends BaseDrawerActivity {
-
+public class FindOutletSimpleActivity extends BaseDrawerActivity {
     @Bind(R.id.fabMenu)
     FloatingActionMenu fabMenu;
 
     @Bind(R.id.lnAddOutlet)
     CoordinatorLayout lnAddOutlet;
 
+    @Bind(R.id.fabSearch)
+    FloatingActionButton fabSearch;
+
+    @Bind(R.id.fabAdvanceSearch)
+    FloatingActionButton fabAdvanceSearch;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_outlet);
+        setContentView(R.layout.activity_find_outlet_simple);
 
         bindViews();
         bindEvents();
@@ -42,6 +49,21 @@ public class AddOutletActivity extends BaseDrawerActivity {
                     lnAddOutlet.setAlpha(1f);
                     lnAddOutlet.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
                 }
+            }
+        });
+
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        fabAdvanceSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FindOutletActivity.class);
+                startActivity(intent);
             }
         });
     }
