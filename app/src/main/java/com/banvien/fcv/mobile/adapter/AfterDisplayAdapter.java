@@ -1,152 +1,327 @@
 package com.banvien.fcv.mobile.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.view.inputmethod.EditorInfo;
+import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
+import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.dto.AfterItemDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.query.In;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Linh Nguyen on 5/25/2016.
+ * Created by Linh Nguyen on 5/27/2016.
  */
-public class AfterDisplayAdapter extends RecyclerView.Adapter<AfterDisplayAdapter.ItemHolder> {
+public class AfterDisplayAdapter extends BaseAdapter {
+    private static final int MHS_KEY = 0;
+    private static final int MHS_VALUE = 1;
+    private static final int MHS_VALUE_YESNO = 2;
+
     private AfterDisplayActivity activity;
-    private List<OutletMerDTO> mData;
+    private List<ProductDTO> mData;
     private Repo repo;
+    private LayoutInflater mInflater;
+    private Map<String, AfterItemDTO> mhsCodes;
+    private EditText edFacing;
+    private Long outletId;
+    private Long outletModelId;
+    private String totalFacing;
 
-    public AfterDisplayAdapter(AfterDisplayActivity activity, List<OutletMerDTO> outletMerDTOs, Repo repo) {
+    public AfterDisplayAdapter(AfterDisplayActivity activity, List<ProductDTO> productDTOs
+            , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
         this.activity = activity;
-        this.mData = outletMerDTOs;
+        this.mData = productDTOs;
+        this.edFacing = edFacing;
         this.repo = repo;
+        this.outletId = outletId;
+        this.outletModelId = outletModelId;
+        mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mhsCodes = new HashMap<>();
     }
 
     @Override
-    public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.after_display_item, parent, false);
-        ItemHolder itemHolder = new ItemHolder(v);
-
-        return itemHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(ItemHolder holder, int position) {
-        ItemHolder itemHolder = holder;
-        itemHolder.bindViews(mData.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return mData.size();
     }
 
-    public class ItemHolder extends RecyclerView.ViewHolder {
+    @Override
+    public Object getItem(int position) {
+        return mData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = mInflater.inflate(R.layout.after_display_item, null);
+        ItemHolder itemHolder = new ItemHolder(v);
+        if(position == 0) {
+            mhsCodes = itemHolder.loadMhs();
+            totalFacing = itemHolder.loadTotalFacing();
+        }
+        itemHolder.bindViews(mData.get(position));
+
+        return v;
+    }
+
+    public class ItemHolder {
 
         @Bind(R.id.tvMHS)
         TextView productName;
 
-        @Bind(R.id.checkBox)
-        CheckBox checkBox;
+        @Bind(R.id.edMHS)
+        EditText editMHS;
+
+        @Bind(R.id.chHave)
+        AppCompatCheckBox chHave;
 
         public ItemHolder(View itemView) {
-            super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final OutletMerDTO outletMerDTO) {
-            ProductDTO productDTO = new ProductDTO();
+        public void bindViews(final ProductDTO productDTO) {
             try {
-                productDTO = repo.getProductDAO().findByProductId(Long.valueOf(outletMerDTO.getRegisterValue()));
+                ELog.d("productCode", productDTO.getCode());
                 productName.setText(productDTO.getName());
-                OutletMerDTO checkedObject = repo.getOutletMerDAO()
-                        .findReferencedDisplay(ScreenContants.MHS_AFTER, outletMerDTO.get_id());
-                if(checkedObject.get_id() > 0 && checkedObject.getActualValue() != null) {
-                    activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-                    checkBox.setChecked(true);
-                }
-
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        String actualValue = null;
-                        if(isChecked) {
-                            activity.setTvCountChecked(ScreenContants.INCREASE_VALUE);
-                            boolean isExist = checkProductExist(outletMerDTO);
-                            if(!isExist) {
-                                addProductAfterData(outletMerDTO);
-                            } else {
-                                actualValue = outletMerDTO.getRegisterValue();
-                                updateProductAfter(outletMerDTO, actualValue);
-                            }
-                        } else {
-                            activity.setTvCountChecked(ScreenContants.DECREASE_VALUE);
-                            updateProductAfter(outletMerDTO, actualValue);
-                        }
+                if(mhsCodes.get(productDTO.getCode()) != null) {
+                    editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode()).getNumberOfFace()));
+                    if(mhsCodes.get(productDTO.getCode()).getYesNo() > 0) {
+                        chHave.setChecked(true);
+                    } else {
+                        chHave.setChecked(false);
                     }
-                });
-            } catch (SQLException e) {
+
+                }
+                bindEvents(productDTO);
+            } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
         }
 
-        private void updateProductAfter(OutletMerDTO outletMerDTO, String actualValue) {
+        private Map<String, AfterItemDTO> loadMhs() {
+            Map<String, AfterItemDTO> result = new HashMap<>();
+            Map<String, Object> properties = new HashMap<>();
+
             try {
-                repo.getOutletMerDAO().updateMHStMer(outletMerDTO, actualValue);
+                properties.put("outletId", outletId);
+                properties.put("outletModelId", outletModelId);
+                properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER);
+
+                OutletMerDTO outletMerDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
+                if(outletMerDTO != null && outletMerDTO.getActualValue() != null
+                        && outletMerDTO.getActualValue() != "") {
+                    String[] mhsString = outletMerDTO.getActualValue().split(",");
+
+                    for(int i = 0; i < mhsString.length; i++) {
+                        String[] mhs = mhsString[i].split(":");
+                        AfterItemDTO afterItemDTO = new AfterItemDTO();
+                        if(mhs.length > 2){
+                            afterItemDTO.setNumberOfFace(Integer.valueOf(mhs[MHS_VALUE]));
+                            afterItemDTO.setYesNo(Integer.valueOf(mhs[MHS_VALUE_YESNO]));;
+                        }
+                        else{
+                            afterItemDTO.setNumberOfFace(0);
+                            afterItemDTO.setYesNo(0);;
+                        }
+                        result.put(mhs[MHS_KEY], afterItemDTO);
+                    }
+                }
+
             } catch (SQLException e) {
-                ELog.d("Can't set actual value to null", e);
-            }
-        }
-
-        private void addProductAfterData(OutletMerDTO outletMerDTO) {
-            OutletMerDTO insertItem = bindData(outletMerDTO);
-            try {
-                repo.getOutletMerDAO().addOutletMerEntity(OutletMerUtil.convertToEntity(insertItem));
-            } catch (SQLException e) {
-                ELog.d("Can't insert product after item", e);
+                e.printStackTrace();
             }
 
+            return result;
         }
 
-        private OutletMerDTO bindData(OutletMerDTO outletMerDTO) {
-            OutletMerDTO data = new OutletMerDTO();
-            data.setReferenceValue(String.valueOf(outletMerDTO.get_id()));
-            data.setActualValue(outletMerDTO.getRegisterValue());
-            data.setDataType(ScreenContants.MHS_AFTER);
-            data.setExhibitRegisteredDetailId(outletMerDTO.getExhibitRegisteredDetailId());
-            data.setExhibitRegisteredId(outletMerDTO.getExhibitRegisteredId());
-            data.setOutletId(outletMerDTO.getOutletId());
-            data.setRouteScheduleId(outletMerDTO.getRouteScheduleId());
-            data.setRouteScheduleDetailId(outletMerDTO.getRouteScheduleDetailId());
-            data.setRegisterValue(outletMerDTO.getRegisterValue());
+        private void bindEvents(final ProductDTO productDTO) {
+            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        try {
+                            int quantity = Integer.parseInt(v.getText().toString());
+                            if (quantity > 0) {
+                                AfterItemDTO afterItem = new AfterItemDTO();
+                                afterItem.setYesNo(1);
+                                afterItem.setNumberOfFace(quantity);
+                                mhsCodes.put(productDTO.getCode(),  afterItem);
 
-            return data;
+                            } else if(quantity == 0) {
+                                mhsCodes.remove(productDTO.getCode());
+                            } else {
+
+                            }
+                            if(quantity > 0) {
+                                chHave.setChecked(Boolean.TRUE);
+                            } else {
+                                chHave.setChecked(Boolean.FALSE);
+                            }
+                            addMhs(mhsCodes, 1);
+                            calculateFacing(mhsCodes);
+                        } catch (NumberFormatException e) {
+
+                        }
+
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            editMHS.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    EditText numberInput;
+                    numberInput = (EditText) v;
+                    if (!hasFocus) {
+                        try {
+                            int quantity = Integer.parseInt(numberInput.getText().toString());
+                            if (quantity > 0) {
+                                AfterItemDTO afterItem = new AfterItemDTO();
+                                afterItem.setYesNo(1);
+                                afterItem.setNumberOfFace(quantity);
+                                mhsCodes.put(productDTO.getCode(), afterItem);
+                            } else if(quantity == 0) {
+                                mhsCodes.remove(productDTO.getCode());
+                            } else {
+
+                            }
+                            if(quantity > 0) {
+                                chHave.setChecked(Boolean.TRUE);
+                            } else {
+                                chHave.setChecked(Boolean.FALSE);
+                            }
+                            addMhs(mhsCodes, 1);
+                            calculateFacing(mhsCodes);
+                        } catch (NumberFormatException e) {
+
+                        }
+
+                    }
+                }
+            });
+
+            editMHS.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(s.toString().equals("")) {
+                        editMHS.setText(Integer.toString(0));
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            chHave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(!b){
+                        try {
+                            repo.getOutletMerDAO().updateCheckYesNoAfter(outletId, outletModelId, productDTO.getCode(), 0);
+                        } catch (SQLException e) {
+                            ELog.d("Error when save have MHS");
+                        }
+                    } else{
+                        try {
+                            repo.getOutletMerDAO().updateCheckYesNoAfter(outletId, outletModelId, productDTO.getCode(), 1);
+                        } catch (SQLException e) {
+                            ELog.d("Error when save have MHS");
+                        }
+                    }
+                }
+            });
+
         }
 
-        public boolean checkProductExist(OutletMerDTO outletMerDTO) {
-            boolean isExist = false;
+        /*Total facing equal total mhs which have quantity > 0*/
+        private void calculateFacing(Map<String, AfterItemDTO> mhsCodes) {
+            int sum = 0;
+            if(mhsCodes.size() > 0) {
+                for(String key : mhsCodes.keySet()) {
+                    sum += mhsCodes.get(key).getNumberOfFace();
+                }
+            } else {
+                sum = 0;
+            }
+
+            addActualValue(Integer.valueOf(Integer.toString(sum)));
+            edFacing.setText(Integer.toString(sum));
+        }
+
+        /*Add mhs with actual value: (code:quantity, code2:quantity,...)*/
+        private void addMhs(Map<String, AfterItemDTO> mhsCodes, Integer yesNo) {
+            String mhsValue = "";
+
             try {
-                isExist = repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.MHS_AFTER, String.valueOf(outletMerDTO.get_id()), outletMerDTO.getOutletId());
+                if(mhsCodes.size() > 0) {
+                    for(String key : mhsCodes.keySet()) {
+                        mhsValue += key + ":" + mhsCodes.get(key).getNumberOfFace().toString()+ ":" + yesNo.toString() + ",";
+                    }
+                    mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
+                    repo.getOutletMerDAO().updateActualValueAfter(outletId, outletModelId, mhsValue);
+                } else {
+                    repo.getOutletMerDAO().updateActualValueAfter(outletId, outletModelId, null);
+                }
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }
+        }
 
-            return isExist;
+        /*Add Facing to actualValue of this outletModel */
+        private void addActualValue(int facing) {
+            try {
+                repo.getOutletMerDAO().updateActualValue(outletId, outletModelId
+                        , ScreenContants.FACING, String.valueOf(facing));
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+        }
+
+        /*Init total facing show on screen*/
+        public String loadTotalFacing() {
+            String result = null;
+            try {
+                result = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
+                edFacing.setText(result);
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+            return result;
         }
     }
 }

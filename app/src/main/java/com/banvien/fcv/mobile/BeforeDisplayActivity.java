@@ -74,7 +74,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
 
     private void bindDatas() {
         try {
-            beforeDisplayDTOs = repo.getOutletMerDAO().findOutletModelByOutletId(outletId);
+            beforeDisplayDTOs = repo.getOutletMerDAO().findOutletModelBeforeByOutletId(outletId);
 
             List<HotzoneEntity> hotzoneEntities = repo.getHotZoneDAO().queryForAll();
             for(HotzoneEntity entity : hotzoneEntities) {
