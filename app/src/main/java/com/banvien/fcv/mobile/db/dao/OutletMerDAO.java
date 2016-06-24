@@ -432,6 +432,33 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
+    public void updateActualValueBefore(Long outletId, Long outletModelId, String s) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE).query();
+
+            if(outletMerAfterList.size() > 0){
+                updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE);
+                updateBuilder.update();
+            } else {
+                List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+
+                if(outletMerList.size() > 0){
+                    OutletMerEntity entity = outletMerList.get(0);
+                    OutletMerEntity outletMerEntityAfter = entity;
+                    outletMerEntityAfter.setDataType(ScreenContants.MHS_BEFORE);
+                    outletMerEntityAfter.setActualValue(s);
+                    addOutletMerEntity(outletMerEntityAfter);
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
     public void updateActualValueAfter(Long outletId, Long outletModelId, String s) {
         UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
         try {
