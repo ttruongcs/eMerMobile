@@ -560,5 +560,12 @@
     <!-- Whatsapp -->
     <string name="whatsapp_outlet_name">Tên cửa hàng</string>
 
+    <!-- Add outlet -->
+    <string name="add_outlet_title">Thêm cửa hàng chưa có trong kế hoạch phân công hôm nay</string>
+    <string name="outlet_code">Mã cửa hàng</string>
+    <string name="outlet_name">Tên cửa hàng</string>
+    <string name="day">Ngày</string>
+    <string name="search">Tìm kiếm</string>
+
 
 </resources>
