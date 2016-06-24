@@ -149,7 +149,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             try {
                 properties.put("outletId", outletId);
                 properties.put("outletModelId", outletModelId);
-                properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS);
+                properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE);
 
                 OutletMerDTO outletMerDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
                 if(outletMerDTO != null && outletMerDTO.getActualValue() != null

@@ -98,7 +98,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
             timelineDTOs.add(step4);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
@@ -138,7 +138,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);

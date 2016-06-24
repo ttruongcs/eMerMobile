@@ -119,6 +119,7 @@ public class ScreenContants {
     public static final Integer STATUS_STEP_NOTYET = 0;
 
     //Image path
+    public static final String CAPTURE_FCV_IMAGE = "fcvImage/";
     public static final String CAPTURE_UNIFORM_PATH = "fcvImage/uniform/";
     public static final String CAPTURE_TOOL_PATH = "fcvImage/tool/";
     public static final String CAPTURE_FIRST_OUTLET = "fcvImage/firstOutlet/";

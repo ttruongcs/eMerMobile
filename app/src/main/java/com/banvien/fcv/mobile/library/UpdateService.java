@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile.library;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -131,6 +133,19 @@ public class UpdateService {
 		repo.getOutletDAO().clearData();
         repo.getShortageProductDAO().clearData();
         repo.getCaptureOverviewDAO().clearData();
+		deleteFileImage();
+	}
+
+	private void deleteFileImage() {
+		File dir = new File(Environment.getExternalStorageDirectory() + ScreenContants.CAPTURE_FCV_IMAGE);
+		if (dir.isDirectory())
+		{
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++)
+			{
+				new File(dir, children[i]).delete();
+			}
+		}
 	}
 
 	private void configStatusHome() throws SQLException {
@@ -167,6 +182,7 @@ public class UpdateService {
 //					ELog.d("Sync error......");
 //				}
 			}
+
 
 			private void fillPOSM(List<POSMDTO> jPosms) {
 				for (POSMDTO dto : jPosms) {
