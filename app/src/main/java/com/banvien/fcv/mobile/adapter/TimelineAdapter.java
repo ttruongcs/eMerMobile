@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -234,7 +235,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(prepareIntent);
                                 break;
                             case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
-                                // todo
+                                showConfirmDialog();
                                 break;
 
 
@@ -303,6 +304,33 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         }
                     });
             builderSingle.show();
+        }
+
+        private void showConfirmDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setTitle(activity.getString(R.string.dialog_confirm_working_title));
+            builder.setMessage(activity.getString(R.string.dialog_confirm_working));
+
+            String positiveText = activity.getString(R.string.accept);
+            builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            String negativeText = activity.getString(R.string.cancel);
+            builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
 
     }
