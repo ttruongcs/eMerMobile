@@ -12,6 +12,7 @@ public class ShortageProductUtil {
         shortageProductDTO.set_id(entity.get_id());
         shortageProductDTO.setProductCode(entity.getProductCode());
         shortageProductDTO.setRouteSCheduleDetailId(entity.getRouteScheduleDetailId());
+        shortageProductDTO.setProductName(entity.getProductName());
 
         return shortageProductDTO;
     }
@@ -21,6 +22,7 @@ public class ShortageProductUtil {
         shortageProductEntity.set_id(dto.get_id());
         shortageProductEntity.setProductCode(dto.getProductCode());
         shortageProductEntity.setRouteScheduleDetailId(dto.getRouteSCheduleDetailId());
+        shortageProductEntity.setProductName(dto.getProductName());
 
         return shortageProductEntity;
     }

@@ -557,5 +557,8 @@
 
     <string name="outlet_list">Danh sách cửa hàng</string>
 
+    <!-- Whatsapp -->
+    <string name="whatsapp_outlet_name">Tên cửa hàng</string>
+
 
 </resources>

@@ -96,7 +96,6 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ProductDTO childText = (ProductDTO) getChild(groupPosition, childPosition);
-        ELog.d("product", childText.toString());
 
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.order_list_item, null);
@@ -119,50 +118,11 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 if ( ((CheckBox)v).isChecked() ) {
                     insertOrRemoveData(childText, ScreenContants.INSERT, tvShortage);
-                    Toast.makeText(v.getContext(), childText.getName() + " checked", Toast.LENGTH_SHORT).show();
                 } else if(!((CheckBox)v).isChecked()) {
                     insertOrRemoveData(childText, ScreenContants.REMOVE, tvShortage);
-                    Toast.makeText(v.getContext(), childText.getName() + " unchecked", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if(actionId == EditorInfo.IME_ACTION_DONE) {
-//                    OutletMerDTO outletMerDTO = new OutletMerDTO();
-//                    outletMerDTO.setDataType(ScreenContants.ORDER);
-//                    outletMerDTO.setActualValue(v.getText().toString());
-//                    outletMerDTO.setOutletId(outletId);
-//                    outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
-//                    insertOrUpdateData(outletMerDTO);
-//
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//
-//        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                EditText numberInput;
-//
-//                if(!hasFocus) {
-//                    numberInput = (EditText) v;
-//                    if(!numberInput.getText().toString().equals("")) {
-//                        OutletMerDTO outletMerDTO = new OutletMerDTO();
-//                        outletMerDTO.setDataType(ScreenContants.ORDER);
-//                        outletMerDTO.setActualValue(numberInput.getText().toString());
-//                        outletMerDTO.setOutletId(outletId);
-//                        outletMerDTO.setReferenceValue(String.valueOf(childText.getProductId()));
-//
-//                        insertOrUpdateData(outletMerDTO);
-//                    }
-//                }
-//            }
-//        });
 
         return convertView;
     }
@@ -172,12 +132,12 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
         shortageProductDTO.setProductCode(productDTO.getCode());
         shortageProductDTO.setRouteSCheduleDetailId(routeScheduleDetailId);
+        shortageProductDTO.setProductName(productDTO.getName());
         if(type == ScreenContants.INSERT) {
             shortageProductDTO = ((OrderActivity)context).addOrder(shortageProductDTO);
             tvShortage.setText(String.valueOf(shortageProductDTO.get_id()));
         } else if(type == ScreenContants.REMOVE) {
             String idRemoved = tvShortage.getText().toString();
-            ELog.d("idRemoved", idRemoved);
             ((OrderActivity)context).removeOrder(idRemoved);
             tvShortage.setText("");
         }

@@ -10,6 +10,7 @@ public class ShortageProductDTO implements Serializable {
     private long _id;
     private Long routeSCheduleDetailId;
     private String productCode;
+    private String productName;
 
     public long get_id() {
         return _id;
@@ -33,6 +34,14 @@ public class ShortageProductDTO implements Serializable {
 
     public void setProductCode(String productCode) {
         this.productCode = productCode;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     @Override

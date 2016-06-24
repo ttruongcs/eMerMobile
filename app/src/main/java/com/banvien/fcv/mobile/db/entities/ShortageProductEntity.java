@@ -16,6 +16,8 @@ public class ShortageProductEntity {
     private Long routeScheduleDetailId;
     @DatabaseField
     private String productCode;
+    @DatabaseField
+    private String productName;
 
     public long get_id() {
         return _id;
@@ -39,5 +41,13 @@ public class ShortageProductEntity {
 
     public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }
