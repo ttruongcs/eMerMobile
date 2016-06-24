@@ -132,6 +132,7 @@ public class ScreenContants {
 
     //Shared Preferences
     public static final String MyPREFERENCES = "shortagePrefs";
+    public static final String BeforePREFERENCES = "beforePrefs";
 
     public static final String INSERT = "INSERT";
     public static final String REMOVE = "REMOVE";

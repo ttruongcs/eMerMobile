@@ -492,12 +492,12 @@
     <string name="chuphinhcongcudungcu">Chụp Ảnh Công Cụ Dụng Cụ</string>
     <string name="motachuphinhcongcudungcu">Chụp ảnh công cụ, dụng cụ làm việc đầu ngày</string>
     <string name="stepchuphinhcongcudungcu">04</string>
-    <string name="chuphinhcuahangdautien">Chụp Ảnh Cửa Hàng Đầu Tiên</string>
-    <string name="motachuphinhcuahangdautien">Lựa chọn và chụp ảnh cửa hàng đầu tiên, dữ liệu sẽ được đồng bộ ngay lên server, ...</string>
-    <string name="stepchuphinhcuahangdautien">05</string>
     <string name="xacnhanlamviec">Xác Nhận Bắt Đầu Làm Việc</string>
     <string name="motaxacnhanlamviec">Kiểm tra lại số cửa hàng sẽ đi trong ngày hôm nay, xác nhận bắt đầu làm việc, ....</string>
-    <string name="stepxacnhanlamviec">06</string>
+    <string name="stepxacnhanlamviec">05</string>
+    <string name="chuphinhcuahangdautien">Chụp Ảnh Cửa Hàng Đầu Tiên</string>
+    <string name="motachuphinhcuahangdautien">Lựa chọn và chụp ảnh cửa hàng đầu tiên, dữ liệu sẽ được đồng bộ ngay lên server, ...</string>
+    <string name="stepchuphinhcuahangdautien">06</string>
 
 
 
@@ -520,7 +520,7 @@
     <string name="huthangdathang">Hụt Hàng Đặt Hàng</string>
     <string name="motahuthangdathang">Đặt hàng và share lên WhatsApp</string>
     <string name="stephuthangdathang">06</string>
-    <string name="khaosatdichvukhachhang">Khảo Sát Dịch Vụ Khách Hàng</string>
+    <string name="khaosatdichvukhachhang">Khảo Sát</string>
     <string name="motakhaosatdichvukhachhang">Khảo sát thông tin, mức độ hài lòng của khách hàng,...</string>
     <string name="stepkhaosatdichvukhachhang">07</string>
     <string name="khaosatposm">Khảo sát POSM</string>
@@ -566,6 +566,12 @@
     <string name="outlet_name">Tên cửa hàng</string>
     <string name="day">Ngày</string>
     <string name="search">Tìm kiếm</string>
+
+
+    <!--After Display Activity-->
+    <string name="soluongtruoc">SL trước</string>
+    <string name="soluongtrungbaysauke">Trên kệ</string>
+    <string name="cotaicuahang">Có</string>
 
 
 </resources>

@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -46,14 +47,16 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
     private List<HotzoneDTO> hotzoneDTOs;
     private Long outletId;
     private Repo repo;
+    private SharedPreferences preferences;
 
     public AfterOutletModelAdapter(AfterDisplayActivity activity, List<AfterDisplayDTO> data
-            , List<HotzoneDTO> hotzoneDTOs, Repo repo, Long outletId) {
+            , List<HotzoneDTO> hotzoneDTOs, Repo repo, Long outletId, SharedPreferences preferences) {
         this.mData = data;
         this.activity = activity;
         this.hotzoneDTOs = hotzoneDTOs;
         this.repo = repo;
         this.outletId = outletId;
+        this.preferences = preferences;
     }
 
     @Override
@@ -115,7 +118,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             AfterDisplayAdapter adapter = new AfterDisplayAdapter(activity, productDTOs, edFacing
-                    , repo, outletId, dto.getOutletModelId());
+                    , repo, outletId, dto.getOutletModelId(), preferences);
             listView.setAdapter(adapter);
             listView.setScrollbarFadingEnabled(false);
 
