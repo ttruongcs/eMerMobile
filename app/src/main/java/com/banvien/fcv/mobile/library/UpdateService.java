@@ -91,8 +91,6 @@ public class UpdateService {
 //				deleteOutletAllDatabase();
 			}
 
-			JSONObject json = null;
-			System.out.println("json "+ json);
 			clearData();
 			configStatusHome();
 			Call<Map<String,Object>> call =
