@@ -103,8 +103,15 @@
                 <TextView
                     android:id="@+id/outletId"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_centerVertical="true"
+                    android:visibility="invisible"
+                    />
+
+                <TextView
+                    android:id="@+id/routeScheduleDetailId"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:visibility="invisible"
                     />
 

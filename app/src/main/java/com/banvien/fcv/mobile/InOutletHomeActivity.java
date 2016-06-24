@@ -31,6 +31,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
 
     private Repo repo;
     private Long outletId;
+    private Long routeScheduleDetailId;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private StatusInOutletDTO statusInOutlet;
@@ -41,6 +42,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
         try {
             StatusInOutletEntity statusInOutletEntity = repo.getStatusInOutletDAO().getConfigStatusInOutletHome();
             if(statusInOutletEntity != null){
@@ -63,35 +65,35 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         if(statusInOutlet != null){
             TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
                     , getString(R.string.motacheckin), getString(R.string.stepcheckin)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, statusInOutlet.getCheckIn(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, statusInOutlet.getCheckIn(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step2 = new TimelineInOutletDTO(getString(R.string.chupanhoverview)
                     , getString(R.string.motachupanhoverview), getString(R.string.stepchupanhoverview)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, statusInOutlet.getChupAnhOverview(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, statusInOutlet.getChupAnhOverview(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step3 = new TimelineInOutletDTO(getString(R.string.xemthongtindangkyvalichsueie)
                     , getString(R.string.motaxemthongtindangkyvalichsueie), getString(R.string.stepxemthongtindangkyvalichsueie)
-                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, statusInOutlet.getXemThongTinDangKyLichSuEIE(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, statusInOutlet.getXemThongTinDangKyLichSuEIE(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step4 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaytruoc)
                     , getString(R.string.motakhaosattrungbaytruoc), getString(R.string.stepmotakhaosattrungbaytruoc)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, statusInOutlet.getKhaoSatTrungBayTruoc(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, statusInOutlet.getKhaoSatTrungBayTruoc(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step5 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaysau)
                     , getString(R.string.motakhaosattrungbaysau), getString(R.string.stepkhaosattrungbaysau)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, statusInOutlet.getKhaoSatTrungBaySau(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, statusInOutlet.getKhaoSatTrungBaySau(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step6 = new TimelineInOutletDTO(getString(R.string.huthangdathang)
                     , getString(R.string.motahuthangdathang), getString(R.string.stephuthangdathang)
-                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, statusInOutlet.getHutHangDatHang(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, statusInOutlet.getHutHangDatHang(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step7 = new TimelineInOutletDTO(getString(R.string.khaosatdichvukhachhang)
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSatDichVuKhachHang(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSatDichVuKhachHang(), outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, statusInOutlet.getKhaoSatPOSM(), outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, statusInOutlet.getKhaoSatPOSM(), outletId, routeScheduleDetailId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -104,35 +106,35 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         } else {
             TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
                     , getString(R.string.motacheckin), getString(R.string.stepcheckin)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, ScreenContants.STATUS_STEP_INPROGRESS, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHECKIN, ScreenContants.STATUS_STEP_INPROGRESS, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step2 = new TimelineInOutletDTO(getString(R.string.chupanhoverview)
                     , getString(R.string.motachupanhoverview), getString(R.string.stepchupanhoverview)
-                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step3 = new TimelineInOutletDTO(getString(R.string.xemthongtindangkyvalichsueie)
                     , getString(R.string.motaxemthongtindangkyvalichsueie), getString(R.string.stepxemthongtindangkyvalichsueie)
-                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step4 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaytruoc)
                     , getString(R.string.motakhaosattrungbaytruoc), getString(R.string.stepmotakhaosattrungbaytruoc)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step5 = new TimelineInOutletDTO(getString(R.string.khaosattrungbaysau)
                     , getString(R.string.motakhaosattrungbaysau), getString(R.string.stepkhaosattrungbaysau)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step6 = new TimelineInOutletDTO(getString(R.string.huthangdathang)
                     , getString(R.string.motahuthangdathang), getString(R.string.stephuthangdathang)
-                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step7 = new TimelineInOutletDTO(getString(R.string.khaosatdichvukhachhang)
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, ScreenContants.STATUS_STEP_NOTYET, outletId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);

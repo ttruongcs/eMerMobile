@@ -96,6 +96,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         itemHolder.tvOrder.setText(mData.get(position).getOrder());
         itemHolder.stepCode.setText(mData.get(position).getType());
         itemHolder.outletId.setText(mData.get(position).getOutletId().toString());
+        itemHolder.routeScheduleDetailId.setText(mData.get(position).getRouteScheduleDetailId().toString());
 
 
         if (mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2) {
@@ -189,6 +190,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         @Bind(R.id.outletId)
         TextView outletId;
 
+        @Bind(R.id.routeScheduleDetailId)
+        TextView routeScheduleDetailId;
+
         public ItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -217,6 +221,8 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                             case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
                                 Intent orderIntent = new Intent(v.getContext(), OrderActivity.class);
                                 orderIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                orderIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 v.getContext().startActivity(orderIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:

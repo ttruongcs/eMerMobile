@@ -30,5 +30,11 @@
         android:theme="@style/checkbox"
          />
 
+    <TextView
+        android:id="@+id/shortageProductId"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"/>
+
 
 </RelativeLayout>

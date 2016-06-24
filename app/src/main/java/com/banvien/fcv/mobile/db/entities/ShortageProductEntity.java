@@ -11,36 +11,18 @@ import java.util.Date;
 @DatabaseTable(tableName = "ShortageProduct")
 public class ShortageProductEntity {
     @DatabaseField(generatedId = true)
-    private Long _id;
+    private long _id;
     @DatabaseField
-    private Long outletId;
-    @DatabaseField
-    private Date createdDate;
+    private Long routeScheduleDetailId;
     @DatabaseField
     private String productCode;
 
-    public Long get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(Long _id) {
+    public void set_id(long _id) {
         this._id = _id;
-    }
-
-    public Long getOutletId() {
-        return outletId;
-    }
-
-    public void setOutletId(Long outletId) {
-        this.outletId = outletId;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public String getProductCode() {
@@ -49,5 +31,13 @@ public class ShortageProductEntity {
 
     public void setProductCode(String productCode) {
         this.productCode = productCode;
+    }
+
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }

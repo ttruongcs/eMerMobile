@@ -1,36 +1,24 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.OrderActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.ShortageProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by Linh Nguyen on 5/24/2016.
@@ -43,14 +31,17 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private Map<String, String> orderInfos;
     private LayoutInflater inflater;
     private Long outletId;
+    private Long routeScheduleDetailId;
 
     public MyExpandableAdapter(Context context, List<ProductgroupDTO> sections,
-                               Map<String, List<ProductDTO>> products, Map<String, String> orderInfos, Long outletId) {
+                               Map<String, List<ProductDTO>> products,
+                               Map<String, String> orderInfos, Long outletId, Long routeScheduleDetailId) {
         this.context = context;
         this.sections = sections;
         this.products = products;
         this.outletId = outletId;
         this.orderInfos = orderInfos;
+        this.routeScheduleDetailId = routeScheduleDetailId;
         inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -105,6 +96,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ProductDTO childText = (ProductDTO) getChild(groupPosition, childPosition);
+        ELog.d("product", childText.toString());
 
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.order_list_item, null);
@@ -113,19 +105,23 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         TextView textViewChild = (TextView) convertView.findViewById(R.id.tvProductName);
         textViewChild.setText(childText.getName());
 
+        final TextView tvShortage = (TextView) convertView.findViewById(R.id.shortageProductId);
+
         CheckBox cbShortage = (CheckBox) convertView.findViewById(R.id.cbShortage);
+
+        if(orderInfos.get(childText.getCode()) != null) {
+            cbShortage.setChecked(true);
+            tvShortage.setText(orderInfos.get(childText.getCode()));
+        }
 
         cbShortage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if ( ((CheckBox)v).isChecked() ) {
-                    ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
-                    shortageProductDTO.setProductCode(childText.getCode());
-                    shortageProductDTO.setOutletId(outletId);
-                    shortageProductDTO.setCreatedDate(new Date(System.currentTimeMillis()));
-
+                    insertOrRemoveData(childText, ScreenContants.INSERT, tvShortage);
                     Toast.makeText(v.getContext(), childText.getName() + " checked", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if(!((CheckBox)v).isChecked()) {
+                    insertOrRemoveData(childText, ScreenContants.REMOVE, tvShortage);
                     Toast.makeText(v.getContext(), childText.getName() + " unchecked", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -171,15 +167,21 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    private void insertOrUpdateData(OutletMerDTO outletMerDTO) {
-        boolean isExist = ((OrderActivity)context).checkProductExist(outletMerDTO);
-        if(!isExist) {
-            ((OrderActivity)context).addOrder(outletMerDTO);
-            ELog.d("insert", "Product is not exist in mer result");
-        } else {
-            ((OrderActivity)context).updateOrder(outletMerDTO);
-            ELog.d("Update", "product is existed in mer result");
+    /*If insert return id of shortage product, else: return null*/
+    private void insertOrRemoveData(ProductDTO productDTO, String type, TextView tvShortage) {
+        ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
+        shortageProductDTO.setProductCode(productDTO.getCode());
+        shortageProductDTO.setRouteSCheduleDetailId(routeScheduleDetailId);
+        if(type == ScreenContants.INSERT) {
+            shortageProductDTO = ((OrderActivity)context).addOrder(shortageProductDTO);
+            tvShortage.setText(String.valueOf(shortageProductDTO.get_id()));
+        } else if(type == ScreenContants.REMOVE) {
+            String idRemoved = tvShortage.getText().toString();
+            ELog.d("idRemoved", idRemoved);
+            ((OrderActivity)context).removeOrder(idRemoved);
+            tvShortage.setText("");
         }
+
     }
 
     @Override

@@ -9,6 +9,7 @@ public class TimelineInOutletDTO {
     private String order;
     private String type;
     private Long outletId;
+    private Long routeScheduleDetailId;
     private int isDone;    //0: Not done, 1: Continue, 2: Done
     private boolean isHeader;
     private boolean isFooter;
@@ -16,13 +17,14 @@ public class TimelineInOutletDTO {
     public TimelineInOutletDTO() {};
 
     public TimelineInOutletDTO(String title, String detail,
-                               String order, String type, int isDone, Long outletId) {
+                               String order, String type, int isDone, Long outletId, Long routeScheduleDetailId) {
         this.title = title;
         this.detail = detail;
         this.order = order;
         this.type = type;
         this.isDone = isDone;
         this.outletId = outletId;
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 
     public String getTitle() {
@@ -87,5 +89,13 @@ public class TimelineInOutletDTO {
 
     public void setFooter(boolean footer) {
         isFooter = footer;
+    }
+
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }

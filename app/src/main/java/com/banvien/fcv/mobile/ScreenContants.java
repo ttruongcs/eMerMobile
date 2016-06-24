@@ -21,6 +21,7 @@ public class ScreenContants {
     public static final Integer OUTLET_STATUS_DOING = 1;
     public static final Integer OUTLET_STATUS_FINISHED = 2;
     public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
+    public static final String KEY_ROUTESCHEDULE_DETAIL = "com.banvien.fcv.emer.routeScheduleDetailId";
     public static final String KEY_POSM_ID = "com.banvien.fcv.emer.posmid";
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
@@ -130,6 +131,9 @@ public class ScreenContants {
 
     //Shared Preferences
     public static final String MyPREFERENCES = "shortagePrefs";
+
+    public static final String INSERT = "INSERT";
+    public static final String REMOVE = "REMOVE";
 
 
 }

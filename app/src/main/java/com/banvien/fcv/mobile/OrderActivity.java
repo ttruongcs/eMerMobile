@@ -9,10 +9,12 @@ import android.widget.ExpandableListView;
 
 import com.banvien.fcv.mobile.adapter.MyExpandableAdapter;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
+import com.banvien.fcv.mobile.beanutil.ShortageProductUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.ShortageProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -29,6 +31,7 @@ import butterknife.Bind;
 public class OrderActivity extends BaseDrawerActivity {
     private static final String TAG = "OrderActivity";
     private static Long outletId;
+    private static Long routeScheduleDetailId;
 
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -54,6 +57,7 @@ public class OrderActivity extends BaseDrawerActivity {
         orderInfos = new HashMap<>();
 
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
 
         initOrderData();
         onFreshList();
@@ -61,7 +65,7 @@ public class OrderActivity extends BaseDrawerActivity {
 
 
         fixSizeExpandableList();
-        adapter = new MyExpandableAdapter(this, sections, products, orderInfos, outletId);
+        adapter = new MyExpandableAdapter(this, sections, products, orderInfos, outletId, routeScheduleDetailId);
         expandableListView.setAdapter(adapter);
     }
 
@@ -70,7 +74,7 @@ public class OrderActivity extends BaseDrawerActivity {
         super.onResume();
         int groupCount = adapter.getGroupCount();
 
-        adapter.notifyDataSetChanged();
+        reloadProductData();
         for (int i= 0; i< groupCount; i++) {
             expandableListView.expandGroup(i);
         }
@@ -123,7 +127,6 @@ public class OrderActivity extends BaseDrawerActivity {
             sharedPreferences = getSharedPreferences(ScreenContants.MyPREFERENCES, MODE_PRIVATE);
             shortageCodes = new String[sharedPreferences.getAll().size()];
             for(String key : sharedPreferences.getAll().keySet()) {
-                ELog.d(key + ": " + sharedPreferences.getAll().get(key));
                 shortageCodes[i] = key;
                 i++;
             }
@@ -135,10 +138,12 @@ public class OrderActivity extends BaseDrawerActivity {
             }
 
             /*Get all outlet mer result by outlet id and dataType*/
-            List<OutletMerDTO> outletMerDTOs = this.repo.getOutletMerDAO().findOrderByOutletId(ScreenContants.ORDER, outletId);
-            if(outletMerDTOs.size() > 0) {
-                for(OutletMerDTO outletMerDTO : outletMerDTOs) {
-                    orderInfos.put(outletMerDTO.getReferenceValue(), outletMerDTO.getActualValue());
+            List<ShortageProductDTO> shortageProductDTOs = this.repo.getShortageProductDAO().findByRouteScheduleId(routeScheduleDetailId);
+
+            if(shortageProductDTOs.size() > 0) {
+                for(ShortageProductDTO shortageProductDTO : shortageProductDTOs) {
+                    ELog.d("shortage", shortageProductDTO.toString());
+                    orderInfos.put(shortageProductDTO.getProductCode(), String.valueOf(shortageProductDTO.get_id()));
                 }
             }
             ELog.d("map", orderInfos.toString());
@@ -147,31 +152,44 @@ public class OrderActivity extends BaseDrawerActivity {
         }
     }
 
-    public void addOrder(OutletMerDTO outletMerDTO) {
+    public ShortageProductDTO addOrder(ShortageProductDTO shortageProductDTO) {
+        ShortageProductDTO result = new ShortageProductDTO();
+
         try {
-            this.repo.getOutletMerDAO().addOutletMerEntity(OutletMerUtil.convertToEntity(outletMerDTO));
+            result = this.repo.getShortageProductDAO().addShortageProduct(ShortageProductUtil.convertToEntity(shortageProductDTO));
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
+
+        return result;
     }
 
-    public void updateOrder(OutletMerDTO outletMerDTO) {
+//    public void updateOrder(OutletMerDTO outletMerDTO) {
+//        try {
+//            this.repo.getOutletMerDAO().updateOrderMer(OutletMerUtil.convertToEntity(outletMerDTO));
+//        } catch (SQLException e) {
+//            ELog.d(e.getMessage(), e);
+//        }
+//    }
+//
+//    public boolean checkProductExist(OutletMerDTO outletMerDTO) {
+//        boolean isExist = false;
+//        try {
+//            isExist = this.repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.ORDER ,outletMerDTO.getReferenceValue(), outletMerDTO.getOutletId());
+//        } catch (SQLException e) {
+//            ELog.d(e.getMessage(), e);
+//        }
+//
+//        return isExist;
+//    }
+
+
+    public void removeOrder(String id) {
         try {
-            this.repo.getOutletMerDAO().updateOrderMer(OutletMerUtil.convertToEntity(outletMerDTO));
+            this.repo.getShortageProductDAO().deleteShortageProduct(id);
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
-    }
-
-    public boolean checkProductExist(OutletMerDTO outletMerDTO) {
-        boolean isExist = false;
-        try {
-            isExist = this.repo.getOutletMerDAO().checkExistByReferenceValue(ScreenContants.ORDER ,outletMerDTO.getReferenceValue(), outletMerDTO.getOutletId());
-        } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
-        }
-
-        return isExist;
     }
 
 

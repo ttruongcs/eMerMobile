@@ -7,33 +7,24 @@ import java.util.Date;
  * Created by Linh Nguyen on 6/24/2016.
  */
 public class ShortageProductDTO implements Serializable {
-    private Long _id;
-    private Long outletId;
-    private Date createdDate;
+    private long _id;
+    private Long routeSCheduleDetailId;
     private String productCode;
 
-    public Long get_id() {
+    public long get_id() {
         return _id;
     }
 
-    public void set_id(Long _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
-    public Long getOutletId() {
-        return outletId;
+    public Long getRouteSCheduleDetailId() {
+        return routeSCheduleDetailId;
     }
 
-    public void setOutletId(Long outletId) {
-        this.outletId = outletId;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setRouteSCheduleDetailId(Long routeSCheduleDetailId) {
+        this.routeSCheduleDetailId = routeSCheduleDetailId;
     }
 
     public String getProductCode() {
@@ -42,5 +33,14 @@ public class ShortageProductDTO implements Serializable {
 
     public void setProductCode(String productCode) {
         this.productCode = productCode;
+    }
+
+    @Override
+    public String toString() {
+        return "ShortageProductDTO{" +
+                "_id=" + _id +
+                ", routeSCheduleDetailId=" + routeSCheduleDetailId +
+                ", productCode='" + productCode + '\'' +
+                '}';
     }
 }

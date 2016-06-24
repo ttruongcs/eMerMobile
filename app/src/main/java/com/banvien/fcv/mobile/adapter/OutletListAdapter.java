@@ -105,6 +105,7 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                     if(flag.equals(ScreenContants.UNFINISH)) {
                         Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
                         intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+                        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
                         view.getContext().startActivity(intent);
                     }
                 }

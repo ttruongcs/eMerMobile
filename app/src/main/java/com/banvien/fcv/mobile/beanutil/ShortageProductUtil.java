@@ -10,9 +10,8 @@ public class ShortageProductUtil {
     public static ShortageProductDTO convertToDTO(ShortageProductEntity entity) {
         ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
         shortageProductDTO.set_id(entity.get_id());
-        shortageProductDTO.setOutletId(entity.getOutletId());
         shortageProductDTO.setProductCode(entity.getProductCode());
-        shortageProductDTO.setCreatedDate(entity.getCreatedDate());
+        shortageProductDTO.setRouteSCheduleDetailId(entity.getRouteScheduleDetailId());
 
         return shortageProductDTO;
     }
@@ -21,8 +20,7 @@ public class ShortageProductUtil {
         ShortageProductEntity shortageProductEntity = new ShortageProductEntity();
         shortageProductEntity.set_id(dto.get_id());
         shortageProductEntity.setProductCode(dto.getProductCode());
-        shortageProductEntity.setOutletId(dto.getOutletId());
-        shortageProductEntity.setCreatedDate(dto.getCreatedDate());
+        shortageProductEntity.setRouteScheduleDetailId(dto.getRouteSCheduleDetailId());
 
         return shortageProductEntity;
     }
