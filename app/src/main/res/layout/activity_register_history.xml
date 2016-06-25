@@ -13,7 +13,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".5"
+        android:layout_weight=".6"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp"
@@ -41,7 +41,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                android:padding="8dp">
+                android:paddingTop="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -62,8 +64,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vị trí đăng ký"
-                android:paddingBottom="3dp"/>
+                android:text="@string/register_position"
+                android:paddingBottom="3dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcvModel"
@@ -80,7 +84,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".5"
+        android:layout_weight=".4"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp"

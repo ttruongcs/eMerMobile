@@ -28,6 +28,7 @@ import com.banvien.fcv.mobile.MapsActivity;
 import com.banvien.fcv.mobile.OrderActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.db.Repo;
@@ -243,7 +244,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(beforeIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
-                                // todo
+                                Intent historyIntent = new Intent(v.getContext(), RegisterHistoryActivity.class);
+                                historyIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(historyIntent);
                                 break;
 
                             default:

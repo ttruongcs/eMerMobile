@@ -596,6 +596,7 @@
     <string name="outlet_model">Loại trưng bày</string>
     <string name="history_reward">Lịch sử trả thưởng</string>
     <string name="register_type">Loại trưng bày và vị trí đăng ký</string>
+    <string name="register_position">Vị trí đăng ký</string>
 
 
 </resources>
