@@ -1,6 +1,8 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,6 +41,11 @@ import butterknife.ButterKnife;
  * Created by Linh Nguyen on 6/16/2016.
  */
 public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
+    final long totalScrollTime = Long.MAX_VALUE; //total scroll time. I think that 300 000 000 years is close enouth to infinity. if not enought you can restart timer in onFinish()
+
+    final int scrollPeriod = 20; // every 20 ms scoll will happened. smaller values for smoother
+
+    final int heightToScroll = 20; // will be scrolled to 20 px every time. smaller values for smoother scrolling
 
     private List<BeforeDisplayDTO> mData;
     private BeforeDisplayActivity activity;
@@ -115,8 +122,8 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
                     , repo, outletId, dto.getOutletModelId());
-            listView.setAdapter(adapter);
             listView.setScrollbarFadingEnabled(false);
+            listView.setAdapter(adapter);
 
             listView.setOnTouchListener(new ListView.OnTouchListener() {
                 @Override
@@ -139,6 +146,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                     return true;
                 }
             });
+
         }
 
         private List<MProductDTO> convertToMHS(BeforeDisplayDTO dto) {
@@ -181,6 +189,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setGravity(Gravity.CENTER);
                         if(position != 0) {
                             try {
                                 repo.getOutletMerDAO().updateActualValue(

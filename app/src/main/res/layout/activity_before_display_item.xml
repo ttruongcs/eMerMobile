@@ -26,19 +26,19 @@
             android:layout_weight="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:weightSum="3">
+            android:weightSum="1">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight=".4"
                 android:text="Vị trí" />
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight=".6"
                 android:theme="@style/ThemeSpinner" />
 
         </LinearLayout>
@@ -110,6 +110,9 @@
                 android:paddingTop="8dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
+                android:smoothScrollbar="true"
+                android:scrollingCache="false"
+                android:animationCache="false"
                 />
         </LinearLayout>
 

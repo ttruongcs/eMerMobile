@@ -18,16 +18,26 @@ import android.widget.ViewSwitcher;
 import com.banvien.fcv.mobile.adapter.AddOutletAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
+import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
+import com.banvien.fcv.mobile.rest.RestClient;
+import com.banvien.fcv.mobile.rest.service.OutletService;
+import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Linh Nguyen on 6/24/2016.
@@ -113,18 +123,32 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                 String outletCode = edOutletCode.getText().toString().trim();
                 if(!outletCode.equals("")) {
                     try {
-                        List<OutletEntity> outletEntities = repo.getOutletDAO().findByCode(outletCode);
+                        Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
+                                .searchOutlet(outletCode, null, null, null, null);
+                        call.enqueue(new Callback<Map<String, Object>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                                Map<String, Object> result = response.body();
+                                List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs = DataBinder.readRouteScheduleDetail(result.get("listRouteOutlet"));
+                                if(routeScheduleDetailDTOs.size() > 0) {
+//                                    initRecycleview(outletEntities);
+                                    ELog.d("size", String.valueOf(routeScheduleDetailDTOs.size()));
+                                    new AnimationUtils();
+                                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+                                    viewSwitcher.showNext();
+                                } else {
+                                    Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-                        if(outletEntities.size() > 0) {
-                            initRecycleview(outletEntities);
+                            @Override
+                            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
 
-                            new AnimationUtils();
-                            viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
-                            viewSwitcher.showNext();
-                        } else {
-                            Toast.makeText(v.getContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (SQLException e) {
+                            }
+                        });
+
+
+                    } catch (Exception e) {
                         ELog.e(e.getMessage(), e);
                     }
 

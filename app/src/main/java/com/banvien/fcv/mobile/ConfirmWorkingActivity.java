@@ -284,7 +284,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Toast.makeText(getBaseContext(), "Press back", Toast.LENGTH_SHORT).show();
     }
 
 
