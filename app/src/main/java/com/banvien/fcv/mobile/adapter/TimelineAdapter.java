@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.banvien.fcv.mobile.ConfirmWorkingActivity;
 import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.CaptureEndDayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
@@ -316,7 +317,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    Intent intent = new Intent(itemView.getContext(), ConfirmWorkingActivity.class);
+                    itemView.getContext().startActivity(intent);
                 }
             });
 

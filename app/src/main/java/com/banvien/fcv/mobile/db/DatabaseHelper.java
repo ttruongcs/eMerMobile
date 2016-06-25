@@ -11,6 +11,7 @@ import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
+import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -31,6 +32,7 @@ import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
+import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
@@ -92,6 +94,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private OutletEndDayImagesDAO outletEndDayImagesDAO = null;
 	private CaptureOverviewDAO captureOverviewDAO = null;
 	private ShortageProductDAO shortageProductDAO = null;
+	private ConfirmWorkingDAO confirmWorkingDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -121,6 +124,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTableIfNotExists(connectionSource, OutletEndDayImagesEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureOverviewEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, ShortageProductEntity.class);
+            TableUtils.createTableIfNotExists(connectionSource, ConfirmWorkingEntity.class);
 
 			TableUtils.createTableIfNotExists(connectionSource, StatusHomeEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, StatusStartDayEntity.class);
@@ -162,6 +166,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, CaptureUniformEntity.class, true);
             TableUtils.dropTable(connectionSource, RouteScheduleEntity.class, true);
 			TableUtils.dropTable(connectionSource, CaptureToolEntity.class, true);
+            TableUtils.dropTable(connectionSource, ConfirmWorkingEntity.class, true);
 
             TableUtils.dropTable(connectionSource, CaptureOverviewEntity.class, true);
             TableUtils.dropTable(connectionSource, ShortageProductEntity.class, true);
@@ -328,6 +333,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
 
         return shortageProductDAO;
+    }
+
+    public ConfirmWorkingDAO getConfirmWorkingDAO() throws SQLException {
+        if(null == confirmWorkingDAO) {
+            confirmWorkingDAO = new ConfirmWorkingDAO(getConnectionSource(), ConfirmWorkingEntity.class);
+        }
+
+        return confirmWorkingDAO;
     }
 	/**
 	 * Close the database connections and clear any cached DAOs.

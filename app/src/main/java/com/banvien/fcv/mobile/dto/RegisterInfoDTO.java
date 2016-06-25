@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Linh Nguyen on 6/25/2016.
  */
-public class RegisterHistoryDTO implements Serializable {
+public class RegisterInfoDTO implements Serializable {
     private String name;
 
     public String getName() {

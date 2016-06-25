@@ -125,6 +125,7 @@ public class ScreenContants {
     public static final String CAPTURE_FIRST_OUTLET = "fcvImage/firstOutlet/";
     public static final String CAPTURE_ENDDAY = "fcvImage/endday/";
     public static final String CAPTURE_OVERVIEW = "fcvImage/overview/";
+    public static final String CAPTURE_CONFIRM_WORKING = "content/working/";
 
     public static final String UNFINISH = "UNFINISH";
     public static final String DOING = "DOING";
@@ -136,6 +137,11 @@ public class ScreenContants {
 
     public static final String INSERT = "INSERT";
     public static final String REMOVE = "REMOVE";
+
+    // Confirm working
+    public static final String CONFIRM_WORKING_PATH = "confirm_";
+    public static final String CONFIRM_WORKING = "CONFIRM_WORKING";
+
 
 
 }

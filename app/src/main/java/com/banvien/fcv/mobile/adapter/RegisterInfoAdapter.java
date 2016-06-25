@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.RegisterHistoryActivity;
-import com.banvien.fcv.mobile.dto.RegisterHistoryDTO;
-import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.dto.RegisterInfoDTO;
 
 import java.util.List;
 
@@ -23,9 +21,9 @@ import butterknife.ButterKnife;
  */
 public class RegisterInfoAdapter extends RecyclerView.Adapter {
     private RegisterHistoryActivity activity;
-    private List<RegisterHistoryDTO> mData;
+    private List<RegisterInfoDTO> mData;
 
-    public RegisterInfoAdapter(RegisterHistoryActivity activity, List<RegisterHistoryDTO> data) {
+    public RegisterInfoAdapter(RegisterHistoryActivity activity, List<RegisterInfoDTO> data) {
         this.activity = activity;
         this.mData = data;
     }

@@ -586,10 +586,8 @@
         \nHoặc chọn \"Hủy bỏ\" để thêm cửa hàng vào lịch làm việc hôm nay và vẫn giữ lịch trình đã được sắp xếp trước.
     </string>
     <string name="cancel">Hủy bỏ</string>
-    <string name="dialog_confirm_working_title">Xác nhận bắt đầu làm việc?</string>
-    <string name="dialog_confirm_working">Xác nhận bắt đầu làm việc, hãy chắc chắn danh sách các cửa hàng của bạn đã sẵn sàng.
-    \nNhân \"Đồng ý\" để bắt đầu làm việc.
-    </string>
+    <string name="dialog_confirm_working_title">Bạn có muốn chụp hình xác nhận bắt đầu làm việc không?</string>
+    <string name="dialog_confirm_working">Chụp hình xác nhận làm việc ở nhà phân phối (nếu có).</string>
 
     <string name="statistics_title">Thống kê các loại trưng bày của cửa hàng được đồng bộ</string>
     <string name="detailed_info">Thông tin chi tiết</string>
