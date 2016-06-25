@@ -41,9 +41,6 @@ public class PrepareActivity extends BaseDrawerActivity {
     @Bind(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
-    @Bind(R.id.fabAddTask)
-    com.github.clans.fab.FloatingActionButton fabAdd;
-
     private Repo repo;
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
@@ -93,22 +90,6 @@ public class PrepareActivity extends BaseDrawerActivity {
             public void onClick(View v) {
                 Log.d(TAG, "sync data from server to handheld");
                 showLocationDialog(v);
-            }
-        });
-
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Add new task from server");
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-                try {
-                    v.getContext().startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-//                    Toast.makeText("Whatsapp have not been installed.");
-                }
             }
         });
     }

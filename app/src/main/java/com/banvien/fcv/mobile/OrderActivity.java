@@ -22,6 +22,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.ShortageProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.github.clans.fab.FloatingActionButton;
 
@@ -53,7 +54,7 @@ public class OrderActivity extends BaseDrawerActivity {
     private Repo repo;
     private MyExpandableAdapter adapter;
     private List<ProductgroupDTO> sections;
-    private Map<String, List<ProductDTO>> products;
+    private Map<String, List<MProductDTO>> products;
     private Map<String, String> orderInfos;
     private String[] shortageCodes;
     private SharedPreferences sharedPreferences;
@@ -185,7 +186,7 @@ public class OrderActivity extends BaseDrawerActivity {
             sections = this.repo.getProductGroupDAO().findAll(); //Get all name of product group
 
             for(ProductgroupDTO productgroupDTO : sections) {
-                List<ProductDTO> productDTOs = this.repo.getProductDAO().findByProductGroupId(productgroupDTO.getProductGroupId(), shortageCodes);
+                List<MProductDTO> productDTOs = this.repo.getProductDAO().findByProductGroupId(productgroupDTO.getProductGroupId(), shortageCodes);
                 products.put(productgroupDTO.getName(), productDTOs);
             }
 

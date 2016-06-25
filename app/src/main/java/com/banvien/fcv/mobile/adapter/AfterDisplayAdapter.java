@@ -22,7 +22,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.AfterItemDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
-import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.query.In;
 
@@ -43,7 +43,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private static final int MHS_VALUE_YESNO = 2;
 
     private AfterDisplayActivity activity;
-    private List<ProductDTO> mData;
+    private List<MProductDTO> mData;
     private Repo repo;
     private LayoutInflater mInflater;
     private Map<String, AfterItemDTO> mhsCodes;
@@ -55,7 +55,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
 
-    public AfterDisplayAdapter(AfterDisplayActivity activity, List<ProductDTO> productDTOs
+    public AfterDisplayAdapter(AfterDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences) {
         this.activity = activity;
         this.mData = productDTOs;
@@ -116,7 +116,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final ProductDTO productDTO) {
+        public void bindViews(final MProductDTO productDTO) {
             ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
             try {
                 ELog.d("productCode", productDTO.getCode());
@@ -191,7 +191,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
             return result;
         }
 
-        private void bindEvents(final ProductDTO productDTO) {
+        private void bindEvents(final MProductDTO productDTO) {
             editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

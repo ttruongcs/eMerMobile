@@ -6,13 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 
-import com.banvien.fcv.mobile.adapter.AfterDisplayAdapter;
 import com.banvien.fcv.mobile.adapter.AfterOutletModelAdapter;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.dto.AfterDisplayDTO;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
@@ -37,7 +36,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<AfterDisplayDTO> afterDisplayDTOs;
-    private List<HotzoneDTO> hotzoneDTOs;
+    private List<HotZoneDTO> hotzoneDTOs;
     private SharedPreferences sharedPreferences;
 
     @Override

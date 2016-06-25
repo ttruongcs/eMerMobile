@@ -7,6 +7,7 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -44,8 +45,8 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         }
     }
 
-    public List<ProductDTO> findAll() {
-        List<ProductDTO> productDTOs = new ArrayList<>();
+    public List<MProductDTO> findAll() {
+        List<MProductDTO> productDTOs = new ArrayList<>();
         try {
             List<ProductEntity> entities = queryForAll();
             for(ProductEntity entity : entities) {
@@ -57,12 +58,12 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         return productDTOs;
     }
 
-    public List<ProductDTO> findByProductGroupId(Long id, String[] shortageCodes) {
+    public List<MProductDTO> findByProductGroupId(Long id, String[] shortageCodes) {
         if(shortageCodes.length <= 0) {
-            return new ArrayList<ProductDTO>();
+            return new ArrayList<MProductDTO>();
         }
 
-        List<ProductDTO> result = new ArrayList<>();
+        List<MProductDTO> result = new ArrayList<>();
         try {
             QueryBuilder<ProductEntity, String> queryBuilder = queryBuilder();
             Where<ProductEntity, String> where = queryBuilder.where();
@@ -87,7 +88,7 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         return result;
     }
 
-    public ProductDTO findByProductId(Long productId) {
+    public MProductDTO findByProductId(Long productId) {
         ProductEntity entity = new ProductEntity();
         try {
             QueryBuilder<ProductEntity, String> queryBuilder = queryBuilder();
@@ -101,8 +102,8 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         return ProductUtil.convertToDTO(entity);
     }
 
-    public List<ProductDTO> findByCodes(String[] mhsCode) {
-        List<ProductDTO> result = new ArrayList<>();
+    public List<MProductDTO> findByCodes(String[] mhsCode) {
+        List<MProductDTO> result = new ArrayList<>();
         List<String> dataConditions = Arrays.asList(mhsCode);
         try {
             List<ProductEntity> entities = queryBuilder().where().in("code", dataConditions).query();

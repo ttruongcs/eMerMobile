@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.library;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +45,18 @@ import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MerchandiserMetadataDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MOutletDTO;
@@ -97,9 +103,13 @@ public class UpdateService {
 			System.out.println("json "+ json);
 			clearData();
 			configStatusHome();
-			Call<Map<String,Object>> call =
-					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
-			fillMetadata(call);
+//			Call<Map<String,Object>> call =
+//					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
+
+
+			Call<Map<String,Object>> callOutletDatas =
+					RestClient.getInstance().getHomeService().getDataInNewDays(10l, new Timestamp(System.currentTimeMillis()));
+			getOutletDatas(callOutletDatas);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
 			errorMessage = context.getString(R.string.general_error);
@@ -110,9 +120,13 @@ public class UpdateService {
 
 	private void clearData() throws SQLException {
         SharedPreferences sharedPreferences = context.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences sharedPreferenceBefores = context.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+		SharedPreferences.Editor editorBefores  = sharedPreferenceBefores.edit();
         editor.clear();
         editor.apply();
+		editorBefores.clear();
+		editorBefores.apply();
 		repo.getOutletEndDayImagesDAO().clearData();
 		repo.getStatusHomeDAO().clearData();
 		repo.getRouteScheduleDAO().clearData();
@@ -156,47 +170,23 @@ public class UpdateService {
 		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
 
-	private void fillMetadata(Call<Map<String,Object>> call){
+	private void getOutletDatas(Call<Map<String,Object>> call){
 		call.enqueue(new Callback<Map<String, Object>>() {
 			@Override
 			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-//				if (response.isSuccess()) {
-					// request successful (status code 200, 201)
-					Map<String, Object> result = response.body();
-					List<POSMDTO> jPosms = DataBinder.readPosmList(result.get(ScreenContants.POSM_LIST));
-					List<HotzoneDTO> jHotzones = DataBinder.readHotzoneList(result.get(ScreenContants.HOTZONE_LIST));
-					List<CatgroupDTO> jCatgroups = DataBinder.readCatgroupList(result.get(ScreenContants.CATGROUP_LIST));
-					List<ProductgroupDTO> jProductGroups = DataBinder.readProductgroupList(result.get(ScreenContants.PRODUCTGROUP_LIST));
-					List<ProductDTO> jProducts = DataBinder.readProductList(result.get(ScreenContants.PRODUCT_LIST));
-					List<ComplainTypeDTO> jComplainTypes = DataBinder.readComplainTypeList(result.get(ScreenContants.COMPLAINTYPE_LIST));
-					RouteScheduleInfoDTO routeScheduleInfo = DataBinder.readRouteScheduleInfo(result.get(ScreenContants.ROUTESCHEDULE_LIST));
-
-					fillPOSM(jPosms);
-					fillHotzone(jHotzones);
-					fillCatgroups(jCatgroups);
-					fillProductgroups(jProductGroups);
-					fillProduct(jProducts);
-					fillComplainTypes(jComplainTypes);
-					fillRouteScheduleInfo(routeScheduleInfo);
-//				} else {
-//					ELog.d("Sync error......");
-//				}
-			}
-
-
-			private void fillPOSM(List<POSMDTO> jPosms) {
-				for (POSMDTO dto : jPosms) {
-					try {
-						POSMEntity entity = POSMUtil.convertToEntity(dto);
-						repo.getPosmDAO().addPOSMEntity(entity);
-					} catch (SQLException e) {
-						ELog.d(e.getMessage(), e);
-					}
+				Map<String, Object> result = response.body();
+				HashMap<String, Object> merchandiserMetadata = (HashMap<String, Object>)result.get("metadata");
+				fillProduct(DataBinder.readProductList(merchandiserMetadata.get("products")));
+				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
+				try {
+					buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
+				} catch (SQLException e) {
+					ELog.d("Error when read plans");
 				}
 			}
 
-			private void fillHotzone(List<HotzoneDTO> jHotzones) {
-				for (HotzoneDTO dto : jHotzones) {
+			private void fillHotzone(List<HotZoneDTO> jHotzones) {
+				for (HotZoneDTO dto : jHotzones) {
 					try {
 						HotzoneEntity entity = HotzoneUtil.convertToEntity(dto);
 						repo.getHotZoneDAO().addHotZoneEntity(entity);
@@ -206,130 +196,60 @@ public class UpdateService {
 				}
 			}
 
-			private void fillCatgroups(List<CatgroupDTO> jCatgroup) {
-				for (CatgroupDTO dto : jCatgroup) {
-					try {
-						CatgroupEntity entity = CatgroupUtil.convertToEntity(dto);
-						repo.getCatgroupDAO().addCatgroupEntity(entity);
-					} catch (SQLException e) {
-						ELog.d(e.getMessage(), e);
-					}
-				}
-			}
-
-			private void fillProductgroups(List<ProductgroupDTO> jProductgroups) {
-				for (ProductgroupDTO dto : jProductgroups) {
-					try {
-						ProductgroupEntity entity = ProductGroupUtil.convertToEntity(dto);
-						repo.getProductGroupDAO().addProdcutGroupEntity(entity);
-					} catch (SQLException e) {
-						ELog.d(e.getMessage(), e);
-					}
-				}
-			}
-
-			private void fillProduct(List<ProductDTO> jProducts) {
-				for (ProductDTO dto : jProducts) {
+			private void fillProduct(List<MProductDTO> jProducts) {
+				for (MProductDTO dto : jProducts) {
 					try {
 						ProductEntity entity = ProductUtil.convertToEntity(dto);
 						repo.getProductDAO().addProductEntity(entity);
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
 					}
-
 				}
 			}
 
-            private void fillComplainTypes(List<ComplainTypeDTO> jComplainTypes) {
-                for (ComplainTypeDTO dto : jComplainTypes) {
-                    try {
-                        ComplainTypeEntity entity = ComplainTypeUtil.convertToEntity(dto);
-                        repo.getComplainTypeDAO().addComplainTypeEntity(entity);
-                    } catch (SQLException e) {
-                        ELog.d(e.getMessage(), e);
-                    }
-                }
-            }
 
-			//			fill routeschedule, outlet, outletmer
-			private void fillRouteScheduleInfo(RouteScheduleInfoDTO routeScheduleInfoDTO) {
-				RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
-                routeScheduleEntity.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
-				try {
-					repo.getRouteScheduleDAO().create(routeScheduleEntity);
-				} catch (SQLException e) {
-					ELog.d(e.getMessage(), e);
-				}
+			private void buildMerPlans(List<MAuditOutletPlanDTO> plans) throws SQLException {
+				for(MAuditOutletPlanDTO plan : plans){
+					OutletEntity outletEntity = parsePlanToOutletEntity(plan);
+					repo.getOutletDAO().addOutletEntity(outletEntity);
 
-				if (routeScheduleInfoDTO.getRouteScheduleDetails() != null
-						&& routeScheduleInfoDTO.getRouteScheduleDetails().size() > 0) {
-					List<MRouteScheduleDetailDTO> mMRouteScheduleDetails = routeScheduleInfoDTO
-							.getRouteScheduleDetails();
-					for (MRouteScheduleDetailDTO mRouteScheduleDetailDTO : mMRouteScheduleDetails) {
-						// Create and Insert Outlet to sqlLite
-						MOutletDTO mOutletDTO = mRouteScheduleDetailDTO.getOutlet();
-						if (mOutletDTO != null) {
-							OutletDTO outlet = new OutletDTO();
-							outlet.setOutletId(mOutletDTO.getOutletId());
-							outlet.setCode(mOutletDTO.getCode());
-							outlet.setName(mOutletDTO.getName());
-							if (mOutletDTO.getDistributor() != null) {
-								outlet.setdCode(mOutletDTO.getDistributor().getCode());
-								outlet.setdName(mOutletDTO.getDistributor().getName());
-							}
-							outlet.setTypeName(mOutletDTO.getOutletTypeCode());
-							outlet.setLocationNo(mOutletDTO.getLocationNo());
-							outlet.setStreet(mOutletDTO.getStreet());
-							outlet.setWard(mOutletDTO.getWard());
-							outlet.setDistrict(mOutletDTO.getDistrict());
-							outlet.setStatus(ScreenContants.OUTLET_STATUS_UNFINISHED);
-							if (mOutletDTO.getCity() != null) {
-								outlet.setCityName(mOutletDTO.getCity().getName());
-							}
-							outlet.setLat(mOutletDTO.getLat());
-							outlet.setLg(mOutletDTO.getLng());
-							outlet.setRouteScheduleDetailId(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
-                            outlet.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
-							try {
-								OutletEntity entity = OutletUtil.convertToEntity(outlet);
-								repo.getOutletDAO().addOutletEntity(entity);
-							} catch (SQLException e) {
-								ELog.d(e.getMessage(), e);
-							}
-						}
-						if (mOutletDTO.getExhibitRegister() != null) {
-							MExhibitRegisterDTO mExhibitRegisterDTO = mOutletDTO.getExhibitRegister();
-							if (mExhibitRegisterDTO.getExhibitRegisterDetails() != null
-									&& mExhibitRegisterDTO.getExhibitRegisterDetails().size() > 0) {
-								List<MExhibitRegisterDetailDTO> mExhibitRegisterDetailDTOs
-										= mExhibitRegisterDTO.getExhibitRegisterDetails();
-								for (MExhibitRegisterDetailDTO mExhibitRegisterDetailDTO
-										: mExhibitRegisterDetailDTOs) {
-									OutletMerDTO outletMerDTO = new OutletMerDTO();
-									outletMerDTO.setOutletId(mOutletDTO.getOutletId());
-									outletMerDTO.setRouteScheduleId(routeScheduleInfoDTO.getRouteScheduleId());
-									outletMerDTO.setRouteScheduleDetailId
-											(mRouteScheduleDetailDTO.getRouteScheduleDetailId());
-									outletMerDTO.setDataType(mExhibitRegisterDetailDTO.getDataType());
-									outletMerDTO.setRegisterValue(mExhibitRegisterDetailDTO.getReferenceValue());
-									outletMerDTO.setExhibitRegisteredId(mExhibitRegisterDTO.getExhibitRegisterId());
-									outletMerDTO.setExhibitRegisteredDetailId(mExhibitRegisterDetailDTO.getExhibitRegisterDetailId());
-									outletMerDTO.setOutletModelId(mExhibitRegisterDetailDTO.getOutletModelId());
-									outletMerDTO.setOutletModelName(mExhibitRegisterDetailDTO.getOutletModelName());
+					List<OutletModelDTO> outletModelDTOs = plan.getOutletModel();
+					for(OutletModelDTO outletModel : outletModelDTOs){
+						List<OutletModelDetailDTO> outletModelDetailDTOs = outletModel.getOutletModelDetail();
+						for(OutletModelDetailDTO outletModelDetail : outletModelDetailDTOs){
+							OutletMerEntity outletMerEntity = new OutletMerEntity();
 
-									try {
-										OutletMerEntity entity = OutletMerUtil.convertToEntity(outletMerDTO);
-										repo.getOutletMerDAO().addOutletMerEntity(entity);
-									} catch (SQLException e) {
-										ELog.d(e.getMessage(), e);
-									}
-								}
-							}
+							outletMerEntity.setDataType(outletModelDetail.getDataType());
+							outletMerEntity.setRouteScheduleDetailId(plan.getRouteScheduleDetailId());
+							outletMerEntity.setRouteScheduleId(plan.getRouteScheduleId());
+							outletMerEntity.setOutletId(plan.getOutletId());
+							outletMerEntity.setOutletModelId(outletModel.getOutletModelId());
+							outletMerEntity.setOutletModelName(outletModel.getName());
+							outletMerEntity.setRegisterValue(outletModelDetail.getReferenceValue());
+
+							repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
+
 						}
 					}
 				}
 			}
 
+			private OutletEntity parsePlanToOutletEntity(MAuditOutletPlanDTO plan){
+				OutletEntity outletEntity = new OutletEntity();
+				if(plan.getCity() != null){
+					outletEntity.setCityName(plan.getCity().getName());
+				}
+				outletEntity.setOutletId(plan.getOutletId());
+				outletEntity.setCode(plan.getCode());
+				outletEntity.setDistrict(plan.getDistrict());
+				outletEntity.setLat(Double.parseDouble(plan.getLatitude().toString()));
+				outletEntity.setLg(Double.parseDouble(plan.getLongitude().toString()));
+				outletEntity.setName(plan.getName());
+				outletEntity.setRouteScheduleId(plan.getRouteScheduleId());
+				outletEntity.setRouteScheduleDetailId(plan.getRouteScheduleDetailId());
+				outletEntity.setStatus(ScreenContants.OUTLET_STATUS_UNFINISHED);
+				return outletEntity;
+			}
 
 			@Override
 			public void onFailure(Call<Map<String, Object>> call, Throwable t) {

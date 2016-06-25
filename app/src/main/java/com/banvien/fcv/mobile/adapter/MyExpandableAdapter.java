@@ -15,6 +15,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.ShortageProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.util.List;
@@ -27,14 +28,14 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<ProductgroupDTO> sections;
-    private Map<String, List<ProductDTO>> products;
+    private Map<String, List<MProductDTO>> products;
     private Map<String, String> orderInfos;
     private LayoutInflater inflater;
     private Long outletId;
     private Long routeScheduleDetailId;
 
     public MyExpandableAdapter(Context context, List<ProductgroupDTO> sections,
-                               Map<String, List<ProductDTO>> products,
+                               Map<String, List<MProductDTO>> products,
                                Map<String, String> orderInfos, Long outletId, Long routeScheduleDetailId) {
         this.context = context;
         this.sections = sections;

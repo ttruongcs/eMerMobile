@@ -4,15 +4,15 @@ import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 
 /**
  * Created by Administrator on 4/4/2016.
  */
 public class ProductUtil {
 
-    public static ProductDTO convertToDTO(ProductEntity item) {
-        ProductDTO result = new ProductDTO();
-        result.set_id(item.get_id());
+    public static MProductDTO convertToDTO(ProductEntity item) {
+        MProductDTO result = new MProductDTO();
         result.setProductId(item.getProductId());
         result.setProductGroupId(item.getProductGroupId());
         result.setCode(item.getCode());
@@ -20,9 +20,8 @@ public class ProductUtil {
         return result;
     }
 
-    public static ProductEntity convertToEntity(ProductDTO item) {
+    public static ProductEntity convertToEntity(MProductDTO item) {
         ProductEntity entity = new ProductEntity();
-        entity.set_id(item.get_id());
         entity.setProductId(item.getProductId());
         entity.setProductGroupId(item.getProductGroupId());
         entity.setCode(item.getCode());

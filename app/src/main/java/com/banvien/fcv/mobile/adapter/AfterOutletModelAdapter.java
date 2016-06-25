@@ -16,16 +16,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
-import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.AfterDisplayDTO;
-import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
-import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -44,13 +42,13 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
 
     private List<AfterDisplayDTO> mData;
     private AfterDisplayActivity activity;
-    private List<HotzoneDTO> hotzoneDTOs;
+    private List<HotZoneDTO> hotzoneDTOs;
     private Long outletId;
     private Repo repo;
     private SharedPreferences preferences;
 
     public AfterOutletModelAdapter(AfterDisplayActivity activity, List<AfterDisplayDTO> data
-            , List<HotzoneDTO> hotzoneDTOs, Repo repo, Long outletId, SharedPreferences preferences) {
+            , List<HotZoneDTO> hotzoneDTOs, Repo repo, Long outletId, SharedPreferences preferences) {
         this.mData = data;
         this.activity = activity;
         this.hotzoneDTOs = hotzoneDTOs;
@@ -114,7 +112,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
         }
 
         private void initRecyclerView(AfterDisplayDTO dto) {
-            List<ProductDTO> productDTOs = convertToMHS(dto);
+            List<MProductDTO> productDTOs = convertToMHS(dto);
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             AfterDisplayAdapter adapter = new AfterDisplayAdapter(activity, productDTOs, edFacing
@@ -145,8 +143,8 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
             });
         }
 
-        private List<ProductDTO> convertToMHS(AfterDisplayDTO dto) {
-            List<ProductDTO> results = new ArrayList<>();
+        private List<MProductDTO> convertToMHS(AfterDisplayDTO dto) {
+            List<MProductDTO> results = new ArrayList<>();
 
             if(dto.getMhs() != null) {
                 String[] mhsCode = dto.getMhs().getRegisterValue().split(",");
@@ -169,7 +167,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
                 spinnerName.add(itemView.getContext().getString(R.string.select_one));
                 spinnerId.add(-1l);
 
-                for (HotzoneDTO hotzoneDTO : hotzoneDTOs) {
+                for (HotZoneDTO hotzoneDTO : hotzoneDTOs) {
                     spinnerName.add(hotzoneDTO.getCode());
                     spinnerId.add(hotzoneDTO.getHotZoneId());
                    // mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());

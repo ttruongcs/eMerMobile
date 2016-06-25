@@ -19,6 +19,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private static final int MHS_VALUE = 1;
 
     private BeforeDisplayActivity activity;
-    private List<ProductDTO> mData;
+    private List<MProductDTO> mData;
     private Map<String, Integer> mhsCodes;
     private Repo repo;
     private LayoutInflater mInflater;
@@ -50,7 +51,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private SharedPreferences sharedPreferenceBefores;
     private SharedPreferences.Editor editorBefore;
 
-    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs
+    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
         this.activity = activity;
         this.mData = productDTOs;
@@ -106,7 +107,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final ProductDTO productDTO) {
+        public void bindViews(final MProductDTO productDTO) {
             editorBefore.putInt(productDTO.getCode(), 0);
             editorBefore.apply();
 
@@ -148,7 +149,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             return result;
         }
 
-        private void bindEvents(final ProductDTO productDTO) {
+        private void bindEvents(final MProductDTO productDTO) {
             editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
