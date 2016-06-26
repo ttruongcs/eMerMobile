@@ -59,9 +59,10 @@
 
 
             <TextView
+                android:id="@+id/textNumSuccess"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="20"
+                android:text="0"
                 android:gravity="center"
                 android:textSize="120dp"
                 android:textStyle="bold"/>

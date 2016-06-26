@@ -29,6 +29,7 @@ import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
+import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
@@ -246,7 +247,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(captureEndDay);
                                 break;
                             case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
-                                // todo
+                                Intent syncEndDay = new Intent(v.getContext(), SyncEndActivity.class);
+                                v.getContext().startActivity(syncEndDay);
                                 break;
 
                             default:

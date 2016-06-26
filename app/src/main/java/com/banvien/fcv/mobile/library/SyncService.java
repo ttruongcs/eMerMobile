@@ -12,6 +12,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.TypeFile;
+import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 import com.banvien.fcv.mobile.dto.syncdto.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
@@ -21,6 +22,7 @@ import com.banvien.fcv.mobile.utils.FileUtils;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -64,7 +66,7 @@ public class SyncService {
 			if(!CheckNetworkConnection.isConnectionAvailable(context)){
 				errorMessage = context.getString(R.string.sync_error_phone_connection);
 			}
-			File file = new File("/storage/emulated/0/445124424/445124424-1238280458.jpg");
+			File file = new File("/storage/emulated/0/fcvImage/tool/24-06-2016/1468119290926.jpg");
 			Uri fileUri = Uri.fromFile(file);
 			uploadFile(file);
 //			OutletMerResultCommand FINAL = buildDataToSync();
@@ -103,7 +105,17 @@ public class SyncService {
 						MediaType.parse("multipart/form-data"), descriptionString);
 
 		// finally, execute the request
-		Call<ResponseBody> call = RestClient.getInstance().getHomeService().upload(requestFile);
+//		Call<ResponseBody> call = RestClient.getInstance().getHomeService().uploadBeginImageDay(file.getName()
+//				, file.getPath(), requestFile);
+
+		MConfirmWorkingImageCommand mConfirmWorkingImageCommand = new MConfirmWorkingImageCommand();
+
+		mConfirmWorkingImageCommand.setName("ABC");
+		mConfirmWorkingImageCommand.setPathImage("ABC.jpg");
+		mConfirmWorkingImageCommand.setType("TOOL");
+
+		Call<ResponseBody> call = RestClient.getInstance().getHomeService().uploadBeginDay(8l
+				, new Timestamp(System.currentTimeMillis()), null, null, mConfirmWorkingImageCommand);
 		call.enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call,

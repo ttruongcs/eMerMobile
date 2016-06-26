@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.rest.service;
 
 import com.banvien.fcv.mobile.command.OutletMerResultCommand;
+import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -32,8 +33,20 @@ public interface HomeService {
     @POST("/mobile/outletregister/sync.html")
     Call<OutletMerResultCommand> syncDataToServer(@Body OutletMerResultCommand command);
 
-
     @Multipart
     @POST ("/mobile/image/sync.html")
-    Call<ResponseBody> upload(@Part("fileToUpload2\"; filename=\"image1.jpg\";") RequestBody file2);
+    Call<ResponseBody> upload(@Part("fileToUpload\"; filename=\"image.jpg\";") RequestBody file2);
+
+
+    @Multipart
+    @POST ("/mobile/working/syncImage.html")
+    Call<ResponseBody> uploadBeginImageDay(@Query("imageName") String imageName, @Query("path") String path
+            , @Part( "fileToUpload\"; filename=\"image.jpg\";") RequestBody file2);
+
+    @POST ("/mobile/working/confirmBeginningTheDay.html")
+    Call<ResponseBody> uploadBeginDay(@Query("routeScheduleId") Long routeScheduleId,
+                                      @Query("startTime") Timestamp startTime,
+                                      @Query("confirmWoringId") String confirmWoringId,
+                                      @Query("endTime") Timestamp endTime,
+                                      @Body MConfirmWorkingImageCommand file2);
 }

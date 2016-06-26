@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +110,7 @@ public class UpdateService {
 
 			Call<Map<String,Object>> callOutletDatas =
 					RestClient.getInstance().getHomeService().getDataInNewDays(10l, new Timestamp(System.currentTimeMillis()));
-			getOutletDatas(callOutletDatas);
+			results = getOutletDatas(callOutletDatas);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
 			errorMessage = context.getString(R.string.general_error);
@@ -170,7 +171,8 @@ public class UpdateService {
 		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
 
-	private void getOutletDatas(Call<Map<String,Object>> call){
+	private Map<String, String> getOutletDatas(Call<Map<String,Object>> call){
+		final Map<String, String> mapResult = new Hashtable<>();
 		call.enqueue(new Callback<Map<String, Object>>() {
 			@Override
 			public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
@@ -179,7 +181,8 @@ public class UpdateService {
 				fillProduct(DataBinder.readProductList(merchandiserMetadata.get("products")));
 				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
 				try {
-					buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
+					Integer numOutlet = buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
+					mapResult.put("numOutletSuccess", numOutlet.toString());
 				} catch (SQLException e) {
 					ELog.d("Error when read plans");
 				}
@@ -208,11 +211,12 @@ public class UpdateService {
 			}
 
 
-			private void buildMerPlans(List<MAuditOutletPlanDTO> plans) throws SQLException {
+			private Integer buildMerPlans(List<MAuditOutletPlanDTO> plans) throws SQLException {
+				Integer numOutlet = 0;
 				for(MAuditOutletPlanDTO plan : plans){
 					OutletEntity outletEntity = parsePlanToOutletEntity(plan);
 					repo.getOutletDAO().addOutletEntity(outletEntity);
-
+					numOutlet = numOutlet + 1;
 					List<OutletModelDTO> outletModelDTOs = plan.getOutletModel();
 					for(OutletModelDTO outletModel : outletModelDTOs){
 						List<OutletModelDetailDTO> outletModelDetailDTOs = outletModel.getOutletModelDetail();
@@ -232,6 +236,7 @@ public class UpdateService {
 						}
 					}
 				}
+				return numOutlet;
 			}
 
 			private OutletEntity parsePlanToOutletEntity(MAuditOutletPlanDTO plan){
@@ -256,5 +261,6 @@ public class UpdateService {
 				ELog.e(t.getMessage(), t);
 			}
 		});
+		return mapResult;
 	}
 }
