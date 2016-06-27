@@ -1,55 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/switcher"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@string/add_outlet_title"
-        android:gravity="center"
-        android:textSize="18dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/advanced_search"
-        android:padding="6dp"
-        android:gravity="center"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:background="@color/primary_kanban"/>
-
-    <android.support.v7.widget.CardView
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true"
-        app:contentPadding="8dp"
-        android:layout_marginTop="-5dp"
-        android:layout_marginLeft="-3dp"
-        android:layout_marginRight="-3dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <android.support.design.widget.CoordinatorLayout
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/add_outlet_title"
+            android:gravity="center"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/advanced_search"
+            android:padding="6dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:background="@color/primary_kanban"/>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/lnAddOutlet">
-
-            <ScrollView
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginRight="-3dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none">
+                android:id="@+id/lnAddOutlet">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginBottom="16dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="@string/outlet_name_code"
+
+                                android:textStyle="bold" />
+
+
+                            <EditText
+                                android:id="@+id/edKeyword"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                style="@style/MyCustomEditText"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginBottom="16dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="@string/address"
+
+                                android:textStyle="bold" />
+
+
+                            <EditText
+                                android:id="@+id/edAddress"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                style="@style/MyCustomEditText"
+                                android:layout_marginLeft="8dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginBottom="16dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="@string/distributor_name"
+
+                                android:textStyle="bold" />
+
+
+                            <EditText
+                                android:id="@+id/edDistributor"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                style="@style/MyCustomEditText"
+                                android:layout_marginLeft="8dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_marginBottom="16dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="@string/day"
+
+                                android:textStyle="bold" />
+
+
+                            <EditText
+                                android:id="@+id/edDate"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                style="@style/MyCustomEditText"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="8dp"/>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnFindOutlet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/find_outlet"
+                            android:theme="@style/PrimaryButton"
+                            android:layout_marginTop="16dp"/>
+
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </android.support.design.widget.CoordinatorLayout>
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fabMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:menu_icon="@drawable/ic_arrow_upward_white_24dp"
+                app:menu_backgroundColor="@android:color/transparent"
+                app:menu_colorNormal="#DA4336"
+                app:menu_colorPressed="#E75043"
+                app:menu_colorRipple="#99FFFFFF"
+                app:menu_fab_size="normal"
+                app:menu_labels_position="left"
+                app:menu_openDirection="up">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fabAdvanceSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    app:fab_label="@string/search_advance"
+                    android:src="@drawable/ic_zoom_in"
+                    app:menu_labels_position="right"
+                    app:menu_openDirection="up"/>
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fabSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    app:fab_label="@string/search"
+                    android:src="@drawable/ic_search" />
+
+            </com.github.clans.fab.FloatingActionMenu>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/tvAddOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/add_outlet_title"
+            android:gravity="center"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_outlet_finded"
+            android:padding="6dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:background="@color/primary_kanban"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginRight="-3dp">
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,179 +266,34 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
-                    <LinearLayout
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:id="@+id/srlAddOutlet"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_marginBottom="16dp">
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
 
-                        <TextView
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rcvAddOutlet"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="Mã cửa hàng"
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
 
-                            android:textStyle="bold" />
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            style="@style/MyCustomEditText"
-                            android:layout_marginLeft="8dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_marginBottom="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="@string/outlet_name"
-
-                            android:textStyle="bold" />
+                        </android.support.v7.widget.RecyclerView>
 
 
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            style="@style/MyCustomEditText"
-                            android:layout_marginLeft="8dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_marginBottom="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="@string/address"
-
-                            android:textStyle="bold" />
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            style="@style/MyCustomEditText"
-                            android:layout_marginLeft="8dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_marginBottom="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="@string/distributor_name"
-
-                            android:textStyle="bold" />
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            style="@style/MyCustomEditText"
-                            android:layout_marginLeft="8dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:layout_marginBottom="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="@string/day"
-
-                            android:textStyle="bold" />
-
-
-                        <EditText
-                            android:id="@+id/edDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            style="@style/MyCustomEditText"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginStart="8dp"/>
-                    </LinearLayout>
+                    </android.support.v4.widget.SwipeRefreshLayout>
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/find_outlet"
+                        android:text="@string/select_outlet"
                         android:theme="@style/PrimaryButton"
+                        android:layout_gravity="bottom"
                         android:layout_marginTop="16dp"/>
-
-
                 </LinearLayout>
 
-            </ScrollView>
 
-        </android.support.design.widget.CoordinatorLayout>
-
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/fabMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:menu_icon="@drawable/ic_arrow_upward_white_24dp"
-            app:menu_backgroundColor="@android:color/transparent"
-            app:menu_colorNormal="#DA4336"
-            app:menu_colorPressed="#E75043"
-            app:menu_colorRipple="#99FFFFFF"
-            app:menu_fab_size="normal"
-            app:menu_labels_position="left"
-            app:menu_openDirection="up">
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fabAdvanceSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:fab_label="@string/search_advance"
-                android:src="@drawable/ic_zoom_in"
-                app:menu_labels_position="right"
-                app:menu_openDirection="up"/>
-
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fabSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                app:fab_label="@string/search"
-                android:src="@drawable/ic_search" />
-
-        </com.github.clans.fab.FloatingActionMenu>
-
-
-    </android.support.v7.widget.CardView>
-
-
-
-</LinearLayout>
+            </android.support.design.widget.CoordinatorLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ViewSwitcher>

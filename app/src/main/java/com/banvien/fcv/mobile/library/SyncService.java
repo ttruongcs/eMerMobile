@@ -80,6 +80,7 @@ public class SyncService {
 //				@Override
 //				public void onFailure(Call<OutletMerResultCommand> call, Throwable t) {
 //
+
 //				}
 //			});
 		}catch (Exception e){

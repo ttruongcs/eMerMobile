@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -11,25 +12,45 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.banvien.fcv.mobile.FindOutletSimpleActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
+import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
+import com.banvien.fcv.mobile.library.SyncService;
+import com.banvien.fcv.mobile.rest.RestClient;
+import com.banvien.fcv.mobile.utils.DataBinder;
+import com.banvien.fcv.mobile.utils.ELog;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Linh Nguyen on 6/24/2016.
  */
 public class AddOutletAdapter extends RecyclerView.Adapter {
-    private List<OutletEntity> mData;
-    private FindOutletSimpleActivity activity;
+    private static final int DELETE_CURRENT_TASK = 1;
+    private static final int NOT_DELETE_CURRENT_TASK = -1;
+    private List<MRouteScheduleDetailDTO> mData;
+    private Activity activity;
+    private Repo repo;
 
-    public AddOutletAdapter(FindOutletSimpleActivity activity, List<OutletEntity> entities) {
+    public AddOutletAdapter(Activity activity, List<MRouteScheduleDetailDTO> entities, Repo repo) {
         this.activity = activity;
         this.mData = entities;
+        this.repo = repo;
     }
 
     @Override
@@ -64,19 +85,22 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(OutletEntity outletEntity) {
-            tvAddOutlet.setText(outletEntity.getName());
+        public void bindViews(final MRouteScheduleDetailDTO routeScheduleDetailDTO) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String time = sdf.format(routeScheduleDetailDTO.getDate());
+            String outletInfo = routeScheduleDetailDTO.getOutlet().getName() + " " + "(" + time + ")";
+            tvAddOutlet.setText(outletInfo);
             cbAddOutlet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        showDialog();
+                        showDialog(routeScheduleDetailDTO);
                     }
                 }
             });
         }
 
-        private void showDialog() {
+        private void showDialog(final MRouteScheduleDetailDTO routeScheduleDetailDTO) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
             builder.setTitle(activity.getString(R.string.dialog_delete_outlet_title));
@@ -86,7 +110,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    addToServer(routeScheduleDetailDTO, DELETE_CURRENT_TASK);
                 }
             });
 
@@ -100,6 +124,65 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
 
             AlertDialog dialog = builder.create();
             dialog.show();
+
+        }
+
+        private void addToServer(MRouteScheduleDetailDTO routeScheduleDetailDTO, int deleteCurrentTask) {
+            Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
+                    .addRoute(routeScheduleDetailDTO.getRouteScheduleDetailId(), deleteCurrentTask);
+            call.enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    Map<String, Object> result = response.body();
+                    MAuditOutletPlanDTO auditOutletPlanDTO = DataBinder.readAuditOutletPlan(result.get("auditOutletPlan"));
+                    if(auditOutletPlanDTO != null) {
+                        addMerResult(auditOutletPlanDTO);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+                }
+            });
+        }
+
+        private void addMerResult(MAuditOutletPlanDTO auditOutletPlanDTO) {
+            OutletEntity entity = new OutletEntity();
+            entity.setOutletId(auditOutletPlanDTO.getOutletId());
+            entity.setName(auditOutletPlanDTO.getName());
+            entity.setCode(auditOutletPlanDTO.getCode());
+            entity.setLocationNo(auditOutletPlanDTO.getLocationNo());
+            entity.setStreet(auditOutletPlanDTO.getStreet());
+            entity.setDistrict(auditOutletPlanDTO.getDistrict());
+            entity.setWard(auditOutletPlanDTO.getWard());
+            entity.setRouteScheduleId(auditOutletPlanDTO.getRouteScheduleId());
+            entity.setRouteScheduleDetailId(auditOutletPlanDTO.getRouteScheduleDetailId());
+            entity.setCityName(auditOutletPlanDTO.getCity().getName());
+            entity.setLat(auditOutletPlanDTO.getLatitude());
+            entity.setLg(auditOutletPlanDTO.getLongitude());
+            entity.setAuditedToday(auditOutletPlanDTO.getAuditedToday());
+            try {
+                repo.getOutletDAO().addOutletEntity(entity);
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+
+            List<OutletMerEntity> outletMerEntities = new ArrayList<>();
+            for(OutletModelDTO outletModelDTO : auditOutletPlanDTO.getOutletModel()) {
+                for(OutletModelDetailDTO outletModelDetailDTO : outletModelDTO.getOutletModelDetail()) {
+                    OutletMerEntity outletMerEntity = new OutletMerEntity();
+                    outletMerEntity.setOutletId(auditOutletPlanDTO.getOutletId());
+                    outletMerEntity.setRouteScheduleId(auditOutletPlanDTO.getRouteScheduleId());
+                    outletMerEntity.setOutletId(outletModelDTO.getOutletModelId());
+                    outletMerEntity.setOutletModelName(outletModelDTO.getName());
+                    outletMerEntity.setRouteScheduleDetailId(auditOutletPlanDTO.getRouteScheduleDetailId());
+                    outletMerEntity.setDataType(outletModelDetailDTO.getDataType());
+                    outletMerEntity.setRegisterValue(outletModelDetailDTO.getReferenceValue());
+                    outletMerEntities.add(outletMerEntity);
+                }
+            }
 
         }
     }

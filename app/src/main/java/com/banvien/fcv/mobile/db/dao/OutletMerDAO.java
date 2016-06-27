@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Created by hieu on 8/03/2016.
@@ -537,7 +538,23 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
+    public void createListMerResult(final List<OutletMerEntity> entities) {
+        try {
+            callBatchTasks(new Callable<Object>() {
 
+                @Override
+                public Object call() throws Exception {
+                    for(OutletMerEntity entity : entities) {
+                        create(entity);
+                    }
+
+                    return null;
+                }
+            });
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
 
 
 

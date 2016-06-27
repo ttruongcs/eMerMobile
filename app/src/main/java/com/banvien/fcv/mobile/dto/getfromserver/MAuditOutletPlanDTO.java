@@ -25,8 +25,8 @@ public class MAuditOutletPlanDTO implements Serializable {
     private Long routeScheduleDetailId;
     private CityDTO city;
 
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private Double latitude;
+    private Double longitude;
 
     private Boolean isAuditedToday;
     private List<OutletModelDTO> outletModel;
@@ -96,19 +96,19 @@ public class MAuditOutletPlanDTO implements Serializable {
         this.city = city;
     }
 
-    public BigDecimal getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigDecimal latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public BigDecimal getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigDecimal longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

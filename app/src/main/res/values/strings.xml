@@ -596,5 +596,7 @@
     <string name="register_type">Loại trưng bày và vị trí đăng ký</string>
     <string name="register_position">Vị trí đăng ký</string>
 
+    <string name="outlet_name_code">Tên/mã cửa hàng</string>
+
 
 </resources>

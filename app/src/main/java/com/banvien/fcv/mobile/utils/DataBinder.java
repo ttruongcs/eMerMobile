@@ -133,4 +133,16 @@ public class DataBinder {
 
         return list;
     }
+
+    public static MAuditOutletPlanDTO readAuditOutletPlan(Object auditOutletPlan) {
+        MAuditOutletPlanDTO auditOutletPlanDTO = null;
+        try {
+            auditOutletPlanDTO = mapper.convertValue(auditOutletPlan, MAuditOutletPlanDTO.class);
+        } catch (Exception e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+
+        return auditOutletPlanDTO;
+    }
 }

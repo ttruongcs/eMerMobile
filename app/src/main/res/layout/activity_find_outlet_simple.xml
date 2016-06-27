@@ -43,7 +43,10 @@
             app:contentPadding="8dp"
             android:layout_marginTop="-5dp"
             android:layout_marginLeft="-3dp"
-            android:layout_marginRight="-3dp">
+            android:layout_marginRight="-3dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
             <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -66,17 +69,17 @@
                         android:layout_marginBottom="16dp">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
-                            android:text="Tên/mã cửa hàng"
+                            android:text="@string/day"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
 
                         <EditText
-                            android:id="@+id/edOutletCode"
-                            android:layout_width="match_parent"
+                            android:id="@+id/edOutletDate"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".5"
                             style="@style/MyCustomEditText"

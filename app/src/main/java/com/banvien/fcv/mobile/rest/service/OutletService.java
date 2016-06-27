@@ -12,10 +12,14 @@ import retrofit2.http.Query;
  * Created by Linh Nguyen on 6/25/2016.
  */
 public interface OutletService {
-    @GET("/mobile/route/searchOutlet.html")
+    @POST("/mobile/route/searchOutlet.html")
     Call<Map<String, Object>> searchOutlet(@Query("keyword") String keyword,
                                    @Query("merchandiserId") Long merchandiserId,
                                    @Query("regionId") Long regionId,
                                    @Query("distributorId") Long distributorId,
                                    @Query("dateCreated") Timestamp createdDate);
+
+    @POST("/mobile/route/addRoute.html")
+    Call<Map<String, Object>> addRoute(@Query("scheduleDetailId")Long scheduleDetailId,
+                                       @Query("deleteCurrentTask")Integer deleteCurrentTask);
 }
