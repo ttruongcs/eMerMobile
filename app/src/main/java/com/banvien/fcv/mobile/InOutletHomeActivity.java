@@ -44,7 +44,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
         try {
-            StatusInOutletEntity statusInOutletEntity = repo.getStatusInOutletDAO().getConfigStatusInOutletHome();
+            StatusInOutletEntity statusInOutletEntity = repo.getStatusInOutletDAO().getConfigStatusInOutletHome(routeScheduleDetailId);
             if(statusInOutletEntity != null){
                 statusInOutlet = StatusInOutletUtil.convertToDTO(statusInOutletEntity);
             } else{

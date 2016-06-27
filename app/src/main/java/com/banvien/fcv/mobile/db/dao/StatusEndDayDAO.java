@@ -4,6 +4,7 @@ package com.banvien.fcv.mobile.db.dao;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -52,5 +53,39 @@ public class StatusEndDayDAO extends AndroidBaseDaoImpl<StatusEndDayEntity, Stri
             ELog.d("clear Status End Day");
             deleteBuilder().delete();
         }
+    }
+
+    public boolean updateStatus(String now, String[] next) {
+        boolean result = false;
+        UpdateBuilder<StatusEndDayEntity, String> updateBuilder = updateBuilder();
+
+        try {
+            updateBuilder.updateColumnValue(now, 2);
+            if(next != null && next.length > 0) {
+                if(next.length == 1) {
+                    updateBuilder.updateColumnValue(next[0], 1);
+                } else {
+                    for(int i=0 ; i < next.length; i++) {
+                        if(i == (next.length - 1)) {
+                            updateBuilder.updateColumnValue(next[i], 1);
+                        } else {
+                            updateBuilder.updateColumnValue(next[i], 2);
+                        }
+
+                    }
+                }
+
+
+            }
+
+            long countOf = updateBuilder.update();
+            if(countOf > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result;
     }
 }

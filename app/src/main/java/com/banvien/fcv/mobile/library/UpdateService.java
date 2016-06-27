@@ -84,7 +84,6 @@ public class UpdateService {
 			clearData();
 			configStatusHome();
             configStatusStartDay();
-			configStatusInOutlet();
 			configStatusEndDay();
 //			Call<Map<String,Object>> call =
 //					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
@@ -154,21 +153,6 @@ public class UpdateService {
 		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
 
-
-	private void configStatusInOutlet() throws SQLException {
-		StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
-		statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
-		statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
-        statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
-
-		repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
-	}
 
 
 	private void configStatusEndDay() throws SQLException {

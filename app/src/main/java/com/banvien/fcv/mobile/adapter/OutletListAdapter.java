@@ -14,12 +14,15 @@ import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.InOutletHomeActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
 import com.banvien.fcv.mobile.utils.ColorGenerator;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.TextDrawable;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -35,11 +38,13 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
     private List<OutletDTO> mData;
     private Fragment fragment;
     private String flag;
+    private Repo repo;
 
-    public OutletListAdapter(List<OutletDTO> outletDTOs, Fragment fragment, String flag) {
+    public OutletListAdapter(List<OutletDTO> outletDTOs, Fragment fragment, String flag, Repo repo) {
         this.mData = outletDTOs;
         this.fragment = fragment;
         this.flag = flag;
+        this.repo = repo;
     }
 
     public OutletListAdapter() {};
@@ -103,6 +108,7 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                 @Override
                 public void onClick(View view) {
                     if(flag.equals(ScreenContants.UNFINISH)) {
+                        configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
                         Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
                         intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                         intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
@@ -110,6 +116,26 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                     }
                 }
             });
+        }
+
+        private void configStatusInOutlet(Long routeScheduleDetailId) {
+            StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
+            statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
+            statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+            statusInOutletEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+
+            try {
+                repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
         }
 
         private String buildOutletCode(String outletCode, String distributorCode){

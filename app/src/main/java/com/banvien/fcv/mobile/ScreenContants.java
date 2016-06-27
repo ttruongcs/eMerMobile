@@ -147,7 +147,7 @@ public class ScreenContants {
     //Column parent name
     public static final String PREPARE_DATE_COLUMN = "chuanBiDauNgay";
     public static final String IN_OUTLET = "trongCuaHang";
-
+    public static final String END_DATE_COLUMN = "ketThucCuoiNgay";
     //Column child name
 
     public static final String START_DATE_SYNC = "dongBoDuLieuPhanCong";
@@ -156,6 +156,10 @@ public class ScreenContants {
     public static final String CAPTURE_TOOL = "chupHinhCongCuDungCu";
     public static final String CONFIRM_WORKING_COLUMN = "xacNhanLamViec";
     public static final String CAPTURE_FIRST_OUTLET_COLUMN = "chupHinhCuaHangDauTien";
+    public static final String CHECK_IN_COLUMN = "checkIn";
+    public static final String CAPTURE_OVERVIEW_COLUMN = "chupAnhOverview";
+    public static final String REGISTER_HISTORY_COLUMN = "xemThongTinDangKyLichSuEIE";
+    public static final String BEFORE_DISPLAY_COLUMN = "khaoSatTrungBayTruoc";
 
 
 
