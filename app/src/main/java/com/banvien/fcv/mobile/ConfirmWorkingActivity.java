@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +25,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.HomeWatcher;
 import com.banvien.fcv.mobile.utils.OnHomePressedListener;
@@ -46,13 +50,16 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
 
+    @Bind(R.id.fabSyncTask)
+    FloatingActionButton fabSyncTask;
+
     @Bind(R.id.gridListImage)
     GridView gridListImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.capturelist);
+        setContentView(R.layout.capturelistworkingday);
         setInitialConfiguration();
         repo = new Repo(this);
 
@@ -197,7 +204,50 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
                 dispatchTakePictureIntent(v);
             }
         });
+
+        btnTake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmDialog(v);
+            }
+        });
     }
+
+
+    private void showConfirmDialog(final View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(this.getString(R.string.dialog_sync_confirm_working_title));
+        builder.setMessage(this.getString(R.string.dialog_sync_confirm_working));
+
+        String positiveText = this.getString(R.string.accept);
+        builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    SyncService syncService = new SyncService(v.getContext(), 1l);
+//                    syncService.synConfirmNewDayImformation();
+                } catch (SQLException e) {
+                    ELog.d("Error when Sync Comfirm Working");
+                }
+            }
+        });
+
+        String negativeText = this.getString(R.string.cancel);
+        builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // todo
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+
+
 
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);

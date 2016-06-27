@@ -68,8 +68,13 @@ public class PrepareActivity extends BaseDrawerActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        UpdateService updateService = new UpdateService(v.getContext());
                         progressDialog  = new ProgressDialog(v.getContext());
-                        startUpdate();
+                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        updateService.updateFromServer(true, progressDialog, textNumSuccess);
+//                        startUpdate();
                     }
                 });
 
@@ -143,9 +148,8 @@ public class PrepareActivity extends BaseDrawerActivity {
             Map<String, String> results = new Hashtable<>();
             try {
                 UpdateService updateService = new UpdateService(context);
-                results = updateService.updateFromServer(true);
+//                results = updateService.updateFromServer(true);
                 errorMessage = results.get("errorMessage");
-                Thread.sleep(10000);
                 if(errorMessage != null) {
                     return null;
                 }
@@ -160,7 +164,6 @@ public class PrepareActivity extends BaseDrawerActivity {
     private void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
-
         }
     }
     private void startUpdatingTask() {

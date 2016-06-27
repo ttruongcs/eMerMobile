@@ -22,6 +22,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
@@ -59,7 +60,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
-            RouteScheduleDTO routeScheduleDTO = repo.getRouteScheduleDAO().findRoute();
+            RouteScheduleEntity routeScheduleDTO = repo.getRouteScheduleDAO().findRoute();
             if(routeScheduleDTO != null){
                 routeScheduleDetailId = routeScheduleDTO.getRouteScheduleId();
             }

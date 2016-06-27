@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
+import com.banvien.fcv.mobile.library.SyncService;
+import com.banvien.fcv.mobile.library.UpdateService;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -324,11 +327,16 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            String negativeText = activity.getString(R.string.cancel);
+            String negativeText = activity.getString(R.string.xacnhankhongchupanh);
             builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    try {
+                        SyncService syncService = new SyncService(activity, 1l);
+                        syncService.synConfirmNewDayImformationDontHaveImage();
+                    } catch (SQLException e) {
+                        Log.e("TimelineAdapter", "Sync no image Error");
+                    }
                 }
             });
 

@@ -44,9 +44,9 @@ public interface HomeService {
             , @Part( "fileToUpload\"; filename=\"image.jpg\";") RequestBody file2);
 
     @POST ("/mobile/working/confirmBeginningTheDay.html")
-    Call<ResponseBody> uploadBeginDay(@Query("routeScheduleId") Long routeScheduleId,
+    Call<Long> uploadBeginDay(@Query("routeScheduleId") Long routeScheduleId,
                                       @Query("startTime") Timestamp startTime,
-                                      @Query("confirmWoringId") String confirmWoringId,
+                                      @Query("confirmWoringId") Long confirmWoringId,
                                       @Query("endTime") Timestamp endTime,
                                       @Body MConfirmWorkingImageCommand file2);
 }
