@@ -76,6 +76,7 @@ public class MapsActivity extends FragmentActivity  {
         bindEvent();
     }
 
+
     private OutletDTO getOutlet(Long outletId) {
         OutletDTO result = new OutletDTO();
 
@@ -114,7 +115,6 @@ public class MapsActivity extends FragmentActivity  {
                     intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
                     startActivity(intent);
                     finish();
-
                 }
             }
         });
