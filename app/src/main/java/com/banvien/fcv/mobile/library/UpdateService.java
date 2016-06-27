@@ -1,77 +1,52 @@
 package com.banvien.fcv.mobile.library;
 
-import java.io.File;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.beanutil.CatgroupUtil;
-import com.banvien.fcv.mobile.beanutil.CatgroupUtil;
-import com.banvien.fcv.mobile.beanutil.ComplainTypeUtil;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
-import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
-import com.banvien.fcv.mobile.beanutil.OutletUtil;
-import com.banvien.fcv.mobile.beanutil.POSMUtil;
-import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
 import com.banvien.fcv.mobile.beanutil.ProductUtil;
+import com.banvien.fcv.mobile.beanutil.QuestionContentUtil;
+import com.banvien.fcv.mobile.beanutil.QuestionUtil;
 import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
-import com.banvien.fcv.mobile.db.DatabaseHelper;
+import com.banvien.fcv.mobile.beanutil.SurveyUtil;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
-import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
-import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
-import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
-import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.db.entities.QuestionContentEntity;
+import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
-import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
-import com.banvien.fcv.mobile.dto.CatgroupDTO;
-import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
-import com.banvien.fcv.mobile.dto.OutletDTO;
-import com.banvien.fcv.mobile.dto.OutletMerDTO;
-import com.banvien.fcv.mobile.dto.POSMDTO;
-import com.banvien.fcv.mobile.dto.ProductDTO;
-import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.db.entities.SurveyEntity;
+import com.banvien.fcv.mobile.dto.QuestionContentDTO;
+import com.banvien.fcv.mobile.dto.QuestionDTO;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
+import com.banvien.fcv.mobile.dto.SurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.MerchandiserMetadataDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.MExhibitRegisterDetailDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.MOutletDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleInfoDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.j256.ormlite.table.TableUtils;
+
+import java.io.File;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -213,6 +188,12 @@ public class UpdateService {
 				fillProduct(DataBinder.readProductList(merchandiserMetadata.get("products")));
 				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
 				try {
+					saveSurveys(DataBinder.readSurvey(merchandiserMetadata.get("surveys")));
+				} catch (Exception e) {
+					// ignore
+					ELog.e("Error when saving surveys", e);
+				}
+				try {
 					Integer numOutlet = buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
 					tvNumOutlet.setText(numOutlet.toString());
 				} catch (SQLException e) {
@@ -242,6 +223,56 @@ public class UpdateService {
 						repo.getProductDAO().addProductEntity(entity);
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void saveSurveys(Map<Long, List<SurveyDTO>> map) throws SQLException {
+				if (map !=  null) {
+					for (Long outletId : map.keySet()) {
+						repo.getSurveyDAO().remove(outletId);
+						List<SurveyDTO> surveyDTOs = map.get(outletId);
+						for (SurveyDTO surveyDTO : surveyDTOs) {
+							try {
+								SurveyEntity surveyEntity = SurveyUtil.convertToEntity(surveyDTO);
+								surveyEntity.setOutletId(outletId);
+								repo.getSurveyDAO().add(surveyEntity);
+								if (surveyDTO.getQuestions() != null) {
+									saveQuestions(surveyDTO.getQuestions(), surveyDTO.getSurveyId());
+								}
+							} catch (SQLException e) {
+								ELog.e(e.getMessage(), e);
+							}
+						}
+					}
+				}
+			}
+
+			private void saveQuestions(List<QuestionDTO> questionDTOs, Long surveyId) throws SQLException {
+				repo.getQuestionDAO().remove(surveyId);
+				for (QuestionDTO questionDTO : questionDTOs) {
+					try {
+						QuestionEntity questionEntity = QuestionUtil.convertToEntity(questionDTO);
+						questionEntity.setSurveyId(surveyId);
+						repo.getQuestionDAO().add(questionEntity);
+						if (questionDTO.getQuestionContents() != null) {
+							saveQuestionContents(questionDTO.getQuestionContents(), questionDTO.getQuestionId());
+						}
+					} catch (SQLException e) {
+						ELog.e(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void saveQuestionContents(List<QuestionContentDTO> questionContentDTOs, Long questionId) throws SQLException {
+				repo.getQuestionContentDAO().remove(questionId);
+				for (QuestionContentDTO questionContentDTO : questionContentDTOs) {
+					try {
+						QuestionContentEntity questionContentEntity = QuestionContentUtil.convertToEntity(questionContentDTO);
+						questionContentEntity.setQuestionId(questionId);
+						repo.getQuestionContentDAO().add(questionContentEntity);
+					} catch (SQLException e) {
+						ELog.e(e.getMessage(), e);
 					}
 				}
 			}
