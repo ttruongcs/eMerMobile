@@ -23,6 +23,7 @@ public class StatusInOutletEntity implements Serializable {
     @DatabaseField
     private Integer hutHangDatHang;
     @DatabaseField
+
     private Integer khaoSat;
 
     public long get_id() {

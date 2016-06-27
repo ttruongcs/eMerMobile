@@ -184,10 +184,13 @@ public class UpdateService {
 		statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
 		statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
 		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-		statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_INPROGRESS);
+		statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_NOTYET);
 		statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
 		statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
 		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
+        statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+
 		repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
 	}
 

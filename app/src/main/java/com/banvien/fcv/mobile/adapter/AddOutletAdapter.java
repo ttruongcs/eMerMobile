@@ -140,13 +140,13 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     MAuditOutletPlanDTO auditOutletPlanDTO = DataBinder.readAuditOutletPlan(result.get("auditOutletPlan"));
                     if(auditOutletPlanDTO != null) {
                         addMerResult(auditOutletPlanDTO);
-                        Toast.makeText(itemView.getContext(), "Add success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                    Toast.makeText(itemView.getContext(), "Add failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(itemView.getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -180,7 +180,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     OutletMerEntity outletMerEntity = new OutletMerEntity();
                     outletMerEntity.setOutletId(auditOutletPlanDTO.getOutletId());
                     outletMerEntity.setRouteScheduleId(auditOutletPlanDTO.getRouteScheduleId());
-                    outletMerEntity.setOutletId(outletModelDTO.getOutletModelId());
+                    outletMerEntity.setOutletModelId(outletModelDTO.getOutletModelId());
                     outletMerEntity.setOutletModelName(outletModelDTO.getName());
                     outletMerEntity.setRouteScheduleDetailId(auditOutletPlanDTO.getRouteScheduleDetailId());
                     outletMerEntity.setDataType(outletModelDetailDTO.getDataType());
@@ -188,7 +188,11 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     outletMerEntities.add(outletMerEntity);
                 }
             }
-
+            try {
+                repo.getOutletMerDAO().createListMerResult(outletMerEntities);
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
         }
     }
 }

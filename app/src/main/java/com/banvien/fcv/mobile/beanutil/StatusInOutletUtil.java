@@ -19,6 +19,7 @@ public class StatusInOutletUtil {
         result.setKhaoSatTrungBaySau(item.getKhaoSatTrungBaySau());
         result.setKhaoSatTrungBayTruoc(item.getKhaoSatTrungBayTruoc());
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());
+        result.setKhaoSat(item.getKhaoSat());
         return result;
     }
 
@@ -31,6 +32,7 @@ public class StatusInOutletUtil {
         result.setKhaoSatTrungBaySau(item.getKhaoSatTrungBaySau());
         result.setKhaoSatTrungBayTruoc(item.getKhaoSatTrungBayTruoc());
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());
+        result.setKhaoSat(item.getKhaoSat());
         return result;
     }
 }
