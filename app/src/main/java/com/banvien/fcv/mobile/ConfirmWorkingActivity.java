@@ -235,6 +235,12 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
                     progressDialog.show();
                     SyncService syncService = new SyncService(v.getContext(), 1l);
                     syncService.synConfirmNewDayImformation(progressDialog);
+                    if(imageDTOs.size() > 0) {
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
+                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
+                        changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+                    }
                 } catch (SQLException e) {
                     ELog.d("Error when Sync Comfirm Working");
                 }
