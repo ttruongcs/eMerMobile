@@ -45,6 +45,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private Repo repo;
     private LayoutInflater mInflater;
     private EditText edFacing;
+    private TextView edCount;
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
@@ -52,13 +53,14 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private SharedPreferences.Editor editorBefore;
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
-            , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
+            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
         this.activity = activity;
         this.mData = productDTOs;
         this.edFacing = edFacing;
         this.repo = repo;
         this.outletId = outletId;
         this.outletModelId = outletModelId;
+        this.edCount = edCount;
 
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
@@ -87,6 +89,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         ItemHolder itemHolder = new ItemHolder(v);
         if(position == 0) {
             mhsCodes = itemHolder.loadMhs();
+            edCount.setText(Integer.toString(mhsCodes.size()));
             totalFacing = itemHolder.loadTotalFacing();
         }
         itemHolder.bindViews(mData.get(position));
@@ -229,6 +232,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
         /*Total facing equal total mhs which have quantity > 0*/
         private void calculateFacing(Map<String, Integer> mhsCodes) {
+            edCount.setText(Integer.toString(mhsCodes.size()));
             int sum = 0;
             if(mhsCodes.size() > 0) {
                 for(String key : mhsCodes.keySet()) {
