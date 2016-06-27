@@ -585,9 +585,16 @@
         \nChọn \"Đồng ý\" để thêm cửa hàng vào lịch làm việc hôm nay và xóa cửa hàng khỏi kế hoạch đã có.
         \nHoặc chọn \"Hủy bỏ\" để thêm cửa hàng vào lịch làm việc hôm nay và vẫn giữ lịch trình đã được sắp xếp trước.
     </string>
+    <string name="xacnhankhongchupanh">Xác nhận</string>
     <string name="cancel">Hủy bỏ</string>
     <string name="dialog_confirm_working_title">Bạn có muốn chụp hình xác nhận bắt đầu làm việc không?</string>
-    <string name="dialog_confirm_working">Chụp hình xác nhận làm việc ở nhà phân phối (nếu có).</string>
+    <string name="dialog_confirm_working">Chọn \"Đồng Ý\" để chụp hình nhà phân phối (nếu có).
+        \n Chọn \"Xác Nhận\" để xác nhận làm việc mà không chụp hình họp
+    </string>
+
+    <string name="dialog_sync_confirm_working_title">Bạn có muốn xác nhận làm việc và đồng bộ </string>
+    <string name="dialog_sync_confirm_working">Chọn \"Đồng Ý\" để xác nhận và đồng bộ.
+    </string>
 
     <string name="statistics_title">Thống kê các loại trưng bày của cửa hàng được đồng bộ</string>
     <string name="detailed_info">Thông tin chi tiết</string>
