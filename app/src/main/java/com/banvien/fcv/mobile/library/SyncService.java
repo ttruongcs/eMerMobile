@@ -259,6 +259,7 @@ public class SyncService {
 				.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
 						, new Timestamp(System.currentTimeMillis()), null, null, new MConfirmWorkingImageCommand());
 
+
 		call.enqueue(new Callback<Long>() {
 			@Override
 			public void onResponse(Call<Long> call,
