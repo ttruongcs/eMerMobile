@@ -45,16 +45,6 @@
             </intent-filter>
         </receiver>
 
-        <!--<activity-->
-            <!--android:name=".SyncNotificationReceiverActivity"-->
-            <!--android:clearTaskOnLaunch="true"-->
-            <!--android:finishOnTaskLaunch="true"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >-->
-            <!--<intent-filter>-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

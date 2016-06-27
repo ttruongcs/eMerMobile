@@ -26,7 +26,6 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void bindViews() {
         ButterKnife.bind(this);
-        setupToolbar();
     }
 
     protected void setToolbarTitle(String title) {

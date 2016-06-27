@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -13,7 +13,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/fcvtoolbar"
-            android:title="@string/app_name"
+            android:title="@string/accept"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"

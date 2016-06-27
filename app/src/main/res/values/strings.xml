@@ -235,7 +235,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_dbb">DBBActivity</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Cài đặt</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="page">Page</string>
