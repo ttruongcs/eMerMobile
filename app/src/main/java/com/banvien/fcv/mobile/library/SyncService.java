@@ -123,6 +123,9 @@ public class SyncService {
 						@Override
 						public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 							Log.e("SyncSevice", "Upload Image Success");
+							if (progressDialog != null && progressDialog.isShowing()) {
+								progressDialog.dismiss();
+							}
 						}
 
 						@Override

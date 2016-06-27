@@ -212,7 +212,12 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         fabSyncTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showConfirmDialog(v);
+                if(imageDTOs.size() > 0) {
+                    showConfirmDialog(v);
+                } else {
+                    Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -229,17 +234,19 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    progressDialog  = new ProgressDialog(v.getContext());
-                    progressDialog.setMessage(v.getContext().getText(R.string.updating));
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    SyncService syncService = new SyncService(v.getContext(), 1l);
-                    syncService.synConfirmNewDayImformation(progressDialog);
                     if(imageDTOs.size() > 0) {
+                        progressDialog  = new ProgressDialog(v.getContext());
+                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        SyncService syncService = new SyncService(v.getContext(), 1l);
+                        syncService.synConfirmNewDayImformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                                 , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+                    } else {
+                        Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_LONG);
                     }
                 } catch (SQLException e) {
                     ELog.d("Error when Sync Comfirm Working");

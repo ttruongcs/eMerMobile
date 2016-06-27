@@ -76,6 +76,7 @@ public class MapsActivity extends FragmentActivity  {
         bindEvent();
     }
 
+
     private OutletDTO getOutlet(Long outletId) {
         OutletDTO result = new OutletDTO();
 
@@ -108,6 +109,13 @@ public class MapsActivity extends FragmentActivity  {
                     String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
                     changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                             , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+
+                    Intent intent = new Intent(v.getContext(), InOutletHomeActivity.class);
+                    intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+                    intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
+                    startActivity(intent);
+
+
                     finish();
                 }
             }
