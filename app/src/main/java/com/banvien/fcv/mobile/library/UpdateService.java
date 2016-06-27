@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
+import com.banvien.fcv.mobile.beanutil.ProductGroupUtil;
 import com.banvien.fcv.mobile.beanutil.ProductUtil;
 import com.banvien.fcv.mobile.beanutil.QuestionContentUtil;
 import com.banvien.fcv.mobile.beanutil.QuestionUtil;
@@ -20,6 +21,7 @@ import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
+import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.banvien.fcv.mobile.db.entities.QuestionContentEntity;
 import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
@@ -27,6 +29,7 @@ import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.db.entities.SurveyEntity;
+import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.QuestionContentDTO;
 import com.banvien.fcv.mobile.dto.QuestionDTO;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
@@ -34,6 +37,7 @@ import com.banvien.fcv.mobile.dto.SurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductGroupDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
@@ -41,6 +45,7 @@ import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.google.android.gms.analytics.ecommerce.Product;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -184,6 +189,7 @@ public class UpdateService {
 				HashMap<String, Object> merchandiserMetadata = (HashMap<String, Object>)result.get("metadata");
 				fillProduct(DataBinder.readProductList(merchandiserMetadata.get("products")));
 				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
+				fillProductGroup(DataBinder.readProductgroupList(merchandiserMetadata.get("productGroups")));
 				try {
 					saveSurveys(DataBinder.readSurvey(merchandiserMetadata.get("surveys")));
 				} catch (Exception e) {
@@ -222,6 +228,17 @@ public class UpdateService {
 					try {
 						ProductEntity entity = ProductUtil.convertToEntity(dto);
 						repo.getProductDAO().addProductEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillProductGroup(List<ProductgroupDTO> jProducts) {
+				for (ProductgroupDTO dto : jProducts) {
+					try {
+						ProductgroupEntity entity = ProductGroupUtil.convertToEntity(dto);
+						repo.getProductGroupDAO().addProdcutGroupEntity(entity);
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
 					}

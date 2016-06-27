@@ -29,7 +29,9 @@ import android.widget.Toast;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.library.UpdateService;
 
+import java.text.SimpleDateFormat;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -46,6 +48,9 @@ public class PrepareActivity extends BaseDrawerActivity {
     @Bind(R.id.textNumSuccess)
     TextView textNumSuccess;
 
+    @Bind(R.id.txtViewDateStartDay)
+    TextView txtViewDateStartDay;
+
     private Repo repo;
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
@@ -55,6 +60,14 @@ public class PrepareActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.init);
         repo = new Repo(this);
+
+        long date = System.currentTimeMillis();
+
+        SimpleDateFormat sdf = new SimpleDateFormat( "E, dd-MM-yyyy" , new Locale("vi_VN"));
+        String dateString = sdf.format(date);
+        txtViewDateStartDay.setText(dateString);
+
+
         bindViews();
     }
 

@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -178,7 +179,7 @@ public class SyncOutletMerResultService {
 				mOutletMerResultImageDTO.setRouteScheduleDetailId(outlet.getRouteScheduleDetailId());
 				long date = System.currentTimeMillis();
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", new Locale("vi_VN"));
 				String dateString = sdf.format(date);
 				String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
 						+ outlet.getCode() + "/" + dateString + "/"
@@ -193,9 +194,9 @@ public class SyncOutletMerResultService {
 	}
 
 
-	public void syncOutletMerResultToServer(final ProgressDialog progressDialog) throws SQLException, IOException {
+	public void syncOutletMerResultToServer(final ProgressDialog progressDialog, final TextView textNumSuccess) throws SQLException, IOException {
 		List<OutletDTO> outlets = OutletIn();
-		List<MOutletMerResultDTO> mOutletMerResultDTOs = new ArrayList<>();
+		final List<MOutletMerResultDTO> mOutletMerResultDTOs = new ArrayList<>();
 
 		for(final OutletDTO outlet : outlets){
 			MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerRetsultDTO(outlet);
@@ -208,7 +209,8 @@ public class SyncOutletMerResultService {
 		callOutletMerResult.enqueue(new IteratorCallback<Integer>(mOutletMerResultDTOs, 0) {
 			@Override
 			public void onResponseArrive(Call<Integer> call, Response<Integer> response) {
-
+				progressDialog.dismiss();
+				textNumSuccess.setText(String.valueOf(mOutletMerResultDTOs.size()));
 			}
 
 			@Override
@@ -225,7 +227,7 @@ public class SyncOutletMerResultService {
 	}
 
 
-	public void syncOutletMerImageImfomation(ProgressDialog progressDialog) throws SQLException, IOException {
+	public void syncOutletMerImageImfomation() throws SQLException, IOException {
 		List<OutletDTO> outlets = OutletIn();
 		List<MOutletMerResultImageDTO> mOutletMerResultImageDTOns = new ArrayList<>();
 		for(final OutletDTO outlet : outlets){
@@ -268,7 +270,7 @@ public class SyncOutletMerResultService {
 	}
 
 
-	public void syncOutletMerImage(ProgressDialog progressDialog) throws SQLException, IOException {
+	public void syncOutletMerImage() throws SQLException, IOException {
 		List<OutletDTO> outlets = OutletIn();
 		List<MOutletMerResultImageDTO> mOutletMerResultImageDTOns = new ArrayList<>();
 		for(final OutletDTO outlet : outlets){
