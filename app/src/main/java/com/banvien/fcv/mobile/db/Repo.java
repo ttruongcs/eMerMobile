@@ -18,12 +18,15 @@ import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
+import com.banvien.fcv.mobile.db.dao.QuestionContentDAO;
+import com.banvien.fcv.mobile.db.dao.QuestionDAO;
 import com.banvien.fcv.mobile.db.dao.RouteScheduleDAO;
 import com.banvien.fcv.mobile.db.dao.ShortageProductDAO;
 import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
+import com.banvien.fcv.mobile.db.dao.SurveyDAO;
 import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -130,6 +133,18 @@ public class Repo {
 
     public ConfirmWorkingDAO getConfirmWorkingDAO() throws SQLException {
         return  databaseHelper.getConfirmWorkingDAO();
+    }
+
+    public SurveyDAO getSurveyDAO() throws SQLException {
+        return  databaseHelper.getSurveyDAO();
+    }
+
+    public QuestionDAO getQuestionDAO() throws SQLException {
+        return  databaseHelper.getQuestionDAO();
+    }
+
+    public QuestionContentDAO getQuestionContentDAO() throws SQLException {
+        return  databaseHelper.getQuestionContentDAO();
     }
 
     public void release() {

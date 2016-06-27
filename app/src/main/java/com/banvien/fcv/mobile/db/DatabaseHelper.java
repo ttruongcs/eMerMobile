@@ -2,7 +2,6 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.banvien.fcv.mobile.db.dao.CaptureOverviewDAO;
@@ -21,12 +20,15 @@ import com.banvien.fcv.mobile.db.dao.OutletRegisteredDAO;
 import com.banvien.fcv.mobile.db.dao.PosmDAO;
 import com.banvien.fcv.mobile.db.dao.ProductDAO;
 import com.banvien.fcv.mobile.db.dao.ProductgroupDAO;
+import com.banvien.fcv.mobile.db.dao.QuestionContentDAO;
+import com.banvien.fcv.mobile.db.dao.QuestionDAO;
 import com.banvien.fcv.mobile.db.dao.RouteScheduleDAO;
 import com.banvien.fcv.mobile.db.dao.ShortageProductDAO;
 import com.banvien.fcv.mobile.db.dao.StatusEndDayDAO;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
+import com.banvien.fcv.mobile.db.dao.SurveyDAO;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
@@ -42,14 +44,15 @@ import com.banvien.fcv.mobile.db.entities.OutletRegisteredEntity;
 import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
+import com.banvien.fcv.mobile.db.entities.QuestionContentEntity;
+import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.ShortageProductEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
-import com.banvien.fcv.mobile.dto.OutletRegisteredDTO;
-import com.banvien.fcv.mobile.dto.StatusHomeDTO;
+import com.banvien.fcv.mobile.db.entities.SurveyEntity;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -95,6 +98,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private CaptureOverviewDAO captureOverviewDAO = null;
 	private ShortageProductDAO shortageProductDAO = null;
 	private ConfirmWorkingDAO confirmWorkingDAO = null;
+	private SurveyDAO surveyDAO = null;
+	private QuestionDAO questionDAO = null;
+	private QuestionContentDAO questionContentDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -130,6 +136,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTableIfNotExists(connectionSource, StatusStartDayEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, StatusInOutletEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, StatusEndDayEntity.class);
+
+			TableUtils.createTableIfNotExists(connectionSource, SurveyEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, QuestionEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, QuestionContentEntity.class);
 
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
@@ -170,6 +180,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             TableUtils.dropTable(connectionSource, CaptureOverviewEntity.class, true);
             TableUtils.dropTable(connectionSource, ShortageProductEntity.class, true);
+
+			TableUtils.dropTable(connectionSource, SurveyEntity.class, true);
+			TableUtils.dropTable(connectionSource, QuestionEntity.class, true);
+			TableUtils.dropTable(connectionSource, QuestionContentEntity.class, true);
 
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
@@ -342,6 +356,29 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         return confirmWorkingDAO;
     }
+
+	public SurveyDAO getSurveyDAO() throws SQLException {
+		if(null == surveyDAO) {
+			surveyDAO = new SurveyDAO(getConnectionSource(), SurveyEntity.class);
+		}
+
+		return surveyDAO;
+	}
+
+	public QuestionDAO getQuestionDAO() throws SQLException {
+		if(null == questionDAO) {
+			questionDAO = new QuestionDAO(getConnectionSource(), QuestionEntity.class);
+		}
+		return questionDAO;
+	}
+
+	public QuestionContentDAO getQuestionContentDAO() throws SQLException {
+		if(null == questionContentDAO) {
+			questionContentDAO = new QuestionContentDAO(getConnectionSource(), QuestionContentEntity.class);
+		}
+		return questionContentDAO;
+	}
+
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */

@@ -5,6 +5,7 @@ import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
+import com.banvien.fcv.mobile.dto.SurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hieu on 4/11/2016.
@@ -144,5 +146,16 @@ public class DataBinder {
 
 
         return auditOutletPlanDTO;
+    }
+
+    public static Map<Long, List<SurveyDTO>> readSurvey(Object object) {
+        Map<Long, List<SurveyDTO>> res = null;
+        try {
+            res = mapper.convertValue(object, new TypeReference<Map<String, List<SurveyDTO>>>(){});
+        } catch (Exception e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return res;
     }
 }
