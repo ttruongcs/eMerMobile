@@ -12,12 +12,14 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
@@ -43,7 +45,9 @@ import com.banvien.fcv.mobile.db.entities.POSMEntity;
 import com.banvien.fcv.mobile.db.entities.ProductEntity;
 import com.banvien.fcv.mobile.db.entities.ProductgroupEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
+import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
+import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
@@ -87,7 +91,7 @@ public class UpdateService {
 	 *
 	 * @return errors message and task type
 	 */
-	public Map<String, String> updateFromServer(boolean forceDeleteDatabase) {
+	public Map<String, String> updateFromServer(boolean forceDeleteDatabase, ProgressDialog progressDialog, TextView textNumberOutlet) {
 		Map<String, String> results = new HashMap<String, String>();
 		String errorMessage = null;
 		String taskType = "STORE";
@@ -104,13 +108,15 @@ public class UpdateService {
 			System.out.println("json "+ json);
 			clearData();
 			configStatusHome();
+			configStatusInOutlet();
+			configStatusEndDay();
 //			Call<Map<String,Object>> call =
 //					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
 
 
 			Call<Map<String,Object>> callOutletDatas =
 					RestClient.getInstance().getHomeService().getDataInNewDays(10l, new Timestamp(System.currentTimeMillis()));
-			results = getOutletDatas(callOutletDatas);
+			results = getOutletDatas(callOutletDatas, progressDialog, textNumberOutlet);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
 			errorMessage = context.getString(R.string.general_error);
@@ -171,7 +177,31 @@ public class UpdateService {
 		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
 
-	private Map<String, String> getOutletDatas(Call<Map<String,Object>> call){
+
+	private void configStatusInOutlet() throws SQLException {
+		StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
+		statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
+		statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_INPROGRESS);
+		statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+		repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
+	}
+
+
+	private void configStatusEndDay() throws SQLException {
+		StatusEndDayEntity statusInOutletEntity = new StatusEndDayEntity();
+		statusInOutletEntity.setChupAnhCuoiNgay(ScreenContants.STATUS_STEP_INPROGRESS);
+		statusInOutletEntity.setDongBoCuoiNgay(ScreenContants.STATUS_STEP_NOTYET);
+		repo.getStatusEndDayDAO().addStatusHome(statusInOutletEntity);
+	}
+
+
+
+
+	private Map<String, String> getOutletDatas(Call<Map<String,Object>> call, final ProgressDialog progressDialog,final TextView tvNumOutlet){
 		final Map<String, String> mapResult = new Hashtable<>();
 		call.enqueue(new Callback<Map<String, Object>>() {
 			@Override
@@ -182,9 +212,13 @@ public class UpdateService {
 				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
 				try {
 					Integer numOutlet = buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
-					mapResult.put("numOutletSuccess", numOutlet.toString());
+					tvNumOutlet.setText(numOutlet.toString());
 				} catch (SQLException e) {
 					ELog.d("Error when read plans");
+				}
+
+				if (progressDialog != null && progressDialog.isShowing()) {
+					progressDialog.dismiss();
 				}
 			}
 
@@ -213,7 +247,9 @@ public class UpdateService {
 
 			private Integer buildMerPlans(List<MAuditOutletPlanDTO> plans) throws SQLException {
 				Integer numOutlet = 0;
+				Long routeScheduleId = null;
 				for(MAuditOutletPlanDTO plan : plans){
+					routeScheduleId = plan.getRouteScheduleId();
 					OutletEntity outletEntity = parsePlanToOutletEntity(plan);
 					repo.getOutletDAO().addOutletEntity(outletEntity);
 					numOutlet = numOutlet + 1;
@@ -236,6 +272,9 @@ public class UpdateService {
 						}
 					}
 				}
+				RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
+				routeScheduleEntity.setRouteScheduleId(routeScheduleId);
+				repo.getRouteScheduleDAO().addRoute(routeScheduleEntity);
 				return numOutlet;
 			}
 

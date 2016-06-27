@@ -15,10 +15,7 @@ public class StatusInOutletUtil {
         result.set_id(item.get_id());
         result.setCheckIn(item.getCheckIn());
         result.setChupAnhOverview(item.getChupAnhOverview());
-        result.setGhiNhanKhieuNai(item.getGhiNhanKhieuNai());
         result.setHutHangDatHang(item.getHutHangDatHang());
-        result.setKhaoSatDichVuKhachHang(item.getKhaoSatDichVuKhachHang());
-        result.setKhaoSatPOSM(item.getKhaoSatPOSM());
         result.setKhaoSatTrungBaySau(item.getKhaoSatTrungBaySau());
         result.setKhaoSatTrungBayTruoc(item.getKhaoSatTrungBayTruoc());
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());
@@ -30,10 +27,7 @@ public class StatusInOutletUtil {
         result.set_id(item.get_id());
         result.setCheckIn(item.getCheckIn());
         result.setChupAnhOverview(item.getChupAnhOverview());
-        result.setGhiNhanKhieuNai(item.getGhiNhanKhieuNai());
         result.setHutHangDatHang(item.getHutHangDatHang());
-        result.setKhaoSatDichVuKhachHang(item.getKhaoSatDichVuKhachHang());
-        result.setKhaoSatPOSM(item.getKhaoSatPOSM());
         result.setKhaoSatTrungBaySau(item.getKhaoSatTrungBaySau());
         result.setKhaoSatTrungBayTruoc(item.getKhaoSatTrungBayTruoc());
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());

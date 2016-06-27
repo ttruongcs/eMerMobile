@@ -23,6 +23,7 @@ import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletEndDayImagesDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
@@ -60,9 +61,9 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
-            RouteScheduleDTO routeScheduleDTO = repo.getRouteScheduleDAO().findRoute();
-            if(routeScheduleDTO != null){
-                routeScheduleDetailId = routeScheduleDTO.getRouteScheduleId();
+            RouteScheduleEntity routeSchedule = repo.getRouteScheduleDAO().findRoute();
+            if(routeSchedule != null){
+                routeScheduleDetailId = routeSchedule.getRouteScheduleId();
             }
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
