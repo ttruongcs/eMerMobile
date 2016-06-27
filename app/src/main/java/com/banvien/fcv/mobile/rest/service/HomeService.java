@@ -2,8 +2,13 @@ package com.banvien.fcv.mobile.rest.service;
 
 import com.banvien.fcv.mobile.command.OutletMerResultCommand;
 import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
+import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MSurveyDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
+import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -30,8 +35,16 @@ public interface HomeService {
     Call<Map<String, Object>> getDataInNewDays(@Query("merchandiserId") Long merchandiserId,
                                        @Query("date") Timestamp date);
 
-    @POST("/mobile/outletregister/sync.html")
-    Call<OutletMerResultCommand> syncDataToServer(@Body OutletMerResultCommand command);
+    @POST("/mobile/working/submitFirstOutletImages.html")
+    Call<Integer> submitOutletResultToServerA(@Query("merchandiserId") Long merchandiserId,
+                                             @Query("outletId") Long outletId,
+                                             @Query("images") String[] images);
+
+    @POST("/mobile/working/submitFirstOutletResult.html")
+    Call<Integer> submitFirstOutletResult(@Body MOutletMerResultDTO outletMerResult);
+
+    @POST("/mobile/working/submitMerResultImage.html")
+    Call<Integer> submitOutletResultImageToServer(@Body List<MOutletMerResultImageDTO> mOutletMerResultImages);
 
     @Multipart
     @POST ("/mobile/image/sync.html")

@@ -38,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void setupToolbar() {
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
     }
 
     @Override

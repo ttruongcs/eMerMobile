@@ -17,6 +17,8 @@ public class MOutletMerResultDetailDTO implements Serializable {
     private MExhibitRegisterDetailDTO exhibitRegisterDetail;
     private String type;
     private String value;
+    private Long outletId;
+    private Long outletModelId;
     private float score;
     private Date createdDate;
     private String createdBy;
@@ -83,5 +85,21 @@ public class MOutletMerResultDetailDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getOutletId() {
+        return outletId;
+    }
+
+    public void setOutletId(Long outletId) {
+        this.outletId = outletId;
+    }
+
+    public Long getOutletModelId() {
+        return outletModelId;
+    }
+
+    public void setOutletModelId(Long outletModelId) {
+        this.outletModelId = outletModelId;
     }
 }

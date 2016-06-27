@@ -16,6 +16,7 @@ public class OutletMerUtil {
         result.setRouteScheduleId(item.getRouteScheduleId());
         result.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
         result.setOutletId(item.getOutletId());
+        result.setOutletModelId(item.getOutletModelId());
         result.setDataType(item.getDataType());
         result.setRegisterValue(item.getRegisterValue());
         result.setActualValue(item.getActualValue());
@@ -32,6 +33,7 @@ public class OutletMerUtil {
         entity.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
         entity.setOutletId(item.getOutletId());
         entity.setDataType(item.getDataType());
+        entity.setOutletModelId(item.getOutletModelId());
         entity.setRegisterValue(item.getRegisterValue());
         entity.setActualValue(item.getActualValue());
         entity.setExhibitRegisteredId(item.getExhibitRegisteredId());

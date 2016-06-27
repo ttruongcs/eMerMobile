@@ -1,7 +1,6 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,37 +14,38 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.banvien.fcv.mobile.utils.MultiChoiceModeListener;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.Bind;
 
-public class CaptureOnceActivity extends BaseDrawerActivity {
-    private static Long outletId;
-    private static Long posmId;
-    private static String captureType;
+/**
+ * Created by Linh Nguyen on 6/23/2016.
+ */
+public class CaptureAfterActivity extends BaseDrawerActivity {
     private static String urlImage;
-    private static OutletEntity outlet;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
+    private RouteScheduleEntity routeScheduleDTO;
+    private static long outletId;
+    private static OutletEntity outlet;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -59,25 +59,30 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         setContentView(R.layout.capturelist);
         setInitialConfiguration();
         repo = new Repo(this);
-        outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
-        captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
-        if (captureType == ScreenContants.IMAGE_AFTER
-                || captureType == ScreenContants.IMAGE_BEFORE) {
-            posmId = this.getIntent().getLongExtra(ScreenContants.KEY_POSM_ID, 0l);
-        }
+        outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
-            ELog.d("Error when findById Outlet");
+            ELog.d("CaptureAfterActivity", "Error when find Outlet ");
         }
-
+        routeScheduleDTO = getRouteSchedule();
         bindGallery();
     }
 
-    private void bindGallery() {
-        List<OutletMerDTO> images = new ArrayList<>();
+    private RouteScheduleEntity getRouteSchedule() {
+        RouteScheduleEntity result = new RouteScheduleEntity();
         try {
-            images = this.repo.getOutletMerDAO().findImageByDataType(captureType, outletId, posmId);
+            result = this.repo.getRouteScheduleDAO().findRoute();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    private void bindGallery() {
+        List<CaptureAfterEntity> images = new ArrayList<>();
+        try {
+            images = this.repo.getCaptureAfterDAO().findAll();
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
@@ -157,7 +162,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
                     File image = new File(photoUri);
                     if (image.exists()) {
                         removedImages.add(imageDTOs.get(i));
-                        this.repo.getOutletMerDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
+                        this.repo.getCaptureToolDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
                         image.delete(); //Delete from external storage
                     } else {
                         ELog.d("File is not exist");
@@ -177,18 +182,18 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         }
     }
 
-    private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
+    private List<ImageDTO> loadGallery(List<CaptureAfterEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (OutletMerDTO outletMerDTO : images) {
-            File image = new File(outletMerDTO.getActualValue());
+        for (CaptureAfterEntity captureToolDTO : images) {
+            File image = new File(captureToolDTO.getPathImage());
             if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
                 Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-                imageDTO.set_id(outletMerDTO.get_id());
+                imageDTO.set_id(captureToolDTO.get_id());
                 imageDTO.setImage(bitmap);
-                imageDTO.setImagePath(outletMerDTO.getActualValue());
+                imageDTO.setImagePath(captureToolDTO.getPathImage());
                 imageDTOs.add(imageDTO);
             }
         }
@@ -226,19 +231,20 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            OutletMerEntity outletMerEntity = new OutletMerEntity();
-            outletMerEntity.setOutletId(outletId);
-            outletMerEntity.setDataType(captureType);
-            outletMerEntity.setActualValue(urlImage);
-            outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
-            if (captureType == ScreenContants.IMAGE_AFTER
-                    || captureType == ScreenContants.IMAGE_BEFORE) {
-                outletMerEntity.setReferenceValue(posmId.toString());
+            CaptureAfterEntity captureToolEntity = new CaptureAfterEntity();
+            captureToolEntity.setPathImage(urlImage);
+            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            captureToolEntity.setOutletId(outletId);
+            if(routeScheduleDTO != null) {
+                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
             }
+
             try {
-                repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
+                repo.getCaptureAfterDAO().create(captureToolEntity);
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
+            } catch (NullPointerException e) {
+                ELog.d("Outlet is not exist");
             }
         }
     }
@@ -256,12 +262,17 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     private static File getOutputMediaFile() {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
+        long date = System.currentTimeMillis();
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), "fcvImage/" + outlet.getCode());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String dateString = sdf.format(date);
+
+
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                , ScreenContants.CAPTURE_AFTER_PATH + outlet.getCode() + "/" + dateString);
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                ELog.d(outlet.getCode(), "failed to create directory");
                 return null;
             }
         }
@@ -269,7 +280,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         // Create a media file name
         Random r = new Random();
         urlImage = mediaStorageDir.getPath() + File.separator
-                + (outlet.getCode() + r.nextInt() + ".jpg").toString();
+                + (System.currentTimeMillis() + r.nextInt() + ".jpg").toString();
         ELog.d("imageUrl", urlImage);
         File mediaFile = new File(urlImage);
         return mediaFile;
@@ -279,5 +290,13 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         bindGallery();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(repo != null) {
+            repo.release();
+        }
     }
 }

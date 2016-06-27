@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile.dto.syncdto;
 
+import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ public class MOutletMerResultDTO implements Serializable {
     private Integer activeStatus;
     private String note;
     private List<MOutletMerResultDetailDTO> outletMerResultDetails;
+    private MSurveyResultDTO surveyResult;
 
     public String getOutletMerResultId() {
         return outletMerResultId;
@@ -74,5 +77,13 @@ public class MOutletMerResultDTO implements Serializable {
 
     public void setOutletMerResultDetails(List<MOutletMerResultDetailDTO> outletMerResultDetails) {
         this.outletMerResultDetails = outletMerResultDetails;
+    }
+
+    public MSurveyResultDTO getSurveyResult() {
+        return surveyResult;
+    }
+
+    public void setSurveyResult(MSurveyResultDTO surveyResult) {
+        this.surveyResult = surveyResult;
     }
 }

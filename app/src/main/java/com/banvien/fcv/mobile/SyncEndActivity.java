@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.banvien.fcv.mobile.library.SyncOutletMerResultService;
 import com.banvien.fcv.mobile.library.SyncService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import butterknife.Bind;
@@ -30,11 +32,20 @@ public class SyncEndActivity extends BaseDrawerActivity {
         setContentView(R.layout.sync_end_day);
         fabSync.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 try {
-                    SyncService syncService = new SyncService(view.getContext(), 1l);
-                    syncService.syncToServer(true);
+                    progressDialog  = new ProgressDialog(v.getContext());
+                    progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    SyncOutletMerResultService syncService = new SyncOutletMerResultService(v.getContext(), 1l);
+                    syncService.syncOutletMerImage(progressDialog);
+                    progressDialog.dismiss();
+//                    syncService.syncOutletMerImageImfomation(progressDialog);
                 } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                catch (IOException e){
                     e.printStackTrace();
                 }
 

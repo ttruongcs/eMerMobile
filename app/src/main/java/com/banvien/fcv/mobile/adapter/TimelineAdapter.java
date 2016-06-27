@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -332,6 +333,12 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
+                        try {
+                            SyncService syncService = new SyncService(activity, 1l);
+                            syncService.synConfirmNewDayImformationDontHaveImage();
+                        } catch (SQLException e) {
+                            ELog.d("Error when Sync Comfirm Working");
+                        }
                         SyncService syncService = new SyncService(activity, 1l);
                         syncService.synConfirmNewDayImformationDontHaveImage();
                     } catch (SQLException e) {

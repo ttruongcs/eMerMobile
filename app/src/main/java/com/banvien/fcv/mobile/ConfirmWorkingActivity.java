@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -55,6 +56,8 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
 
     @Bind(R.id.gridListImage)
     GridView gridListImage;
+
+    private static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +208,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             }
         });
 
-        btnTake.setOnClickListener(new View.OnClickListener() {
+        fabSyncTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConfirmDialog(v);
@@ -225,8 +228,12 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
+                    progressDialog  = new ProgressDialog(v.getContext());
+                    progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
                     SyncService syncService = new SyncService(v.getContext(), 1l);
-//                    syncService.synConfirmNewDayImformation();
+                    syncService.synConfirmNewDayImformation(progressDialog);
                 } catch (SQLException e) {
                     ELog.d("Error when Sync Comfirm Working");
                 }
@@ -237,7 +244,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // todo
+                //todo
             }
         });
 

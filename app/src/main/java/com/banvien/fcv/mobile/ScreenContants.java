@@ -68,10 +68,10 @@ public class ScreenContants {
     public static final String IMAGE_TOOL =  "IMAGE_TOOL";
     public static final String IMAGE_UNIFORM =  "IMAGE_UNIFORM";
     //BEFORE
-    public static final String IMAGE_BEFORE_POSM =  "IMAGE_BEFORE_POSM";
+    public static final String IMAGE_BEFORE =  "IMAGE_BEFORE";
 
     //AFTER
-    public static final String IMAGE_AFTER_POSM =  "IMAGE_AFTER_POSM";
+    public static final String IMAGE_AFTER =  "IMAGE_AFTER";
 
     //GPS
     public static final String GPS = "GPS";
@@ -126,6 +126,8 @@ public class ScreenContants {
     public static final String CAPTURE_ENDDAY = "fcvImage/endday/";
     public static final String CAPTURE_OVERVIEW = "fcvImage/overview/";
     public static final String CAPTURE_CONFIRM_WORKING = "fcvImage/working/";
+    public static final String CAPTURE_BEFORE_PATH = "fcvImage/before/";
+    public static final String CAPTURE_AFTER_PATH = "fcvImage/after/";
 
     public static final String UNFINISH = "UNFINISH";
     public static final String DOING = "DOING";

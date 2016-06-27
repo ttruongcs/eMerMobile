@@ -61,7 +61,7 @@ public class SyncService {
 	 *
 	 * @return errors message and task type
 	 */
-	public Map<String, String> syncToServer(boolean forceDeleteDatabase) {
+	public Map<String, String> syncOutletResultToServer(boolean forceDeleteDatabase) {
 		Map<String, String> results = new HashMap<String, String>();
 		String errorMessage = null;
 		String taskType = "STORE";
@@ -77,51 +77,7 @@ public class SyncService {
 		return results;
 	}
 
-	private OutletMerResultCommand buildDataToSync() throws SQLException {
-		OutletMerResultCommand FINAL = new OutletMerResultCommand();
-		MOutletMerResultDTO finalOutletMerResultDTO = new MOutletMerResultDTO();
-
-		// Setup OutletMerResult for final
-		finalOutletMerResultDTO.setActiveStatus(ScreenContants.OUTLET_MER_ACTIVE);
-		finalOutletMerResultDTO.setAuditDate(new Date());
-		finalOutletMerResultDTO.setSubmittedDate(new Date());
-		finalOutletMerResultDTO.setNote("");
-		finalOutletMerResultDTO.setOutletMerResultId("");
-
-		// Setup List MOutletMerResultDetailDTO
-		List<OutletMerDTO> outletMerDTOs = repo.getOutletMerDAO().findToSync();
-		List<MOutletMerResultDetailDTO> outletMerResultDetailDTOs = new ArrayList<>();
-		for(OutletMerDTO outletMerDTO : outletMerDTOs){
-			if(outletMerDTO.getRouteScheduleDetailId() != null){
-				finalOutletMerResultDTO.setRouteScheduleDetailId(outletMerDTO.getRouteScheduleDetailId());
-			}
-
-			MOutletMerResultDetailDTO mOutletMerResultDetailDTO = new MOutletMerResultDetailDTO();
-
-			MExhibitRegisterDetailDTO exhibitRegisterDetailDTO = new MExhibitRegisterDetailDTO();
-			exhibitRegisterDetailDTO.setExhibitRegisterId(outletMerDTO.getExhibitRegisteredDetailId());
-
-			mOutletMerResultDetailDTO.setExhibitRegisterDetail(exhibitRegisterDetailDTO);
-			mOutletMerResultDetailDTO.setType(outletMerDTO.getDataType());
-			mOutletMerResultDetailDTO.setCreatedDate(new Date());
-			if(outletMerDTO.getDataType() != null &&
-					(outletMerDTO.getDataType().equals(ScreenContants.FACING_AFTER)
-							|| outletMerDTO.getDataType().equals(ScreenContants.FACING_BEFORE)
-							|| outletMerDTO.getDataType().equals(ScreenContants.EIE_AFTER)
-							|| outletMerDTO.getDataType().equals(ScreenContants.EIE_BEFORE))){
-				mOutletMerResultDetailDTO.setScore(Float.valueOf(outletMerDTO.getActualValue()));
-			} else {
-				mOutletMerResultDetailDTO.setValue(outletMerDTO.getActualValue());
-			}
-
-			outletMerResultDetailDTOs.add(mOutletMerResultDetailDTO);
-		}
-		finalOutletMerResultDTO.setOutletMerResultDetails(outletMerResultDetailDTOs);
-		FINAL.setPojo(finalOutletMerResultDTO);
-		return FINAL;
-	}
-
-	public void synConfirmNewDayImformation(ProgressDialog progressDialog) throws SQLException {
+	public void synConfirmNewDayImformation(final ProgressDialog progressDialog) throws SQLException {
 		RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
 		routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
 
@@ -225,6 +181,9 @@ public class SyncService {
 										@Override
 										public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 											Log.e("SyncSevice", "Upload Image Success");
+											if (progressDialog != null && progressDialog.isShowing()) {
+												progressDialog.dismiss();
+											}
 										}
 
 										@Override
@@ -272,5 +231,11 @@ public class SyncService {
 			}
 		});
 	}
+
+
+
+
+
+
 
 }
