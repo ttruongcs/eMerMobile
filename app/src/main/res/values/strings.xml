@@ -480,6 +480,9 @@
 
 
         <!--Home Start Day Activity-->
+    <string name="tongsocuahangduocdongbove">Tổng Số Cửa Hàng Được Đồng Bộ Về Máy</string>
+
+
     <string name="dongbodulieuphancong">Đồng Bộ Dữ Liệu Phân Công</string>
     <string name="motadongbodulieuphancong">Đồng bộ danh sách cửa hàng phải đi trong ngày đã được phân công, ....</string>
     <string name="stepdongbodulieuphancong">01</string>
@@ -534,6 +537,8 @@
 
 
     <!--End Day Activity-->
+    <string name="tongsocuahangduocbaocao">Tổng Số Cửa Hàng Được Báo Cáo</string>
+
     <string name="chupanhcuoingay">Chụp Ảnh Cuối Ngày</string>
     <string name="motachupanhcuoingay">Chụp ảnh cuối ngày sau khi hoàn thành công việc,..</string>
     <string name="stepchupanhcuoingay">01</string>
