@@ -121,7 +121,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
-                    , repo, outletId, dto.getOutletModelId());
+                    , repo, outletId, dto.getOutletModelId(), tvCountChecked);
             listView.setScrollbarFadingEnabled(false);
             listView.setAdapter(adapter);
 
