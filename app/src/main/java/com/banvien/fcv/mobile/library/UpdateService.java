@@ -104,8 +104,6 @@ public class UpdateService {
 //				deleteOutletAllDatabase();
 			}
 
-			JSONObject json = null;
-			System.out.println("json "+ json);
 			clearData();
 			configStatusHome();
 			configStatusInOutlet();
