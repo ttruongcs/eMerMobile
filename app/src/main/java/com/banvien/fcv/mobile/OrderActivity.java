@@ -56,7 +56,7 @@ public class OrderActivity extends BaseDrawerActivity {
     private List<ProductgroupDTO> sections;
     private Map<String, List<MProductDTO>> products;
     private Map<String, String> orderInfos;
-    private String[] shortageCodes;
+    private List<String> shortageCodes;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -67,6 +67,7 @@ public class OrderActivity extends BaseDrawerActivity {
         sections = new ArrayList<>();
         products = new HashMap<>();
         orderInfos = new HashMap<>();
+        shortageCodes = new ArrayList<>();
 
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
@@ -177,10 +178,11 @@ public class OrderActivity extends BaseDrawerActivity {
     private void initOrderData() {
         int i = 0;
         try {
-            sharedPreferences = getSharedPreferences(ScreenContants.MyPREFERENCES, MODE_PRIVATE);
-            shortageCodes = new String[sharedPreferences.getAll().size()];
+            sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
             for(String key : sharedPreferences.getAll().keySet()) {
-                shortageCodes[i] = key;
+                if(sharedPreferences.getInt(key, -1) == 0) {
+                    shortageCodes.add(key);
+                }
                 i++;
             }
             sections = this.repo.getProductGroupDAO().findAll(); //Get all name of product group

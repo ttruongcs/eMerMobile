@@ -58,8 +58,8 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
         return productDTOs;
     }
 
-    public List<MProductDTO> findByProductGroupId(Long id, String[] shortageCodes) {
-        if(shortageCodes.length <= 0) {
+    public List<MProductDTO> findByProductGroupId(Long id, List<String> shortageCodes) {
+        if(shortageCodes.size() <= 0) {
             return new ArrayList<MProductDTO>();
         }
 
@@ -69,11 +69,11 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
             Where<ProductEntity, String> where = queryBuilder.where();
 
 
-            if(shortageCodes.length > 0) {
-                for(int i = 0; i < shortageCodes.length; i++) {
-                    where.eq("code", shortageCodes[i]);
+            if(shortageCodes.size() > 0) {
+                for(int i = 0; i < shortageCodes.size(); i++) {
+                    where.eq("code", shortageCodes.get(i));
                 }
-                where.or(shortageCodes.length);
+                where.or(shortageCodes.size());
             }
             where.eq("productGroupId", id);
             where.and(2);
