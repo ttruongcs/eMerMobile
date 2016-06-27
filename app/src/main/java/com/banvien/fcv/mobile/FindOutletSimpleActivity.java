@@ -165,15 +165,7 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                                 Map<String, Object> result = response.body();
                                 List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs = DataBinder.readRouteScheduleDetail(result.get("listRouteOutlet"));
                                 initRecycleview(routeScheduleDetailDTOs);
-                                ELog.d("size", String.valueOf(routeScheduleDetailDTOs.size()));
-                                if(routeScheduleDetailDTOs.size() > 0) {
-                                    adapter.notifyDataSetChanged();
-                                    new AnimationUtils();
-                                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
-                                    viewSwitcher.showNext();
-                                } else {
-                                    Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
-                                }
+
                             }
 
                             @Override
@@ -198,12 +190,21 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
 
     private void initRecycleview(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
         routeScheduleDetailDTOs = checkRouteExist(routeScheduleDetailDTOs);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
-        layoutManager = new MySpeedScrollManager(getBaseContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new AddOutletAdapter(this, routeScheduleDetailDTOs, repo);
-        recyclerView.setAdapter(adapter);
+        if(routeScheduleDetailDTOs.size() > 0) {
+            recyclerView.setHasFixedSize(true);
+            recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
+            layoutManager = new MySpeedScrollManager(getBaseContext());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new AddOutletAdapter(this, routeScheduleDetailDTOs, repo);
+            recyclerView.setAdapter(adapter);
+
+            new AnimationUtils();
+            viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+            viewSwitcher.showNext();
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private List<MRouteScheduleDetailDTO> checkRouteExist(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {

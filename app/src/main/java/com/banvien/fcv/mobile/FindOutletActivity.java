@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +71,6 @@ public class FindOutletActivity extends BaseDrawerActivity {
 
     @Bind(R.id.edKeyword)
     EditText edKeyword;
-
-    @Bind(R.id.edAddress)
-    EditText edAddress;
-
-    @Bind(R.id.edDistributor)
-    EditText edDistributor;
 
     @Bind(R.id.edDate)
     EditText edDate;
@@ -153,8 +148,6 @@ public class FindOutletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 String keyword = edKeyword.getText().toString().trim();
-                String address = edAddress.getText().toString().trim();
-                String distributor = edDistributor.getText().toString().trim();
                 String createdDate = edDate.getText().toString().trim();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 Timestamp createdDateTs = null;
@@ -175,15 +168,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 Map<String, Object> result = response.body();
                                 List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs = DataBinder.readRouteScheduleDetail(result.get("listRouteOutlet"));
-                                if(routeScheduleDetailDTOs.size() > 0) {
-                                    initRecycleview(routeScheduleDetailDTOs);
-                                    ELog.d("size", String.valueOf(routeScheduleDetailDTOs.size()));
-                                    new AnimationUtils();
-                                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
-                                    viewSwitcher.showNext();
-                                } else {
-                                    Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
-                                }
+                                initRecycleview(routeScheduleDetailDTOs);
                             }
 
                             @Override
@@ -207,12 +192,38 @@ public class FindOutletActivity extends BaseDrawerActivity {
     }
 
     private void initRecycleview(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
-        layoutManager = new MySpeedScrollManager(getBaseContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new AddOutletAdapter(this, routeScheduleDetailDTOs, repo);
-        recyclerView.setAdapter(adapter);
+        routeScheduleDetailDTOs = checkRouteExist(routeScheduleDetailDTOs);
+        if(routeScheduleDetailDTOs.size() > 0) {
+            recyclerView.setHasFixedSize(true);
+            recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
+            layoutManager = new MySpeedScrollManager(getBaseContext());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new AddOutletAdapter(this, routeScheduleDetailDTOs, repo);
+            recyclerView.setAdapter(adapter);
+
+            new AnimationUtils();
+            viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+            viewSwitcher.showNext();
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private List<MRouteScheduleDetailDTO> checkRouteExist(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
+        List<MRouteScheduleDetailDTO> results = new ArrayList<>(routeScheduleDetailDTOs);
+        for(MRouteScheduleDetailDTO dto : routeScheduleDetailDTOs) {
+            try {
+                long countOf = repo.getOutletDAO().checkExist(dto.getOutlet().getOutletId());
+                if(countOf > 0) {
+                    results.remove(dto);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return results;
     }
 
     @Override

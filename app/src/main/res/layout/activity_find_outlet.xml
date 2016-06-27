@@ -99,56 +99,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".5"
-                                android:text="@string/address"
-
-                                android:textStyle="bold" />
-
-
-                            <EditText
-                                android:id="@+id/edAddress"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
-                                style="@style/MyCustomEditText"
-                                android:layout_marginLeft="8dp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="1"
-                            android:layout_marginBottom="16dp">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
-                                android:text="@string/distributor_name"
-
-                                android:textStyle="bold" />
-
-
-                            <EditText
-                                android:id="@+id/edDistributor"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
-                                style="@style/MyCustomEditText"
-                                android:layout_marginLeft="8dp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="1"
-                            android:layout_marginBottom="16dp">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
                                 android:text="@string/day"
 
                                 android:textStyle="bold" />

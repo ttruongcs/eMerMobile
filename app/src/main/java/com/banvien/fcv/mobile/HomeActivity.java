@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -120,5 +121,10 @@ public class HomeActivity extends BaseDrawerActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
