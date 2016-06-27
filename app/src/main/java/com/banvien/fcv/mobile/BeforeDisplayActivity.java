@@ -4,28 +4,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.banvien.fcv.mobile.adapter.BeforeDisplayAdapter;
 import com.banvien.fcv.mobile.adapter.BeforeOutletModelAdapter;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
-import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
-import com.banvien.fcv.mobile.dto.OutletMerDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.Bind;
 
 /**
@@ -42,8 +35,9 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<BeforeDisplayDTO> beforeDisplayDTOs;
-    private List<HotzoneDTO> hotzoneDTOs;
+    private List<HotZoneDTO> hotzoneDTOs;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferenceBefores;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +68,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
 
     private void bindDatas() {
         try {
-            beforeDisplayDTOs = repo.getOutletMerDAO().findOutletModelByOutletId(outletId);
+            beforeDisplayDTOs = repo.getOutletMerDAO().findOutletModelBeforeByOutletId(outletId);
 
             List<HotzoneEntity> hotzoneEntities = repo.getHotZoneDAO().queryForAll();
             for(HotzoneEntity entity : hotzoneEntities) {

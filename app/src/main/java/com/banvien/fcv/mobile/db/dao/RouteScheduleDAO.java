@@ -28,20 +28,28 @@ public class RouteScheduleDAO extends AndroidBaseDaoImpl<RouteScheduleEntity, St
         super(connectionSource, tableConfig);
     }
 
-    public RouteScheduleDTO findRoute() {
-        RouteScheduleDTO result = new RouteScheduleDTO();
+    public RouteScheduleEntity findRoute() {
+        RouteScheduleEntity result = new RouteScheduleEntity();
         try {
             RouteScheduleEntity entity = queryBuilder().queryForFirst();
 
             if(entity != null) {
-                result.set_id(entity.get_id());
-                result.setRouteScheduleId(entity.getRouteScheduleId());
+                result = entity;
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
 
         return result;
+    }
+
+    public void addRoute(RouteScheduleEntity data) {
+        ELog.d("data", data.toString());
+        try {
+            create(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clearData() throws SQLException {

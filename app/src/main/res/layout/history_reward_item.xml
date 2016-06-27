@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="T5"/>
+
+            <TextView
+                android:id="@+id/tvColon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvMonth"
+                android:layout_toEndOf="@+id/tvMonth"
+                android:text=" : "/>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvColon"
+                android:layout_toEndOf="@+id/tvColon"
+                android:text="Đạt"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvEIE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EIE"/>
+
+            <TextView
+                android:id="@+id/tvEIEColon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvEIE"
+                android:layout_toEndOf="@+id/tvEIE"
+                android:text=" : "/>
+
+            <TextView
+                android:id="@+id/tvEIENumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvEIEColon"
+                android:layout_toEndOf="@+id/tvEIEColon"
+                android:text="90"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -12,6 +12,8 @@ public class RouteScheduleEntity {
     private Long _id;
     @DatabaseField
     private Long routeScheduleId;
+    @DatabaseField
+    private Long confirmWoringId;
 
     public Long get_id() {
         return _id;
@@ -27,5 +29,13 @@ public class RouteScheduleEntity {
 
     public void setRouteScheduleId(Long routeScheduleId) {
         this.routeScheduleId = routeScheduleId;
+    }
+
+    public Long getConfirmWoringId() {
+        return confirmWoringId;
+    }
+
+    public void setConfirmWoringId(Long confirmWoringId) {
+        this.confirmWoringId = confirmWoringId;
     }
 }

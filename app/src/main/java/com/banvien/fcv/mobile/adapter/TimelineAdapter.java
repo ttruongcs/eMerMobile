@@ -3,43 +3,42 @@ package com.banvien.fcv.mobile.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.banvien.fcv.mobile.ConfirmWorkingActivity;
+import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.CaptureEndDayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
-import com.banvien.fcv.mobile.HomeActivity;
-import com.banvien.fcv.mobile.InOutletHomeActivity;
-import com.banvien.fcv.mobile.MapsActivity;
+import com.banvien.fcv.mobile.FindOutletSimpleActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
+import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
-import com.banvien.fcv.mobile.dto.StatusHomeDTO;
-import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
+import com.banvien.fcv.mobile.library.SyncService;
+import com.banvien.fcv.mobile.library.UpdateService;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -233,14 +232,15 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(uniformIntent);
                                 break;
                             case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
-                                // todo
+                                Intent addOutletIntent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
+                                v.getContext().startActivity(addOutletIntent);
                                 break;
                             case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :
                                 Intent prepareIntent = new Intent(v.getContext(), PrepareActivity.class);
                                 v.getContext().startActivity(prepareIntent);
                                 break;
                             case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
-                                // todo
+                                showConfirmDialog();
                                 break;
 
 
@@ -250,7 +250,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(captureEndDay);
                                 break;
                             case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
-                                // todo
+                                Intent syncEndDay = new Intent(v.getContext(), SyncEndActivity.class);
+                                v.getContext().startActivity(syncEndDay);
                                 break;
 
                             default:
@@ -309,6 +310,39 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         }
                     });
             builderSingle.show();
+        }
+
+        private void showConfirmDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setTitle(activity.getString(R.string.dialog_confirm_working_title));
+            builder.setMessage(activity.getString(R.string.dialog_confirm_working));
+
+            String positiveText = activity.getString(R.string.accept);
+            builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(itemView.getContext(), ConfirmWorkingActivity.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+
+            String negativeText = activity.getString(R.string.xacnhankhongchupanh);
+            builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        SyncService syncService = new SyncService(activity, 1l);
+                        syncService.synConfirmNewDayImformationDontHaveImage();
+                    } catch (SQLException e) {
+                        Log.e("TimelineAdapter", "Sync no image Error");
+                    }
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
 
     }

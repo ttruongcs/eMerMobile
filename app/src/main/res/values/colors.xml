@@ -79,4 +79,6 @@
 
     <color name="green_500">#66BB6A</color>
     <color name="red_500">#F44336</color>
+
+    <color name="kanban_input_text">#0071BC</color>
 </resources>

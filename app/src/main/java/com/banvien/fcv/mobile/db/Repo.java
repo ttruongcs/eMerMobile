@@ -8,6 +8,7 @@ import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
 import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
+import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -125,6 +126,10 @@ public class Repo {
 
     public ShortageProductDAO getShortageProductDAO() throws SQLException {
         return  databaseHelper.getShortageProductDAO();
+    }
+
+    public ConfirmWorkingDAO getConfirmWorkingDAO() throws SQLException {
+        return  databaseHelper.getConfirmWorkingDAO();
     }
 
     public void release() {

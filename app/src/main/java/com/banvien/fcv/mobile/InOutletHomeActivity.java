@@ -89,20 +89,17 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
 
             TimelineInOutletDTO step7 = new TimelineInOutletDTO(getString(R.string.khaosatdichvukhachhang)
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSatDichVuKhachHang(), outletId, routeScheduleDetailId);
+                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSat(), outletId, routeScheduleDetailId);
 
-            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
-                    , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, statusInOutlet.getKhaoSatPOSM(), outletId, routeScheduleDetailId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
-            timelineDTOs.add(step8);
+
         } else {
             TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
                     , getString(R.string.motacheckin), getString(R.string.stepcheckin)
@@ -132,18 +129,14 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
                     , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
-            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.xacnhanlamviec)
-                    , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
-                    , ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
             timelineDTOs.add(step4);
-            timelineDTOs.add(step4);
+            timelineDTOs.add(step3);
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
-            timelineDTOs.add(step8);
         }
 
         if(timelineDTOs.size() > 0) {

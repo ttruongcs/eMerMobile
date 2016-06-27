@@ -85,5 +85,9 @@ public class OutletTabActivity extends BaseDrawerActivity {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewPager.setCurrentItem(2);
+    }
 }

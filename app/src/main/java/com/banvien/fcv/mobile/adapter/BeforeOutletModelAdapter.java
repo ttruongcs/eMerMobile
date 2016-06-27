@@ -1,6 +1,8 @@
 package com.banvien.fcv.mobile.adapter;
 
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,11 +21,11 @@ import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
-import com.banvien.fcv.mobile.dto.HotzoneDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -39,15 +41,20 @@ import butterknife.ButterKnife;
  * Created by Linh Nguyen on 6/16/2016.
  */
 public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
+    final long totalScrollTime = Long.MAX_VALUE; //total scroll time. I think that 300 000 000 years is close enouth to infinity. if not enought you can restart timer in onFinish()
+
+    final int scrollPeriod = 20; // every 20 ms scoll will happened. smaller values for smoother
+
+    final int heightToScroll = 20; // will be scrolled to 20 px every time. smaller values for smoother scrolling
 
     private List<BeforeDisplayDTO> mData;
     private BeforeDisplayActivity activity;
-    private List<HotzoneDTO> hotzoneDTOs;
+    private List<HotZoneDTO> hotzoneDTOs;
     private Long outletId;
     private Repo repo;
 
     public BeforeOutletModelAdapter(BeforeDisplayActivity activity, List<BeforeDisplayDTO> data
-            , List<HotzoneDTO> hotzoneDTOs, Repo repo, Long outletId) {
+            , List<HotZoneDTO> hotzoneDTOs, Repo repo, Long outletId) {
         this.mData = data;
         this.activity = activity;
         this.hotzoneDTOs = hotzoneDTOs;
@@ -110,13 +117,13 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
         }
 
         private void initRecyclerView(BeforeDisplayDTO dto) {
-            List<ProductDTO> productDTOs = convertToMHS(dto);
+            List<MProductDTO> productDTOs = convertToMHS(dto);
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
                     , repo, outletId, dto.getOutletModelId());
-            listView.setAdapter(adapter);
             listView.setScrollbarFadingEnabled(false);
+            listView.setAdapter(adapter);
 
             listView.setOnTouchListener(new ListView.OnTouchListener() {
                 @Override
@@ -139,10 +146,11 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                     return true;
                 }
             });
+
         }
 
-        private List<ProductDTO> convertToMHS(BeforeDisplayDTO dto) {
-            List<ProductDTO> results = new ArrayList<>();
+        private List<MProductDTO> convertToMHS(BeforeDisplayDTO dto) {
+            List<MProductDTO> results = new ArrayList<>();
 
             if(dto.getMhs() != null) {
                 String[] mhsCode = dto.getMhs().getRegisterValue().split(",");
@@ -165,7 +173,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                 spinnerName.add(itemView.getContext().getString(R.string.select_one));
                 spinnerId.add(-1l);
 
-                for (HotzoneDTO hotzoneDTO : hotzoneDTOs) {
+                for (HotZoneDTO hotzoneDTO : hotzoneDTOs) {
                     spinnerName.add(hotzoneDTO.getCode());
                     spinnerId.add(hotzoneDTO.getHotZoneId());
                    // mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());
@@ -181,6 +189,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setGravity(Gravity.CENTER);
                         if(position != 0) {
                             try {
                                 repo.getOutletMerDAO().updateActualValue(

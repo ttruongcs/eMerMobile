@@ -119,11 +119,13 @@ public class ScreenContants {
     public static final Integer STATUS_STEP_NOTYET = 0;
 
     //Image path
+    public static final String CAPTURE_FCV_IMAGE = "fcvImage/";
     public static final String CAPTURE_UNIFORM_PATH = "fcvImage/uniform/";
     public static final String CAPTURE_TOOL_PATH = "fcvImage/tool/";
     public static final String CAPTURE_FIRST_OUTLET = "fcvImage/firstOutlet/";
     public static final String CAPTURE_ENDDAY = "fcvImage/endday/";
     public static final String CAPTURE_OVERVIEW = "fcvImage/overview/";
+    public static final String CAPTURE_CONFIRM_WORKING = "fcvImage/working/";
 
     public static final String UNFINISH = "UNFINISH";
     public static final String DOING = "DOING";
@@ -131,9 +133,15 @@ public class ScreenContants {
 
     //Shared Preferences
     public static final String MyPREFERENCES = "shortagePrefs";
+    public static final String BeforePREFERENCES = "beforePrefs";
 
     public static final String INSERT = "INSERT";
     public static final String REMOVE = "REMOVE";
+
+    // Confirm working
+    public static final String CONFIRM_WORKING_PATH = "confirm_";
+    public static final String CONFIRM_WORKING = "CONFIRM_WORKING";
+
 
 
 }

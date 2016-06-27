@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.CaptureToolDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
@@ -43,7 +44,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
-    private RouteScheduleDTO routeScheduleDTO;
+    private RouteScheduleEntity routeScheduleDTO;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -62,8 +63,8 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         bindGallery();
     }
 
-    private RouteScheduleDTO getRouteSchedule() {
-        RouteScheduleDTO result = new RouteScheduleDTO();
+    private RouteScheduleEntity getRouteSchedule() {
+        RouteScheduleEntity result = new RouteScheduleEntity();
         try {
             result = this.repo.getRouteScheduleDAO().findRoute();
         } catch (SQLException e) {

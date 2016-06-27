@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.banvien.fcv.mobile.AfterDisplayActivity;
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureOverviewActivity;
@@ -27,6 +28,7 @@ import com.banvien.fcv.mobile.MapsActivity;
 import com.banvien.fcv.mobile.OrderActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.db.Repo;
@@ -232,7 +234,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 // todo
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
-                                // todo
+                                Intent afterIntent = new Intent(v.getContext(), AfterDisplayActivity.class);
+                                afterIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(afterIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
                                 Intent beforeIntent = new Intent(v.getContext(), BeforeDisplayActivity.class);
@@ -240,7 +244,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(beforeIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
-                                // todo
+                                Intent historyIntent = new Intent(v.getContext(), RegisterHistoryActivity.class);
+                                historyIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                v.getContext().startActivity(historyIntent);
                                 break;
 
                             default:
@@ -252,53 +258,6 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
-        }
-
-        private void showAlertBox(final View v) throws SQLException {
-            android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
-            builderSingle.setTitle("Chọn một cửa hàng : ");
-            List<OutletDTO> outletList = repo.getOutletDAO().findAll();
-            final ArrayAdapter<OutletDTO> arrayAdapter = new ArrayAdapter<OutletDTO>(
-                    v.getContext(),
-                    android.R.layout.select_dialog_singlechoice);
-            arrayAdapter.addAll(outletList);
-
-            builderSingle.setNegativeButton(
-                    "cancel",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-
-            builderSingle.setAdapter(
-                    arrayAdapter,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final OutletDTO outletDTO = arrayAdapter.getItem(which);
-                            android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
-                                    v.getContext());
-                            builderInner.setMessage(outletDTO.getName());
-                            builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
-                            builderInner.setPositiveButton(
-                                    "Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(
-                                                DialogInterface dialog,
-                                                int which) {
-                                            Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
-                                            firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-                                            v.getContext().startActivity(firstOutletIntent);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            builderInner.show();
-                        }
-                    });
-            builderSingle.show();
         }
     }
 }

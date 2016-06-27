@@ -6,6 +6,7 @@ import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.dto.AfterDisplayDTO;
 import com.banvien.fcv.mobile.dto.BeforeDisplayDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Created by hieu on 8/03/2016.
@@ -348,7 +350,7 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return null;
     }
 
-    public List<BeforeDisplayDTO> findOutletModelByOutletId(Long outletId) {
+    public List<BeforeDisplayDTO> findOutletModelBeforeByOutletId(Long outletId) {
         List<BeforeDisplayDTO> result = new ArrayList<>();
 
         try {
@@ -383,6 +385,43 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         return result;
     }
 
+
+
+    public List<AfterDisplayDTO> findOutletModelAfterByOutletId(Long outletId) {
+        List<AfterDisplayDTO> result = new ArrayList<>();
+
+        try {
+            List<OutletMerEntity> outletModels = queryBuilder().distinct()
+                    .selectColumns("outletModelId").selectColumns("outletModelName").where().eq("outletId", outletId).query();
+
+            if(outletModels.size() > 0) {
+                for(OutletMerEntity entity : outletModels) {
+                    AfterDisplayDTO afterDisplayDTO = new AfterDisplayDTO();
+                    afterDisplayDTO.setOutletModelId(entity.getOutletModelId());
+                    afterDisplayDTO.setOutletModelName(entity.getOutletModelName());
+
+                    Map<String, Object> properties = new HashMap<>();
+                    properties.put("outletId", outletId);
+                    properties.put("outletModelId", entity.getOutletModelId());
+                    properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS);
+                    List<OutletMerEntity> mhsEntities = queryForFieldValues(properties);
+
+                    ELog.d(mhsEntities.toString());
+
+                    if(mhsEntities.size() > 0) {
+                        afterDisplayDTO.setMhs(OutletMerUtil.convertToDTO(mhsEntities.get(0)));
+                    }
+                    result.add(afterDisplayDTO);
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
+
     public void updateActualValue(Long outletId, Long outletModelId,String dataType, String s) {
         UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
         try {
@@ -393,6 +432,131 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
             ELog.d(e.getMessage(), e);
         }
     }
+
+    public void updateActualValueBefore(Long outletId, Long outletModelId, String s) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE).query();
+
+            if(outletMerAfterList.size() > 0){
+                updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE);
+                updateBuilder.update();
+            } else {
+                List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+
+                if(outletMerList.size() > 0){
+                    OutletMerEntity entity = outletMerList.get(0);
+                    OutletMerEntity outletMerEntityAfter = entity;
+                    outletMerEntityAfter.setDataType(ScreenContants.MHS_BEFORE);
+                    outletMerEntityAfter.setActualValue(s);
+                    addOutletMerEntity(outletMerEntityAfter);
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
+    public void updateActualValueAfter(Long outletId, Long outletModelId, String s) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER).query();
+
+            if(outletMerAfterList.size() > 0){
+                updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER);
+                updateBuilder.update();
+            } else {
+                List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+
+                if(outletMerList.size() > 0){
+                    OutletMerEntity entity = outletMerList.get(0);
+                    OutletMerEntity outletMerEntityAfter = entity;
+                    outletMerEntityAfter.setDataType(ScreenContants.MHS_AFTER);
+                    outletMerEntityAfter.setActualValue(s);
+                    addOutletMerEntity(outletMerEntityAfter);
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
+
+
+    public void updateCheckYesNoAfter(Long outletId, Long outletModelId, String mhsCode, Integer yesNo) {
+        UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
+        try {
+            List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER).query();
+
+            if(outletMerAfterList.size() > 0){
+                OutletMerEntity outletMerValueEntity = outletMerAfterList.get(0);
+                if(outletMerValueEntity.getActualValue() != null && outletMerValueEntity.getActualValue() != "")
+                {
+                    String[] actualValueAfter = outletMerValueEntity.getActualValue().split(",");
+                    String updateValueAfter = "";
+                    String finalUpdateValueAfter = "";
+                    int flag = 0;
+                    for(int i = 0; i < actualValueAfter.length ; i ++){
+                        if(actualValueAfter[i].contains(mhsCode)){
+                            updateValueAfter = actualValueAfter[i];
+                            updateValueAfter = updateValueAfter.replace(updateValueAfter.split(":")[2], yesNo.toString());
+                            flag = 1;
+                        }else{
+                            finalUpdateValueAfter = finalUpdateValueAfter + actualValueAfter[i] + ",";
+                        }
+                    }
+                    if(flag == 0){
+                        String valueYesNoAdd = mhsCode + ":" + 0 + ":" + yesNo.toString();
+                        finalUpdateValueAfter = finalUpdateValueAfter + "," + valueYesNoAdd;
+                    }
+                    finalUpdateValueAfter = finalUpdateValueAfter + updateValueAfter;
+                    updateBuilder.updateColumnValue("actualValue", finalUpdateValueAfter).where().eq("outletId", outletId).and()
+                            .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER);
+                    updateBuilder.update();
+                }
+            } else {
+                List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+
+                if(outletMerList.size() > 0){
+                    OutletMerEntity entity = outletMerList.get(0);
+                    OutletMerEntity outletMerEntityAfter = entity;
+                    outletMerEntityAfter.setDataType(ScreenContants.MHS_AFTER);
+                    outletMerEntityAfter.setActualValue(mhsCode + ":" + 0 + ":" + yesNo.toString());
+                    addOutletMerEntity(outletMerEntityAfter);
+                }
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
+    public void createListMerResult(final List<OutletMerEntity> entities) {
+        try {
+            callBatchTasks(new Callable<Object>() {
+
+                @Override
+                public Object call() throws Exception {
+                    for(OutletMerEntity entity : entities) {
+                        create(entity);
+                    }
+
+                    return null;
+                }
+            });
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
+
+
 
     public void clearData() throws SQLException {
         if(isTableExists()) {

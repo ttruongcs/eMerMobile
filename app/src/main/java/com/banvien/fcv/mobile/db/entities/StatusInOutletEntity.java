@@ -23,11 +23,8 @@ public class StatusInOutletEntity implements Serializable {
     @DatabaseField
     private Integer hutHangDatHang;
     @DatabaseField
-    private Integer khaoSatDichVuKhachHang;
-    @DatabaseField
-    private Integer khaoSatPOSM;
-    @DatabaseField
-    private Integer ghiNhanKhieuNai;
+
+    private Integer khaoSat;
 
     public long get_id() {
         return _id;
@@ -85,27 +82,11 @@ public class StatusInOutletEntity implements Serializable {
         this.hutHangDatHang = hutHangDatHang;
     }
 
-    public Integer getKhaoSatDichVuKhachHang() {
-        return khaoSatDichVuKhachHang;
+    public Integer getKhaoSat() {
+        return khaoSat;
     }
 
-    public void setKhaoSatDichVuKhachHang(Integer khaoSatDichVuKhachHang) {
-        this.khaoSatDichVuKhachHang = khaoSatDichVuKhachHang;
-    }
-
-    public Integer getKhaoSatPOSM() {
-        return khaoSatPOSM;
-    }
-
-    public void setKhaoSatPOSM(Integer khaoSatPOSM) {
-        this.khaoSatPOSM = khaoSatPOSM;
-    }
-
-    public Integer getGhiNhanKhieuNai() {
-        return ghiNhanKhieuNai;
-    }
-
-    public void setGhiNhanKhieuNai(Integer ghiNhanKhieuNai) {
-        this.ghiNhanKhieuNai = ghiNhanKhieuNai;
+    public void setKhaoSat(Integer khaoSat) {
+        this.khaoSat = khaoSat;
     }
 }

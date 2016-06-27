@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.rest;
 
 import com.banvien.fcv.mobile.rest.service.HomeService;
+import com.banvien.fcv.mobile.rest.service.OutletService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,6 +28,7 @@ public final class RestClient {
     private HomeService homeService;
     private OkHttpClient httpClient;
     private String authToken, portalId;
+    private OutletService outletService;
 
 
     private RestClient() {
@@ -114,6 +116,13 @@ public final class RestClient {
             homeService = createService(HomeService.class);
         }
         return homeService;
+    }
+
+    public OutletService getOutletService() {
+        if (outletService == null) {
+            outletService = createService(OutletService.class);
+        }
+        return outletService;
     }
 
     public void setHomeService(HomeService homeService) {

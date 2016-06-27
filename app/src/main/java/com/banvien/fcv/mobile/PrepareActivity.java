@@ -23,11 +23,13 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.library.UpdateService;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -41,8 +43,8 @@ public class PrepareActivity extends BaseDrawerActivity {
     @Bind(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
-    @Bind(R.id.fabAddTask)
-    com.github.clans.fab.FloatingActionButton fabAdd;
+    @Bind(R.id.textNumSuccess)
+    TextView textNumSuccess;
 
     private Repo repo;
     private static UpdatingTask updateTask = null;
@@ -66,8 +68,13 @@ public class PrepareActivity extends BaseDrawerActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        UpdateService updateService = new UpdateService(v.getContext());
                         progressDialog  = new ProgressDialog(v.getContext());
-                        startUpdate();
+                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        updateService.updateFromServer(true, progressDialog, textNumSuccess);
+//                        startUpdate();
                     }
                 });
 
@@ -95,22 +102,6 @@ public class PrepareActivity extends BaseDrawerActivity {
                 showLocationDialog(v);
             }
         });
-
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Add new task from server");
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-                try {
-                    v.getContext().startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-//                    Toast.makeText("Whatsapp have not been installed.");
-                }
-            }
-        });
     }
 
 
@@ -122,7 +113,7 @@ public class PrepareActivity extends BaseDrawerActivity {
         }
     }
 
-    private class UpdatingTask extends AsyncTask<String, Void, Boolean> {
+    private class UpdatingTask extends AsyncTask<String, Void, Map<String, String>> {
         private Context context;
         private String errorMessage = null;
 
@@ -137,10 +128,11 @@ public class PrepareActivity extends BaseDrawerActivity {
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final Map<String, String> mapResult) {
             updateTask = null;
-            dismissProgressDialog();
-            if (success) {
+            if (mapResult != null) {
+                dismissProgressDialog();
+                textNumSuccess.setText(mapResult.get("numOutletSuccess"));
                 Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
             } else {
                 if(errorMessage != null) {
@@ -152,26 +144,26 @@ public class PrepareActivity extends BaseDrawerActivity {
 
         }
 
-        protected Boolean doInBackground(final String... args) {
+        protected Map<String, String> doInBackground(final String... args) {
+            Map<String, String> results = new Hashtable<>();
             try {
                 UpdateService updateService = new UpdateService(context);
-                Map<String, String> results = updateService.updateFromServer(true);
+//                results = updateService.updateFromServer(true);
                 errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {
-                    return false;
+                    return null;
                 }
             }catch (Exception e) {
                 Log.e("HomeActivity", e.getMessage(), e);
-                return false;
+                return null;
             }
-            return true;
+            return results;
         }
     }
 
     private void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
-
         }
     }
     private void startUpdatingTask() {

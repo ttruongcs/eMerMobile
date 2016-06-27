@@ -19,6 +19,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private static final int MHS_VALUE = 1;
 
     private BeforeDisplayActivity activity;
-    private List<ProductDTO> mData;
+    private List<MProductDTO> mData;
     private Map<String, Integer> mhsCodes;
     private Repo repo;
     private LayoutInflater mInflater;
@@ -47,10 +48,10 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferenceBefores;
+    private SharedPreferences.Editor editorBefore;
 
-    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<ProductDTO> productDTOs
+    public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId) {
         this.activity = activity;
         this.mData = productDTOs;
@@ -61,8 +62,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
-        sharedPreferences = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        sharedPreferenceBefores = this.activity.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
+        editorBefore = sharedPreferenceBefores.edit();
     }
 
     @Override
@@ -106,40 +107,19 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindViews(final ProductDTO productDTO) {
-            editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-            editor.apply();
-
-            ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
+        public void bindViews(final MProductDTO productDTO) {
+            editorBefore.putInt(productDTO.getCode(), 0);
+            editorBefore.apply();
 
             try {
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
                     editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode())));
-                    checkShortageExist(productDTO.getCode());
-
-
                 }
                 bindEvents(productDTO);
             } catch (Exception e) {
                 ELog.d("Can't get product from server", e);
             }
-        }
-
-        private void checkShortageExist(String code) {
-            int modelPrefId = sharedPreferences.getInt(code, -1);
-
-            if(modelPrefId != -1) {
-                if(modelPrefId == outletModelId) {
-                    editor.remove(code);
-                    editor.apply();
-                } else {
-                    editor.putInt(code, Integer.valueOf(outletModelId.toString()));
-                    editor.apply();
-                }
-
-            }
-
         }
 
         private Map<String, Integer> loadMhs() {
@@ -149,7 +129,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             try {
                 properties.put("outletId", outletId);
                 properties.put("outletModelId", outletModelId);
-                properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS);
+                properties.put(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE);
 
                 OutletMerDTO outletMerDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
                 if(outletMerDTO != null && outletMerDTO.getActualValue() != null
@@ -169,7 +149,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             return result;
         }
 
-        private void bindEvents(final ProductDTO productDTO) {
+        private void bindEvents(final MProductDTO productDTO) {
             editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -178,14 +158,13 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(v.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
-                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
-                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                                editor.apply();
                             } else {
 
                             }
+                            editorBefore.putInt(productDTO.getCode(), quantity);
+                            editorBefore.apply();
                             addMhs(mhsCodes);
                             calculateFacing(mhsCodes);
                         } catch (NumberFormatException e) {
@@ -208,14 +187,13 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             int quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
-                                checkShortageExist(productDTO.getCode());
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
-                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                                editor.apply();
                             } else {
 
                             }
+                            editorBefore.putInt(productDTO.getCode(), quantity);
+                            editorBefore.apply();
                             addMhs(mhsCodes);
                             calculateFacing(mhsCodes);
                         } catch (NumberFormatException e) {
@@ -272,9 +250,9 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
-                    repo.getOutletMerDAO().updateActualValue(outletId, outletModelId, ScreenContants.MHS, mhsValue);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue);
                 } else {
-                    repo.getOutletMerDAO().updateActualValue(outletId, outletModelId, ScreenContants.MHS, null);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId, null);
                 }
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);

@@ -38,9 +38,6 @@ public class PrepareFragment extends BaseFragment {
     @Bind(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
-    @Bind(R.id.fabAddTask)
-    com.github.clans.fab.FloatingActionButton fabAdd;
-
     private Repo repo;
     private static UpdatingTask updateTask = null;
     private static ProgressDialog progressDialog;
@@ -141,22 +138,6 @@ public class PrepareFragment extends BaseFragment {
                 showLocationDialog(v);
             }
         });
-
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-                try {
-                    v.getContext().startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-//                    Toast.makeText("Whatsapp have not been installed.");
-                }
-                Log.d(TAG, "Add new task from server");
-            }
-        });
     }
 
     @Override
@@ -205,8 +186,8 @@ public class PrepareFragment extends BaseFragment {
         protected Boolean doInBackground(final String... args) {
             try {
                 UpdateService updateService = new UpdateService(context);
-                Map<String, String> results = updateService.updateFromServer(true);
-                errorMessage = results.get("errorMessage");
+//                Map<String, String> results = updateService.updateFromServer(true);
+//                errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {
                     return false;
                 }

@@ -18,6 +18,8 @@ public class HotzoneEntity implements Serializable {
     private String name;
     @DatabaseField
     private String code;
+    @DatabaseField
+    private String note;
 
     public long get_id() {
         return _id;
@@ -49,5 +51,13 @@ public class HotzoneEntity implements Serializable {
 
     public void setHotZoneId(Long hotZoneId) {
         this.hotZoneId = hotZoneId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

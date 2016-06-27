@@ -42,6 +42,8 @@ public class OutletEntity implements Serializable {
     @DatabaseField
     private Integer status;
     @DatabaseField
+    private Boolean isAuditedToday;
+    @DatabaseField
     private Long routeScheduleId;
     @DatabaseField
     private Long routeScheduleDetailId;
@@ -180,5 +182,13 @@ public class OutletEntity implements Serializable {
 
     public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public Boolean getAuditedToday() {
+        return isAuditedToday;
+    }
+
+    public void setAuditedToday(Boolean auditedToday) {
+        isAuditedToday = auditedToday;
     }
 }
