@@ -188,4 +188,11 @@ public class PrepareActivity extends BaseDrawerActivity {
         startUpdatingTask();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getBaseContext(), StartDayActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

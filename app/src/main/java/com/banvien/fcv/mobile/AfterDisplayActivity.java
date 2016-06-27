@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -105,6 +106,11 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
                 String[] next = {ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN};
                 changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                         , ScreenContants.AFTER_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
+                startActivity(intent);
                 finish();
 
             }

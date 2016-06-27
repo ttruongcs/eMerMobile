@@ -346,6 +346,10 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                                 , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+                        Intent intent = new Intent(activity, StartDayActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        activity.startActivity(intent);
+                        activity.finish();
 
                     } catch (SQLException e) {
                         Log.e("TimelineAdapter", "Sync no image Error");

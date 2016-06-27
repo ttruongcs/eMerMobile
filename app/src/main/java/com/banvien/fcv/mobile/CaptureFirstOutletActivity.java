@@ -275,11 +275,14 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if(imageDTOs.size() > 0) {
             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
             changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                     , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
         }
+        Intent intent = new Intent(getBaseContext(), StartDayActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

@@ -109,13 +109,11 @@ public class MapsActivity extends FragmentActivity  {
                     String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
                     changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                             , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
-
                     Intent intent = new Intent(v.getContext(), InOutletHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                     intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
                     startActivity(intent);
-
-
                     finish();
                 }
             }
