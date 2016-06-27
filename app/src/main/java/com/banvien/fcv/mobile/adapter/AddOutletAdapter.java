@@ -145,6 +145,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     if(auditOutletPlanDTO != null) {
                         addMerResult(auditOutletPlanDTO);
                         Toast.makeText(itemView.getContext(), activity.getString(R.string.add_success), Toast.LENGTH_SHORT).show();
+                        activity.finish();
                     }
                 }
 

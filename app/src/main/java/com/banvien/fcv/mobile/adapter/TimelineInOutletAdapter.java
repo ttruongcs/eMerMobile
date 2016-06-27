@@ -218,6 +218,8 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                             case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
                                 Intent overviewIntent = new Intent(v.getContext(), CaptureOverviewActivity.class);
                                 overviewIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                overviewIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 v.getContext().startActivity(overviewIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
@@ -239,10 +241,14 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
                                 Intent afterIntent = new Intent(v.getContext(), AfterDisplayActivity.class);
                                 afterIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                afterIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 v.getContext().startActivity(afterIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
                                 Intent beforeIntent = new Intent(v.getContext(), BeforeDisplayActivity.class);
+                                beforeIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 beforeIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
                                 v.getContext().startActivity(beforeIntent);
                                 break;

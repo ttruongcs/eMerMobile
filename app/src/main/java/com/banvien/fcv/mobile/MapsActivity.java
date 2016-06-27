@@ -108,8 +108,7 @@ public class MapsActivity extends FragmentActivity  {
                     String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
                     changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                             , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
-                    Intent intent = new Intent(v.getContext(), InOutletHomeActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -129,7 +128,7 @@ public class MapsActivity extends FragmentActivity  {
                 float distance = locationA.distanceTo(locationB) ;
                 tvGps.setText(String.valueOf(lat) + "," + String.valueOf(log));
                 if(distance >= ScreenContants.GPS_DISTANCE){
-                    Toast.makeText(v.getContext(), "Khoảng cách cần nhỏ hơn hoặc bằng " + distance, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Khoảng cách cần nhỏ hơn hoặc bằng " + ScreenContants.GPS_DISTANCE + " đơn vị", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(v.getContext(), "Khoảng cách hợp lệ", Toast.LENGTH_SHORT).show();
                     isValid = true;
