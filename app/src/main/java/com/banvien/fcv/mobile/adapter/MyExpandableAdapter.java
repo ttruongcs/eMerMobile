@@ -96,7 +96,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final ProductDTO childText = (ProductDTO) getChild(groupPosition, childPosition);
+        final MProductDTO childText = (MProductDTO) getChild(groupPosition, childPosition);
 
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.order_list_item, null);
@@ -129,7 +129,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     /*If insert return id of shortage product, else: return null*/
-    private void insertOrRemoveData(ProductDTO productDTO, String type, TextView tvShortage) {
+    private void insertOrRemoveData(MProductDTO productDTO, String type, TextView tvShortage) {
         ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
         shortageProductDTO.setProductCode(productDTO.getCode());
         shortageProductDTO.setRouteSCheduleDetailId(routeScheduleDetailId);
