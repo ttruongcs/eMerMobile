@@ -36,6 +36,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -163,9 +164,10 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
                                 Map<String, Object> result = response.body();
                                 List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs = DataBinder.readRouteScheduleDetail(result.get("listRouteOutlet"));
+                                initRecycleview(routeScheduleDetailDTOs);
+                                ELog.d("size", String.valueOf(routeScheduleDetailDTOs.size()));
                                 if(routeScheduleDetailDTOs.size() > 0) {
-                                    initRecycleview(routeScheduleDetailDTOs);
-                                    ELog.d("size", String.valueOf(routeScheduleDetailDTOs.size()));
+                                    adapter.notifyDataSetChanged();
                                     new AnimationUtils();
                                     viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
                                     viewSwitcher.showNext();
@@ -195,12 +197,29 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
     }
 
     private void initRecycleview(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
+        routeScheduleDetailDTOs = checkRouteExist(routeScheduleDetailDTOs);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
         layoutManager = new MySpeedScrollManager(getBaseContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AddOutletAdapter(this, routeScheduleDetailDTOs, repo);
         recyclerView.setAdapter(adapter);
+    }
+
+    private List<MRouteScheduleDetailDTO> checkRouteExist(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
+        List<MRouteScheduleDetailDTO> results = new ArrayList<>(routeScheduleDetailDTOs);
+        for(MRouteScheduleDetailDTO dto : routeScheduleDetailDTOs) {
+            try {
+                long countOf = repo.getOutletDAO().checkExist(dto.getOutlet().getOutletId());
+                if(countOf > 0) {
+                    results.remove(dto);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return results;
     }
 
     @Override

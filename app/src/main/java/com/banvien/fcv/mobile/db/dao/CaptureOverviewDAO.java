@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.db.dao;
 
 import com.banvien.fcv.mobile.beanutil.CaptureOverviewUtil;
+import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
 import com.banvien.fcv.mobile.dto.CaptureOverviewDTO;
@@ -43,6 +44,21 @@ public class CaptureOverviewDAO extends AndroidBaseDaoImpl<CaptureOverviewEntity
             ELog.d(e.getMessage(), e);
         }
         return results;
+    }
+
+
+    public List<CaptureOverviewEntity> findByOutletId(Long outletId) {
+        try {
+            List<CaptureOverviewEntity> results = new ArrayList<>();
+            List<CaptureOverviewEntity> result = queryBuilder().where().eq("outletId", outletId).query();
+            if(result.size() > 0) {
+                return result;
+            }
+            return results;
+        } catch (SQLException e) {
+            ELog.d("Error findByOutletId in CaptureOverviewEntity");
+        }
+        return null;
     }
 
     public void deleteImageFromId(Long id) {

@@ -25,6 +25,7 @@ import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
+import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.db.entities.SurveyEntity;
 import com.banvien.fcv.mobile.dto.QuestionContentDTO;
 import com.banvien.fcv.mobile.dto.QuestionDTO;
@@ -36,6 +37,7 @@ import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
@@ -81,6 +83,7 @@ public class UpdateService {
 
 			clearData();
 			configStatusHome();
+            configStatusStartDay();
 			configStatusInOutlet();
 			configStatusEndDay();
 //			Call<Map<String,Object>> call =
@@ -175,6 +178,16 @@ public class UpdateService {
 		repo.getStatusEndDayDAO().addStatusHome(statusInOutletEntity);
 	}
 
+    private void configStatusStartDay() throws SQLException {
+        StatusStartDayEntity statusStartDayEntity = new StatusStartDayEntity();
+        statusStartDayEntity.setDongBoDuLieuPhanCong(ScreenContants.STATUS_STEP_INPROGRESS);
+        statusStartDayEntity.setThemCuaHangNeuMuon(ScreenContants.STATUS_STEP_NOTYET);
+        statusStartDayEntity.setChupHinhCongCuDungCu(ScreenContants.STATUS_STEP_NOTYET);
+        statusStartDayEntity.setChupHinhCuaHangDauTien(ScreenContants.STATUS_STEP_NOTYET);
+        statusStartDayEntity.setChupHinhDongPhuc(ScreenContants.STATUS_STEP_NOTYET);
+        statusStartDayEntity.setXacNhanLamViec(ScreenContants.STATUS_STEP_NOTYET);
+        repo.getStartDayDAO().addStatusHome(statusStartDayEntity);
+    }
 
 
 
@@ -196,6 +209,10 @@ public class UpdateService {
 				try {
 					Integer numOutlet = buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
 					tvNumOutlet.setText(numOutlet.toString());
+                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(context);
+                    String[] next = {ScreenContants.ADD_OUTLET, ScreenContants.CAPTURE_UNIFORM};
+                    changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                            , ScreenContants.START_DATE_SYNC, next, ScreenContants.IN_OUTLET, false);
 				} catch (SQLException e) {
 					ELog.d("Error when read plans");
 				}

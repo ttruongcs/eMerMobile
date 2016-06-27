@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.library.UpdateService;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -332,8 +334,19 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     try {
+                        try {
+                            SyncService syncService = new SyncService(activity, 1l);
+                            syncService.synConfirmNewDayImformationDontHaveImage();
+                        } catch (SQLException e) {
+                            ELog.d("Error when Sync Comfirm Working");
+                        }
                         SyncService syncService = new SyncService(activity, 1l);
                         syncService.synConfirmNewDayImformationDontHaveImage();
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
+                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
+                        changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+
                     } catch (SQLException e) {
                         Log.e("TimelineAdapter", "Sync no image Error");
                     }

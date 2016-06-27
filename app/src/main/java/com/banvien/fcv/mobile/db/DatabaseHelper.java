@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.banvien.fcv.mobile.db.dao.CaptureAfterDAO;
+import com.banvien.fcv.mobile.db.dao.CaptureBeforeDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureOverviewDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
@@ -29,6 +31,8 @@ import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
 import com.banvien.fcv.mobile.db.dao.SurveyDAO;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
+import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
@@ -101,6 +105,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private SurveyDAO surveyDAO = null;
 	private QuestionDAO questionDAO = null;
 	private QuestionContentDAO questionContentDAO = null;
+	private CaptureBeforeDAO captureBeforeDAO = null;
+	private CaptureAfterDAO captureAfterDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -128,6 +134,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTableIfNotExists(connectionSource, CaptureToolEntity.class);
             TableUtils.createTableIfNotExists(connectionSource, OutletFirstImagesEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, OutletEndDayImagesEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, CaptureOverviewEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, CaptureAfterEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, CaptureBeforeEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, CaptureOverviewEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, ShortageProductEntity.class);
             TableUtils.createTableIfNotExists(connectionSource, ConfirmWorkingEntity.class);
@@ -179,6 +188,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ConfirmWorkingEntity.class, true);
 
             TableUtils.dropTable(connectionSource, CaptureOverviewEntity.class, true);
+			TableUtils.dropTable(connectionSource, CaptureAfterEntity.class, true);
+			TableUtils.dropTable(connectionSource, CaptureBeforeEntity.class, true);
             TableUtils.dropTable(connectionSource, ShortageProductEntity.class, true);
 
 			TableUtils.dropTable(connectionSource, SurveyEntity.class, true);
@@ -356,6 +367,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         return confirmWorkingDAO;
     }
+
+
+	public CaptureBeforeDAO getCaptureBeforeDAO() throws SQLException {
+		if(null == captureBeforeDAO) {
+			captureBeforeDAO = new CaptureBeforeDAO(getConnectionSource(), CaptureBeforeEntity.class);
+		}
+
+		return captureBeforeDAO;
+	}
+
+	public CaptureAfterDAO getCaptureAfterDAO() throws SQLException {
+		if(null == captureAfterDAO) {
+			captureAfterDAO = new CaptureAfterDAO(getConnectionSource(), CaptureAfterEntity.class);
+		}
+
+		return captureAfterDAO;
+	}
+
 
 	public SurveyDAO getSurveyDAO() throws SQLException {
 		if(null == surveyDAO) {

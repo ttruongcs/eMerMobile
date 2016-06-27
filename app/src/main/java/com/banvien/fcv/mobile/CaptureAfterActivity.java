@@ -1,7 +1,5 @@
 package com.banvien.fcv.mobile;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,9 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,17 +19,16 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
-import com.banvien.fcv.mobile.library.SyncService;
-import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.banvien.fcv.mobile.utils.HomeWatcher;
-import com.banvien.fcv.mobile.utils.OnHomePressedListener;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,44 +36,53 @@ import java.util.Random;
 import butterknife.Bind;
 
 /**
- * Created by Linh Nguyen on 6/25/2016.
+ * Created by Linh Nguyen on 6/23/2016.
  */
-public class ConfirmWorkingActivity extends BaseDrawerActivity  {
+public class CaptureAfterActivity extends BaseDrawerActivity {
     private static String urlImage;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
+    private RouteScheduleEntity routeScheduleDTO;
+    private static long outletId;
+    private static OutletEntity outlet;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.fabSyncTask)
-    FloatingActionButton fabSyncTask;
-
     @Bind(R.id.gridListImage)
     GridView gridListImage;
-
-    private static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.capturelistworkingday);
+        setContentView(R.layout.capturelist);
         setInitialConfiguration();
         repo = new Repo(this);
-
+        outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        try {
+            outlet = repo.getOutletDAO().findById(outletId);
+        } catch (SQLException e) {
+            ELog.d("CaptureAfterActivity", "Error when find Outlet ");
+        }
+        routeScheduleDTO = getRouteSchedule();
         bindGallery();
-        bindEvents();
     }
 
-    private void bindEvents() {
-
+    private RouteScheduleEntity getRouteSchedule() {
+        RouteScheduleEntity result = new RouteScheduleEntity();
+        try {
+            result = this.repo.getRouteScheduleDAO().findRoute();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return result;
     }
 
     private void bindGallery() {
-        List<ConfirmWorkingEntity> images = new ArrayList<>();
+        List<CaptureAfterEntity> images = new ArrayList<>();
         try {
-            images = this.repo.getConfirmWorkingDAO().findAll();
+            images = this.repo.getCaptureAfterDAO().findAll();
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
@@ -158,7 +162,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
                     File image = new File(photoUri);
                     if (image.exists()) {
                         removedImages.add(imageDTOs.get(i));
-                        this.repo.getConfirmWorkingDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
+                        this.repo.getCaptureToolDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
                         image.delete(); //Delete from external storage
                     } else {
                         ELog.d("File is not exist");
@@ -178,20 +182,18 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         }
     }
 
-    private List<ImageDTO> loadGallery(List<ConfirmWorkingEntity> images) {
+    private List<ImageDTO> loadGallery(List<CaptureAfterEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (ConfirmWorkingEntity confirmWorkingEntity : images) {
-            File image = new File(confirmWorkingEntity.getPathImage());
-            ELog.d("Image", confirmWorkingEntity.getPathImage().replace(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + ScreenContants.CAPTURE_FCV_IMAGE, ""));
+        for (CaptureAfterEntity captureToolDTO : images) {
+            File image = new File(captureToolDTO.getPathImage());
             if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
                 Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-                imageDTO.set_id(confirmWorkingEntity.get_id());
+                imageDTO.set_id(captureToolDTO.get_id());
                 imageDTO.setImage(bitmap);
-                imageDTO.setImagePath(confirmWorkingEntity.getPathImage());
+                imageDTO.setImagePath(captureToolDTO.getPathImage());
                 imageDTOs.add(imageDTO);
             }
         }
@@ -208,60 +210,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
                 dispatchTakePictureIntent(v);
             }
         });
-
-        fabSyncTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConfirmDialog(v);
-            }
-        });
     }
-
-
-    private void showConfirmDialog(final View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle(this.getString(R.string.dialog_sync_confirm_working_title));
-        builder.setMessage(this.getString(R.string.dialog_sync_confirm_working));
-
-        String positiveText = this.getString(R.string.accept);
-        builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    progressDialog  = new ProgressDialog(v.getContext());
-                    progressDialog.setMessage(v.getContext().getText(R.string.updating));
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    SyncService syncService = new SyncService(v.getContext(), 1l);
-                    syncService.synConfirmNewDayImformation(progressDialog);
-                    if(imageDTOs.size() > 0) {
-                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
-                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
-                        changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
-                    }
-                } catch (SQLException e) {
-                    ELog.d("Error when Sync Comfirm Working");
-                }
-            }
-        });
-
-        String negativeText = this.getString(R.string.cancel);
-        builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //todo
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-
-
 
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
@@ -282,16 +231,20 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ConfirmWorkingEntity confirmWorkingEntity = new ConfirmWorkingEntity();
-            String filename = urlImage.substring(urlImage.lastIndexOf('/') + 1, urlImage.length());
-            confirmWorkingEntity.setPathImage(urlImage);
-            confirmWorkingEntity.setName(filename);
-            confirmWorkingEntity.setType(ScreenContants.CONFIRM_WORKING);
+            CaptureAfterEntity captureToolEntity = new CaptureAfterEntity();
+            captureToolEntity.setPathImage(urlImage);
+            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            captureToolEntity.setOutletId(outletId);
+            if(routeScheduleDTO != null) {
+                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+            }
 
             try {
-                repo.getConfirmWorkingDAO().create(confirmWorkingEntity);
+                repo.getCaptureAfterDAO().create(captureToolEntity);
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
+            } catch (NullPointerException e) {
+                ELog.d("Outlet is not exist");
             }
         }
     }
@@ -311,10 +264,12 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         // using Environment.getExternalStorageState() before doing this.
         long date = System.currentTimeMillis();
 
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        String dateString = sdf.format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String dateString = sdf.format(date);
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory(), ScreenContants.CAPTURE_FCV_IMAGE + ScreenContants.CAPTURE_CONFIRM_WORKING);
+
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                , ScreenContants.CAPTURE_AFTER_PATH + outlet.getCode() + "/" + dateString);
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
@@ -325,7 +280,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         // Create a media file name
         Random r = new Random();
         urlImage = mediaStorageDir.getPath() + File.separator
-                + (ScreenContants.CONFIRM_WORKING_PATH + System.currentTimeMillis() + r.nextInt() + ".jpg").toString();
+                + (System.currentTimeMillis() + r.nextInt() + ".jpg").toString();
         ELog.d("imageUrl", urlImage);
         File mediaFile = new File(urlImage);
         return mediaFile;
@@ -342,20 +297,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         super.onDestroy();
         if(repo != null) {
             repo.release();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    private void setStatusChange() {
-        if(imageDTOs.size() > 0) {
-            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
-            String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
-            changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                    , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
         }
     }
 }

@@ -82,7 +82,7 @@ public class CaptureActivity extends BaseDrawerActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CapturePosmActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                intent.putExtra(ScreenContants.CAPTURE_TYPE, ScreenContants.IMAGE_AFTER_POSM);
+                intent.putExtra(ScreenContants.CAPTURE_TYPE, ScreenContants.IMAGE_AFTER);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);
             }
@@ -93,7 +93,7 @@ public class CaptureActivity extends BaseDrawerActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CapturePosmActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                intent.putExtra(ScreenContants.CAPTURE_TYPE, ScreenContants.IMAGE_BEFORE_POSM);
+                intent.putExtra(ScreenContants.CAPTURE_TYPE, ScreenContants.IMAGE_BEFORE);
                 ELog.d("Outlet Id", String.valueOf(outletId));
                 startActivity(intent);
             }

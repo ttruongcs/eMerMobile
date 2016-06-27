@@ -61,8 +61,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
-        if (captureType == ScreenContants.IMAGE_AFTER_POSM
-                || captureType == ScreenContants.IMAGE_BEFORE_POSM) {
+        if (captureType == ScreenContants.IMAGE_AFTER
+                || captureType == ScreenContants.IMAGE_BEFORE) {
             posmId = this.getIntent().getLongExtra(ScreenContants.KEY_POSM_ID, 0l);
         }
         try {
@@ -231,8 +231,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             outletMerEntity.setDataType(captureType);
             outletMerEntity.setActualValue(urlImage);
             outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
-            if (captureType == ScreenContants.IMAGE_AFTER_POSM
-                    || captureType == ScreenContants.IMAGE_BEFORE_POSM) {
+            if (captureType == ScreenContants.IMAGE_AFTER
+                    || captureType == ScreenContants.IMAGE_BEFORE) {
                 outletMerEntity.setReferenceValue(posmId.toString());
             }
             try {

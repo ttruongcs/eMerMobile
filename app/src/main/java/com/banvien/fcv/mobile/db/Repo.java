@@ -2,6 +2,8 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 
+import com.banvien.fcv.mobile.db.dao.CaptureAfterDAO;
+import com.banvien.fcv.mobile.db.dao.CaptureBeforeDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureOverviewDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.dao.CaptureUniformDAO;
@@ -133,6 +135,14 @@ public class Repo {
 
     public ConfirmWorkingDAO getConfirmWorkingDAO() throws SQLException {
         return  databaseHelper.getConfirmWorkingDAO();
+    }
+
+    public CaptureAfterDAO getCaptureAfterDAO() throws SQLException {
+        return  databaseHelper.getCaptureAfterDAO();
+    }
+
+    public CaptureBeforeDAO getCaptureBeforeDAO() throws SQLException {
+        return  databaseHelper.getCaptureBeforeDAO();
     }
 
     public SurveyDAO getSurveyDAO() throws SQLException {

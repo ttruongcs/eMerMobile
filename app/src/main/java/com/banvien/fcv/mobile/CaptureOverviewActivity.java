@@ -76,9 +76,9 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     }
 
     private void bindGallery() {
-        List<CaptureOverviewDTO> images = new ArrayList<>();
+        List<CaptureOverviewEntity> images = new ArrayList<>();
         try {
-            images = this.repo.getCaptureOverviewDAO().findAll();
+            images = this.repo.getCaptureOverviewDAO().findByOutletId(outletId);
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
@@ -178,9 +178,9 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
         }
     }
 
-    private List<ImageDTO> loadGallery(List<CaptureOverviewDTO> images) {
+    private List<ImageDTO> loadGallery(List<CaptureOverviewEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (CaptureOverviewDTO captureToolDTO : images) {
+        for (CaptureOverviewEntity captureToolDTO : images) {
             File image = new File(captureToolDTO.getPathImage());
             if (image.exists()) {
                 ImageDTO imageDTO = new ImageDTO();

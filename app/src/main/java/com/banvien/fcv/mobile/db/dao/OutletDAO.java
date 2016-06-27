@@ -4,6 +4,7 @@ package com.banvien.fcv.mobile.db.dao;
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -117,5 +118,17 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
+    }
+
+    public long checkExist(Long outletId) {
+        long countOf = 0;
+        QueryBuilder<OutletEntity, String> queryBuilder = queryBuilder();
+        try {
+            countOf = queryBuilder.where().eq("outletId", outletId).countOf();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return countOf;
     }
 }

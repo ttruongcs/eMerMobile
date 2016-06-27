@@ -27,6 +27,7 @@ import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -270,5 +271,15 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         bindGallery();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(imageDTOs.size() > 0) {
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                    , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
+        }
     }
 }
