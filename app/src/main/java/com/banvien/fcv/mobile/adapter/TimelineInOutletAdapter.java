@@ -203,13 +203,16 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     repo = new Repo(v.getContext());
                     try {
-                        StatusInOutletEntity statusInOutlet = repo.getStatusInOutletDAO().getConfigStatusInOutletHome();
+                        StatusInOutletEntity statusInOutlet = repo.getStatusInOutletDAO().getConfigStatusInOutletHome(
+                                Long.valueOf(routeScheduleDetailId.getText().toString()));
 
                         switch (stepCode.getText().toString()) {
                             // IN OUTLET
                             case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
                                 Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
                                 mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                    , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 v.getContext().startActivity(mapsIntent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:

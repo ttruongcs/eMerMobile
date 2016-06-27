@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.fragments.CustomMapFragment;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,7 +39,9 @@ public class MapsActivity extends FragmentActivity  {
     private CustomMapFragment mapFragment;
     private Repo repo;
     private static Long outletId;
+    private static Long routeScheduleDetailId;
     private OutletDTO outletDTO;
+    private boolean isValid = false;
 
     @Bind(R.id.tvTime)
     TextView tvTime;
@@ -60,6 +64,8 @@ public class MapsActivity extends FragmentActivity  {
         ButterKnife.bind(this);
         repo = new Repo(this);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
+        isValid = false;
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
          mapFragment = (CustomMapFragment) getSupportFragmentManager()
@@ -96,6 +102,21 @@ public class MapsActivity extends FragmentActivity  {
         btnAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isValid == true) {
+                    addOrUpdateGPS();
+                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+                    String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
+                    changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                            , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                    Intent intent = new Intent(v.getContext(), InOutletHomeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 double lat = mapFragment.getLocation().getLatitude();
                 double log = mapFragment.getLocation().getLongitude();
 
@@ -106,9 +127,12 @@ public class MapsActivity extends FragmentActivity  {
                 locationB.setLatitude(outletDTO.getLat());
                 locationB.setLongitude(outletDTO.getLg());
                 float distance = locationA.distanceTo(locationB) ;
-                tvGps.setText(String.valueOf(lat));
-                if(distance <= ScreenContants.GPS_DISTANCE){
-                    Toast.makeText(v.getContext(), "Khoang Cach < " + distance, Toast.LENGTH_SHORT).show();
+                tvGps.setText(String.valueOf(lat) + "," + String.valueOf(log));
+                if(distance >= ScreenContants.GPS_DISTANCE){
+                    Toast.makeText(v.getContext(), "Khoảng cách cần nhỏ hơn hoặc bằng " + distance, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v.getContext(), "Khoảng cách hợp lệ", Toast.LENGTH_SHORT).show();
+                    isValid = true;
                 }
             }
         });
@@ -131,7 +155,6 @@ public class MapsActivity extends FragmentActivity  {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        addOrUpdateGPS();
     }
 
     private void addOrUpdateGPS() {

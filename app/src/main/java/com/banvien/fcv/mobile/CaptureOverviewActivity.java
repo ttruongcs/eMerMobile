@@ -24,6 +24,7 @@ import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.CaptureOverviewDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -292,6 +293,17 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
         super.onDestroy();
         if(repo != null) {
             repo.release();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(imageDTOs.size() > 0) {
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            String[] next = {ScreenContants.REGISTER_HISTORY_COLUMN, ScreenContants.BEFORE_DISPLAY_COLUMN};
+            changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                    , ScreenContants.CAPTURE_OVERVIEW_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
         }
     }
 }

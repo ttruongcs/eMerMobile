@@ -5,6 +5,9 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -37,15 +40,19 @@ public class StatusInOutletDAO extends AndroidBaseDaoImpl<StatusInOutletEntity, 
         }
     }
 
-    public StatusInOutletEntity getConfigStatusInOutletHome() {
-        List<StatusInOutletEntity> result = new ArrayList<>();
+    public StatusInOutletEntity getConfigStatusInOutletHome(Long routeScheduleDetailId) {
+        StatusInOutletEntity result = null;
+        QueryBuilder<StatusInOutletEntity, String> queryBuilder = queryBuilder();
+        PreparedQuery<StatusInOutletEntity> preparedQuery = null;
         try {
-            result  = queryForAll();
+            queryBuilder.where().eq("routeScheduleDetailId", routeScheduleDetailId);
+            preparedQuery = queryBuilder.prepare();
+            result  = queryForFirst(preparedQuery);
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
-        if(result.size() == 0) return null;
-        return result.get(0);
+
+        return result;
     }
 
     public void clearData() throws SQLException {
@@ -53,5 +60,39 @@ public class StatusInOutletDAO extends AndroidBaseDaoImpl<StatusInOutletEntity, 
             ELog.d("clear Data Status In Outlet");
             deleteBuilder().delete();
         }
+    }
+
+    public boolean updateStatus(String now, String[] next, Long routeScheduleDetailId) {
+        boolean result = false;
+        UpdateBuilder<StatusInOutletEntity, String> updateBuilder = updateBuilder();
+
+        try {
+            updateBuilder.updateColumnValue(now, 2);
+            if(next != null && next.length > 0) {
+                if(next.length == 1) {
+                    updateBuilder.updateColumnValue(next[0], 1);
+                } else {
+                    for(int i=0 ; i < next.length; i++) {
+                        if(i == (next.length - 1)) {
+                            updateBuilder.updateColumnValue(next[i], 1);
+                        } else {
+                            updateBuilder.updateColumnValue(next[i], 2);
+                        }
+
+                    }
+                }
+
+
+            }
+            updateBuilder.where().eq("routeScheduleDetailId", routeScheduleDetailId);
+            long countOf = updateBuilder.update();
+            if(countOf > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result;
     }
 }

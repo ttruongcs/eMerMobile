@@ -71,7 +71,7 @@ public class DoingOutletFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new OutletListAdapter(mData, DoingOutletFragment.this, ScreenContants.DOING);
+        adapter = new OutletListAdapter(mData, DoingOutletFragment.this, ScreenContants.DOING, repo);
         recyclerView.setAdapter(adapter);
 
         onFreshList();

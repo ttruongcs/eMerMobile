@@ -23,7 +23,8 @@ public class StatusInOutletEntity implements Serializable {
     @DatabaseField
     private Integer hutHangDatHang;
     @DatabaseField
-
+    private Long routeScheduleDetailId;
+    @DatabaseField
     private Integer khaoSat;
 
     public long get_id() {
@@ -88,5 +89,13 @@ public class StatusInOutletEntity implements Serializable {
 
     public void setKhaoSat(Integer khaoSat) {
         this.khaoSat = khaoSat;
+    }
+
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }

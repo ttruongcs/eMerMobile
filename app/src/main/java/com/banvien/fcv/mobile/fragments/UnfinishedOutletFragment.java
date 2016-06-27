@@ -74,7 +74,7 @@ public class UnfinishedOutletFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null));
         layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new OutletListAdapter(mData, UnfinishedOutletFragment.this, ScreenContants.UNFINISH);
+        adapter = new OutletListAdapter(mData, UnfinishedOutletFragment.this, ScreenContants.UNFINISH, repo);
         recyclerView.setAdapter(adapter);
 
         onFreshList();
