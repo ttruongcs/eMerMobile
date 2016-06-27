@@ -144,6 +144,19 @@ public class ScreenContants {
     public static final String CONFIRM_WORKING_PATH = "confirm_";
     public static final String CONFIRM_WORKING = "CONFIRM_WORKING";
 
+    //Column parent name
+    public static final String PREPARE_DATE_COLUMN = "chuanBiDauNgay";
+    public static final String IN_OUTLET = "trongCuaHang";
+
+    //Column child name
+
+    public static final String START_DATE_SYNC = "dongBoDuLieuPhanCong";
+    public static final String ADD_OUTLET = "themCuaHangNeuMuon";
+    public static final String CAPTURE_UNIFORM = "chupHinhDongPhuc";
+    public static final String CAPTURE_TOOL = "chupHinhCongCuDungCu";
+    public static final String CONFIRM_WORKING_COLUMN = "xacNhanLamViec";
+    public static final String CAPTURE_FIRST_OUTLET_COLUMN = "chupHinhCuaHangDauTien";
+
 
 
 }

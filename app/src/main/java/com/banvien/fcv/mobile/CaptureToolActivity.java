@@ -24,6 +24,7 @@ import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.CaptureToolDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -288,6 +289,17 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         super.onDestroy();
         if(repo != null) {
             repo.release();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(imageDTOs.size() > 0) {
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            String[] next = {ScreenContants.CONFIRM_WORKING_COLUMN};
+            changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                    , ScreenContants.CAPTURE_TOOL, next, ScreenContants.IN_OUTLET, false);
         }
     }
 }

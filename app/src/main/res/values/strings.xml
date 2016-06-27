@@ -604,6 +604,7 @@
     <string name="register_position">Vị trí đăng ký</string>
 
     <string name="outlet_name_code">Tên/mã cửa hàng</string>
-
+    <string name="add_success">Thêm thành công</string>
+    <string name="add_failed">Thêm thất bại</string>
 
 </resources>

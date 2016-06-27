@@ -3,6 +3,7 @@ package com.banvien.fcv.mobile.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -23,6 +26,7 @@ import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.rest.RestClient;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
 
@@ -140,13 +144,13 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     MAuditOutletPlanDTO auditOutletPlanDTO = DataBinder.readAuditOutletPlan(result.get("auditOutletPlan"));
                     if(auditOutletPlanDTO != null) {
                         addMerResult(auditOutletPlanDTO);
-                        Toast.makeText(itemView.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(itemView.getContext(), activity.getString(R.string.add_success), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                    Toast.makeText(itemView.getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(itemView.getContext(), activity.getString(R.string.add_failed), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -159,6 +163,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             entity.setLocationNo(auditOutletPlanDTO.getLocationNo());
             entity.setStreet(auditOutletPlanDTO.getStreet());
             entity.setDistrict(auditOutletPlanDTO.getDistrict());
+            entity.setStatus(0);
             entity.setWard(auditOutletPlanDTO.getWard());
             entity.setRouteScheduleId(auditOutletPlanDTO.getRouteScheduleId());
             entity.setRouteScheduleDetailId(auditOutletPlanDTO.getRouteScheduleDetailId());

@@ -27,6 +27,7 @@ import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.library.SyncService;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.HomeWatcher;
 import com.banvien.fcv.mobile.utils.OnHomePressedListener;
@@ -343,5 +344,12 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         super.onBackPressed();
     }
 
-
+    private void setStatusChange() {
+        if(imageDTOs.size() > 0) {
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
+            changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                    , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+        }
+    }
 }

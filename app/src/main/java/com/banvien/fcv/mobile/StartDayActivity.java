@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.TimelineAdapter;
 import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
@@ -43,6 +44,15 @@ public class StartDayActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
+        reloadData();
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TimelineAdapter(timelineDTOs, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void reloadData() {
         try {
             StatusStartDayEntity statusStartDayEntity = repo.getStartDayDAO().getConfigStartDayHome();
             if(statusStartDayEntity != null){
@@ -50,14 +60,10 @@ public class StartDayActivity extends BaseDrawerActivity {
             } else{
                 statusStartDay = null;
             }
+            timelineDTOs = buildTreeStep();
         } catch (SQLException e) {
             ELog.d("Error when get CONFIG");
         }
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(buildTreeStep(), this);
-        recyclerView.setAdapter(adapter);
     }
 
     private List<TimelineDTO> buildTreeStep() {
@@ -132,5 +138,12 @@ public class StartDayActivity extends BaseDrawerActivity {
         }
 
         return timelineDTOs;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reloadData();
+        adapter.notifyDataSetChanged();
     }
 }
