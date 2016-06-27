@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.dto.AfterDisplayDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
@@ -28,6 +31,7 @@ import butterknife.Bind;
 public class AfterDisplayActivity extends BaseDrawerActivity {
     private static final String TAG = "BeforeDisplayActivity";
     private static Long outletId;
+    private static Long routeScheduleDetailId;
 
     @Bind(R.id.rvOutletModel)
     RecyclerView recyclerView;
@@ -45,6 +49,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_after_outletmodel);
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
         afterDisplayDTOs = new ArrayList<>();
         hotzoneDTOs = new ArrayList<>();
         sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
@@ -87,7 +92,34 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(this.getString(R.string.before_display_title));
+        builder.setMessage(this.getString(R.string.before_display_content));
+
+        String positiveText = this.getString(R.string.accept);
+        builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+                String[] next = {ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN};
+                changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                        , ScreenContants.AFTER_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                finish();
+
+            }
+        });
+
+        String negativeText = this.getString(R.string.cancel);
+        builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

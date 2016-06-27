@@ -47,6 +47,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     private ImageAdapter adapter;
     private RouteScheduleEntity routeScheduleDTO;
     private static long outletId;
+    private static long routeScheduleDetailId;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
@@ -61,6 +62,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
         setInitialConfiguration();
         repo = new Repo(this);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
 
         routeScheduleDTO = getRouteSchedule();
         bindGallery();
@@ -300,7 +302,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if(imageDTOs.size() > 0) {
-            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this, routeScheduleDetailId);
             String[] next = {ScreenContants.REGISTER_HISTORY_COLUMN, ScreenContants.BEFORE_DISPLAY_COLUMN};
             changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                     , ScreenContants.CAPTURE_OVERVIEW_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);

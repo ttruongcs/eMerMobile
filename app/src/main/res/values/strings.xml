@@ -611,5 +611,9 @@
     <string name="outlet_name_code">Tên/mã cửa hàng</string>
     <string name="add_success">Thêm thành công</string>
     <string name="add_failed">Thêm thất bại</string>
+    <string name="before_display_title">Bạn có chắc muốn quay lại?</string>
+    <string name="before_display_content">
+        Bạn đã hoàn thành xong công việc.\nChọn "đồng ý" để quay lại.\nChọn "Hủy bỏ" để tiếp tục thực hiện công việc.
+    </string>
 
 </resources>

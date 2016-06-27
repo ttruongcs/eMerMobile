@@ -160,6 +160,9 @@ public class ScreenContants {
     public static final String CAPTURE_OVERVIEW_COLUMN = "chupAnhOverview";
     public static final String REGISTER_HISTORY_COLUMN = "xemThongTinDangKyLichSuEIE";
     public static final String BEFORE_DISPLAY_COLUMN = "khaoSatTrungBayTruoc";
+    public static final String AFTER_DISPLAY_COLUMN = "khaoSatTrungBaySau";
+    public static final String SHORTAGE_PRODUCT_COLUMN = "hutHangDatHang";
+    public static final String SURVEY_COLUMN = "khaoSat";
 
 
 
