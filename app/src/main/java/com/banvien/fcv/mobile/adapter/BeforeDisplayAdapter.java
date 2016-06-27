@@ -108,13 +108,16 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final MProductDTO productDTO) {
-            editorBefore.putInt(productDTO.getCode(), 0);
-            editorBefore.apply();
 
             try {
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
                     editMHS.setText(Integer.toString(mhsCodes.get(productDTO.getCode())));
+                    editorBefore.putInt(productDTO.getCode(), mhsCodes.get(productDTO.getCode()));
+                    editorBefore.apply();
+                } else {
+                    editorBefore.putInt(productDTO.getCode(), 0);
+                    editorBefore.apply();
                 }
                 bindEvents(productDTO);
             } catch (Exception e) {

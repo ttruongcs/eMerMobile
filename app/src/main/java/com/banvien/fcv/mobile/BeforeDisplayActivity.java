@@ -47,7 +47,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         beforeDisplayDTOs = new ArrayList<>();
         hotzoneDTOs = new ArrayList<>();
-        sharedPreferences = getSharedPreferences(ScreenContants.MyPREFERENCES, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
 
         bindDatas();
         initRecyclerView();

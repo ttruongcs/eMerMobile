@@ -104,13 +104,14 @@ public class ProductDAO extends AndroidBaseDaoImpl<ProductEntity, String> {
 
     public List<MProductDTO> findByCodes(String[] mhsCode) {
         List<MProductDTO> result = new ArrayList<>();
-        List<String> dataConditions = Arrays.asList(mhsCode);
+        QueryBuilder<ProductEntity, String> queryBuilder = queryBuilder();
+        PreparedQuery<ProductEntity> preparedQuery = null;
         try {
-            List<ProductEntity> entities = queryBuilder().where().in("code", dataConditions).query();
-            if(entities.size() > 0) {
-                for(ProductEntity entity : entities) {
-                    result.add(ProductUtil.convertToDTO(entity));
-                }
+            for(String code : mhsCode) {
+                queryBuilder.where().eq("code", code);
+                preparedQuery = queryBuilder.prepare();
+                ProductEntity productEntity = queryForFirst(preparedQuery);
+                result.add(ProductUtil.convertToDTO(productEntity));
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
