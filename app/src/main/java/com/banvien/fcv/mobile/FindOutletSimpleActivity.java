@@ -81,6 +81,7 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Long routeScheduleId;
 
     Repo repo;
 
@@ -90,8 +91,25 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_find_outlet_simple);
         repo = new Repo(this);
 
+        routeScheduleId = findRouteSchedule();
         bindViews();
         bindEvents();
+    }
+
+    private Long findRouteSchedule() {
+        Long routeScheduleId = null;
+
+        try {
+            RouteScheduleEntity route = repo.getRouteScheduleDAO().findRoute();
+
+            if(route != null) {
+                routeScheduleId = route.getRouteScheduleId();
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return routeScheduleId;
     }
 
     private void bindEvents() {
@@ -138,8 +156,8 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
                 }
                 if(!createdDate.equals("")) {
                     try {
-                        Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
-                                .searchOutlet(null, null, null, null, createdDateTs);
+                         Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
+                                .searchOutlet(null, null, routeScheduleId, null, null, createdDateTs);
                         call.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {

@@ -110,4 +110,12 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
 
         return entities;
     }
+
+    public void addOrUpdate(OutletEntity entity) {
+        try {
+            createOrUpdate(entity);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+    }
 }

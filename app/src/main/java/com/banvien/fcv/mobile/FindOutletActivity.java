@@ -17,6 +17,7 @@ import android.widget.ViewSwitcher;
 
 import com.banvien.fcv.mobile.adapter.AddOutletAdapter;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.DataBinder;
@@ -27,6 +28,7 @@ import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,16 +83,34 @@ public class FindOutletActivity extends BaseDrawerActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private Repo repo;
+    private Long routeScheduleId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_outlet);
         repo = new Repo(this);
+        routeScheduleId = findRouteSchedule();
 
         bindViews();
         bindEvents();
 
+    }
+
+    private Long findRouteSchedule() {
+        Long routeScheduleId = null;
+
+        try {
+            RouteScheduleEntity route = repo.getRouteScheduleDAO().findRoute();
+
+            if(route != null) {
+                routeScheduleId = route.getRouteScheduleId();
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return routeScheduleId;
     }
 
     private void bindEvents() {
@@ -149,7 +169,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
                 if(createdDateTs != null) {
                     try {
                         Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
-                                .searchOutlet(keyword, null, null, null, createdDateTs); //Todo Revise this
+                                .searchOutlet(keyword, null, routeScheduleId, null, null, createdDateTs); //Todo Revise this
                         call.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {

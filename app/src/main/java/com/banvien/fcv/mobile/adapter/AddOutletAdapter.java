@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.db.Repo;
@@ -94,7 +95,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
-                        showDialog(routeScheduleDetailDTO);
+                       showDialog(routeScheduleDetailDTO);
                     }
                 }
             });
@@ -110,7 +111,9 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    ELog.d("hello", "a");
                     addToServer(routeScheduleDetailDTO, DELETE_CURRENT_TASK);
+
                 }
             });
 
@@ -118,7 +121,7 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    addToServer(routeScheduleDetailDTO, NOT_DELETE_CURRENT_TASK);
                 }
             });
 
@@ -137,13 +140,13 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
                     MAuditOutletPlanDTO auditOutletPlanDTO = DataBinder.readAuditOutletPlan(result.get("auditOutletPlan"));
                     if(auditOutletPlanDTO != null) {
                         addMerResult(auditOutletPlanDTO);
-
+                        Toast.makeText(itemView.getContext(), "Add success", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-
+                    Toast.makeText(itemView.getContext(), "Add failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -159,12 +162,14 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
             entity.setWard(auditOutletPlanDTO.getWard());
             entity.setRouteScheduleId(auditOutletPlanDTO.getRouteScheduleId());
             entity.setRouteScheduleDetailId(auditOutletPlanDTO.getRouteScheduleDetailId());
-            entity.setCityName(auditOutletPlanDTO.getCity().getName());
+            if(auditOutletPlanDTO.getCity() != null && auditOutletPlanDTO.getCity().getName() != null) {
+                entity.setCityName(auditOutletPlanDTO.getCity().getName());
+            }
             entity.setLat(auditOutletPlanDTO.getLatitude());
             entity.setLg(auditOutletPlanDTO.getLongitude());
             entity.setAuditedToday(auditOutletPlanDTO.getAuditedToday());
             try {
-                repo.getOutletDAO().addOutletEntity(entity);
+                repo.getOutletDAO().addOrUpdate(entity);
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }
