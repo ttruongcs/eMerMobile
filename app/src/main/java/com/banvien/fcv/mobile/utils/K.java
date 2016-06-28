@@ -23,4 +23,6 @@ public class K {
     public static final String REGISTER_PASSWORD                = "pojo.user.password";
     public static final String REGISTER_USERNAME                = "pojo.user.userName";
 
+    public static final String PRINCIPAL_JSON                   = "principal_json";
+
 }

@@ -1,10 +1,8 @@
 package com.banvien.fcv.mobile.rest.service;
 
-import com.banvien.fcv.mobile.command.OutletMerResultCommand;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.MSurveyDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 
 import java.sql.Timestamp;
@@ -62,4 +60,7 @@ public interface HomeService {
                                       @Query("confirmWoringId") Long confirmWoringId,
                                       @Query("endTime") Timestamp endTime,
                                       @Body MConfirmWorkingImageCommand file2);
+
+    @POST("/mobile/user/auth.html")
+    Call<UserPrincipal> login(@Query("userName") String userName, @Query("password") String password);
 }

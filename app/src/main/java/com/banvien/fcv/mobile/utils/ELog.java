@@ -2,7 +2,7 @@ package com.banvien.fcv.mobile.utils;
 
 import android.util.Log;
 
-import com.banvien.fcv.mobile.utils.A;
+import com.banvien.fcv.mobile.core.A;
 
 
 /**

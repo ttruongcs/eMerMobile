@@ -1,4 +1,4 @@
-package com.banvien.fcv.mobile.utils;
+package com.banvien.fcv.mobile.core;
 
 import android.app.AlarmManager;
 import android.app.Application;
@@ -11,9 +11,13 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 
 import com.banvien.fcv.mobile.R;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
+import com.banvien.fcv.mobile.utils.DataBinder;
+import com.banvien.fcv.mobile.utils.K;
 
 /**
  * Application
@@ -39,6 +43,8 @@ public final class A extends Application
 	private static AlarmManager alarmMan;
 	private static ConnectivityManager connMan;
 
+	private static UserPrincipal principal;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -62,6 +68,20 @@ public final class A extends Application
 
 	public static SharedPreferences.Editor prefEditor() {
 		return editor;
+	}
+
+	public static UserPrincipal getPrincipal() {
+		if (principal == null) {
+			String json = A.gets(K.PRINCIPAL_JSON);
+			if (!TextUtils.isEmpty(json)) {
+				principal = DataBinder.readUserPrincipal(json);
+			}
+		}
+		return principal;
+	}
+
+	public static void setPrincipal(UserPrincipal principal) {
+		A.principal = principal;
 	}
 
 	public static ContentResolver contentResolver() {

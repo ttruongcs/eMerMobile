@@ -6,6 +6,7 @@ import com.banvien.fcv.mobile.dto.POSMDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.SurveyDTO;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
@@ -157,5 +158,24 @@ public class DataBinder {
         }
 
         return res;
+    }
+
+    public static UserPrincipal readUserPrincipal(String json) {
+        UserPrincipal res = null;
+        try {
+            res = mapper.readValue(json, UserPrincipal.class);
+        }catch (Exception e) {
+            ELog.e(e.getMessage(), e);
+        }
+        return res;
+    }
+
+    public static String toJsonString(Object object) {
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            ELog.e(e.getMessage(), e);
+        }
+        return "";
     }
 }
