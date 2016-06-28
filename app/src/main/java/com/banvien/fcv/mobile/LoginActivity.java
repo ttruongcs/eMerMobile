@@ -42,6 +42,7 @@ public class LoginActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_login);
 
         if (A.getPrincipal() != null) {
+            RestClient.getInstance().setAuthToken(A.getPrincipal().getJwt());
             startHomeActivity();
             finish();
         } else {
