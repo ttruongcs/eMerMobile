@@ -275,7 +275,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
         private void showAlertBox(final View v) throws SQLException {
             android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
-            builderSingle.setTitle("Chọn một cửa hàng : ");
+            builderSingle.setTitle("Chọn một cửa hàng: ");
             List<OutletDTO> outletList = repo.getOutletDAO().findAll();
             final ArrayAdapter<OutletDTO> arrayAdapter = new ArrayAdapter<OutletDTO>(
                     v.getContext(),
@@ -299,7 +299,10 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             final OutletDTO outletDTO = arrayAdapter.getItem(which);
                             android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
                                     v.getContext());
-                            builderInner.setMessage(outletDTO.getName());
+                            StringBuilder stringBuilder = new StringBuilder(outletDTO.getName());
+                            stringBuilder.append(" - ").append(outletDTO.getCode()).append("\n");
+                            stringBuilder.append("So 5, duong so 4, ngo so 2");
+                            builderInner.setMessage(stringBuilder.toString());
                             builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
                             builderInner.setPositiveButton(
                                     "Ok",
