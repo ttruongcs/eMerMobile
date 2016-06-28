@@ -119,20 +119,27 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
         }
 
         private void configStatusInOutlet(Long routeScheduleDetailId) {
-            StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
-            statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
-            statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
-            statusInOutletEntity.setRouteScheduleDetailId(routeScheduleDetailId);
-
             try {
-                repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
+                List<StatusInOutletEntity> statusInOutletEntities = repo.getStatusInOutletDAO().queryForEq("routeScheduleDetailId", routeScheduleDetailId);
+                if(statusInOutletEntities.size() <= 0) {
+                    StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
+                    statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
+                    statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setKhaoSatTrungBayTruoc(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+
+                    repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);
+                } else {
+                    ELog.d("Status outlet đã tồn tại");
+                }
+
+
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }

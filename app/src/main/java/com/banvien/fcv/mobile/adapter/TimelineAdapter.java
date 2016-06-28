@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ConfirmWorkingActivity;
@@ -93,7 +94,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         ItemHolder itemHolder = (ItemHolder) holder;
 
         int height = this.containerHeight(activity);
-        itemHolder.linearLayout.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, height);
+        itemHolder.linearLayout.setLayoutParams(params);
         itemHolder.tvTimeline.setText(mData.get(position).getTitle());
         itemHolder.tvDetail.setText(mData.get(position).getDetail());
         itemHolder.tvOrder.setText(mData.get(position).getOrder());
