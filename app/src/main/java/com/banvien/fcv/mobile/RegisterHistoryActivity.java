@@ -51,15 +51,24 @@ public class RegisterHistoryActivity extends BaseDrawerActivity {
         RegisterInfoDTO registerInfoDTO = new RegisterInfoDTO();
         registerInfoDTO.setName("Vị trí 1");
 
+        RegisterInfoDTO registerInfoDTO2 = new RegisterInfoDTO();
+        registerInfoDTO2.setName("Vị trí 2");
+
+        RegisterInfoDTO registerInfoDTO3 = new RegisterInfoDTO();
+        registerInfoDTO3.setName("Vị trí 3");
+
+        RegisterInfoDTO registerInfoDTO4 = new RegisterInfoDTO();
+        registerInfoDTO4.setName("Vị trí 4");
+
+        RegisterInfoDTO registerInfoDTO5 = new RegisterInfoDTO();
+        registerInfoDTO5.setName("Vị trí 5");
+
         //  Todo Hard cord
         data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
-        data.add(registerInfoDTO);
+        data.add(registerInfoDTO2);
+        data.add(registerInfoDTO3);
+        data.add(registerInfoDTO4);
+        data.add(registerInfoDTO5);
 
 //        RegisterInfoDTO historyDTO = new RegisterInfoDTO();
 //        historyDTO.setName("ahihi");

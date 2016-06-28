@@ -457,7 +457,7 @@
     <string name="other_complaint">Other</string>
     <string name="complaint_hint">Your complaint.</string>
 
-    <string name="select_one">Select one</string>
+    <string name="select_one">Chọn vị trí</string>
 
     <!--Map-->
     <string name="current_position">Current position</string>

@@ -115,6 +115,8 @@ public class MapsActivity extends FragmentActivity  {
                     intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
                     startActivity(intent);
                     finish();
+                } else {
+                    Toast.makeText(v.getContext(), "Cần check hợp lệ trước khi đồng ý", Toast.LENGTH_SHORT).show();
                 }
             }
         });

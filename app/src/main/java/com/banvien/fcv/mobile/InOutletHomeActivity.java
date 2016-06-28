@@ -146,4 +146,5 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
 
         return timelineDTOs;
     }
+
 }
