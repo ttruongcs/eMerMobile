@@ -3,6 +3,8 @@ package com.banvien.fcv.mobile.dto;
 import com.banvien.fcv.mobile.utils.DataBinder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,6 +31,8 @@ public class UserPrincipal implements Serializable {
     private String group;
 
     private String jwt;
+
+    private List<String> authorities;
 
     public UserPrincipal() {
     }
@@ -116,5 +120,16 @@ public class UserPrincipal implements Serializable {
 
     public String toJsonString() {
         return DataBinder.toJsonString(this);
+    }
+
+    public List<String> getAuthorities() {
+        if (authorities == null) {
+            authorities = new ArrayList<>();
+        }
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
     }
 }
