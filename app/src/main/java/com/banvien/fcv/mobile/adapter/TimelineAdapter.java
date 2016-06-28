@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.ConfirmWorkingActivity;
 import com.banvien.fcv.mobile.FindOutletActivity;
@@ -198,6 +199,9 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(cardView.getAlpha() == 0.3f) {
+                        Toast.makeText(v.getContext(), v.getContext().getString(R.string.notyet_done), Toast.LENGTH_SHORT).show();
+                    }
                     repo = new Repo(v.getContext());
                     try {
                         StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
