@@ -616,5 +616,5 @@
         Bạn đã hoàn thành xong công việc.\nChọn "đồng ý" để quay lại.\nChọn "Hủy bỏ" để tiếp tục thực hiện công việc.
     </string>
     <string name="notyet_done">Hoàn thành các bước bên trên để tiếp tục.</string>
-
+    <string name="username">Tên đăng nhập</string>
 </resources>

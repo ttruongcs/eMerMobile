@@ -21,6 +21,7 @@
 		<item name="android:textColorSecondary">@android:color/white</item>
 		<item name="actionMenuTextColor">@android:color/white</item>
 		<item name="android:textColor">@color/text</item>
+
 	</style>
 	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 	<!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
@@ -81,6 +82,7 @@
         <!-- Used for the bottom line when not selected / focused -->
         <item name="colorControlNormal">#9e9e9e</item>
         <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
+		<item name="android:colorControlHighlight">@color/primary_kanban</item>
     </style>
 
 	<style name="EditTextCustomHolo" parent="android:Widget.EditText">

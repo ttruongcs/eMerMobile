@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 
@@ -72,7 +75,6 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView.setAlpha(0.3f);
         }
-
 
         return v;
     }
