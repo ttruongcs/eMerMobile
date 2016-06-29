@@ -18,6 +18,7 @@ import com.banvien.fcv.mobile.dto.ShortageProductDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
     private LayoutInflater inflater;
     private Long outletId;
     private Long routeScheduleDetailId;
+    private HashMap<Integer, boolean[]> mChildCheckStates;
 
     public MyExpandableAdapter(Context context, List<ProductgroupDTO> sections,
                                Map<String, List<MProductDTO>> products,
@@ -44,6 +46,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         this.orderInfos = orderInfos;
         this.routeScheduleDetailId = routeScheduleDetailId;
         inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mChildCheckStates = new HashMap<Integer, boolean[]>();
     }
 
     @Override
@@ -96,6 +99,8 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final int mGroupPosition = groupPosition;
+        final int mChildPosition = childPosition;
         final MProductDTO childText = (MProductDTO) getChild(groupPosition, childPosition);
 
         if(convertView == null) {
@@ -110,20 +115,38 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         CheckBox cbShortage = (CheckBox) convertView.findViewById(R.id.cbShortage);
 
         if(orderInfos.get(childText.getCode()) != null) {
-            cbShortage.setChecked(true);
+            boolean[] getChecked = mChildCheckStates.get(mGroupPosition);
+            getChecked[mChildPosition] = true;
+            mChildCheckStates.put(mGroupPosition, getChecked);
             tvShortage.setText(orderInfos.get(childText.getCode()));
+        }
+
+        if(mChildCheckStates.containsKey(mGroupPosition)) {
+            boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
+            cbShortage.setChecked(getChecked[mChildPosition]);
+        } else {
+            boolean getChecked[] = new boolean[getChildrenCount(mGroupPosition)];
+            mChildCheckStates.put(mGroupPosition, getChecked);
+            cbShortage.setChecked(false);
         }
 
         cbShortage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if ( ((CheckBox)v).isChecked() ) {
+                    boolean[] getChecked = mChildCheckStates.get(mGroupPosition);
+                    getChecked[mChildPosition] = true;
+                    mChildCheckStates.put(mGroupPosition, getChecked);
                     insertOrRemoveData(childText, ScreenContants.INSERT, tvShortage);
                 } else if(!((CheckBox)v).isChecked()) {
+                    boolean getChecked[] = mChildCheckStates.get(mGroupPosition);
+                    getChecked[mChildPosition] = false;
+                    mChildCheckStates.put(mGroupPosition, getChecked);
                     insertOrRemoveData(childText, ScreenContants.REMOVE, tvShortage);
                 }
             }
         });
+
 
         return convertView;
     }
