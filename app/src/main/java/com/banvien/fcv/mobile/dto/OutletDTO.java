@@ -168,12 +168,8 @@ public class OutletDTO implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder(name);
         stringBuilder.append(" - ").append(code).append("\n");
-        if(locationNo != null && street != null && ward != null && cityName != null) {
-            stringBuilder.append("Địa chỉ: ").append(locationNo).append(", ").append(street).append(", ");
-            stringBuilder.append(ward).append(", ").append(cityName);
-        } else {
-            stringBuilder.append("GPS: ").append(lat).append(",").append(lg).append("\n");
-        }
+        stringBuilder.append("Địa chỉ: ").append(locationNo).append(", ").append(street).append(", ");
+        stringBuilder.append(ward).append(", ").append(cityName);
 
         return stringBuilder.toString();
     }

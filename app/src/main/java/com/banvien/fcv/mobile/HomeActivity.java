@@ -6,17 +6,20 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.banvien.fcv.mobile.adapter.TimelineAdapter;
 import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.K;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -123,6 +126,15 @@ public class HomeActivity extends BaseDrawerActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if(id == R.id.action_loggout) {
+            A.delc(K.PRINCIPAL_JSON);
+
+            if (TextUtils.isEmpty(A.gets(K.PRINCIPAL_JSON))) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         return super.onOptionsItemSelected(item);
