@@ -29,8 +29,10 @@
         android:id="@+id/fabShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|start"
         fab:fab_label="Share"
+        fab:fab_colorNormal="@color/primary_kanban"
+        fab:fab_colorPressed="@color/primary_kanban"
         android:src="@drawable/ic_share" />
 
 

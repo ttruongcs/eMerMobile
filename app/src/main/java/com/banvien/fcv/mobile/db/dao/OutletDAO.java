@@ -8,6 +8,7 @@ import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -130,5 +131,20 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         }
 
         return countOf;
+    }
+
+    public int updateGpsOutlet(Long outletId, double lat, double log) {
+        int rowSuccess = 0;
+        UpdateBuilder<OutletEntity, String> updateBuilder = updateBuilder();
+        try {
+            updateBuilder.updateColumnValue("lat", lat);
+            updateBuilder.updateColumnValue("lg", log);
+            updateBuilder.where().eq("outletId", outletId);
+            rowSuccess = updateBuilder.update();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return rowSuccess;
     }
 }

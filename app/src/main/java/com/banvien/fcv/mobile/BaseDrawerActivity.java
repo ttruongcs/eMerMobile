@@ -44,15 +44,6 @@ public class BaseDrawerActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_loggout) {
-            A.delc(K.PRINCIPAL_JSON);
-
-            if (TextUtils.isEmpty(A.gets(K.PRINCIPAL_JSON))) {
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
         return true;
     }
 
