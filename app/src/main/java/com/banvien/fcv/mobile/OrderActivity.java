@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.banvien.fcv.mobile.adapter.MyExpandableAdapter;
 import com.banvien.fcv.mobile.beanutil.OutletMerUtil;
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.beanutil.ShortageProductUtil;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
@@ -22,6 +24,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.dto.ShortageProductDTO;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.github.clans.fab.FloatingActionButton;
@@ -58,6 +61,7 @@ public class OrderActivity extends BaseDrawerActivity {
     private Map<String, String> orderInfos;
     private List<String> shortageCodes;
     private SharedPreferences sharedPreferences;
+    private UserPrincipal principal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class OrderActivity extends BaseDrawerActivity {
         orderInfos = new HashMap<>();
         shortageCodes = new ArrayList<>();
 
+        principal = A.getPrincipal();
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
 
@@ -87,6 +92,7 @@ public class OrderActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    ELog.d(principal.toString());
                     List<ShortageProductDTO> whatsappProducts = repo.getShortageProductDAO().
                             findByRouteScheduleId(routeScheduleDetailId);
                     OutletEntity outletEntity = repo.getOutletDAO().findById(outletId);
@@ -97,9 +103,32 @@ public class OrderActivity extends BaseDrawerActivity {
                     whatsappIntent.setPackage("com.whatsapp");
 
                     /*Create template whatsapp*/
-                    textSend.append("Long Sup Dong Nai").append("\n");
+                    textSend.append(principal.getFirstName()).append(" ").append(principal.getLastName()).append("\n");
                     textSend.append("------------").append("\n");
                     textSend.append(getString(R.string.whatsapp_outlet_name) + ": " + outletDTO.getName()).append("\n");
+                    String fullAddress = "";
+                    StringBuilder address = new StringBuilder();
+                    if(!(outletDTO.getLocationNo() == null && outletDTO.getStreet() == null && outletDTO.getWard() == null && outletDTO.getCityName() == null)) {
+                        address.append("Địa chỉ: ");
+                        if(outletDTO.getLocationNo() != null && !TextUtils.isEmpty(outletDTO.getLocationNo())) {
+                            address.append(outletDTO.getLocationNo()).append(", ");
+                        }
+                        if(outletDTO.getStreet() != null && !TextUtils.isEmpty(outletDTO.getStreet())) {
+                            address.append(outletDTO.getStreet()).append(", ");
+                        }
+                        if(outletDTO.getWard() != null && !TextUtils.isEmpty(outletDTO.getWard())) {
+                            address.append(outletDTO.getWard()).append(", ");
+                        }
+                        if(outletDTO.getCityName() != null && !TextUtils.isEmpty(outletDTO.getCityName())) {
+                            address.append(outletDTO.getCityName());
+                        }
+                        fullAddress = address.toString();
+
+                        if(fullAddress.substring(fullAddress.length() - 1).trim().equals(",")) {
+                            fullAddress = fullAddress.substring(0, fullAddress.length() - 1);
+                        }
+                    }
+                    textSend.append(fullAddress).append("\n");
 
 
                     if(whatsappProducts.size() > 0) {

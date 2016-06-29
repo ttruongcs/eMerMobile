@@ -132,4 +132,19 @@ public class UserPrincipal implements Serializable {
     public void setAuthorities(List<String> authorities) {
         this.authorities = authorities;
     }
+
+    @Override
+    public String toString() {
+        return "UserPrincipal{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", code='" + code + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", group='" + group + '\'' +
+                ", jwt='" + jwt + '\''+
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.banvien.fcv.mobile.dto;
 
 import android.text.Html;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -167,10 +168,32 @@ public class OutletDTO implements Serializable {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder(name);
+        String fullAddress = "";
         stringBuilder.append(" - ").append(code).append("\n");
-        stringBuilder.append("Địa chỉ: ").append(locationNo).append(", ").append(street).append(", ");
-        stringBuilder.append(ward).append(", ").append(cityName);
+        if(!(locationNo == null && street == null && ward == null && cityName == null)) {
+            stringBuilder.append("Địa chỉ: ");
+            if(locationNo != null && !TextUtils.isEmpty(locationNo)) {
+                stringBuilder.append(locationNo).append(", ");
+            }
+            if(street != null && !TextUtils.isEmpty(street)) {
+                stringBuilder.append(street).append(", ");
+            }
+            if(ward != null && !TextUtils.isEmpty(ward)) {
+                stringBuilder.append(ward).append(", ");
+            }
+            if(cityName != null && !TextUtils.isEmpty(cityName)) {
+                stringBuilder.append(cityName);
+            }
+            fullAddress = stringBuilder.toString();
 
-        return stringBuilder.toString();
+            if(fullAddress.substring(fullAddress.length() - 1).trim().equals(",")) {
+                fullAddress = fullAddress.substring(0, fullAddress.length() - 1);
+            }
+        }
+
+
+
+
+        return fullAddress;
     }
 }

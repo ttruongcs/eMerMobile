@@ -137,7 +137,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
                         });
 
                         AlertDialog captureDialog = captureBuilder.create();
-                        captureBuilder.show();
+                        captureDialog.show();
 
                     }
                 } catch (SQLException e) {
