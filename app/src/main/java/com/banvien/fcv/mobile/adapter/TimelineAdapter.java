@@ -300,8 +300,6 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                             android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
                                     v.getContext());
                             StringBuilder stringBuilder = new StringBuilder(outletDTO.getName());
-                            stringBuilder.append(" - ").append(outletDTO.getCode()).append("\n");
-                            stringBuilder.append("So 5, duong so 4, ngo so 2");
                             builderInner.setMessage(stringBuilder.toString());
                             builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
                             builderInner.setPositiveButton(
