@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.banvien.fcv.mobile.adapter.AfterOutletModelAdapter;
 import com.banvien.fcv.mobile.beanutil.HotzoneUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.dto.AfterDisplayDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
@@ -37,6 +40,9 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     @Bind(R.id.rvOutletModel)
     RecyclerView recyclerView;
 
+    @Bind(R.id.fabTakeCapture)
+    FloatingActionButton fabTakeCapture;
+
     private Repo repo;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -55,6 +61,14 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         hotzoneDTOs = new ArrayList<>();
         sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
         bindDatas();
+        fabTakeCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), CaptureAfterActivity.class);
+                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                startActivity(intent);
+            }
+        });
         initRecyclerView();
     }
 

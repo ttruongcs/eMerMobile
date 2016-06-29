@@ -82,7 +82,7 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
     private void bindGallery() {
         List<CaptureAfterEntity> images = new ArrayList<>();
         try {
-            images = this.repo.getCaptureAfterDAO().findAll();
+            images = this.repo.getCaptureAfterDAO().findByOutletId(outletId);
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);

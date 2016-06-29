@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
@@ -82,7 +83,7 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     private void bindGallery() {
         List<CaptureBeforeEntity> images = new ArrayList<>();
         try {
-            images = this.repo.getCaptureBeforeDAO().findAll();
+            images = this.repo.getCaptureBeforeDAO().findByOutletId(outletId);
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
@@ -231,16 +232,16 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureBeforeEntity captureToolEntity = new CaptureBeforeEntity();
-            captureToolEntity.setPathImage(urlImage);
-            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            captureToolEntity.setOutletId(outletId);
+            CaptureBeforeEntity captureBeforeEntity = new CaptureBeforeEntity();
+            captureBeforeEntity.setPathImage(urlImage);
+            captureBeforeEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            captureBeforeEntity.setOutletId(outletId);
             if(routeScheduleDTO != null) {
-                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+                captureBeforeEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
             }
 
             try {
-                repo.getCaptureBeforeDAO().create(captureToolEntity);
+                repo.getCaptureBeforeDAO().create(captureBeforeEntity);
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             } catch (NullPointerException e) {
