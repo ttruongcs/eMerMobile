@@ -13,14 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
-import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
+import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.C;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,21 +27,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Linh Nguyen on 5/20/2016.
+ * Created by Hieu Le on 5/20/2016.
  */
 public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHolder> {
     private List<QuestionEntity> data;
-    private Map<Long, DoSurveyAnswerEntity> responseMap = new HashMap<>();
+    private Map<Long, DoSurveyAnswerEntity> answerMap;
     private Context context;
 
-    public DoSurveyAdapter(Context context, List<QuestionEntity> data) {
+    public DoSurveyAdapter(Context context, List<QuestionEntity> data, Map<Long, DoSurveyAnswerEntity> answerMap) {
         this.context = context;
         this.data = data;
+        this.answerMap = answerMap;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.posm_capture_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_dosurvey, parent, false);
         ViewHolder outletHolder = new ViewHolder(v);
 
         return outletHolder;
@@ -86,7 +86,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
             questionAnswerPane.removeAllViews();
 
-            DoSurveyAnswerEntity doSurveyAnswerEntity = responseMap.get(questionEntity.getQuestionId());
+            DoSurveyAnswerEntity doSurveyAnswerEntity = answerMap.get(questionEntity.getQuestionId());
 
             List<View> views = new ArrayList<>();
             if (C.QUESTION_TYPE_MULTI_SHORT_ANSWER.equals(questionEntity.getType())) {
@@ -135,7 +135,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     private EditText newEditText() {
         EditText editText = new EditText(context);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         editText.setSingleLine();
 
