@@ -54,9 +54,10 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private SharedPreferences sharedPreferenceOrders;
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
+    private TextView tvCountChecked;
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<MProductDTO> productDTOs
-            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences) {
+            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences, TextView tvCountChecked) {
         this.activity = activity;
         this.mData = productDTOs;
         this.edFacing = edFacing;
@@ -68,6 +69,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         sharedPreferenceOrders = this.activity.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferenceOrders.edit();
         this.mhsCodes = new HashMap<>();
+        this.tvCountChecked = tvCountChecked;
     }
 
     @Override

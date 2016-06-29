@@ -117,7 +117,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             AfterDisplayAdapter adapter = new AfterDisplayAdapter(activity, productDTOs, edFacing
-                    , repo, outletId, dto.getOutletModelId(), preferences);
+                    , repo, outletId, dto.getOutletModelId(), preferences, tvCountChecked);
             listView.setAdapter(adapter);
             listView.setScrollbarFadingEnabled(false);
 
