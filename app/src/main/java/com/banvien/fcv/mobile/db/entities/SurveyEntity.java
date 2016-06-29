@@ -17,7 +17,7 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "Survey")
 public class SurveyEntity implements Serializable {
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, id = true)
     private Long surveyId;
     @DatabaseField
     private String name;

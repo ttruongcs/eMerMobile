@@ -11,6 +11,8 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 
@@ -24,7 +26,7 @@ import com.banvien.fcv.mobile.utils.K;
  * Created by hieu on 4/4/2016.
  */
 
-public final class A extends Application
+public final class A extends MultiDexApplication
 {
 	public  static final int SDK  = android.os.Build.VERSION.SDK_INT;
 
@@ -44,6 +46,12 @@ public final class A extends Application
 	private static ConnectivityManager connMan;
 
 	private static UserPrincipal principal;
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		MultiDex.install(this);
+	}
 
 	@Override
 	public void onCreate() {

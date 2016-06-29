@@ -1,7 +1,6 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -20,12 +19,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.banvien.fcv.mobile.ConfirmWorkingActivity;
-import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.CaptureEndDayActivity;
 import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
+import com.banvien.fcv.mobile.ConfirmWorkingActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.FindOutletSimpleActivity;
@@ -35,13 +33,9 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
-import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
-import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.library.SyncService;
-import com.banvien.fcv.mobile.library.UpdateService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 

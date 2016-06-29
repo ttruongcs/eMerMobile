@@ -288,7 +288,9 @@ public class UpdateService {
 				for (QuestionContentDTO questionContentDTO : questionContentDTOs) {
 					try {
 						QuestionContentEntity questionContentEntity = QuestionContentUtil.convertToEntity(questionContentDTO);
-						questionContentEntity.setQuestionId(questionId);
+						QuestionEntity questionEntity = new QuestionEntity();
+						questionEntity.setQuestionId(questionId);
+						questionContentEntity.setQuestion(questionEntity);
 						repo.getQuestionContentDAO().add(questionContentEntity);
 					} catch (SQLException e) {
 						ELog.e(e.getMessage(), e);

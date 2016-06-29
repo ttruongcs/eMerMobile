@@ -1,7 +1,7 @@
 package com.banvien.fcv.mobile.db.entities;
 
-import com.banvien.fcv.mobile.dto.QuestionContentDTO;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "Question")
 public class QuestionEntity implements Serializable {
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, id = true)
     private Long questionId;
     @DatabaseField
     private String questionText;
@@ -29,8 +29,8 @@ public class QuestionEntity implements Serializable {
     @DatabaseField(canBeNull = false)
     private Long surveyId;
 
-
-    private List<QuestionContentDTO> questionContents;
+    @ForeignCollectionField(eager = true, foreignFieldName = "questionId")
+    private List<QuestionContentEntity> questionContents;
 
     public Long getQuestionId() {
         return questionId;
@@ -65,11 +65,11 @@ public class QuestionEntity implements Serializable {
     }
 
 
-    public List<QuestionContentDTO> getQuestionContents() {
+    public List<QuestionContentEntity> getQuestionContents() {
         return questionContents;
     }
 
-    public void setQuestionContents(List<QuestionContentDTO> questionContents) {
+    public void setQuestionContents(List<QuestionContentEntity> questionContents) {
         this.questionContents = questionContents;
     }
 

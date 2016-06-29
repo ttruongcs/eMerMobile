@@ -36,6 +36,7 @@ import butterknife.Bind;
  * Created by Linh Nguyen on 6/23/2016.
  */
 public class CaptureAfterActivity extends BaseDrawerActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static String urlImage;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
@@ -178,25 +179,6 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
         }
     }
 
-//    private List<ImageDTO> loadGallery(List<CaptureAfterEntity> images) {
-//        List<ImageDTO> imageDTOs = new ArrayList<>();
-//        for (CaptureAfterEntity captureToolDTO : images) {
-//            File image = new File(captureToolDTO.getPathImage());
-//            if (image.isFile()) {
-//                ImageDTO imageDTO = new ImageDTO();
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inSampleSize = 8;
-//                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-//                imageDTO.set_id(captureToolDTO.get_id());
-//                imageDTO.setImage(bitmap);
-//                imageDTO.setImagePath(captureToolDTO.getPathImage());
-//                imageDTOs.add(imageDTO);
-//            }
-//        }
-//
-//        return imageDTOs;
-//    }
-
     private List<ImageDTO> loadGallery(List<CaptureAfterEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
         if (images != null) {
@@ -221,9 +203,6 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
             }
         });
     }
-
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

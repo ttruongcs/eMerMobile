@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @DatabaseTable(tableName = "QuestionContent")
 public class QuestionContentEntity implements Serializable {
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, id = true)
     private Long questionContentId;
     @DatabaseField
     private String label;
@@ -22,8 +22,9 @@ public class QuestionContentEntity implements Serializable {
     private String value;
     @DatabaseField
     private Integer sort;
-    @DatabaseField(canBeNull = false)
-    private Long questionId;
+
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = false, columnName = "questionId")
+    private QuestionEntity question;
 
     public Long getQuestionContentId() {
         return questionContentId;
@@ -57,11 +58,11 @@ public class QuestionContentEntity implements Serializable {
         this.sort = sort;
     }
 
-    public Long getQuestionId() {
-        return questionId;
+    public QuestionEntity getQuestion() {
+        return question;
     }
 
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+    public void setQuestion(QuestionEntity question) {
+        this.question = question;
     }
 }
