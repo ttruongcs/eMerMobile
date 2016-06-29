@@ -149,6 +149,15 @@ public class SyncService {
 									   Response<Long> response) {
 					Log.v("newDayDontHaveImage", "success");
 					// Dong Bo Hinh Anh Dau Ngay
+					try {
+						RouteScheduleEntity routeScheduleEntity1 = repo.getRouteScheduleDAO().findRoute();
+						if(routeScheduleEntity1 != null) {
+							routeScheduleEntity1.setConfirmWoringId(Long.valueOf(response.body().toString()));
+							repo.getRouteScheduleDAO().update(routeScheduleEntity1);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 					List<ConfirmWorkingEntity> confirmWorkingEntityList = null;
 					try {
 						confirmWorkingEntityList = repo.getConfirmWorkingDAO().findAll();

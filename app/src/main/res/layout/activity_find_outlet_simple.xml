@@ -68,13 +68,13 @@
                         android:weightSum="1"
                         android:layout_marginBottom="16dp">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".5"
-                            android:text="@string/day"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_weight=".5"-->
+                            <!--android:text="@string/day"-->
+                            <!--android:textColor="@color/black"-->
+                            <!--android:textStyle="bold" />-->
 
 
                         <EditText

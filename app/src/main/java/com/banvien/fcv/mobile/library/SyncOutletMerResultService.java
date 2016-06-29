@@ -2,18 +2,26 @@ package com.banvien.fcv.mobile.library;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
+import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
+import com.banvien.fcv.mobile.dto.CaptureToolDTO;
+import com.banvien.fcv.mobile.dto.CaptureUniformDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MSurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
@@ -361,10 +369,6 @@ public class SyncOutletMerResultService {
 							RequestBody.create(MediaType.parse("multipart/form-data")
 									, new File(mOutletMerResultImageDTO.getMobileImagePath()));
 
-					Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
-							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
-									, mOutletMerResultImageDTO.getImageUrl(), requestFile);
-
 					return RestClient.getInstance()
 							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
 									, mOutletMerResultImageDTO.getImageUrl(), requestFile);
@@ -376,6 +380,271 @@ public class SyncOutletMerResultService {
 				}
 			});
 
+		}
+	}
+
+
+	public void syncImageTool() throws SQLException, IOException {
+		List<CaptureToolDTO> captureToolDTOList = repo.getCaptureToolDAO().findAll();
+		RouteScheduleEntity routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
+		if(routeScheduleEntity.getConfirmWoringId() != null){
+			final Long confirmWorkingId = routeScheduleEntity.getConfirmWoringId();
+			final Long routeScheduleId = routeScheduleEntity.getRouteScheduleId();
+
+			List<MConfirmWorkingImageCommand> mConfirmWorkingImageCommandList = new ArrayList<>();
+			for(CaptureToolDTO captureToolDTO : captureToolDTOList){
+				MConfirmWorkingImageCommand mConfirmWorkingImageCommand = new MConfirmWorkingImageCommand();
+				mConfirmWorkingImageCommand.setName
+						(captureToolDTO.getPathImage().split("/")[captureToolDTO.getPathImage().split("/").length - 1]);
+
+				long date = System.currentTimeMillis();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				String dateString = sdf.format(date);
+				String pathInServer = ScreenContants.CAPTURE_TOOL_PATH + dateString + "/";
+
+				mConfirmWorkingImageCommand.setPathImage(pathInServer);
+				mConfirmWorkingImageCommand.setType(ScreenContants.CAPTURE_TOOL);
+
+				mConfirmWorkingImageCommandList.add(mConfirmWorkingImageCommand);
+			}
+
+			if(mConfirmWorkingImageCommandList.size() > 0) {
+				Call<Long> callBeginImformation = RestClient.getInstance()
+						.getHomeService().uploadBeginDay(routeScheduleId
+								, new Timestamp(System.currentTimeMillis()), confirmWorkingId, null, mConfirmWorkingImageCommandList.get(0));
+
+				callBeginImformation.enqueue(new IteratorCallback<Long>(mConfirmWorkingImageCommandList, 0) {
+					@Override
+					public void onResponseArrive(Call<Long> call, Response<Long> response) {
+
+					}
+					@Override
+					public Call getCall(Object object) {
+						MConfirmWorkingImageCommand mConfirmWorkingImageCommand = (MConfirmWorkingImageCommand)object;
+						return RestClient.getInstance()
+								.getHomeService().uploadBeginDay(routeScheduleId
+										, new Timestamp(System.currentTimeMillis())
+										, confirmWorkingId, null, mConfirmWorkingImageCommand);
+					}
+					@Override
+					public void onFailure(Call<Long> call, Throwable t) {
+
+					}
+				});
+
+				List<MOutletMerResultImageDTO> mOutletMerResultImageDTOs = new ArrayList<>();
+				for(CaptureToolDTO captureToolDTO : captureToolDTOList){
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = new MOutletMerResultImageDTO();
+					mOutletMerResultImageDTO.setNameImage
+							(captureToolDTO.getPathImage().split("/")[captureToolDTO.getPathImage().split("/").length - 1]);
+
+					long date = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String dateString = sdf.format(date);
+					String pathInServer = ScreenContants.CAPTURE_TOOL_PATH + dateString + "/";
+
+					mOutletMerResultImageDTO.setImageUrl(pathInServer);
+					mOutletMerResultImageDTO.setMobileImagePath(captureToolDTO.getPathImage());
+
+					mOutletMerResultImageDTOs.add(mOutletMerResultImageDTO);
+				}
+
+				if(mOutletMerResultImageDTOs.size() > 0){
+
+					RequestBody requestFile =
+							RequestBody.create(MediaType.parse("multipart/form-data")
+									, new File(mOutletMerResultImageDTOs.get(0).getMobileImagePath()));
+
+					Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
+							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTOs.get(0).getNameImage()
+									, mOutletMerResultImageDTOs.get(0).getImageUrl(), requestFile);
+
+
+					callOutletMerResult.enqueue(new IteratorCallback<ResponseBody>(mOutletMerResultImageDTOs, 0) {
+						@Override
+						public void onResponseArrive(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+						}
+
+						@Override
+						public Call getCall(Object object) {
+
+							MOutletMerResultImageDTO mOutletMerResultImageDTO = (MOutletMerResultImageDTO)object;
+
+							RequestBody requestFile =
+									RequestBody.create(MediaType.parse("multipart/form-data")
+											, new File(mOutletMerResultImageDTO.getMobileImagePath()));
+
+							return RestClient.getInstance()
+									.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
+											, mOutletMerResultImageDTO.getImageUrl(), requestFile);
+						}
+
+						@Override
+						public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+						}
+					});
+
+				}
+			}
+
+		}
+	}
+
+
+
+	public void syncImageUniform() throws SQLException, IOException {
+		List<CaptureUniformDTO> captureUniformDTOList = repo.getCaptureUniformDAO().findAll();
+		RouteScheduleEntity routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
+		if(routeScheduleEntity.getConfirmWoringId() != null){
+			final Long confirmWorkingId = routeScheduleEntity.getConfirmWoringId();
+			final Long routeScheduleId = routeScheduleEntity.getRouteScheduleId();
+
+			List<MConfirmWorkingImageCommand> mConfirmWorkingImageCommandList = new ArrayList<>();
+			for(CaptureUniformDTO captureToolDTO : captureUniformDTOList){
+				MConfirmWorkingImageCommand mConfirmWorkingImageCommand = new MConfirmWorkingImageCommand();
+				mConfirmWorkingImageCommand.setName
+						(captureToolDTO.getPathImage().split("/")[captureToolDTO.getPathImage().split("/").length - 1]);
+
+				long date = System.currentTimeMillis();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				String dateString = sdf.format(date);
+				String pathInServer = ScreenContants.CAPTURE_UNIFORM_PATH + dateString + "/";
+
+				mConfirmWorkingImageCommand.setPathImage(pathInServer);
+				mConfirmWorkingImageCommand.setType(ScreenContants.CAPTURE_UNIFORM);
+
+				mConfirmWorkingImageCommandList.add(mConfirmWorkingImageCommand);
+			}
+
+			if(mConfirmWorkingImageCommandList.size() > 0) {
+				Call<Long> callBeginImformation = RestClient.getInstance()
+						.getHomeService().uploadBeginDay(routeScheduleId
+								, new Timestamp(System.currentTimeMillis()), confirmWorkingId, null, mConfirmWorkingImageCommandList.get(0));
+
+				callBeginImformation.enqueue(new IteratorCallback<Long>(mConfirmWorkingImageCommandList, 0) {
+					@Override
+					public void onResponseArrive(Call<Long> call, Response<Long> response) {
+
+					}
+					@Override
+					public Call getCall(Object object) {
+						MConfirmWorkingImageCommand mConfirmWorkingImageCommand = (MConfirmWorkingImageCommand)object;
+						return RestClient.getInstance()
+								.getHomeService().uploadBeginDay(routeScheduleId
+										, new Timestamp(System.currentTimeMillis())
+										, confirmWorkingId, null, mConfirmWorkingImageCommand);
+					}
+					@Override
+					public void onFailure(Call<Long> call, Throwable t) {
+
+					}
+				});
+
+				List<MOutletMerResultImageDTO> mOutletMerResultImageDTOs = new ArrayList<>();
+				for(CaptureUniformDTO captureUniformDTO : captureUniformDTOList){
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = new MOutletMerResultImageDTO();
+					mOutletMerResultImageDTO.setNameImage
+							(captureUniformDTO.getPathImage().split("/")[captureUniformDTO.getPathImage().split("/").length - 1]);
+
+					long date = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String dateString = sdf.format(date);
+					String pathInServer = ScreenContants.CAPTURE_UNIFORM_PATH + dateString + "/";
+
+					mOutletMerResultImageDTO.setImageUrl(pathInServer);
+					mOutletMerResultImageDTO.setMobileImagePath(captureUniformDTO.getPathImage());
+
+					mOutletMerResultImageDTOs.add(mOutletMerResultImageDTO);
+				}
+
+				if(mOutletMerResultImageDTOs.size() > 0){
+
+					RequestBody requestFile =
+							RequestBody.create(MediaType.parse("multipart/form-data")
+									, new File(mOutletMerResultImageDTOs.get(0).getMobileImagePath()));
+
+					Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
+							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTOs.get(0).getNameImage()
+									, mOutletMerResultImageDTOs.get(0).getImageUrl(), requestFile);
+
+
+					callOutletMerResult.enqueue(new IteratorCallback<ResponseBody>(mOutletMerResultImageDTOs, 0) {
+						@Override
+						public void onResponseArrive(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+						}
+
+						@Override
+						public Call getCall(Object object) {
+
+							MOutletMerResultImageDTO mOutletMerResultImageDTO = (MOutletMerResultImageDTO)object;
+
+							RequestBody requestFile =
+									RequestBody.create(MediaType.parse("multipart/form-data")
+											, new File(mOutletMerResultImageDTO.getMobileImagePath()));
+
+							return RestClient.getInstance()
+									.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
+											, mOutletMerResultImageDTO.getImageUrl(), requestFile);
+						}
+
+						@Override
+						public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+						}
+					});
+
+				}
+
+			}
+		}
+	}
+
+	public void clearData() throws SQLException {
+		SharedPreferences sharedPreferences = context.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences sharedPreferenceBefores = context.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		SharedPreferences.Editor editorBefores  = sharedPreferenceBefores.edit();
+		editor.clear();
+		editor.apply();
+		editorBefores.clear();
+		editorBefores.apply();
+		repo.getOutletEndDayImagesDAO().clearData();
+		repo.getStatusHomeDAO().clearData();
+		repo.getRouteScheduleDAO().clearData();
+		repo.getOutletFirstImagesDAO().clearData();
+		repo.getCaptureToolDAO().clearData();
+		repo.getCatgroupDAO().clearData();
+		repo.getComplainTypeDAO().clearData();
+		repo.getHotZoneDAO().clearData();
+		repo.getCaptureUniformDAO().clearData();
+		repo.getPosmDAO().clearData();
+		repo.getProductDAO().clearData();
+		repo.getProductGroupDAO().clearData();
+		repo.getStartDayDAO().clearData();
+		repo.getStatusEndDayDAO().clearData();
+		repo.getStatusInOutletDAO().clearData();
+		repo.getOutletMerDAO().clearData();
+		repo.getOutletRegisteredDAO().clearData();
+		repo.getOutletDAO().clearData();
+		repo.getShortageProductDAO().clearData();
+		repo.getCaptureOverviewDAO().clearData();
+		repo.getConfirmWorkingDAO().clearData();
+		deleteFileImage();
+	}
+
+
+	private void deleteFileImage() {
+		File dir = new File(Environment.getExternalStorageDirectory() + ScreenContants.CAPTURE_FCV_IMAGE);
+		if (dir.isDirectory())
+		{
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++)
+			{
+				new File(dir, children[i]).delete();
+			}
 		}
 	}
 }

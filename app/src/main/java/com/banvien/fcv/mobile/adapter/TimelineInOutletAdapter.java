@@ -32,6 +32,7 @@ import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
 import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
@@ -136,6 +137,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             itemHolder.arrow.setVisibility(View.GONE);
         }
 
+
     }
 
     @Override
@@ -209,11 +211,17 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                         switch (stepCode.getText().toString()) {
                             // IN OUTLET
                             case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
-                                Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
-                                mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                    , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                v.getContext().startActivity(mapsIntent);
+                                OutletEntity outletEntity = repo.getOutletDAO().findById(Long.valueOf(outletId.getText().toString()));
+                                if(outletEntity.getLat() != null && outletEntity.getLg() != null) {
+                                    Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
+                                    mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    v.getContext().startActivity(mapsIntent);
+                                } else {
+                                    showMapsDialog(v);
+                                }
+
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
                                 Intent overviewIntent = new Intent(v.getContext(), CaptureOverviewActivity.class);
@@ -267,6 +275,10 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+        }
+
+        private void showMapsDialog(View v) {
+
         }
     }
 }

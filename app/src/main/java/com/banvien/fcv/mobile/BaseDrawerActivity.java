@@ -1,11 +1,16 @@
 package com.banvien.fcv.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+
+import com.banvien.fcv.mobile.core.A;
+import com.banvien.fcv.mobile.utils.K;
 
 public class BaseDrawerActivity extends BaseActivity {
 
@@ -39,6 +44,15 @@ public class BaseDrawerActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_loggout) {
+            A.delc(K.PRINCIPAL_JSON);
+
+            if (TextUtils.isEmpty(A.gets(K.PRINCIPAL_JSON))) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
         return true;
     }
 

@@ -55,9 +55,12 @@ public class SyncEndActivity extends BaseDrawerActivity {
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                     SyncOutletMerResultService syncService = new SyncOutletMerResultService(v.getContext(), 1l);
+                    syncService.syncImageTool();
+                    syncService.syncImageUniform();
                     syncService.syncOutletMerImage();
                     syncService.syncOutletMerImageImfomation();
                     syncService.syncOutletMerResultToServer(progressDialog, textNumSuccess);
+                    syncService.clearData();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

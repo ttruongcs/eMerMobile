@@ -337,8 +337,12 @@ public class UpdateService {
 				outletEntity.setOutletId(plan.getOutletId());
 				outletEntity.setCode(plan.getCode());
 				outletEntity.setDistrict(plan.getDistrict());
-				outletEntity.setLat(Double.parseDouble(plan.getLatitude().toString()));
-				outletEntity.setLg(Double.parseDouble(plan.getLongitude().toString()));
+				if(plan.getLatitude() != null) {
+					outletEntity.setLat(Double.parseDouble(plan.getLatitude().toString()));
+				}
+				if(plan.getLongitude() != null) {
+                    outletEntity.setLg(Double.parseDouble(plan.getLongitude().toString()));
+                }
 				outletEntity.setName(plan.getName());
 				outletEntity.setRouteScheduleId(plan.getRouteScheduleId());
 				outletEntity.setRouteScheduleDetailId(plan.getRouteScheduleDetailId());

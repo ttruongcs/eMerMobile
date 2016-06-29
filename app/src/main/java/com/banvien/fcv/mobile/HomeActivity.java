@@ -109,6 +109,11 @@ public class HomeActivity extends BaseDrawerActivity {
     }
 
     @Override
+    protected void setToolbarTitle(String title) {
+        super.setToolbarTitle("Cac Buoc Lam Viec");
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
