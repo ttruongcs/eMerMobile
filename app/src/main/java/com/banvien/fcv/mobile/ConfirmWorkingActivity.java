@@ -3,16 +3,12 @@ package com.banvien.fcv.mobile;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +21,9 @@ import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.banvien.fcv.mobile.utils.HomeWatcher;
-import com.banvien.fcv.mobile.utils.OnHomePressedListener;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -64,7 +57,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelistworkingday);
-        setInitialConfiguration();
         repo = new Repo(this);
 
         bindGallery();
@@ -180,17 +172,10 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
 
     private List<ImageDTO> loadGallery(List<ConfirmWorkingEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (ConfirmWorkingEntity confirmWorkingEntity : images) {
-            File image = new File(confirmWorkingEntity.getPathImage());
-            ELog.d("Image", confirmWorkingEntity.getPathImage().replace(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + ScreenContants.CAPTURE_FCV_IMAGE, ""));
-            if (image.exists()) {
+        if (images != null) {
+            for (ConfirmWorkingEntity confirmWorkingEntity : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(confirmWorkingEntity.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(confirmWorkingEntity.getPathImage());
                 imageDTOs.add(imageDTO);
             }
@@ -271,12 +256,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
 
     }
 
-
-
-
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
 
     // intiating camera
     static final int REQUEST_IMAGE_CAPTURE = 1;

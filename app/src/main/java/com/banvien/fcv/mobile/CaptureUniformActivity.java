@@ -1,33 +1,25 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.CaptureUniformDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
@@ -61,7 +53,6 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
 
         routeScheduleDTO = getRouteSchedule();
@@ -184,17 +175,10 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     private List<ImageDTO> loadGallery(List<CaptureUniformDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
         for (CaptureUniformDTO captureUniformDTO : images) {
-            File image = new File(captureUniformDTO.getPathImage());
-            if (image.exists()) {
-                ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-                imageDTO.set_id(captureUniformDTO.get_id());
-                imageDTO.setImage(bitmap);
-                imageDTO.setImagePath(captureUniformDTO.getPathImage());
-                imageDTOs.add(imageDTO);
-            }
+            ImageDTO imageDTO = new ImageDTO();
+            imageDTO.set_id(captureUniformDTO.get_id());
+            imageDTO.setImagePath(captureUniformDTO.getPathImage());
+            imageDTOs.add(imageDTO);
         }
 
         return imageDTOs;
@@ -211,9 +195,6 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
         });
     }
 
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
 
     // intiating camera
     static final int REQUEST_IMAGE_CAPTURE = 1;

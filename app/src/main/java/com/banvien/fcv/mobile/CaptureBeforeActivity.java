@@ -40,6 +40,7 @@ import butterknife.Bind;
  * Created by Linh Nguyen on 6/23/2016.
  */
 public class CaptureBeforeActivity extends BaseDrawerActivity {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static String urlImage;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
@@ -58,7 +59,6 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
@@ -185,15 +185,10 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
 
     private List<ImageDTO> loadGallery(List<CaptureBeforeEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (CaptureBeforeEntity captureToolDTO : images) {
-            File image = new File(captureToolDTO.getPathImage());
-            if (image.exists()) {
+        if (images != null) {
+            for (CaptureBeforeEntity captureToolDTO : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(captureToolDTO.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(captureToolDTO.getPathImage());
                 imageDTOs.add(imageDTO);
             }
@@ -212,13 +207,6 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
             }
         });
     }
-
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
-
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

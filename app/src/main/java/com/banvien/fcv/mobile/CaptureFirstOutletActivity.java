@@ -3,8 +3,6 @@ package com.banvien.fcv.mobile;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,12 +22,9 @@ import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
-import com.banvien.fcv.mobile.dto.OutletMerDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
@@ -65,7 +60,6 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
@@ -186,15 +180,10 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
 
     private List<ImageDTO> loadGallery(List<OutletFirstImagesDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (OutletFirstImagesDTO outletFirstImages : images) {
-            File image = new File(outletFirstImages.getImagePath());
-            if (image.exists()) {
+        if (images != null) {
+            for (OutletFirstImagesDTO outletFirstImages : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(outletFirstImages.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(outletFirstImages.getImagePath());
                 imageDTOs.add(imageDTO);
             }

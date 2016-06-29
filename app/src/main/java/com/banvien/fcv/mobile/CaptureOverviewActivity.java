@@ -1,14 +1,11 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +18,7 @@ import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
-import com.banvien.fcv.mobile.dto.CaptureOverviewDTO;
 import com.banvien.fcv.mobile.dto.ImageDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
@@ -59,7 +54,6 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
@@ -183,15 +177,10 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
 
     private List<ImageDTO> loadGallery(List<CaptureOverviewEntity> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (CaptureOverviewEntity captureToolDTO : images) {
-            File image = new File(captureToolDTO.getPathImage());
-            if (image.exists()) {
+        if (images != null) {
+            for (CaptureOverviewEntity captureToolDTO : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(captureToolDTO.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(captureToolDTO.getPathImage());
                 imageDTOs.add(imageDTO);
             }
@@ -211,9 +200,6 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
         });
     }
 
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
 
     // intiating camera
     static final int REQUEST_IMAGE_CAPTURE = 1;

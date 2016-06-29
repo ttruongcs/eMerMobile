@@ -25,6 +25,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.UiUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -141,6 +142,8 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
                     return true;
                 }
             });
+
+            UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
         }
 
         private List<MProductDTO> convertToMHS(AfterDisplayDTO dto) {

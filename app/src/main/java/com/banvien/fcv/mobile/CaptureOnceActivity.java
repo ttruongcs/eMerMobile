@@ -1,9 +1,6 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -27,7 +22,6 @@ import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.banvien.fcv.mobile.utils.MultiChoiceModeListener;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -57,7 +51,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         captureType = this.getIntent().getStringExtra(ScreenContants.CAPTURE_TYPE);
@@ -179,15 +172,10 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
 
     private List<ImageDTO> loadGallery(List<OutletMerDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (OutletMerDTO outletMerDTO : images) {
-            File image = new File(outletMerDTO.getActualValue());
-            if (image.exists()) {
+        if (images != null) {
+            for (OutletMerDTO outletMerDTO : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(outletMerDTO.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(outletMerDTO.getActualValue());
                 imageDTOs.add(imageDTO);
             }
@@ -205,10 +193,6 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
                 dispatchTakePictureIntent(v);
             }
         });
-    }
-
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
     }
 
     // intiating camera

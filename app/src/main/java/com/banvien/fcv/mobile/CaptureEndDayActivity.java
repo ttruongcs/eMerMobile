@@ -1,14 +1,11 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,15 +16,11 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
-import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletEndDayImagesDTO;
-import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
-import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -39,6 +32,7 @@ import java.util.Random;
 import butterknife.Bind;
 
 public class CaptureEndDayActivity extends BaseDrawerActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private static Long outletId;
     private static Long routeScheduleDetailId;
     private static String urlImage;
@@ -57,7 +51,6 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
@@ -177,15 +170,10 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
 
     private List<ImageDTO> loadGallery(List<OutletEndDayImagesDTO> images) {
         List<ImageDTO> imageDTOs = new ArrayList<>();
-        for (OutletEndDayImagesDTO outletEndDayImages : images) {
-            File image = new File(outletEndDayImages.getImagePath());
-            if (image.exists()) {
+        if (images != null) {
+            for (OutletEndDayImagesDTO outletEndDayImages : images) {
                 ImageDTO imageDTO = new ImageDTO();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
                 imageDTO.set_id(outletEndDayImages.get_id());
-                imageDTO.setImage(bitmap);
                 imageDTO.setImagePath(outletEndDayImages.getImagePath());
                 imageDTOs.add(imageDTO);
             }
@@ -204,12 +192,7 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         });
     }
 
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
 
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public void dispatchTakePictureIntent(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

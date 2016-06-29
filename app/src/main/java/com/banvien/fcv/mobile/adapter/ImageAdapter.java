@@ -2,26 +2,22 @@ package com.banvien.fcv.mobile.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.dto.ImageDTO;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -62,13 +58,17 @@ public class ImageAdapter extends BaseAdapter {
         if(v == null) {
             v = mInflater.inflate(R.layout.grid_item, parent, false);
             v.setTag(R.id.picture, v.findViewById(R.id.picture));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
-
         }
 
         imageView = (ImageView) v.getTag(R.id.picture);
 
-        imageView.setImageBitmap(this.imageDTOs.get(position).getImage());
+        ImageDTO imageDTO = this.imageDTOs.get(position);
+        if (imageDTO.getImage() != null) {
+            imageView.setImageBitmap(imageDTO.getImage());
+        } else if (imageDTO.getImagePath() != null) {
+            final String decoded = Uri.decode(Uri.fromFile(new File(imageDTO.getImagePath())).toString());
+            ImageLoader.getInstance().displayImage(decoded, imageView);
+        }
 
         if(!this.imageDTOs.get(position).isChecked()) {
             imageView.setAlpha(1f);
