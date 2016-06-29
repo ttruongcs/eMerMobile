@@ -112,7 +112,9 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
                 try {
                     DoSurveyAnswerDAO surveyAnswerDAO = repo.getDoSurveyAnswerDAO();
                     QueryBuilder<DoSurveyAnswerEntity, Long> queryBuilder = surveyAnswerDAO.queryBuilder();
-                    queryBuilder.where().in("questionId", questionIds);
+                    queryBuilder.where().eq("outletId", outletId);
+                    queryBuilder.where().and().eq("surveyId", surveyId);
+                    queryBuilder.where().and().in("questionId", questionIds);
                     return surveyAnswerDAO.getResultSetLoader(context, queryBuilder.prepare());
                 } catch (SQLException e) {
                     ELog.e(e.getMessage(), e);
