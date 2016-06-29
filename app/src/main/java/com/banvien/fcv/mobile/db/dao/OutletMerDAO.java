@@ -433,24 +433,24 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
-    public void updateActualValueBefore(Long outletId, Long outletModelId, String s) {
+    public void updateActualValueBefore(Long outletId, Long outletModelId, String s, String type, String typeRef) {
         UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
         try {
             List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
-                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE).query();
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, type).query();
 
             if(outletMerAfterList.size() > 0){
                 updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
-                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_BEFORE);
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, type);
                 updateBuilder.update();
             } else {
                 List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
-                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, typeRef).query();
 
                 if(outletMerList.size() > 0){
                     OutletMerEntity entity = outletMerList.get(0);
                     OutletMerEntity outletMerEntityAfter = entity;
-                    outletMerEntityAfter.setDataType(ScreenContants.MHS_BEFORE);
+                    outletMerEntityAfter.setDataType(type);
                     outletMerEntityAfter.setActualValue(s);
                     addOutletMerEntity(outletMerEntityAfter);
                 }
@@ -460,24 +460,24 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
         }
     }
 
-    public void updateActualValueAfter(Long outletId, Long outletModelId, String s) {
+    public void updateActualValueAfter(Long outletId, Long outletModelId, String s, String type, String typeRef) {
         UpdateBuilder<OutletMerEntity, String> updateBuilder = updateBuilder();
         try {
             List<OutletMerEntity> outletMerAfterList = queryBuilder().where().eq("outletId", outletId).and()
-                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER).query();
+                    .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, type).query();
 
             if(outletMerAfterList.size() > 0){
                 updateBuilder.updateColumnValue("actualValue", s).where().eq("outletId", outletId).and()
-                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS_AFTER);
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, type);
                 updateBuilder.update();
             } else {
                 List<OutletMerEntity> outletMerList = queryBuilder().where().eq("outletId", outletId).and()
-                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, ScreenContants.MHS).query();
+                        .eq("outletModelId", outletModelId).and().eq(ScreenContants.DATA_TYPE, typeRef).query();
 
                 if(outletMerList.size() > 0){
                     OutletMerEntity entity = outletMerList.get(0);
                     OutletMerEntity outletMerEntityAfter = entity;
-                    outletMerEntityAfter.setDataType(ScreenContants.MHS_AFTER);
+                    outletMerEntityAfter.setDataType(type);
                     outletMerEntityAfter.setActualValue(s);
                     addOutletMerEntity(outletMerEntityAfter);
                 }

@@ -257,9 +257,9 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
-                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue, ScreenContants.MHS_BEFORE, ScreenContants.MHS);
                 } else {
-                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId, null);
+                    repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId, null, ScreenContants.MHS_BEFORE, ScreenContants.MHS);
                 }
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
@@ -269,8 +269,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         /*Add Facing to actualValue of this outletModel */
         private void addActualValue(int facing) {
             try {
-                repo.getOutletMerDAO().updateActualValue(outletId, outletModelId
-                        , ScreenContants.FACING, String.valueOf(facing));
+                repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,
+                        String.valueOf(facing), ScreenContants.FACING_BEFORE, ScreenContants.FACING);
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }
@@ -281,7 +281,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
             ELog.d("outletId", String.valueOf(outletId));
             String result = null;
             try {
-                result = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING, outletId, outletModelId);
+                result = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_BEFORE, outletId, outletModelId);
                 edFacing.setText(result);
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);

@@ -165,7 +165,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
             final List<String> spinnerName = new ArrayList<>();
             final List<Long> spinnerId = new ArrayList<>();
             Map<String, String> mapForSearch = new HashMap<>();
-            // int positionSelected = 0;
+            int positionSelected = 0;
             try {
                 spinnerName.add(itemView.getContext().getString(R.string.select_one));
                 spinnerId.add(-1l);
@@ -173,27 +173,36 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
                 for (HotZoneDTO hotzoneDTO : hotzoneDTOs) {
                     spinnerName.add(hotzoneDTO.getCode());
                     spinnerId.add(hotzoneDTO.getHotZoneId());
-                   // mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());
+                    mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());
                 }
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity, R.layout.simple_spinner_item, spinnerName);
                 arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 spinner.setAdapter(arrayAdapter);
 
-//                positionSelected = findHotzoneSelected(arrayAdapter, mapForSearch);
-//                spinner.setSelection(positionSelected);
+                positionSelected = findHotzoneSelected(arrayAdapter, mapForSearch, dto.getOutletModelId());
+                if(positionSelected == 0) {
+                    positionSelected = findHotzoneBeforeSelected(arrayAdapter, dto.getOutletModelId());
+                }
+                spinner.setSelection(positionSelected);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(position != 0) {
+                        if(position == 0) {
                             try {
-                                repo.getOutletMerDAO().updateActualValue(
-                                        outletId, dto.getOutletModelId(), ScreenContants.HOTZONE, spinnerName.get(position));
+                                repo.getOutletMerDAO().updateActualValueBefore(
+                                        outletId, dto.getOutletModelId(), null, ScreenContants.HOTZONE_AFTER, ScreenContants.HOTZONE);
                             } catch (SQLException e) {
                                 ELog.d(e.getMessage(), e);
                             }
-                            //addAfterHotzone(hotzoneList.get(position - 1), spinnerId.get(position));
+                        } else if(position != 0) {
+                            try {
+                                repo.getOutletMerDAO().updateActualValueBefore(
+                                        outletId, dto.getOutletModelId(), spinnerName.get(position), ScreenContants.HOTZONE_AFTER, ScreenContants.HOTZONE);
+                            } catch (SQLException e) {
+                                ELog.d(e.getMessage(), e);
+                            }
                         }
                     }
                     @Override
@@ -204,6 +213,42 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
             } catch (Exception e) {
                 ELog.d(e.getMessage(), e);
             }
+        }
+
+        private int findHotzoneSelected(ArrayAdapter<String> arrayAdapter, Map<String, String> mapForSearch, Long outletModelId) {
+            int i = 0;
+            try {
+                Map<String, Object> properties = new HashMap<>();
+                properties.put("outletId", outletId);
+                properties.put("outletModelId", outletModelId);
+                properties.put(ScreenContants.DATA_TYPE, ScreenContants.HOTZONE_AFTER);
+                OutletMerDTO hotzoneDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
+                if(hotzoneDTO.getActualValue() != null) {
+                    i = arrayAdapter.getPosition(hotzoneDTO.getActualValue());
+                }
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+
+            return i;
+        }
+
+        private int findHotzoneBeforeSelected(ArrayAdapter<String> arrayAdapter, Long outletModelId) {
+            int i = 0;
+            try {
+                Map<String, Object> properties = new HashMap<>();
+                properties.put("outletId", outletId);
+                properties.put("outletModelId", outletModelId);
+                properties.put(ScreenContants.DATA_TYPE, ScreenContants.HOTZONE_BEFORE);
+                OutletMerDTO hotzoneDTO = repo.getOutletMerDAO().findFirstResultByProperties(properties);
+                if(hotzoneDTO.getActualValue() != null) {
+                    i = arrayAdapter.getPosition(hotzoneDTO.getActualValue());
+                }
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+
+            return i;
         }
 
         private void bindModelView(AfterDisplayDTO displayDTO) {
