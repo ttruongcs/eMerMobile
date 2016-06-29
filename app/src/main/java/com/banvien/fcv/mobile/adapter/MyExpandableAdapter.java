@@ -128,16 +128,17 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+
     /*If insert return id of shortage product, else: return null*/
     private void insertOrRemoveData(MProductDTO productDTO, String type, TextView tvShortage) {
         ShortageProductDTO shortageProductDTO = new ShortageProductDTO();
         shortageProductDTO.setProductCode(productDTO.getCode());
         shortageProductDTO.setRouteSCheduleDetailId(routeScheduleDetailId);
         shortageProductDTO.setProductName(productDTO.getName());
-        if(type == ScreenContants.INSERT) {
+        if(ScreenContants.INSERT.equals(type)) {
             shortageProductDTO = ((OrderActivity)context).addOrder(shortageProductDTO);
             tvShortage.setText(String.valueOf(shortageProductDTO.get_id()));
-        } else if(type == ScreenContants.REMOVE) {
+        } else if(ScreenContants.REMOVE.equals(type)) {
             String idRemoved = tvShortage.getText().toString();
             ((OrderActivity)context).removeOrder(idRemoved);
             tvShortage.setText("");
