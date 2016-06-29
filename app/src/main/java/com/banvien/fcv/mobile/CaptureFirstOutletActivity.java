@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -27,6 +30,7 @@ import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.routeschedule.RouteScheduleDTO;
+import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
@@ -46,12 +50,16 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
+    private static ProgressDialog progressDialog;
 
     @Bind(R.id.btnTake)
     FloatingActionButton btnTake;
 
     @Bind(R.id.gridListImage)
     GridView gridListImage;
+
+    @Bind(R.id.fabSyncTask)
+    FloatingActionButton fabSyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +212,65 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
                 dispatchTakePictureIntent(v);
             }
         });
+
+        fabSyncTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imageDTOs.size() > 0) {
+                   // showConfirmDialog(v);
+                } else {
+                    Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    private void showConfirmDialog(final View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(this.getString(R.string.dialog_sync_capture_first_image_title));
+        builder.setMessage(this.getString(R.string.dialog_sync_capture_first_image));
+
+        String positiveText = this.getString(R.string.accept);
+        builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    if(imageDTOs.size() > 0) {
+                        progressDialog  = new ProgressDialog(v.getContext());
+                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        SyncService syncService = new SyncService(v.getContext(), 1l);
+                        syncService.synConfirmNewDayImformation(progressDialog);
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
+                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
+                        changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
+                        Intent intent = new Intent(getBaseContext(), StartDayActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_LONG);
+                    }
+                } catch (SQLException e) {
+                    ELog.d("Error when Sync Comfirm Working");
+                }
+            }
+        });
+
+        String negativeText = this.getString(R.string.cancel);
+        builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //todo
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setInitialConfiguration() {

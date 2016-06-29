@@ -84,9 +84,6 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
         @Bind(R.id.gps_distributor_label)
         TextView outletAddress;
 
-        @Bind(R.id.imageOutlet)
-        ImageView imageOutlet;
-
         public OutletHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -99,10 +96,10 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             this.outletAddress.setText(buildOutletAdress(outletDTO.getLocationNo(), outletDTO.getStreet()
                     , outletDTO.getWard(), outletDTO.getCityName()));
 
-            Random r = new Random();
-            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(outletDTO.getName()
-                    .charAt(0)).toUpperCase(), mColorGenerator.getColor(outletDTO.getName() + r.nextInt()));
-            imageOutlet.setImageDrawable(drawable);
+//            Random r = new Random();
+//            TextDrawable drawable = mDrawableBuilder.build(String.valueOf(outletDTO.getName()
+//                    .charAt(0)).toUpperCase(), mColorGenerator.getColor(outletDTO.getName() + r.nextInt()));
+//            imageOutlet.setImageDrawable(drawable);
 
             item.setOnClickListener(new View.OnClickListener() {
                 @Override

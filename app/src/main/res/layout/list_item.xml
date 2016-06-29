@@ -1,51 +1,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/item"
-    android:layout_height="72dp">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:paddingTop="8dp">
 
-    <ImageView
-        android:id="@+id/imageOutlet"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@+id/imageOutlet"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true">
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/name_distributor_label"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/title"
-            android:paddingRight="16dp"
-            android:textSize="19dp" />
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/address_distributor_label"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/subtitle"
-            android:paddingRight="16dp"
-
-            android:textSize="11dp" />
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/gps_distributor_label"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/subtitle"
-            android:paddingRight="16dp"
-
-            android:textSize="11dp" />
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="12sp" />
 
 
     </LinearLayout>

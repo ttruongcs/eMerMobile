@@ -601,6 +601,9 @@
     <string name="dialog_sync_confirm_working">Chọn \"Đồng Ý\" để xác nhận và đồng bộ.
     </string>
 
+    <string name="dialog_sync_capture_first_image_title">Bạn có chắc muốn đồng bộ ảnh chụp cửa hàng đầu tiên?</string>
+    <string name="dialog_sync_capture_first_image">Chọn \"Đồng Ý\" để xác nhận và đồng bộ</string>
+
     <string name="statistics_title">Thống kê các loại trưng bày của cửa hàng được đồng bộ</string>
     <string name="detailed_info">Thông tin chi tiết</string>
     <string name="outlet_model">Loại trưng bày</string>
