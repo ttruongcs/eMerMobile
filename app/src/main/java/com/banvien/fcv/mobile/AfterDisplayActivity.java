@@ -105,6 +105,19 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         }
     }
 
+    private void changeStatus() {
+        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+        String[] next = {ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN};
+        changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                , ScreenContants.AFTER_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+        Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -116,16 +129,31 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
-                String[] next = {ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN};
-                changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
-                        , ScreenContants.AFTER_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
-                Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
-                startActivity(intent);
-                finish();
+                try {
+                    boolean isCaptured = repo.getCaptureAfterDAO().checkCaptured(outletId);
+                    if(isCaptured == true) {
+                        changeStatus();
+                    } else {
+                        AlertDialog.Builder captureBuilder = new AlertDialog.Builder(AfterDisplayActivity.this);
+                        captureBuilder.setMessage(getString(R.string.dialog_after_content));
+
+                        String positiveText = getString(R.string.capture);
+                        captureBuilder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getBaseContext(), CaptureAfterActivity.class);
+                                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                                startActivity(intent);
+                            }
+                        });
+
+                        AlertDialog captureDialog = captureBuilder.create();
+                        captureDialog.show();
+
+                    }
+                } catch (SQLException e) {
+                    ELog.d(e.getMessage(), e);
+                }
 
             }
         });

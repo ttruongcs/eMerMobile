@@ -5,6 +5,7 @@ import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -70,5 +71,21 @@ public class CaptureAfterDAO extends AndroidBaseDaoImpl<CaptureAfterEntity, Stri
             ELog.d("clear Status End Day");
             deleteBuilder().delete();
         }
+    }
+
+    public boolean checkCaptured(Long outletId) {
+        boolean isCaptured = false;
+        QueryBuilder<CaptureAfterEntity, String> queryBuilder = queryBuilder();
+
+        try {
+            long rowFound = queryBuilder.where().eq("outletId", outletId).countOf();
+            if(rowFound > 0) {
+                isCaptured = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return isCaptured;
     }
 }

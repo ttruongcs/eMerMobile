@@ -633,5 +633,7 @@
     <!-- Capture Before -->
     <string name="dialog_before_title">Chụp hình khảo sát trưng bày trước?</string>
     <string name="dialog_before_content">Hình ảnh cho khảo sát trưng bày trước còn thiếu.\nChọn \"Chụp Ảnh\" để tiến hành chụp</string>
+    <string name="dialog_after_title">Chụp hình khảo sát trưng bày sau?</string>
+    <string name="dialog_after_content">Hình ảnh cho khảo sát trưng bày sau còn thiếu.\nChọn \"Chụp Ảnh\" để tiến hành chụp</string>
     <string name="capture">Chụp ảnh</string>
 </resources>
