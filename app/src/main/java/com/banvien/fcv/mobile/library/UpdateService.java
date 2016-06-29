@@ -16,6 +16,7 @@ import com.banvien.fcv.mobile.beanutil.QuestionContentUtil;
 import com.banvien.fcv.mobile.beanutil.QuestionUtil;
 import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
 import com.banvien.fcv.mobile.beanutil.SurveyUtil;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
@@ -95,7 +96,7 @@ public class UpdateService {
 
 
 			Call<Map<String,Object>> callOutletDatas =
-					RestClient.getInstance().getHomeService().getDataInNewDays(10l, new Timestamp(System.currentTimeMillis()));
+					RestClient.getInstance().getHomeService().getDataInNewDays(A.getPrincipal().getUserId(), new Timestamp(System.currentTimeMillis()));
 			results = getOutletDatas(callOutletDatas, progressDialog, textNumberOutlet);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
