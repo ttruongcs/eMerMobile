@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -278,6 +279,26 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         }
 
         private void showMapsDialog(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+            builder.setMessage(v.getContext().getString(R.string.dialog_map_content));
+
+            String positiveText = v.getContext().getString(R.string.update);
+            builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent mapsIntent = new Intent(itemView.getContext(), MapsActivity.class);
+                    mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                    mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                    mapsIntent.putExtra(ScreenContants.KEY_GPS_UPDATE, 1l);
+                    itemView.getContext().startActivity(mapsIntent);
+                }
+            });
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         }
     }

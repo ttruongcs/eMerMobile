@@ -625,4 +625,8 @@
     <string name="login_error_msg_empty_password">Vui lòng nhập Mật Khẩu</string>
     <string name="login_failed_msg">Tên Đăng Nhập/Mật Khẩu không đúng!</string>
     <string name="log_out">Đăng xuất</string>
+
+    <string name="dialog_map_content">Cửa hàng hiện tại chưa có GPS, cần cập nhật lại GPS.</string>
+    <string name="gps_update_title">Vị trí cửa hàng đã được cập nhật.</string>
+    <string name="gps_update_content">Chọn \"Đồng Ý\" để thoát khỏi \"Check in\" và tiếp tục công việc.\n Chọn \"Hủy bỏ\" để chọn vị trí khác. </string>
 </resources>
