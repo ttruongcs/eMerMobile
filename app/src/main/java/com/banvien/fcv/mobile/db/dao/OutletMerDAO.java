@@ -506,7 +506,8 @@ public class OutletMerDAO extends AndroidBaseDaoImpl<OutletMerEntity, String> {
                     for(int i = 0; i < actualValueAfter.length ; i ++){
                         if(actualValueAfter[i].contains(mhsCode)){
                             updateValueAfter = actualValueAfter[i];
-                            updateValueAfter = updateValueAfter.replace(updateValueAfter.split(":")[2], yesNo.toString());
+                            updateValueAfter = updateValueAfter.substring(0, updateValueAfter.lastIndexOf(":") + 1);
+                            updateValueAfter += yesNo.toString();
                             flag = 1;
                         }else{
                             finalUpdateValueAfter = finalUpdateValueAfter + actualValueAfter[i] + ",";

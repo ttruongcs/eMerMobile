@@ -55,6 +55,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
     private TextView tvCountChecked;
+    private Map<String, Boolean> numberChecked;
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences, TextView tvCountChecked) {
@@ -70,6 +71,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         editor = sharedPreferenceOrders.edit();
         this.mhsCodes = new HashMap<>();
         this.tvCountChecked = tvCountChecked;
+        this.numberChecked = new HashMap<>();
     }
 
     @Override
@@ -94,7 +96,9 @@ public class AfterDisplayAdapter extends BaseAdapter {
         if(position == 0) {
             mhsCodes = itemHolder.loadMhs();
             totalFacing = itemHolder.loadTotalFacing();
+            tvCountChecked.setText(Integer.toString(numberChecked.size()));
         }
+
         itemHolder.bindViews(mData.get(position));
 
         return v;
@@ -177,6 +181,9 @@ public class AfterDisplayAdapter extends BaseAdapter {
                         if(mhs.length > 2){
                             afterItemDTO.setNumberOfFace(Integer.valueOf(mhs[MHS_VALUE]));
                             afterItemDTO.setYesNo(Integer.valueOf(mhs[MHS_VALUE_YESNO]));;
+                            if(afterItemDTO.getYesNo() == 1) {
+                                numberChecked.put(mhs[MHS_KEY], true);
+                            }
                         }
                         else{
                             afterItemDTO.setNumberOfFace(0);
@@ -290,12 +297,16 @@ public class AfterDisplayAdapter extends BaseAdapter {
                     if(!b){
                         try {
                             repo.getOutletMerDAO().updateCheckYesNoAfter(outletId, outletModelId, productDTO.getCode(), 0);
+                            numberChecked.remove(productDTO.getCode());
+                            tvCountChecked.setText(Integer.toString(numberChecked.size()));
                         } catch (SQLException e) {
                             ELog.d("Error when save have MHS");
                         }
                     } else{
                         try {
                             repo.getOutletMerDAO().updateCheckYesNoAfter(outletId, outletModelId, productDTO.getCode(), 1);
+                            numberChecked.put(productDTO.getCode(), true);
+                            tvCountChecked.setText(Integer.toString(numberChecked.size()));
                         } catch (SQLException e) {
                             ELog.d("Error when save have MHS");
                         }
@@ -303,6 +314,12 @@ public class AfterDisplayAdapter extends BaseAdapter {
                 }
             });
 
+        }
+
+        private void setCountChange(String code) {
+            chHave.setChecked(Boolean.TRUE);
+            numberChecked.put(code, true);
+            tvCountChecked.setText(Integer.toString(numberChecked.size()));
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
