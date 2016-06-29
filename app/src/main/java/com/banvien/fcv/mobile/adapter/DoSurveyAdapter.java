@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.db.entities.QuestionEntity;
-import com.banvien.fcv.mobile.dto.DoSurveyAnswerDTO;
+import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.C;
 import com.bumptech.glide.Glide;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHolder> {
     private List<QuestionEntity> data;
-    private Map<Long, DoSurveyAnswerDTO> responseMap = new HashMap<>();
+    private Map<Long, DoSurveyAnswerEntity> responseMap = new HashMap<>();
     private Context context;
 
     public DoSurveyAdapter(Context context, List<QuestionEntity> data) {
@@ -86,14 +86,14 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
             questionAnswerPane.removeAllViews();
 
-            DoSurveyAnswerDTO surveyResponseDTO = responseMap.get(questionEntity.getQuestionId());
+            DoSurveyAnswerEntity doSurveyAnswerEntity = responseMap.get(questionEntity.getQuestionId());
 
             List<View> views = new ArrayList<>();
             if (C.QUESTION_TYPE_MULTI_SHORT_ANSWER.equals(questionEntity.getType())) {
                 EditText editText = newEditText();
 
-                if (surveyResponseDTO != null) {
-                    editText.setText(surveyResponseDTO.getAnswer());
+                if (doSurveyAnswerEntity != null) {
+                    editText.setText(doSurveyAnswerEntity.getAnswer());
                 }
                 editText.setTag(questionEntity.getQuestionId());
 
@@ -101,8 +101,8 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
             } else if (C.QUESTION_TYPE_YES_NO.equals(questionEntity.getType())) {
                 CheckBox checkBox = newCheckBox();
 
-                if (surveyResponseDTO != null) {
-                    checkBox.setChecked(C.FLAG_YES.equals(surveyResponseDTO.getAnswer()));
+                if (doSurveyAnswerEntity != null) {
+                    checkBox.setChecked(C.FLAG_YES.equals(doSurveyAnswerEntity.getAnswer()));
                 }
                 checkBox.setTag(questionEntity.getQuestionId());
 
@@ -110,15 +110,15 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
             }else if (C.QUESTION_TYPE_YES_NO_MODIFIED.equals(questionEntity.getType())) {
                 CheckBox checkBox = newCheckBox();
 
-                if (surveyResponseDTO != null) {
-                    checkBox.setChecked(C.FLAG_YES.equals(surveyResponseDTO.getAnswer()));
+                if (doSurveyAnswerEntity != null) {
+                    checkBox.setChecked(C.FLAG_YES.equals(doSurveyAnswerEntity.getAnswer()));
                 }
                 checkBox.setTag(questionEntity.getQuestionId());
 
                 EditText editText = newEditText();
 
-                if (surveyResponseDTO != null) {
-                    editText.setText(surveyResponseDTO.getExtra());
+                if (doSurveyAnswerEntity != null) {
+                    editText.setText(doSurveyAnswerEntity.getExtra());
                 }
                 editText.setTag(questionEntity.getQuestionId());
 

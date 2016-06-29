@@ -152,7 +152,7 @@ public class DataBinder {
     public static Map<Long, List<SurveyDTO>> readSurvey(Object object) {
         Map<Long, List<SurveyDTO>> res = null;
         try {
-            res = mapper.convertValue(object, new TypeReference<Map<String, List<SurveyDTO>>>(){});
+            res = mapper.convertValue(object, new TypeReference<Map<Long, List<SurveyDTO>>>(){});
         } catch (Exception e) {
             ELog.d(e.getMessage(), e);
         }

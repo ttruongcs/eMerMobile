@@ -13,6 +13,7 @@ import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
+import com.banvien.fcv.mobile.db.dao.DoSurveyAnswerDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -39,6 +40,7 @@ import com.banvien.fcv.mobile.db.entities.CaptureUniformEntity;
 import com.banvien.fcv.mobile.db.entities.CatgroupEntity;
 import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
+import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
@@ -107,6 +109,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private QuestionContentDAO questionContentDAO = null;
 	private CaptureBeforeDAO captureBeforeDAO = null;
 	private CaptureAfterDAO captureAfterDAO = null;
+	private DoSurveyAnswerDAO doSurveyAnswerDAO = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -407,6 +410,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return questionContentDAO;
 	}
+
+	public DoSurveyAnswerDAO getDoSurveyAnswerDAO() throws SQLException {
+		if(null == doSurveyAnswerDAO) {
+			doSurveyAnswerDAO = new DoSurveyAnswerDAO(getConnectionSource(), DoSurveyAnswerEntity.class);
+		}
+
+		return doSurveyAnswerDAO;
+	}
+
 
 	/**
 	 * Close the database connections and clear any cached DAOs.

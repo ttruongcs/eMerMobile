@@ -11,6 +11,7 @@ import com.banvien.fcv.mobile.db.dao.CatgroupDAO;
 import com.banvien.fcv.mobile.db.dao.ComplainTypeDAO;
 import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
+import com.banvien.fcv.mobile.db.dao.DoSurveyAnswerDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -29,7 +30,6 @@ import com.banvien.fcv.mobile.db.dao.StatusHomeDAO;
 import com.banvien.fcv.mobile.db.dao.StatusInOutletDAO;
 import com.banvien.fcv.mobile.db.dao.StatusStartDayDAO;
 import com.banvien.fcv.mobile.db.dao.SurveyDAO;
-import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
@@ -155,6 +155,10 @@ public class Repo {
 
     public QuestionContentDAO getQuestionContentDAO() throws SQLException {
         return  databaseHelper.getQuestionContentDAO();
+    }
+
+    public DoSurveyAnswerDAO getDoSurveyAnswerDAO() throws SQLException {
+        return  databaseHelper.getDoSurveyAnswerDAO();
     }
 
     public void release() {
