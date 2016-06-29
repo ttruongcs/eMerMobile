@@ -624,4 +624,5 @@
     <string name="login_error_msg_empty_username">Vui lòng nhập Tên Đăng Nhập</string>
     <string name="login_error_msg_empty_password">Vui lòng nhập Mật Khẩu</string>
     <string name="login_failed_msg">Tên Đăng Nhập/Mật Khẩu không đúng!</string>
+    <string name="log_out">Đăng xuất</string>
 </resources>
