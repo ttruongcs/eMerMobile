@@ -135,6 +135,7 @@ public class UpdateService {
         repo.getShortageProductDAO().clearData();
         repo.getCaptureOverviewDAO().clearData();
         repo.getConfirmWorkingDAO().clearData();
+        repo.getCaptureBeforeDAO().clearData();
 		deleteFileImage();
 	}
 

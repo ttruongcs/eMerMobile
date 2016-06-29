@@ -129,8 +129,9 @@ public class HomeActivity extends BaseDrawerActivity {
         }
         if(id == R.id.action_loggout) {
             A.delc(K.PRINCIPAL_JSON);
+            A.setPrincipal(null);
 
-            if (TextUtils.isEmpty(A.gets(K.PRINCIPAL_JSON))) {
+            if (TextUtils.isEmpty(A.gets(K.PRINCIPAL_JSON)) && A.getPrincipal() == null) {
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();

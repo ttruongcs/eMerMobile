@@ -629,4 +629,9 @@
     <string name="dialog_map_content">Cửa hàng hiện tại chưa có GPS, cần cập nhật lại GPS.</string>
     <string name="gps_update_title">Vị trí cửa hàng đã được cập nhật.</string>
     <string name="gps_update_content">Chọn \"Đồng Ý\" để thoát khỏi \"Check in\" và tiếp tục công việc.\n Chọn \"Hủy bỏ\" để chọn vị trí khác. </string>
+
+    <!-- Capture Before -->
+    <string name="dialog_before_title">Chụp hình khảo sát trưng bày trước?</string>
+    <string name="dialog_before_content">Hình ảnh cho khảo sát trưng bày trước còn thiếu.\nChọn \"Chụp Ảnh\" để tiến hành chụp</string>
+    <string name="capture">Chụp ảnh</string>
 </resources>

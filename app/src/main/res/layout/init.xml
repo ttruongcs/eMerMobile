@@ -74,6 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             fab:fab_label="Sync Task"
+            app:fab_colorNormal="@color/primary_kanban"
+            app:fab_colorPressed="@color/primary_kanban"
             android:src="@drawable/ic_sync_white_24dp" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -163,7 +163,7 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
                     File image = new File(photoUri);
                     if (image.exists()) {
                         removedImages.add(imageDTOs.get(i));
-                        this.repo.getCaptureToolDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
+                        this.repo.getCaptureBeforeDAO().deleteImageFromId(imageDTOs.get(i).get_id()); //Delete from database
                         image.delete(); //Delete from external storage
                     } else {
                         ELog.d("File is not exist");
