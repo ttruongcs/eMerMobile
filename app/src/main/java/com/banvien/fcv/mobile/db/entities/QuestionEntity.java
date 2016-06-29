@@ -5,6 +5,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,8 +30,8 @@ public class QuestionEntity implements Serializable {
     @DatabaseField(canBeNull = false)
     private Long surveyId;
 
-    @ForeignCollectionField(eager = true, foreignFieldName = "questionId")
-    private List<QuestionContentEntity> questionContents;
+    @ForeignCollectionField(eager = true)
+    private Collection<QuestionContentEntity> questionContents;
 
     public Long getQuestionId() {
         return questionId;
@@ -65,11 +66,11 @@ public class QuestionEntity implements Serializable {
     }
 
 
-    public List<QuestionContentEntity> getQuestionContents() {
+    public Collection<QuestionContentEntity> getQuestionContents() {
         return questionContents;
     }
 
-    public void setQuestionContents(List<QuestionContentEntity> questionContents) {
+    public void setQuestionContents(Collection<QuestionContentEntity> questionContents) {
         this.questionContents = questionContents;
     }
 
