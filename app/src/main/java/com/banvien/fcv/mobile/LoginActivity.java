@@ -54,9 +54,6 @@ public class LoginActivity extends BaseDrawerActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(LoginActivity.this);
-                progressDialog.show();
-                progressDialog.setCancelable(false);
 
                 txtLoginMsg.setVisibility(View.GONE);
                 boolean isValid = true;
@@ -70,6 +67,10 @@ public class LoginActivity extends BaseDrawerActivity {
                 }
 
                 if (isValid) {
+                    progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.show();
+                    progressDialog.setCancelable(false);
+
                     Call<UserPrincipal> loginCall = RestClient.getInstance().getHomeService().login(editUsername.getText().toString().trim(), editPassword.getText().toString());
                     loginCall.enqueue(new Callback<UserPrincipal>() {
                         @Override

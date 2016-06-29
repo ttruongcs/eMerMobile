@@ -204,9 +204,9 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     }
                     repo = new Repo(v.getContext());
                     try {
-                        StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
-                        StatusStartDayEntity statusStartDay = repo.getStartDayDAO().getConfigStartDayHome();
-                        StatusEndDayEntity statusEndDay = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
+//                        StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
+//                        StatusStartDayEntity statusStartDay = repo.getStartDayDAO().getConfigStartDayHome();
+//                        StatusEndDayEntity statusEndDay = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
 
                         switch (stepCode.getText().toString()) {
                             // HOME
@@ -266,8 +266,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 // todo
                                 break;
                         }
-                    } catch (SQLException e) {
-                        ELog.d("Message log :can find config home activity");
+                    } catch (Exception e) {
+                        ELog.e("Message log :can find config home activity", e);
                     }
                 }
             });
