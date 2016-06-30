@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.db;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -35,6 +36,7 @@ public class OrmliteListLoader<T, ID> extends AsyncTaskLoader<List<T>>
             }
 
         } catch (SQLException e) {
+            Log.e("OrmliteListLoader", e.getMessage(), e);
             result = Collections.emptyList();
         }
 

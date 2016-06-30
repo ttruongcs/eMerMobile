@@ -34,6 +34,15 @@ public class SurveyDAO extends AndroidBaseDaoImpl<SurveyEntity, Long> {
         }
     }
 
+    public long count(Long outletId) {
+        try {
+            return queryBuilder().where().eq("outletId", outletId).countOf();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public void remove(Long outletId) throws SQLException {
         try {
             DeleteBuilder<SurveyEntity, Long> deleteBuilder = deleteBuilder();

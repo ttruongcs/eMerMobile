@@ -68,6 +68,7 @@ public class LoginActivity extends BaseDrawerActivity {
 
                 if (isValid) {
                     progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.setMessage(A.s(R.string.loading));
                     progressDialog.show();
                     progressDialog.setCancelable(false);
 

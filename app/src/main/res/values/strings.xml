@@ -646,4 +646,7 @@
     <string name="s2">s2</string>
     <string name="s3">s3</string>
     <string name="report_enddayy">Báo cáo cuối ngày</string>
+
+    <string name="save_survey_failed_msg">Có lỗi xảy ra!</string>
+    <string name="loading">Đang tải...</string>
 </resources>

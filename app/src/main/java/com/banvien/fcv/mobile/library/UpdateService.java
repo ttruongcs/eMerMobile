@@ -258,7 +258,7 @@ public class UpdateService {
 								SurveyEntity surveyEntity = SurveyUtil.convertToEntity(surveyDTO);
 								surveyEntity.setOutletId(outletId);
 								repo.getSurveyDAO().add(surveyEntity);
-								if (surveyDTO.getQuestions() != null) {
+								if (surveyDTO.getQuestions() != null && surveyDTO.getQuestions().size() > 0) {
 									saveQuestions(surveyDTO.getQuestions(), surveyDTO.getSurveyId());
 								}
 							} catch (SQLException e) {
@@ -276,7 +276,7 @@ public class UpdateService {
 						QuestionEntity questionEntity = QuestionUtil.convertToEntity(questionDTO);
 						questionEntity.setSurveyId(surveyId);
 						repo.getQuestionDAO().add(questionEntity);
-						if (questionDTO.getQuestionContents() != null) {
+						if (questionDTO.getQuestionContents() != null && questionDTO.getQuestionContents().size() > 0) {
 							saveQuestionContents(questionDTO.getQuestionContents(), questionDTO.getQuestionId());
 						}
 					} catch (SQLException e) {

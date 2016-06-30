@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.dto.ImageDTO;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
@@ -67,7 +68,8 @@ public class ImageAdapter extends BaseAdapter {
             imageView.setImageBitmap(imageDTO.getImage());
         } else if (imageDTO.getImagePath() != null) {
             final String decoded = Uri.decode(Uri.fromFile(new File(imageDTO.getImagePath())).toString());
-            ImageLoader.getInstance().displayImage(decoded, imageView);
+//            ImageLoader.getInstance().displayImage(decoded, imageView);
+            Glide.with(context).load(decoded).fitCenter().into(imageView);
         }
 
         if(!this.imageDTOs.get(position).isChecked()) {

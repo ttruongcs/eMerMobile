@@ -28,8 +28,7 @@ public abstract class OrmliteCursorAdapter<T> extends CursorAdapter
             T item = mQuery.mapRow(new AndroidDatabaseResults(cursor, null)) ;
             bindView(itemView, context, item);
         }
-        catch(SQLException e)
-        {
+        catch(SQLException e) {
             e.printStackTrace();
         }
         

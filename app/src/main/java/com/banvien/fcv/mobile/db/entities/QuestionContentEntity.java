@@ -14,7 +14,9 @@ import java.io.Serializable;
  */
 @DatabaseTable(tableName = "QuestionContent")
 public class QuestionContentEntity implements Serializable {
-    @DatabaseField(canBeNull = false, id = true)
+    @DatabaseField(generatedId = true)
+    private Long _id;
+    @DatabaseField(canBeNull = false, index = true)
     private Long questionContentId;
     @DatabaseField
     private String label;
@@ -64,5 +66,13 @@ public class QuestionContentEntity implements Serializable {
 
     public void setQuestion(QuestionEntity question) {
         this.question = question;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 }

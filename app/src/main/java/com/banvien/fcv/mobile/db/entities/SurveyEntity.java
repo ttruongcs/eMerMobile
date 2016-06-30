@@ -1,12 +1,10 @@
 package com.banvien.fcv.mobile.db.entities;
 
-import com.banvien.fcv.mobile.dto.QuestionDTO;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +15,9 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "Survey")
 public class SurveyEntity implements Serializable {
-    @DatabaseField(canBeNull = false, id = true)
+    @DatabaseField(generatedId = true)
+    private Long _id;
+    @DatabaseField(canBeNull = false)
     private Long surveyId;
     @DatabaseField
     private String name;
@@ -27,7 +27,7 @@ public class SurveyEntity implements Serializable {
     private Date endDate;
     @DatabaseField
     private Boolean active;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(index = true)
     private Long outletId;
 
     public Long getSurveyId() {
@@ -76,5 +76,13 @@ public class SurveyEntity implements Serializable {
 
     public void setOutletId(Long outletId) {
         this.outletId = outletId;
+    }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 }

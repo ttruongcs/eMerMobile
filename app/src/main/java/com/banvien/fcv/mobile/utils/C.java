@@ -13,8 +13,8 @@ public class C {
     public static final String QUESTION_TYPE_YES_NO_MODIFIED   = "Yes_No_Modified";
     public static final String QUESTION_TYPE_MULTI_CHOICE   = "Multiple_Choice";
     public static final String QUESTION_TYPE_MULTI_SELECT_CHOICE   = "Multiple_Select_Choice";
-    public static final String QUESTION_TYPE_MULTI_SHORT_ANSWER   = "Short_Answer";
-    public static final String QUESTION_TYPE_MULTI_FREE_TEXT   = "Free_Text";
+    public static final String QUESTION_TYPE_SHORT_ANSWER = "Short_Answer";
+    public static final String QUESTION_TYPE_FREE_TEXT = "Free_Text";
 
     public static final String FLAG_YES   = "Y";
     public static final String FLAG_NO   = "N";

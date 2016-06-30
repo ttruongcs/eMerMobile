@@ -14,7 +14,7 @@ public class DoSurveyAnswerEntity implements Serializable {
     private Long _id;
     @DatabaseField(canBeNull = false)
     private Long questionId;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private Long surveyId;
     @DatabaseField(canBeNull = false)
     private Long outletId;

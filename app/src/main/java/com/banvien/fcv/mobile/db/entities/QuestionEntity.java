@@ -6,7 +6,6 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +16,9 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "Question")
 public class QuestionEntity implements Serializable {
-    @DatabaseField(canBeNull = false, id = true)
+    @DatabaseField(generatedId = true)
+    private Long _id;
+    @DatabaseField(canBeNull = false)
     private Long questionId;
     @DatabaseField
     private String questionText;
@@ -27,8 +28,9 @@ public class QuestionEntity implements Serializable {
     private String imagePath;
     @DatabaseField
     private String type;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, index = true)
     private Long surveyId;
+
 
     @ForeignCollectionField(eager = true)
     private Collection<QuestionContentEntity> questionContents;
@@ -89,4 +91,14 @@ public class QuestionEntity implements Serializable {
     public void setSurveyId(Long surveyId) {
         this.surveyId = surveyId;
     }
+
+    public Long get_id() {
+        return _id;
+    }
+
+    public void set_id(Long _id) {
+        this._id = _id;
+    }
+
+
 }

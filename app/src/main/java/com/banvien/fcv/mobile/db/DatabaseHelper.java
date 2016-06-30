@@ -150,6 +150,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTableIfNotExists(connectionSource, StatusEndDayEntity.class);
 
 			TableUtils.createTableIfNotExists(connectionSource, SurveyEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, DoSurveyAnswerEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, QuestionEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, QuestionContentEntity.class);
 
@@ -196,6 +197,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ShortageProductEntity.class, true);
 
 			TableUtils.dropTable(connectionSource, SurveyEntity.class, true);
+			TableUtils.dropTable(connectionSource, DoSurveyAnswerEntity.class, true);
 			TableUtils.dropTable(connectionSource, QuestionEntity.class, true);
 			TableUtils.dropTable(connectionSource, QuestionContentEntity.class, true);
 
