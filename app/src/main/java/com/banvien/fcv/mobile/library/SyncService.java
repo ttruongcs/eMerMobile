@@ -77,7 +77,7 @@ public class SyncService {
 		return results;
 	}
 
-	public void synConfirmNewDayImformation(final ProgressDialog progressDialog) throws SQLException {
+	public void synConfirmNewDayInformation(final ProgressDialog progressDialog) throws SQLException {
 		RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
 		routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
 
@@ -223,9 +223,8 @@ public class SyncService {
 	}
 
 
-	public void synConfirmNewDayImformationDontHaveImage() throws SQLException {
-		RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
-		routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
+	public void synConfirmNewDayInformationDontHaveImage() throws SQLException {
+		RouteScheduleEntity routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
 		Call<Long> call = RestClient.getInstance()
 				.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
 						, new Timestamp(System.currentTimeMillis()), null, null, new MConfirmWorkingImageCommand());

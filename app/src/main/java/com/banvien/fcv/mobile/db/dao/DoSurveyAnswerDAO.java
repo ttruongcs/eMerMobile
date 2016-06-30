@@ -9,6 +9,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hieu on 8/03/2016.
@@ -32,6 +34,15 @@ public class DoSurveyAnswerDAO extends AndroidBaseDaoImpl<DoSurveyAnswerEntity, 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<DoSurveyAnswerEntity> find(Long outletId) {
+        try {
+            return queryBuilder().where().eq("outletId", outletId).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     public void remove(Long outletId) throws SQLException {

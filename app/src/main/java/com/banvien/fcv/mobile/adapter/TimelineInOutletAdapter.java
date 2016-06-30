@@ -11,7 +11,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
@@ -19,28 +18,16 @@ import android.widget.TextView;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
-import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureOverviewActivity;
-import com.banvien.fcv.mobile.CaptureToolActivity;
-import com.banvien.fcv.mobile.CaptureUniformActivity;
-import com.banvien.fcv.mobile.CoverageInfoActivity;
-import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.MapsActivity;
 import com.banvien.fcv.mobile.OrderActivity;
-import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.SurveyActivity;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
-import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
-import com.banvien.fcv.mobile.db.entities.StatusHomeEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
-import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
-import com.banvien.fcv.mobile.dto.OutletDTO;
-import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.dto.TimelineInOutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 
@@ -245,6 +232,8 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:
                                 Intent intent = new Intent(v.getContext(), SurveyActivity.class);
                                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
                                 v.getContext().startActivity(intent);
                                 break;
                             case ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM:

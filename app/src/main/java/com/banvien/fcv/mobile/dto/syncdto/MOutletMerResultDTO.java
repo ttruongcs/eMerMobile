@@ -21,7 +21,7 @@ public class MOutletMerResultDTO implements Serializable {
     private Integer activeStatus;
     private String note;
     private List<MOutletMerResultDetailDTO> outletMerResultDetails;
-    private MSurveyResultDTO surveyResult;
+    private List<MSurveyResultDTO> surveyResult;
 
     public String getOutletMerResultId() {
         return outletMerResultId;
@@ -79,11 +79,11 @@ public class MOutletMerResultDTO implements Serializable {
         this.outletMerResultDetails = outletMerResultDetails;
     }
 
-    public MSurveyResultDTO getSurveyResult() {
+    public List<MSurveyResultDTO> getSurveyResult() {
         return surveyResult;
     }
 
-    public void setSurveyResult(MSurveyResultDTO surveyResult) {
+    public void setSurveyResult(List<MSurveyResultDTO> surveyResult) {
         this.surveyResult = surveyResult;
     }
 }

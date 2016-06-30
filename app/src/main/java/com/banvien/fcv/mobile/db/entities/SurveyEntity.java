@@ -85,4 +85,5 @@ public class SurveyEntity implements Serializable {
     public void set_id(Long _id) {
         this._id = _id;
     }
+
 }

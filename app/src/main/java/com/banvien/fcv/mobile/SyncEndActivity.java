@@ -1,20 +1,13 @@
 package com.banvien.fcv.mobile;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.banvien.fcv.mobile.library.SyncOutletMerResultService;
-import com.banvien.fcv.mobile.library.SyncService;
 
 import java.io.IOException;
 import java.sql.SQLException;

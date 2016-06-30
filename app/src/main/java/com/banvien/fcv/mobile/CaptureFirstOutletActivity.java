@@ -232,7 +232,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         SyncService syncService = new SyncService(v.getContext(), 1l);
-                        syncService.synConfirmNewDayImformation(progressDialog);
+                        syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN

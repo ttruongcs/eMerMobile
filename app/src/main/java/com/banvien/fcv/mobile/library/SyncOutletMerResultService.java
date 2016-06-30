@@ -8,28 +8,24 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ScreenContants;
-import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.dao.CaptureToolDAO;
 import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureOverviewEntity;
-import com.banvien.fcv.mobile.db.entities.CaptureToolEntity;
-import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
+import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
+import com.banvien.fcv.mobile.db.entities.SurveyEntity;
 import com.banvien.fcv.mobile.dto.CaptureToolDTO;
 import com.banvien.fcv.mobile.dto.CaptureUniformDTO;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.MSurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
-import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.IteratorCallback;
 
 import java.io.File;
@@ -47,7 +43,6 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SyncOutletMerResultService {
@@ -84,14 +79,36 @@ public class SyncOutletMerResultService {
 		return repo.getOutletDAO().findAll();
 	}
 
-	private MOutletMerResultDTO createMOutletMerRetsultDTO (OutletDTO outlet) throws SQLException {
+	private List<MSurveyResultDTO> buildSurveyResult(Long outletId) throws SQLException {
+		Map<String, List<MSurveyResultDTO>> map = new HashMap<>();
+		List<DoSurveyAnswerEntity> doSurveyAnswerEntities = repo.getDoSurveyAnswerDAO().find(outletId);
+		for (DoSurveyAnswerEntity doSurveyAnswerEntity : doSurveyAnswerEntities) {
+			String key = doSurveyAnswerEntity.getSurveyId() + (doSurveyAnswerEntity.getRouteScheduleDetailId() != null? ("_" + doSurveyAnswerEntity.getRouteScheduleDetailId()) : "");
+			List<MSurveyResultDTO> mSurveyResultDTOs = map.get(key);
+			if (mSurveyResultDTOs == null) {
+				mSurveyResultDTOs = new ArrayList<>();
+				map.put(key, mSurveyResultDTOs);
+			}
+
+			MSurveyResultDTO m = new MSurveyResultDTO();
+			m.setSurveyId(doSurveyAnswerEntity.getSurveyId());
+			m.setRouteScheduleDetailId(doSurveyAnswerEntity.getRouteScheduleDetailId());
+
+			mSurveyResultDTOs.add(m);
+
+		}
+		// TODO resolve sync result
+		return new ArrayList<>();
+	}
+
+	private MOutletMerResultDTO createMOutletMerResultDTO(OutletDTO outlet) throws SQLException {
 		MOutletMerResultDTO mOutletMerResultDTO = new MOutletMerResultDTO();
 
 		mOutletMerResultDTO.setSubmittedDate(new Timestamp(System.currentTimeMillis()));
 		mOutletMerResultDTO.setAuditDate(new Timestamp(System.currentTimeMillis()));
 		mOutletMerResultDTO.setActiveStatus(ScreenContants.OUTLET_MER_ACTIVE);
 		mOutletMerResultDTO.setRouteScheduleDetailId(outlet.getRouteScheduleDetailId());
-		mOutletMerResultDTO.setSurveyResult(new MSurveyResultDTO());
+		mOutletMerResultDTO.setSurveyResult(buildSurveyResult(outlet.getOutletId()));
 
 		List<OutletMerDTO> outletMerEntityList = repo.getOutletMerDAO().findByOutletId(outlet.getOutletId());
 		List<MOutletMerResultDetailDTO> outletMerResultDetailDTOs = new ArrayList<>();
@@ -207,7 +224,7 @@ public class SyncOutletMerResultService {
 		final List<MOutletMerResultDTO> mOutletMerResultDTOs = new ArrayList<>();
 
 		for(final OutletDTO outlet : outlets){
-			MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerRetsultDTO(outlet);
+			MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerResultDTO(outlet);
 			mOutletMerResultDTOs.add(mOutletMerResultDTO);
 		}
 

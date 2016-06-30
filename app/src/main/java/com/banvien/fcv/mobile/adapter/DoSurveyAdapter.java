@@ -24,6 +24,7 @@ import com.banvien.fcv.mobile.utils.C;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,18 +38,22 @@ import butterknife.ButterKnife;
  * Created by Hieu Le on 5/20/2016.
  */
 public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHolder> {
+    private final int FREE_TEXT_ROWS = 3;
     private List<QuestionEntity> data;
     private Map<Long, DoSurveyAnswerEntity> answerMap;
     private Map<Long, List<View>> answerViewMap = new HashMap<>();
-    private Map<Long, Set<String>> multiChoiceAnswerMap = new HashMap<>();
     private Map<Long, QuestionEntity> questionEntityMap = null;
+    private Long outletId, surveyId, routeScheduleDetailId;
 
     private Context context;
 
-    public DoSurveyAdapter(Context context, List<QuestionEntity> data, Map<Long, DoSurveyAnswerEntity> answerMap) {
+    public DoSurveyAdapter(Context context, List<QuestionEntity> data, Map<Long, DoSurveyAnswerEntity> answerMap, Long outletId, Long surveyId, Long routeScheduleDetailId) {
         this.context = context;
         this.data = data;
         this.answerMap = answerMap;
+        this.outletId = outletId;
+        this.surveyId = surveyId;
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 
     @Override
@@ -103,11 +108,14 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
             List<View> views = new ArrayList<>();
             if (C.QUESTION_TYPE_SHORT_ANSWER.equals(questionEntity.getType())) {
-                EditText editText = newEditText(1, false);
+                EditText editText = newEditText(1);
 
                 if (doSurveyAnswerEntity != null) {
                     editText.setText(doSurveyAnswerEntity.getAnswer());
                 }
+
+                addListener(editText, false);
+
                 editText.setTag(questionEntity.getQuestionId());
 
                 views.add(editText);
@@ -117,6 +125,9 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 if (doSurveyAnswerEntity != null) {
                     checkBox.setChecked(C.FLAG_YES.equals(doSurveyAnswerEntity.getAnswer()));
                 }
+
+                addListener(checkBox);
+
                 checkBox.setText(questionEntity.getQuestionText());
 
                 checkBox.setTag(questionEntity.getQuestionId());
@@ -130,29 +141,32 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 if (doSurveyAnswerEntity != null) {
                     checkBox.setChecked(C.FLAG_YES.equals(doSurveyAnswerEntity.getAnswer()));
                 }
+
+                addListener(checkBox);
+
                 checkBox.setText(questionEntity.getQuestionText());
 
                 checkBox.setTag(questionEntity.getQuestionId());
 
                 txtQuestionText.setVisibility(View.GONE);
 
-                EditText editText = newEditText(1, true);
+                EditText editText = newEditText(1);
 
                 if (doSurveyAnswerEntity != null) {
                     editText.setText(doSurveyAnswerEntity.getExtra());
                 }
+
+                addListener(editText, true);
+
                 editText.setTag(questionEntity.getQuestionId());
 
                 views.add(editText);
                 views.add(checkBox);
-            } else if (C.QUESTION_TYPE_MULTI_CHOICE.equals(questionEntity.getType())) {
+            } else if (C.QUESTION_TYPE_MULTI_CHOICE.equals(questionEntity.getType()) || C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionEntity.getType())) {
                 Set<String> choiceSet = null;
-                if (doSurveyAnswerEntity != null && doSurveyAnswerEntity.getAnswer() != null) {
-                    choiceSet = multiChoiceAnswerMap.get(questionEntity.getQuestionId());
-                    if (choiceSet == null) {
+                if (C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionEntity.getType())) {
+                    if (doSurveyAnswerEntity != null && !TextUtils.isEmpty(doSurveyAnswerEntity.getAnswer())) {
                         choiceSet = new HashSet<>();
-                        multiChoiceAnswerMap.put(questionEntity.getQuestionId(), choiceSet);
-
                         String[] temp = doSurveyAnswerEntity.getAnswer().split("\\|");
                         for (String s : temp) {
                             choiceSet.add(s.trim());
@@ -161,23 +175,38 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 }
                 if (questionEntity.getQuestionContents() != null) {
                     for (QuestionContentEntity questionContentEntity : questionEntity.getQuestionContents()) {
+                        String value = questionContentEntity.getValue();
+                        if (value == null) {
+                            value = questionContentEntity.getQuestionContentId().toString();
+                        }
                         CheckBox checkBox = newCheckBox();
+                        checkBox.setText(questionContentEntity.getLabel());
 
-                        if (choiceSet != null && choiceSet.contains(questionContentEntity.getQuestionContentId().toString())) {
+                        if (C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionEntity.getType())) {
+                            if (choiceSet != null && choiceSet.contains(value)) {
+                                checkBox.setChecked(true);
+                            }
+                        } else if(doSurveyAnswerEntity != null && value.equals(doSurveyAnswerEntity.getAnswer())){
                             checkBox.setChecked(true);
                         }
-                        checkBox.setTag(questionContentEntity.getQuestionContentId());
+
+                        addListener(checkBox);
+
+                        checkBox.setTag(questionEntity.getQuestionId() + "_" + value);
 
                         views.add(checkBox);
                     }
                 }
             }else if (C.QUESTION_TYPE_FREE_TEXT.equals(questionEntity.getType())) {
 
-                EditText editText = newEditText(3, false);
+                EditText editText = newEditText(FREE_TEXT_ROWS);
 
                 if (doSurveyAnswerEntity != null) {
                     editText.setText(doSurveyAnswerEntity.getAnswer());
                 }
+
+                addListener(editText, false);
+
                 editText.setTag(questionEntity.getQuestionId());
 
                 views.add(editText);
@@ -197,13 +226,17 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
         }
     }
 
-    private EditText newEditText(int rows, final boolean isExtra) {
+    private EditText newEditText(int rows) {
         final EditText editText = new EditText(context);
         editText.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         editText.setMaxLines(rows);
 
+        return editText;
+    }
+
+    private void addListener(final EditText editText, final boolean isExtra) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -223,6 +256,10 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                     if (doSurveyAnswerEntity == null) {
                         doSurveyAnswerEntity = new DoSurveyAnswerEntity();
                         doSurveyAnswerEntity.setQuestionId(questionId);
+                        doSurveyAnswerEntity.setOutletId(outletId);
+                        doSurveyAnswerEntity.setSurveyId(surveyId);
+                        doSurveyAnswerEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+                        answerMap.put(questionId, doSurveyAnswerEntity);
                     }
                     if (isExtra) {
                         doSurveyAnswerEntity.setExtra(s.toString());
@@ -232,8 +269,6 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 }
             }
         });
-
-        return editText;
     }
 
     private CheckBox newCheckBox() {
@@ -242,21 +277,72 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
+        return checkBox;
+    }
+
+    private void addListener(final CheckBox checkBox) {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (checkBox.getTag() != null) {
-                    Long questionId = Long.valueOf(checkBox.getTag().toString());
+                    Long questionId = null;
+                    String answerValue = null;
+                    String sTag = checkBox.getTag().toString();
+                    int index = sTag.indexOf("_");
+                    if (index > 0) {
+                        questionId =  Long.valueOf(sTag.substring(0, index));
+                        answerValue = sTag.substring(index + 1);
+                    } else {
+                        questionId = Long.valueOf(sTag);
+                    }
                     String questionType = getQuestionType(questionId);
 
                     DoSurveyAnswerEntity doSurveyAnswerEntity = answerMap.get(questionId);
                     if (doSurveyAnswerEntity == null) {
                         doSurveyAnswerEntity = new DoSurveyAnswerEntity();
                         doSurveyAnswerEntity.setQuestionId(questionId);
+                        doSurveyAnswerEntity.setOutletId(outletId);
+                        doSurveyAnswerEntity.setSurveyId(surveyId);
+                        doSurveyAnswerEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+                        answerMap.put(questionId, doSurveyAnswerEntity);
                     }
 
-                    if (C.QUESTION_TYPE_MULTI_CHOICE.equals(questionType) || C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionType)) {
-                        // TODO put answer
+                    if (C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionType)) {
+                        if (!TextUtils.isEmpty(doSurveyAnswerEntity.getAnswer())) {
+                            List<String> aList = Arrays.asList(doSurveyAnswerEntity.getAnswer().split("\\|"));
+                            if (isChecked) {
+                                if (!aList.contains(answerValue)) {
+                                    aList.add(answerValue);
+                                }
+                            } else {
+                                aList.remove(answerValue);
+                            }
+                            StringBuilder sb = new StringBuilder();
+                            for (String s : aList) {
+                                if (sb.length() > 0) {
+                                    sb.append("|");
+                                }
+                                sb.append(s);
+                            }
+                            doSurveyAnswerEntity.setAnswer(sb.toString());
+                        } else if(isChecked){
+                            doSurveyAnswerEntity.setAnswer(answerValue);
+                        }
+                    } else if (C.QUESTION_TYPE_MULTI_CHOICE.equals(questionType)) {
+                        if (isChecked) {
+                            List<View> views = answerViewMap.get(questionId);
+                            for (View view : views) {
+                                CheckBox cb = (CheckBox) view;
+                                if (cb != checkBox) {
+                                    cb.setChecked(false);
+                                }
+                            }
+
+                            doSurveyAnswerEntity.setAnswer(answerValue);
+
+                        } else if(answerValue.equals(doSurveyAnswerEntity.getAnswer())){
+                            doSurveyAnswerEntity.setAnswer(null);
+                        }
                     } else {
                         doSurveyAnswerEntity.setAnswer(isChecked? C.FLAG_YES : C.FLAG_NO);
                     }
@@ -264,7 +350,6 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 }
             }
         });
-        return checkBox;
     }
 
     private String getQuestionType(Long questionId) {

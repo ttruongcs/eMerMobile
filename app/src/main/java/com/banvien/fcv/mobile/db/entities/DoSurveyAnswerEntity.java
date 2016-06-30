@@ -14,10 +14,12 @@ public class DoSurveyAnswerEntity implements Serializable {
     private Long _id;
     @DatabaseField(canBeNull = false)
     private Long questionId;
-    @DatabaseField(canBeNull = true)
+    @DatabaseField(canBeNull = false)
     private Long surveyId;
     @DatabaseField(canBeNull = false)
     private Long outletId;
+    @DatabaseField(canBeNull = true)
+    private Long routeScheduleDetailId;
     @DatabaseField
     private String answer;
     @DatabaseField
@@ -69,5 +71,13 @@ public class DoSurveyAnswerEntity implements Serializable {
 
     public void setOutletId(Long outletId) {
         this.outletId = outletId;
+    }
+
+    public Long getRouteScheduleDetailId() {
+        return routeScheduleDetailId;
+    }
+
+    public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
+        this.routeScheduleDetailId = routeScheduleDetailId;
     }
 }

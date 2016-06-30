@@ -32,7 +32,7 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
     private final String TAG = "SurveyActivity";
     private final static int LOADER_ID = IDGenerator.newId();
     private ProgressDialog progressDialog;
-    private Long outletId;
+    private Long outletId, routeScheduleDetailId;
     private Repo repo;
     private List<SurveyEntity> surveyList = new ArrayList<>();
     @Bind(R.id.survey_listview)
@@ -43,7 +43,10 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_list);
+        setToolbarTitle(A.s(R.string.survey_title));
+
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
         repo = new Repo(this);
         surveyArrayAdapter = new SurveyArrayAdapter(this, surveyList);
         listView.setAdapter(surveyArrayAdapter);
@@ -55,6 +58,7 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
                 Intent intent = new Intent(SurveyActivity.this, DoSurveyActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 intent.putExtra(ScreenContants.KEY_SURVEY_ID, surveyEntity.getSurveyId());
+                intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
                 startActivity(intent);
             }
         });

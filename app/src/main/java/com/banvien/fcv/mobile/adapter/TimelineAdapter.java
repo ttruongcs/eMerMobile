@@ -386,12 +386,12 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     try {
                         try {
                             SyncService syncService = new SyncService(activity, 1l);
-                            syncService.synConfirmNewDayImformationDontHaveImage();
+                            syncService.synConfirmNewDayInformationDontHaveImage();
                         } catch (SQLException e) {
                             ELog.d("Error when Sync Comfirm Working");
                         }
                         SyncService syncService = new SyncService(activity, 1l);
-                        syncService.synConfirmNewDayImformationDontHaveImage();
+                        syncService.synConfirmNewDayInformationDontHaveImage();
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN

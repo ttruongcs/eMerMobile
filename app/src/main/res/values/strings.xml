@@ -236,6 +236,7 @@
     <string name="title_activity_dbb">DBBActivity</string>
 
     <string name="action_settings">Cài đặt</string>
+    <string name="action_save">Lưu</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="page">Page</string>
@@ -653,6 +654,10 @@
     <string name="out_of_finished_content">Kiểm tra những công việc còn đang làm để hoàn tất công việc.</string>
     <string name="out_of_check">Kiểm tra</string>
 
+    <string name="confirm">Xác nhận</string>
     <string name="save_survey_failed_msg">Có lỗi xảy ra!</string>
+    <string name="save_survey_success_msg">Lưu thành công</string>
+    <string name="save_survey_warning_required_answer">Vui lòng nhập các câu bắt buộc</string>
+    <string name="dosurvey_not_yet_saved_exit_warning_msg">Bạn chưa lưu kết quả. Bạn có thật sự muốn thoát?</string>
     <string name="loading">Đang tải...</string>
 </resources>
