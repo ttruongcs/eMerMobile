@@ -641,9 +641,11 @@
     <string name="dialog_after_title">Chụp hình khảo sát trưng bày sau?</string>
     <string name="dialog_after_content">Hình ảnh cho khảo sát trưng bày sau còn thiếu.\nChọn \"Chụp Ảnh\" để tiến hành chụp</string>
     <string name="capture">Chụp ảnh</string>
-    <string name="s0">s0:</string>
-    <string name="s1">s1:</string>
-    <string name="s2">s2</string>
-    <string name="s3">s3</string>
+    <string name="s0">S0:</string>
+    <string name="s1">S1:</string>
+    <string name="s2">S2</string>
+    <string name="s3">S3</string>
     <string name="report_enddayy">Báo cáo cuối ngày</string>
+    <string name="pass">Đạt</string>
+    <string name="fail">Không đạt</string>
 </resources>

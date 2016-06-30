@@ -4,12 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.RegisterHistoryActivity;
-import com.banvien.fcv.mobile.dto.RegisterInfoDTO;
+import com.banvien.fcv.mobile.dto.HistoryDTO;
 
 import java.util.List;
 
@@ -17,20 +16,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Linh Nguyen on 6/25/2016.
+ * Created by Linh Nguyen on 6/30/2016.
  */
-public class RegisterInfoAdapter extends RecyclerView.Adapter {
+public class HistoryInfoAdapter extends RecyclerView.Adapter {
     private RegisterHistoryActivity activity;
-    private List<RegisterInfoDTO> mData;
+    private List<HistoryDTO> mData;
 
-    public RegisterInfoAdapter(RegisterHistoryActivity activity, List<RegisterInfoDTO> data) {
+    public HistoryInfoAdapter(RegisterHistoryActivity activity, List<HistoryDTO> data) {
         this.activity = activity;
         this.mData = data;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_outlet_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_reward_item, parent, false);
         ItemHolder itemHolder = new ItemHolder(v);
 
         return itemHolder;
@@ -39,12 +38,15 @@ public class RegisterInfoAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemHolder itemHolder = (ItemHolder) holder;
-        itemHolder.edTest.setText(mData.get(position).getName());
-        if(position == 2) {
-            itemHolder.cbCheck.setChecked(true);
 
+        itemHolder.tvMonth.setText("T" + mData.get(position).getMonth());
+        if(mData.get(position).isStatus() == true) {
+            itemHolder.tvStatus.setText(activity.getString(R.string.pass));
+        } else {
+            itemHolder.tvStatus.setText(activity.getString(R.string.fail));
         }
-        itemHolder.cbCheck.setEnabled(false);
+        itemHolder.tvEIENumber.setText(String.valueOf(mData.get(position).getEie()));
+
 
     }
 
@@ -55,11 +57,14 @@ public class RegisterInfoAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.cbAddOutlet)
-        CheckBox cbCheck;
+        @Bind(R.id.tvMonth)
+        TextView tvMonth;
 
-        @Bind(R.id.tvAddOutlet)
-        TextView edTest;
+        @Bind(R.id.tvStatus)
+        TextView tvStatus;
+
+        @Bind(R.id.tvEIENumber)
+        TextView tvEIENumber;
 
         public ItemHolder(View itemView) {
             super(itemView);
