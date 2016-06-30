@@ -1,7 +1,10 @@
 package com.banvien.fcv.mobile.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.adapter.OutletListAdapter;
@@ -29,11 +35,15 @@ import butterknife.ButterKnife;
  * Created by Linh Nguyen on 5/20/2016.
  */
 public class UnfinishedOutletFragment extends Fragment {
+    @Nullable
     @Bind(R.id.rvOutletList)
     RecyclerView recyclerView;
 
+    @Nullable
     @Bind(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    Button btnLetGo;
 
     private View rootView;
     private RecyclerView.Adapter adapter;
@@ -62,7 +72,26 @@ public class UnfinishedOutletFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         repo = new Repo(rootView.getContext());
 
+        if(!checkExistData()) {
+            rootView = inflater.inflate(R.layout.data_no_exist_item, container, false);
+            btnLetGo = (Button) rootView.findViewById(R.id.btnLetGo);
+        }
+
         return rootView;
+    }
+
+    private boolean checkExistData() {
+        boolean isExist = false;
+        try {
+            List<OutletDTO> outletDTOs = repo.getOutletDAO().getOutletsWithCircumstance(ScreenContants.OUTLET_STATUS_UNFINISHED);
+            if(outletDTOs.size() > 0) {
+                isExist = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return isExist;
     }
 
     @Override
@@ -112,5 +141,32 @@ public class UnfinishedOutletFragment extends Fragment {
         if(repo != null) {
             repo.release();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!checkExistData()) {
+            changeDataUnavailable();
+        } else {
+            reloadOutletList();
+        }
+    }
+
+    private void changeDataUnavailable() {
+        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        rootView = inflater.inflate(R.layout.data_no_exist_item, null);
+        btnLetGo = (Button) rootView.findViewById(R.id.btnLetGo);
+        ViewGroup viewGroup = (ViewGroup)getView();
+        viewGroup.removeAllViews();
+        viewGroup.addView(rootView);
+
+        btnLetGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TabLayout tabLayout = ((TabLayout)getActivity().findViewById(R.id.tabs));
+                tabLayout.getTabAt(1).select();
+            }
+        });
     }
 }

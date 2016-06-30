@@ -14,7 +14,10 @@ import com.banvien.fcv.mobile.ActionActivity;
 import com.banvien.fcv.mobile.InOutletHomeActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.beanutil.OutletUtil;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.fragments.BaseFragment;
@@ -46,10 +49,6 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
         this.flag = flag;
         this.repo = repo;
     }
-
-    public OutletListAdapter() {};
-
-
 
     @Override
     public OutletHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -104,8 +103,12 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(flag.equals(ScreenContants.UNFINISH)) {
-                        configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
+                    if  (outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)
+                            || outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_INPROGRESS)) {
+                        if(outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)) {
+                            configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
+                        }
+                        updateStatus(outletDTO, ScreenContants.DOING);
                         Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
                         intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                         intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
@@ -115,10 +118,27 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             });
         }
 
+        private void updateStatus(OutletDTO outletDTO, String typeStatus) {
+            OutletEntity outletEntity = OutletUtil.convertToEntity(outletDTO);
+            if(typeStatus.equals(ScreenContants.DOING)) {
+                outletEntity.setStatus(ScreenContants.STATUS_STEP_INPROGRESS);
+            }
+
+            try {
+                int rowSuccess = repo.getOutletDAO().update(outletEntity);
+                if (rowSuccess == 0) {
+                    ELog.d("Can't update outlet");
+                }
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+
+        }
+
         private void configStatusInOutlet(Long routeScheduleDetailId) {
             try {
                 List<StatusInOutletEntity> statusInOutletEntities = repo.getStatusInOutletDAO().queryForEq("routeScheduleDetailId", routeScheduleDetailId);
-                if(statusInOutletEntities.size() <= 0) {
+                if (statusInOutletEntities.size() <= 0) {
                     StatusInOutletEntity statusInOutletEntity = new StatusInOutletEntity();
                     statusInOutletEntity.setCheckIn(ScreenContants.STATUS_STEP_INPROGRESS);
                     statusInOutletEntity.setChupAnhOverview(ScreenContants.STATUS_STEP_NOTYET);
@@ -142,31 +162,31 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             }
         }
 
-        private String buildOutletCode(String outletCode, String distributorCode){
+        private String buildOutletCode(String outletCode, String distributorCode) {
             StringBuffer stringBuffer = new StringBuffer();
 
-            if(outletCode != null) {
+            if (outletCode != null) {
                 stringBuffer.append(outletCode);
             }
-            if(distributorCode != null) {
+            if (distributorCode != null) {
                 stringBuffer.append(distributorCode);
             }
 
             return stringBuffer.toString();
         }
 
-        private String buildOutletAdress(String locationNum, String street, String ward, String cityName){
+        private String buildOutletAdress(String locationNum, String street, String ward, String cityName) {
             StringBuffer stringBuffer = new StringBuffer();
-            if(null != locationNum) {
+            if (null != locationNum) {
                 stringBuffer.append(locationNum).append(",  ");
             }
-            if(null != street) {
+            if (null != street) {
                 stringBuffer.append(street).append("   ");
             }
-            if(null != ward) {
+            if (null != ward) {
                 stringBuffer.append(ward).append("   ");
             }
-            if(null != cityName) {
+            if (null != cityName) {
                 stringBuffer.append(cityName);
             }
             return stringBuffer.toString();

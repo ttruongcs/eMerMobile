@@ -39,6 +39,9 @@ public class SyncEndActivity extends BaseDrawerActivity {
     @Bind(R.id.switcher)
     ViewSwitcher viewSwitcher;
 
+    @Bind(R.id.tvEndOutlet)
+    TextView tvEndOutlet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class SyncEndActivity extends BaseDrawerActivity {
                     syncService.syncImageUniform();
                     syncService.syncOutletMerImage();
                     syncService.syncOutletMerImageImfomation();
-                    syncService.syncOutletMerResultToServer(progressDialog, textNumSuccess);
+                    syncService.syncOutletMerResultToServer(progressDialog, tvEndOutlet);
                     syncService.clearData();
                     new AnimationUtils();
                     viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
