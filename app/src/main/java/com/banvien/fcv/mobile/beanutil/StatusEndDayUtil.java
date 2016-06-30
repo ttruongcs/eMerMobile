@@ -15,6 +15,7 @@ public class StatusEndDayUtil {
         result.set_id(item.get_id());
         result.setChupAnhCuoiNgay(item.getChupAnhCuoiNgay());
         result.setDongBoCuoiNgay(item.getDongBoCuoiNgay());
+        result.setKetThucCuoiNgay(item.getKetThucCuoiNgay());
         return result;
     }
 
@@ -23,6 +24,7 @@ public class StatusEndDayUtil {
         result.set_id(item.get_id());
         result.setChupAnhCuoiNgay(item.getChupAnhCuoiNgay());
         result.setDongBoCuoiNgay(item.getDongBoCuoiNgay());
+        result.setKetThucCuoiNgay(item.getKetThucCuoiNgay());
         return result;
     }
 }

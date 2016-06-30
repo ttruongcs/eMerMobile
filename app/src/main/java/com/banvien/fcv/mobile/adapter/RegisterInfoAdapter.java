@@ -40,6 +40,7 @@ public class RegisterInfoAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemHolder itemHolder = (ItemHolder) holder;
         itemHolder.edTest.setText(mData.get(position).getName());
+        itemHolder.cbCheck.setEnabled(false);
     }
 
     @Override

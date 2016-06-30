@@ -8,8 +8,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.banvien.fcv.mobile.library.SyncOutletMerResultService;
 import com.banvien.fcv.mobile.library.SyncService;
@@ -33,6 +35,9 @@ public class SyncEndActivity extends BaseDrawerActivity {
 
     @Bind(R.id.txtViewDateEndDay)
     TextView txtViewDateEndDay;
+
+    @Bind(R.id.switcher)
+    ViewSwitcher viewSwitcher;
 
 
     @Override
@@ -61,6 +66,9 @@ public class SyncEndActivity extends BaseDrawerActivity {
                     syncService.syncOutletMerImageImfomation();
                     syncService.syncOutletMerResultToServer(progressDialog, textNumSuccess);
                     syncService.clearData();
+                    new AnimationUtils();
+                    viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
+                    viewSwitcher.showNext();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
