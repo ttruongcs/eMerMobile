@@ -648,4 +648,8 @@
     <string name="report_enddayy">Báo cáo cuối ngày</string>
     <string name="pass">Đạt</string>
     <string name="fail">Không đạt</string>
+
+    <string name="out_of_unfinished">Chúc mừng! Công việc \"chưa hoàn thành\" trong ngày đã hết.</string>
+    <string name="out_of_finished_content">Kiểm tra những công việc còn đang làm để hoàn tất công việc.</string>
+    <string name="out_of_check">Kiểm tra</string>
 </resources>

@@ -105,7 +105,6 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                 public void onClick(View view) {
                     if  (outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)
                             || outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_INPROGRESS)) {
-                        A.putc("doingTab", true);
                         if(outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)) {
                             configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
                         }

@@ -87,13 +87,6 @@ public class OutletTabActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if(A.is("doingTab")) {
-//            viewPager.setCurrentItem(1);
-//        } else {
-//            viewPager.setCurrentItem(2);
-//        }
         tabLayout.getTabAt(2).select();
-
-
     }
 }
