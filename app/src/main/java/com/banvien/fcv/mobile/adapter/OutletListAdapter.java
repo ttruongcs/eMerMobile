@@ -144,8 +144,14 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
 
         private String buildOutletCode(String outletCode, String distributorCode){
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(outletCode);
-            stringBuffer.append(distributorCode);
+
+            if(outletCode != null) {
+                stringBuffer.append(outletCode);
+            }
+            if(distributorCode != null) {
+                stringBuffer.append(distributorCode);
+            }
+
             return stringBuffer.toString();
         }
 

@@ -103,9 +103,20 @@ public class OrderActivity extends BaseDrawerActivity {
                     whatsappIntent.setPackage("com.whatsapp");
 
                     /*Create template whatsapp*/
-                    textSend.append(principal.getFirstName()).append(" ").append(principal.getLastName()).append("\n");
+                    if(principal.getFirstName() != null) {
+                        textSend.append(principal.getFirstName()).append(" ");
+                        if(principal.getLastName() == null) {
+                            textSend.append("\n");
+                        }
+                    }
+                    if(principal.getLastName() != null) {
+                        textSend.append(principal.getLastName()).append("\n");
+                    }
+
                     textSend.append("------------").append("\n");
-                    textSend.append(getString(R.string.whatsapp_outlet_name) + ": " + outletDTO.getName()).append("\n");
+                    if(outletDTO.getName() != null) {
+                        textSend.append(getString(R.string.whatsapp_outlet_name) + ": " + outletDTO.getName()).append("\n");
+                    }
                     String fullAddress = "";
                     StringBuilder address = new StringBuilder();
                     if(!(outletDTO.getLocationNo() == null && outletDTO.getStreet() == null && outletDTO.getWard() == null && outletDTO.getCityName() == null)) {

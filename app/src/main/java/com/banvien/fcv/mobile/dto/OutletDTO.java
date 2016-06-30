@@ -167,7 +167,10 @@ public class OutletDTO implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(name);
+        StringBuilder stringBuilder = new StringBuilder();
+        if(name != null) {
+            stringBuilder.append(name);
+        }
         String fullAddress = "";
         stringBuilder.append(" - ").append(code).append("\n");
         if(!(locationNo == null && street == null && ward == null && cityName == null)) {
