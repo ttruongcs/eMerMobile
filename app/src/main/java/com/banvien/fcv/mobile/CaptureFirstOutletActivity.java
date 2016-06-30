@@ -206,7 +206,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 if(imageDTOs.size() > 0) {
-                   // showConfirmDialog(v);
+                    showConfirmDialog(v);
                 } else {
                     Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_SHORT).show();
                 }

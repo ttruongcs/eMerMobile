@@ -195,78 +195,81 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if(cardView.getAlpha() == 0.3f) {
                         Toast.makeText(v.getContext(), v.getContext().getString(R.string.notyet_done), Toast.LENGTH_SHORT).show();
-                    }
-                    repo = new Repo(v.getContext());
-                    try {
+
+                    } else if(cardView.getAlpha() == 1f) {
+                        repo = new Repo(v.getContext());
+                        try {
 //                        StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
 //                        StatusStartDayEntity statusStartDay = repo.getStartDayDAO().getConfigStartDayHome();
 //                        StatusEndDayEntity statusEndDay = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
 
-                        switch (stepCode.getText().toString()) {
-                            // HOME
-                            case ScreenContants.HOME_STEP_STARTDAY :
-                                Intent startDayIntent = new Intent(v.getContext(), StartDayActivity.class);
-                                v.getContext().startActivity(startDayIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET :
-                                Intent coverageActivity = new Intent(v.getContext(), CoverageInfoActivity.class);
-                                v.getContext().startActivity(coverageActivity);
-                                break;
-                            case ScreenContants.HOME_STEP_ENDDAY:
-                                Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);
-                                v.getContext().startActivity(endDayIntent);
-                                break;
+                            switch (stepCode.getText().toString()) {
+                                // HOME
+                                case ScreenContants.HOME_STEP_STARTDAY :
+                                    Intent startDayIntent = new Intent(v.getContext(), StartDayActivity.class);
+                                    v.getContext().startActivity(startDayIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET :
+                                    Intent coverageActivity = new Intent(v.getContext(), CoverageInfoActivity.class);
+                                    v.getContext().startActivity(coverageActivity);
+                                    break;
+                                case ScreenContants.HOME_STEP_ENDDAY:
+                                    Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);
+                                    v.getContext().startActivity(endDayIntent);
+                                    break;
 
-                            // START DAY
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
-                                Intent toolIntent = new Intent(v.getContext(), CaptureToolActivity.class);
-                                v.getContext().startActivity(toolIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
-                                try {
-                                    showAlertBox(v);
-                                } catch (SQLException e) {
-                                    ELog.d("Error when go to choice first outlet");
-                                }
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
-                                Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
-                                v.getContext().startActivity(uniformIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
-                                Intent addOutletIntent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
-                                v.getContext().startActivity(addOutletIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :
-                                Intent prepareIntent = new Intent(v.getContext(), PrepareActivity.class);
-                                v.getContext().startActivity(prepareIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
-                                showConfirmDialog();
-                                break;
+                                // START DAY
+                                case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
+                                    Intent toolIntent = new Intent(v.getContext(), CaptureToolActivity.class);
+                                    v.getContext().startActivity(toolIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
+                                    try {
+                                        showAlertBox(v);
+                                    } catch (SQLException e) {
+                                        ELog.d("Error when go to choice first outlet");
+                                    }
+                                    break;
+                                case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
+                                    Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
+                                    v.getContext().startActivity(uniformIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
+                                    Intent addOutletIntent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
+                                    v.getContext().startActivity(addOutletIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :
+                                    Intent prepareIntent = new Intent(v.getContext(), PrepareActivity.class);
+                                    v.getContext().startActivity(prepareIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC:
+                                    showConfirmDialog();
+                                    break;
 
 
-                            // END DAY
-                            case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
-                                Intent captureEndDay = new Intent(v.getContext(), CaptureEndDayActivity.class);
-                                v.getContext().startActivity(captureEndDay);
-                                break;
-                            case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
-                                Intent syncEndDay = new Intent(v.getContext(), SyncEndActivity.class);
-                                v.getContext().startActivity(syncEndDay);
-                                break;
+                                // END DAY
+                                case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
+                                    Intent captureEndDay = new Intent(v.getContext(), CaptureEndDayActivity.class);
+                                    v.getContext().startActivity(captureEndDay);
+                                    break;
+                                case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
+                                    Intent syncEndDay = new Intent(v.getContext(), SyncEndActivity.class);
+                                    v.getContext().startActivity(syncEndDay);
+                                    break;
 
-                            case ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY:
-                                showConfirmEndDialog();
-                                break;
+                                case ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY:
+                                    showConfirmEndDialog();
+                                    break;
 
-                            default:
-                                // todo
-                                break;
+                                default:
+                                    // todo
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            ELog.e("Message log :can find config home activity", e);
                         }
-                    } catch (Exception e) {
-                        ELog.e("Message log :can find config home activity", e);
                     }
+
                 }
             });
         }
