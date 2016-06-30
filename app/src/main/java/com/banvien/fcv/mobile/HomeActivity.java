@@ -47,6 +47,7 @@ public class HomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         repo = new Repo(this);
+        A.putc("doingTab", false);
 //        repo.getDatabaseHelper().get();
         repo.getDatabaseHelper().getWritableDatabase(); //Create database and table
         try {

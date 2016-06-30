@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.banvien.fcv.mobile.adapter.ViewPagerAdapter;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.fragments.DoingOutletFragment;
 import com.banvien.fcv.mobile.fragments.FinishedOutletFragment;
 import com.banvien.fcv.mobile.fragments.UnfinishedOutletFragment;
@@ -45,9 +46,7 @@ public class OutletTabActivity extends BaseDrawerActivity {
         super.onStart();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-
     }
-
 
     private void setupViewPager(ViewPager viewPager) {
         Log.d(TAG, "Init tab");
@@ -88,6 +87,13 @@ public class OutletTabActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        viewPager.setCurrentItem(2);
+//        if(A.is("doingTab")) {
+//            viewPager.setCurrentItem(1);
+//        } else {
+//            viewPager.setCurrentItem(2);
+//        }
+        tabLayout.getTabAt(2).select();
+
+
     }
 }
