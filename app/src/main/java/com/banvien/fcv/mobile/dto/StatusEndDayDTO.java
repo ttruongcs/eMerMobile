@@ -9,6 +9,8 @@ public class StatusEndDayDTO implements Serializable {
     
     private Integer dongBoCuoiNgay;
 
+    private Integer ketThucCuoiNgay;
+
     public long get_id() {
         return _id;
     }
@@ -31,5 +33,13 @@ public class StatusEndDayDTO implements Serializable {
 
     public void setDongBoCuoiNgay(Integer dongBoCuoiNgay) {
         this.dongBoCuoiNgay = dongBoCuoiNgay;
+    }
+
+    public Integer getKetThucCuoiNgay() {
+        return ketThucCuoiNgay;
+    }
+
+    public void setKetThucCuoiNgay(Integer ketThucCuoiNgay) {
+        this.ketThucCuoiNgay = ketThucCuoiNgay;
     }
 }

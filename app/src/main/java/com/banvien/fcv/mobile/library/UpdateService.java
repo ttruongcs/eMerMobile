@@ -166,6 +166,7 @@ public class UpdateService {
 		StatusEndDayEntity statusInOutletEntity = new StatusEndDayEntity();
 		statusInOutletEntity.setChupAnhCuoiNgay(ScreenContants.STATUS_STEP_INPROGRESS);
 		statusInOutletEntity.setDongBoCuoiNgay(ScreenContants.STATUS_STEP_NOTYET);
+		statusInOutletEntity.setKetThucCuoiNgay(ScreenContants.STATUS_STEP_NOTYET);
 		repo.getStatusEndDayDAO().addStatusHome(statusInOutletEntity);
 	}
 

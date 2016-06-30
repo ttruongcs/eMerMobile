@@ -70,8 +70,13 @@ public class EndDayActivity extends BaseDrawerActivity {
                     , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
                     , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, statusEndDay.getDongBoCuoiNgay());
 
+            TimelineDTO step3 = new TimelineDTO(getString(R.string.ketthuccuoingay)
+                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongbocuoingay)
+                    , ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY, statusEndDay.getKetThucCuoiNgay());
+
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
+            timelineDTOs.add(step3);
         } else {
             TimelineDTO step1 = new TimelineDTO(getString(R.string.chupanhcuoingay)
                     , getString(R.string.motachupanhcuoingay), getString(R.string.stepchupanhcuoingay)
@@ -81,8 +86,13 @@ public class EndDayActivity extends BaseDrawerActivity {
                     , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
                     , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, ScreenContants.STATUS_STEP_NOTYET);
 
+            TimelineDTO step3 = new TimelineDTO(getString(R.string.ketthuccuoingay)
+                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongbocuoingay)
+                    , ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY, ScreenContants.STATUS_STEP_NOTYET);
+
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
+            timelineDTOs.add(step3);
         }
 
         if(timelineDTOs.size() > 0) {

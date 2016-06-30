@@ -474,7 +474,7 @@
     <string name="chamdientrungbaytaicuahang">Trưng Bày Tại Cửa Hàng</string>
     <string name="motachamdiemtrungbaytaicuahang">Chấm điểm trưng bày, khảo sát, ghi nhận khiếu nại, chụp ảnh trưng bày cửa hàng ,....</string>
     <string name="stepchamdiemtrungbay">02</string>
-    <string name="ketthuccuoingay">Kết Thúc Cuối Ngày</string>
+    <string name="ketthuccuoingay">Xác nhận Cuối Ngày</string>
     <string name="motaketthuccuoingay">Báo cáo dữ liệu về hệ thống, chụp ảnh cuối ngày, xác nhận hoàn thành công việc, ....</string>
     <string name="stepketthuccuoingay">03</string>
 
@@ -543,8 +543,11 @@
     <string name="motachupanhcuoingay">Chụp ảnh cuối ngày sau khi hoàn thành công việc,..</string>
     <string name="stepchupanhcuoingay">01</string>
     <string name="dongboketqua">Đồng Bộ Kết Quả</string>
+    <string name="xacnhancuoingay">Xác nhận cuối ngày</string>
     <string name="motadongboketqua">Đồng bộ kết quả chấm trưng bày về hệ thống</string>
     <string name="stepdongboketqua">02</string>
+    <string name="stepdongbocuoingay">03</string>
+    <string name="dongbocuoingay">Xác nhận đã hoàn thành công việc trong ngày</string>
 
     <string name="check">Check</string>
     <string name="time">Thời gian</string>
@@ -596,6 +599,8 @@
     <string name="dialog_confirm_working">Chọn \"Đồng Ý\" để chụp hình nhà phân phối (nếu có).
         \n Chọn \"Xác Nhận\" để xác nhận làm việc mà không chụp hình họp
     </string>
+    <string name="dialog_confirm_end_title">Bạn có chắc muốn xác nhận cuối ngày không?</string>
+    <string name="dialog_confirm_end_content">Chọn đồng ý để xác nhận hoàn thành tất cả công việc và xác nhận cuối ngày.</string>
 
     <string name="dialog_sync_confirm_working_title">Bạn có muốn xác nhận làm việc và đồng bộ </string>
     <string name="dialog_sync_confirm_working">Chọn \"Đồng Ý\" để xác nhận và đồng bộ.

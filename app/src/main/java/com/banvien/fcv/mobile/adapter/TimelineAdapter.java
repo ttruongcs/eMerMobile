@@ -256,6 +256,10 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 v.getContext().startActivity(syncEndDay);
                                 break;
 
+                            case ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY:
+                                showConfirmEndDialog();
+                                break;
+
                             default:
                                 // todo
                                 break;
@@ -265,6 +269,51 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+        }
+
+        private void showConfirmEndDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setTitle(activity.getString(R.string.dialog_confirm_end_title));
+            builder.setMessage(activity.getString(R.string.dialog_confirm_end_content));
+
+            String positiveText = activity.getString(R.string.accept);
+            builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+//                        try {
+//                            SyncService syncService = new SyncService(activity, 1l);
+//                            syncService.synConfirmEndDayInformation();
+//                        } catch (SQLException e) {
+//                            ELog.d("Error when Sync Comfirm Working"); //Todo Sync here
+//                        }
+                        SyncService syncService = new SyncService(activity, 1l);
+                        syncService.synConfirmEndDayInformation();
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
+                        changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
+                                , ScreenContants.CONFIRM_END_COLUMN, null, ScreenContants.END_DATE_COLUMN, false);
+//                        Intent intent = new Intent(activity, .class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); //Todo set status here
+//                        activity.startActivity(intent);
+//                        activity.finish();
+
+                    } catch (SQLException e) {
+                        Log.e("TimelineAdapter", "Sync no image Error");
+                    }
+                }
+            });
+
+            String negativeText = activity.getString(R.string.cancel);
+            builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         private void showAlertBox(final View v) throws SQLException {

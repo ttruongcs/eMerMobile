@@ -244,6 +244,27 @@ public class SyncService {
 		});
 	}
 
+	public void synConfirmEndDayInformation() throws SQLException {
+//		RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
+//		routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
+//		Call<Long> call = RestClient.getInstance()
+//				.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
+//						, new Timestamp(System.currentTimeMillis()), null, null, new MConfirmWorkingImageCommand());
+//
+//
+//		call.enqueue(new Callback<Long>() {
+//			@Override
+//			public void onResponse(Call<Long> call,
+//								   Response<Long> response) {
+//				Log.v("newDayDontHaveImage", "success");
+//			}
+//			@Override
+//			public void onFailure(Call<Long> call, Throwable t) {
+//				Log.e("DontHaveImage error:", t.getMessage());
+//			}
+//		});
+	}
+
 
 
 

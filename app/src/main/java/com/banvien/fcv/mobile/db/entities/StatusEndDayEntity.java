@@ -16,6 +16,7 @@ public class StatusEndDayEntity implements Serializable {
     private Integer chupAnhCuoiNgay;
     @DatabaseField
     private Integer dongBoCuoiNgay;
+    @DatabaseField Integer ketThucCuoiNgay;
 
     public long get_id() {
         return _id;
@@ -39,5 +40,13 @@ public class StatusEndDayEntity implements Serializable {
 
     public void setDongBoCuoiNgay(Integer dongBoCuoiNgay) {
         this.dongBoCuoiNgay = dongBoCuoiNgay;
+    }
+
+    public Integer getKetThucCuoiNgay() {
+        return ketThucCuoiNgay;
+    }
+
+    public void setKetThucCuoiNgay(Integer ketThucCuoiNgay) {
+        this.ketThucCuoiNgay = ketThucCuoiNgay;
     }
 }
