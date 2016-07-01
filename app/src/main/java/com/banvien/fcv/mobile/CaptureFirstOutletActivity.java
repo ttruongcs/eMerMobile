@@ -60,6 +60,8 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_first_image_list);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.chuphinhcuahangdautien);
+
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
             routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);

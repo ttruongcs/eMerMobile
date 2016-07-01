@@ -63,6 +63,8 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.chuanbidaungay);
+
         reloadData();
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

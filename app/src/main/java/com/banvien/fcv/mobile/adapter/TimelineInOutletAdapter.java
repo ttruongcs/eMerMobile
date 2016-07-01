@@ -110,7 +110,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             itemHolder.arrow.setVisibility(View.VISIBLE);
 
         } else {
-            itemHolder.cardView.setAlpha(1f); //Todo: Change to 0.3f
+            itemHolder.cardView.setAlpha(0.3f); //Todo: Change to 0.3f
             itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle_not_done);
             switch (holder.getItemViewType()) {
                 case HEADER_ITEM:
