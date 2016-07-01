@@ -48,17 +48,17 @@ import retrofit2.Response;
 public class FindOutletActivity extends BaseDrawerActivity {
     private static final int DILOG_ID = 0;
 
-    @BindView(R.id.fabMenu)
-    FloatingActionMenu fabMenu;
+//    @BindView(R.id.fabMenu)
+//    FloatingActionMenu fabMenu;
 
     @BindView(R.id.lnAddOutlet)
     CoordinatorLayout lnAddOutlet;
 
-    @BindView(R.id.fabSearch)
-    FloatingActionButton fabSearch;
-
-    @BindView(R.id.fabAdvanceSearch)
-    FloatingActionButton fabAdvanceSearch;
+//    @BindView(R.id.fabSearch)
+//    FloatingActionButton fabSearch;
+//
+//    @BindView(R.id.fabAdvanceSearch)
+//    FloatingActionButton fabAdvanceSearch;
 
     @BindView(R.id.btnFindOutlet)
     Button btnFindOutlet;
@@ -85,6 +85,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_outlet);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.find_outlet);
         routeScheduleId = findRouteSchedule();
 
         bindViews();
@@ -109,33 +110,33 @@ public class FindOutletActivity extends BaseDrawerActivity {
     }
 
     private void bindEvents() {
-        fabMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if(opened) {
-                    lnAddOutlet.setAlpha(0.3f);
-                    lnAddOutlet.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-                } else {
-                    lnAddOutlet.setAlpha(1f);
-                    lnAddOutlet.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-                }
-            }
-        });
-
-        fabSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        fabAdvanceSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), getString(R.string.find_warning), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        fabMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+//            @Override
+//            public void onMenuToggle(boolean opened) {
+//                if(opened) {
+//                    lnAddOutlet.setAlpha(0.3f);
+//                    lnAddOutlet.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+//                } else {
+//                    lnAddOutlet.setAlpha(1f);
+//                    lnAddOutlet.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+//                }
+//            }
+//        });
+//
+//        fabSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        fabAdvanceSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), getString(R.string.find_warning), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         edDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +205,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
             new AnimationUtils();
             viewSwitcher.setAnimation(AnimationUtils.makeInAnimation(getBaseContext(), true));
             viewSwitcher.showNext();
+            getSupportActionBar().setTitle(R.string.themcuahangneumuon);
         } else {
             Toast.makeText(getBaseContext(), getString(R.string.no_result_found), Toast.LENGTH_SHORT).show();
         }

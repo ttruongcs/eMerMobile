@@ -27,6 +27,7 @@ import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.ConfirmWorkingActivity;
 import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
+import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.FindOutletSimpleActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
@@ -242,7 +243,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                     v.getContext().startActivity(uniformIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
-                                    Intent addOutletIntent = new Intent(v.getContext(), FindOutletSimpleActivity.class);
+                                    Intent addOutletIntent = new Intent(v.getContext(), FindOutletActivity.class);
                                     v.getContext().startActivity(addOutletIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_DONGBODULIEUPHANCONG :

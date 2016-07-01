@@ -45,6 +45,7 @@ public class PrepareActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.init);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.dongbodulieuphancong);
 
         long date = System.currentTimeMillis();
 

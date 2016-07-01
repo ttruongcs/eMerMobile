@@ -47,8 +47,8 @@ public class HomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         repo = new Repo(this);
-//        repo.getDatabaseHelper().get();
         repo.getDatabaseHelper().getWritableDatabase(); //Create database and table
+        getSupportActionBar().setTitle(R.string.home);
         try {
             StatusHomeEntity statusHomeEntity = repo.getStatusHomeDAO().getConfigStatusHome();
             if(statusHomeEntity != null){
@@ -57,7 +57,7 @@ public class HomeActivity extends BaseDrawerActivity {
                 statusHome = null;
             }
         } catch (SQLException e) {
-            ELog.d("Error when get CONFIG!");
+            ELog.d("Error when get CONFIG!!");
         }
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
