@@ -22,14 +22,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DoingOutletFragment extends Fragment {
-    @Bind(R.id.rvOutletList)
+    @BindView(R.id.rvOutletList)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private View rootView;

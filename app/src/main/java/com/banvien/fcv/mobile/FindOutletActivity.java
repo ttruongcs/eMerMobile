@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,31 +48,31 @@ import retrofit2.Response;
 public class FindOutletActivity extends BaseDrawerActivity {
     private static final int DILOG_ID = 0;
 
-    @Bind(R.id.fabMenu)
+    @BindView(R.id.fabMenu)
     FloatingActionMenu fabMenu;
 
-    @Bind(R.id.lnAddOutlet)
+    @BindView(R.id.lnAddOutlet)
     CoordinatorLayout lnAddOutlet;
 
-    @Bind(R.id.fabSearch)
+    @BindView(R.id.fabSearch)
     FloatingActionButton fabSearch;
 
-    @Bind(R.id.fabAdvanceSearch)
+    @BindView(R.id.fabAdvanceSearch)
     FloatingActionButton fabAdvanceSearch;
 
-    @Bind(R.id.btnFindOutlet)
+    @BindView(R.id.btnFindOutlet)
     Button btnFindOutlet;
 
-    @Bind(R.id.rcvAddOutlet)
+    @BindView(R.id.rcvAddOutlet)
     RecyclerView recyclerView;
 
-    @Bind(R.id.switcher)
+    @BindView(R.id.switcher)
     ViewSwitcher viewSwitcher;
 
-    @Bind(R.id.edKeyword)
+    @BindView(R.id.edKeyword)
     EditText edKeyword;
 
-    @Bind(R.id.edDate)
+    @BindView(R.id.edDate)
     EditText edDate;
 
     private RecyclerView.Adapter adapter;

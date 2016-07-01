@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/23/2016.
@@ -45,10 +45,10 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
     private static long outletId;
     private static OutletEntity outlet;
 
-    @Bind(R.id.btnTake)
+    @BindView(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.gridListImage)
+    @BindView(R.id.gridListImage)
     GridView gridListImage;
 
     @Override

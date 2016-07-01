@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -71,16 +71,16 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
     }
 
     public class OutletHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.item)
+        @BindView(R.id.item)
         RelativeLayout item;
 
-        @Bind(R.id.name_distributor_label)
+        @BindView(R.id.name_distributor_label)
         TextView outletName;
 
-        @Bind(R.id.address_distributor_label)
+        @BindView(R.id.address_distributor_label)
         TextView outletCode;
 
-        @Bind(R.id.gps_distributor_label)
+        @BindView(R.id.gps_distributor_label)
         TextView outletAddress;
 
         public OutletHolder(View itemView) {

@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 5/27/2016.
@@ -37,10 +37,10 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     private static Long outletId;
     private static Long routeScheduleDetailId;
 
-    @Bind(R.id.rvOutletModel)
+    @BindView(R.id.rvOutletModel)
     RecyclerView recyclerView;
 
-    @Bind(R.id.fabTakeCapture)
+    @BindView(R.id.fabTakeCapture)
     FloatingActionButton fabTakeCapture;
 
     private Repo repo;

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.adapter.ViewPagerAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,10 +22,10 @@ public class OutletTabFragment extends BaseFragment {
     private final String TAG = "OutletTab";
 
     @Nullable
-    @Bind(R.id.outletViewPager)
+    @BindView(R.id.outletViewPager)
     ViewPager viewPager;
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout tabLayout;
 
     public static OutletTabFragment newInstance() {

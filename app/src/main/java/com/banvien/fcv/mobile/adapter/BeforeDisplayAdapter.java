@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -100,10 +100,10 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
     public class ItemHolder {
 
-        @Bind(R.id.tvMHS)
+        @BindView(R.id.tvMHS)
         TextView productName;
 
-        @Bind(R.id.edMHS)
+        @BindView(R.id.edMHS)
         EditText editMHS;
 
         public ItemHolder(View itemView) {

@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -76,13 +76,13 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.txtQuestionText)
+        @BindView(R.id.txtQuestionText)
         public TextView txtQuestionText;
 
-        @Bind(R.id.questionImageView)
+        @BindView(R.id.questionImageView)
         public ImageView imageView;
 
-        @Bind(R.id.questionAnswerPane)
+        @BindView(R.id.questionAnswerPane)
         public LinearLayout questionAnswerPane;
 
         public ViewHolder(View itemView) {
@@ -295,6 +295,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                     } else {
                         questionId = Long.valueOf(sTag);
                     }
+
                     String questionType = getQuestionType(questionId);
 
                     DoSurveyAnswerEntity doSurveyAnswerEntity = answerMap.get(questionId);

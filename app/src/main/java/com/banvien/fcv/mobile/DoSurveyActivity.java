@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Hieu Le on 6/28/2016.
@@ -52,7 +52,7 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
     private List<QuestionEntity> questionList = new ArrayList<>();
     private Map<Long, DoSurveyAnswerEntity> answerMap = new HashMap<>();
     private List<Long> requiredQuestionIds = new ArrayList<>();
-    @Bind(R.id.dosurvey_recyclerview)
+    @BindView(R.id.dosurvey_recyclerview)
     RecyclerView recyclerView;
     private DoSurveyAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;

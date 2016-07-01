@@ -310,8 +310,9 @@ public class SyncOutletMerResultService {
 					String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
 							+ outlet.getCode() + "/" + dateString + "/";
 
-					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
-							[captureOverviewEntity.getPathImage().split("/").length - 1]);
+//					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
+//							[captureOverviewEntity.getPathImage().split("/").length - 1]);
+					mOutletMerResultImageDTO.setNameImage(pathImageInServer);
 					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
 					mOutletMerResultImageDTO.setMobileImagePath(captureOverviewEntity.getPathImage());
 					mOutletMerResultImageDTOns.add(mOutletMerResultImageDTO);

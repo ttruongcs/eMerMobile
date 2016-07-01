@@ -21,14 +21,14 @@ import com.banvien.fcv.mobile.library.UpdateService;
 import java.io.File;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class SyncEndFragment extends BaseFragment {
     private static final String TAG = "SyncEndFragment";
     private static Long outletId;
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
 

@@ -12,7 +12,7 @@ import com.banvien.fcv.mobile.fragments.DoingOutletFragment;
 import com.banvien.fcv.mobile.fragments.FinishedOutletFragment;
 import com.banvien.fcv.mobile.fragments.UnfinishedOutletFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,10 +22,10 @@ public class OutletTabActivity extends BaseDrawerActivity {
     private final String TAG = "OutletTab";
 
     @Nullable
-    @Bind(R.id.outletViewPager)
+    @BindView(R.id.outletViewPager)
     ViewPager viewPager;
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout tabLayout;
 
 

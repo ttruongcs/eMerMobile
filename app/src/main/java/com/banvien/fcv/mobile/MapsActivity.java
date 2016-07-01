@@ -34,7 +34,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,16 +50,16 @@ public class MapsActivity extends FragmentActivity  {
     private OutletDTO outletDTO;
     private boolean isValid = false;
 
-    @Bind(R.id.tvTime)
+    @BindView(R.id.tvTime)
     TextView tvTime;
 
-    @Bind(R.id.tvGps)
+    @BindView(R.id.tvGps)
     TextView tvGps;
 
-    @Bind(R.id.btnAgree)
+    @BindView(R.id.btnAgree)
     Button btnAgree;
 
-    @Bind(R.id.btnCheck)
+    @BindView(R.id.btnCheck)
     Button btnCheck;
 
     GoogleMap googleMap;

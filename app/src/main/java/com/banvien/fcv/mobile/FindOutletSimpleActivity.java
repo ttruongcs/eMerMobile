@@ -41,7 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,34 +50,34 @@ import retrofit2.Response;
  * Created by Linh Nguyen on 6/24/2016.
  */
 public class FindOutletSimpleActivity extends BaseDrawerActivity {
-    @Bind(R.id.fabMenu)
+    @BindView(R.id.fabMenu)
     FloatingActionMenu fabMenu;
 
-    @Bind(R.id.lnAddOutlet)
+    @BindView(R.id.lnAddOutlet)
     CoordinatorLayout lnAddOutlet;
 
-    @Bind(R.id.fabSearch)
+    @BindView(R.id.fabSearch)
     FloatingActionButton fabSearch;
 
-    @Bind(R.id.fabAdvanceSearch)
+    @BindView(R.id.fabAdvanceSearch)
     FloatingActionButton fabAdvanceSearch;
 
-    @Bind(R.id.edOutletDate)
+    @BindView(R.id.edOutletDate)
     EditText edDate;
 
-    @Bind(R.id.btnFindOutlet)
+    @BindView(R.id.btnFindOutlet)
     Button btnFindOutlet;
 
-    @Bind(R.id.switcher)
+    @BindView(R.id.switcher)
     ViewSwitcher viewSwitcher;
 
-    @Bind(R.id.tvAddOutlet)
+    @BindView(R.id.tvAddOutlet)
     TextView tvAddOutlet;
 
-    @Bind(R.id.rcvAddOutlet)
+    @BindView(R.id.rcvAddOutlet)
     RecyclerView recyclerView;
 
-    @Bind(R.id.srlAddOutlet)
+    @BindView(R.id.srlAddOutlet)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.Adapter adapter;

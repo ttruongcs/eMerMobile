@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/28/2016.
@@ -35,7 +35,7 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
     private Long outletId, routeScheduleDetailId;
     private Repo repo;
     private List<SurveyEntity> surveyList = new ArrayList<>();
-    @Bind(R.id.survey_listview)
+    @BindView(R.id.survey_listview)
     ListView listView;
     private SurveyArrayAdapter surveyArrayAdapter;
 

@@ -10,7 +10,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  */
 public class BaseActivity extends AppCompatActivity {
     @Nullable
-    @Bind(R.id.fcvtoolbar)
+    @BindView(R.id.fcvtoolbar)
     Toolbar toolbar;
 
     @Override
@@ -59,6 +59,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void initImageLoader() {
+        // TODO remove universal image loader
 //        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
 //        ImageLoader.getInstance().init(config);
     }

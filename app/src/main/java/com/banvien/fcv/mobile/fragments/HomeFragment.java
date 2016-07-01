@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
  */
 public class HomeFragment extends BaseFragment {
     private static final String TAG = "HomeFragment";
-    @Bind(R.id.step1_photo)
+    @BindView(R.id.step1_photo)
     ImageView initStep;
 
-    @Bind(R.id.step2_photo)
+    @BindView(R.id.step2_photo)
     ImageView actionStep;
 
-    @Bind(R.id.step3_photo)
+    @BindView(R.id.step3_photo)
     ImageView endStep;
 
     @Override

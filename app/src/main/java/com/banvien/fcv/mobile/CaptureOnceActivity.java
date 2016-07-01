@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class CaptureOnceActivity extends BaseDrawerActivity {
     private static Long outletId;
@@ -41,10 +41,10 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
 
-    @Bind(R.id.btnTake)
+    @BindView(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.gridListImage)
+    @BindView(R.id.gridListImage)
     GridView gridListImage;
 
     @Override

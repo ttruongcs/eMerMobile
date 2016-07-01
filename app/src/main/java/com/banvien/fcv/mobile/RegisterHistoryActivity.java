@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/25/2016.
@@ -36,13 +36,13 @@ public class RegisterHistoryActivity extends BaseDrawerActivity {
     private List<RegisterInfoDTO> data;
     private List<HistoryDTO> historyData;
 
-    @Bind(R.id.spModel)
+    @BindView(R.id.spModel)
     Spinner spOutletModel;
 
-    @Bind(R.id.rcvModel)
+    @BindView(R.id.rcvModel)
     RecyclerView rcvModel;
 
-    @Bind(R.id.rcvHistory)
+    @BindView(R.id.rcvHistory)
     RecyclerView rcvHistory;
 
     RecyclerView.Adapter adapterModel;

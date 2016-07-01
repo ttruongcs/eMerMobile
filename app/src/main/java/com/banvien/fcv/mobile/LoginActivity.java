@@ -16,7 +16,7 @@ import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.K;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,13 +26,13 @@ import retrofit2.Response;
  */
 public class LoginActivity extends BaseDrawerActivity {
     private final String TAG = "LoginActivity";
-    @Bind(R.id.edUsername)
+    @BindView(R.id.edUsername)
     EditText editUsername;
-    @Bind(R.id.edPassword)
+    @BindView(R.id.edPassword)
     EditText editPassword;
-    @Bind(R.id.btn_login)
+    @BindView(R.id.btn_login)
     Button loginBtn;
-    @Bind(R.id.login_msg)
+    @BindView(R.id.login_msg)
     TextView txtLoginMsg;
     private ProgressDialog progressDialog;
 

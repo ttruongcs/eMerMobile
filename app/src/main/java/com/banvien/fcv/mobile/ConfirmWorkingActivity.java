@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/25/2016.
@@ -42,13 +42,13 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
 
-    @Bind(R.id.btnTake)
+    @BindView(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     FloatingActionButton fabSyncTask;
 
-    @Bind(R.id.gridListImage)
+    @BindView(R.id.gridListImage)
     GridView gridListImage;
 
     private static ProgressDialog progressDialog;
@@ -220,10 +220,10 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     if(imageDTOs.size() > 0) {
-                        progressDialog  = new ProgressDialog(v.getContext());
-                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
+//                        progressDialog  = new ProgressDialog(v.getContext());
+//                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+//                        progressDialog.setCancelable(false);
+//                        progressDialog.show();
                         SyncService syncService = new SyncService(v.getContext(), 1l);
                         syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());

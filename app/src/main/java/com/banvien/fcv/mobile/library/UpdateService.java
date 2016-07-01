@@ -91,12 +91,9 @@ public class UpdateService {
 			configStatusHome();
             configStatusStartDay();
 			configStatusEndDay();
-//			Call<Map<String,Object>> call =
-//					RestClient.getInstance().getHomeService().getRoute(1l, 20, 5, 2016);
-
 
 			Call<Map<String,Object>> callOutletDatas =
-					RestClient.getInstance().getHomeService().getDataInNewDays(A.getPrincipal().getUserId(), new Timestamp(System.currentTimeMillis()));
+					RestClient.getInstance().getHomeService().getDataInNewDays(A.getPrincipal().getUserId(), new Timestamp(System.currentTimeMillis() + 1));
 			results = getOutletDatas(callOutletDatas, progressDialog, textNumberOutlet);
 		}catch (Exception e){
 			Log.e(TAG, "error", e);
@@ -305,26 +302,28 @@ public class UpdateService {
 				Integer numOutlet = 0;
 				Long routeScheduleId = null;
 				for(MAuditOutletPlanDTO plan : plans){
-					routeScheduleId = plan.getRouteScheduleId();
-					OutletEntity outletEntity = parsePlanToOutletEntity(plan);
-					repo.getOutletDAO().addOutletEntity(outletEntity);
-					numOutlet = numOutlet + 1;
-					List<OutletModelDTO> outletModelDTOs = plan.getOutletModel();
-					for(OutletModelDTO outletModel : outletModelDTOs){
-						List<OutletModelDetailDTO> outletModelDetailDTOs = outletModel.getOutletModelDetail();
-						for(OutletModelDetailDTO outletModelDetail : outletModelDetailDTOs){
-							OutletMerEntity outletMerEntity = new OutletMerEntity();
+					if(plan.getOutletModel() != null && plan.getOutletModel().size() > 0){
+						routeScheduleId = plan.getRouteScheduleId();
+						OutletEntity outletEntity = parsePlanToOutletEntity(plan);
+						repo.getOutletDAO().addOutletEntity(outletEntity);
+						numOutlet = numOutlet + 1;
+						List<OutletModelDTO> outletModelDTOs = plan.getOutletModel();
+						for(OutletModelDTO outletModel : outletModelDTOs){
+							List<OutletModelDetailDTO> outletModelDetailDTOs = outletModel.getOutletModelDetail();
+							for(OutletModelDetailDTO outletModelDetail : outletModelDetailDTOs){
+								OutletMerEntity outletMerEntity = new OutletMerEntity();
 
-							outletMerEntity.setDataType(outletModelDetail.getDataType());
-							outletMerEntity.setRouteScheduleDetailId(plan.getRouteScheduleDetailId());
-							outletMerEntity.setRouteScheduleId(plan.getRouteScheduleId());
-							outletMerEntity.setOutletId(plan.getOutletId());
-							outletMerEntity.setOutletModelId(outletModel.getOutletModelId());
-							outletMerEntity.setOutletModelName(outletModel.getName());
-							outletMerEntity.setRegisterValue(outletModelDetail.getReferenceValue());
+								outletMerEntity.setDataType(outletModelDetail.getDataType());
+								outletMerEntity.setRouteScheduleDetailId(plan.getRouteScheduleDetailId());
+								outletMerEntity.setRouteScheduleId(plan.getRouteScheduleId());
+								outletMerEntity.setOutletId(plan.getOutletId());
+								outletMerEntity.setOutletModelId(outletModel.getOutletModelId());
+								outletMerEntity.setOutletModelName(outletModel.getName());
+								outletMerEntity.setRegisterValue(outletModelDetail.getReferenceValue());
 
-							repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
+								repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
 
+							}
 						}
 					}
 				}

@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 5/24/2016.
@@ -45,13 +45,13 @@ public class OrderActivity extends BaseDrawerActivity {
     private static Long outletId;
     private static Long routeScheduleDetailId;
 
-    @Bind(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.expandListProduct)
+    @BindView(R.id.expandListProduct)
     ExpandableListView expandableListView;
 
-    @Bind(R.id.fabShare)
+    @BindView(R.id.fabShare)
     FloatingActionButton btnShare;
 
     private Repo repo;

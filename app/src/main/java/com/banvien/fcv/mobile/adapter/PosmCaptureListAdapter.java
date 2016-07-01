@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -73,13 +73,13 @@ public class PosmCaptureListAdapter extends RecyclerView.Adapter<PosmCaptureList
     }
 
     public class PosmHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.posmName)
+        @BindView(R.id.posmName)
         TextView posmName;
 
-        @Bind(R.id.imagePosm)
+        @BindView(R.id.imagePosm)
         ImageView imagePosm;
 
-        @Bind(R.id.lnClickToCapture)
+        @BindView(R.id.lnClickToCapture)
         LinearLayout lnClickToCapture;
 
         public PosmHolder(View itemView) {

@@ -540,6 +540,7 @@
     <!--End Day Activity-->
     <string name="tongsocuahangduocbaocao">Tổng Số Cửa Hàng Được Báo Cáo</string>
     <string name="bancanchuphinhdedongbo">Bạn cần chụp hình nhà phân phối để đồng bộ</string>
+    <string name="bancanchuphinhoutletdautiendedongbo">Bạn cần chụp hình outlet đầu tiên để đồng bộ</string>
     <string name="chupanhcuoingay">Chụp Ảnh Cuối Ngày</string>
     <string name="motachupanhcuoingay">Chụp ảnh cuối ngày sau khi hoàn thành công việc,..</string>
     <string name="stepchupanhcuoingay">01</string>

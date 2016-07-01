@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -36,11 +36,11 @@ import butterknife.ButterKnife;
  */
 public class UnfinishedOutletFragment extends Fragment {
     @Nullable
-    @Bind(R.id.rvOutletList)
+    @BindView(R.id.rvOutletList)
     RecyclerView recyclerView;
 
     @Nullable
-    @Bind(R.id.swipe_refresh_layout)
+    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     Button btnLetGo;
