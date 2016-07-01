@@ -220,10 +220,10 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     if(imageDTOs.size() > 0) {
-                        progressDialog  = new ProgressDialog(v.getContext());
-                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
+//                        progressDialog  = new ProgressDialog(v.getContext());
+//                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
+//                        progressDialog.setCancelable(false);
+//                        progressDialog.show();
                         SyncService syncService = new SyncService(v.getContext(), 1l);
                         syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());

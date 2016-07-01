@@ -76,6 +76,17 @@ public class OutletFirstImagesDAO extends AndroidBaseDaoImpl<OutletFirstImagesEn
         return results;
     }
 
+    public List<OutletFirstImagesEntity> findAll() {
+        List<OutletFirstImagesEntity> entities = new ArrayList<>();
+        try {
+            entities = queryForAll();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return entities;
+    }
+
     public void deleteImageFromId(Long id) {
         try {
             DeleteBuilder<OutletFirstImagesEntity, String> deleteBuilder = deleteBuilder();

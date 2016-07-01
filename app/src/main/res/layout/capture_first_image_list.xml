@@ -7,18 +7,27 @@
     tools:context=".MainActivity"
     android:theme="@style/customActionModeTheme" >
 
-    <GridView
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/gridListImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="120dp"
+        android:columnWidth="115dp"
         android:numColumns="2"
         android:verticalSpacing="3dp"
         android:horizontalSpacing="3dp"
         android:stretchMode="columnWidth"
         android:gravity="center">
     </GridView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSyncTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        fab:backgroundTint="@color/primary_kanban"
+        fab:fab_label="Sync Task"
+        android:src="@drawable/ic_sync_white_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnTake"
