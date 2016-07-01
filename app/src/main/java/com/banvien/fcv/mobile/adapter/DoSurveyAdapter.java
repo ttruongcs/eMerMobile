@@ -68,7 +68,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ViewHolder viewHolder = holder;
-        viewHolder.bindViews(position, data.get(position));
+        viewHolder.bindViews(data.get(position));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
         }
 
-        public void bindViews(int pos, final QuestionEntity questionEntity) {
+        public void bindViews(final QuestionEntity questionEntity) {
 
             if (StringUtils.isNotBlank(questionEntity.getQuestionText())) {
                 txtQuestionText.setText(questionEntity.getQuestionText().trim());
@@ -246,6 +246,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         editText.setMaxLines(rows);
+        editText.setTextColor(R.color.aluminum);
 
         return editText;
     }
@@ -369,6 +370,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 }
             }
         });
+
     }
 
     private String getQuestionType(Long questionId) {
@@ -386,4 +388,5 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     public Map<Long, List<View>> getAnswerViewMap() {
         return answerViewMap;
     }
+
 }

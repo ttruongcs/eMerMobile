@@ -28,6 +28,7 @@ import com.banvien.fcv.mobile.utils.C;
 import com.banvien.fcv.mobile.utils.DialogBuilder;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.IDGenerator;
+import com.banvien.fcv.mobile.utils.StringUtils;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 
@@ -63,10 +64,16 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dosurvey);
-        setToolbarTitle(A.s(R.string.survey_title));
+
 
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         surveyId = getIntent().getLongExtra(ScreenContants.KEY_SURVEY_ID, 0l);
+        String title = getIntent().getStringExtra(ScreenContants.KEY_SURVEY_TITLE);
+        if (StringUtils.isNotBlank(title)) {
+            setToolbarTitle(title);
+        } else {
+            setToolbarTitle(A.s(R.string.survey_title));
+        }
         routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
 
         repo = new Repo(this);
@@ -119,7 +126,7 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
 
         if(id == R.id.action_save) {
             if (!checkRequiredAnswers()) {
-                Toast.makeText(this, A.s(R.string.save_survey_warning_required_answer), Toast.LENGTH_LONG);
+                Toast.makeText(this, A.s(R.string.save_survey_warning_required_answer), Toast.LENGTH_LONG).show();
                 return true;
             }
 
@@ -143,7 +150,7 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
                 protected void onPostExecute(Boolean aBoolean) {
                     super.onPostExecute(aBoolean);
                     progressDialog.dismiss();
-                    Toast.makeText(DoSurveyActivity.this, A.s(success ? R.string.save_survey_success_msg : R.string.save_survey_failed_msg), Toast.LENGTH_LONG);
+                    Toast.makeText(DoSurveyActivity.this, A.s(success ? R.string.save_survey_success_msg : R.string.save_survey_failed_msg), Toast.LENGTH_LONG).show();
                 }
 
                 @Override
