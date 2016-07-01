@@ -101,6 +101,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
         ELog.d("position", String.valueOf(position));
 
         if (mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2) {
+            if(mData.get(position).getIsDone() == 2) {
+                itemHolder.arrow.setVisibility(View.GONE);
+            } else {
+                itemHolder.arrow.setVisibility(View.VISIBLE);
+            }
             itemHolder.cardView.setAlpha(1f);
             itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle);
             switch (holder.getItemViewType()) {
@@ -116,7 +121,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     break;
             }
 
-            itemHolder.arrow.setVisibility(View.VISIBLE);
+
 
         } else {
             itemHolder.cardView.setAlpha(0.3f);
