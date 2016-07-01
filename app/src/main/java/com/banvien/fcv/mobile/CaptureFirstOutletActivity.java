@@ -63,10 +63,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
-            RouteScheduleEntity routeScheduleDTO = repo.getRouteScheduleDAO().findRoute();
-            if(routeScheduleDTO != null){
-                routeScheduleDetailId = routeScheduleDTO.getRouteScheduleId();
-            }
+            routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
@@ -166,7 +163,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
                 }
             }
 
-            for(ImageDTO imageDTO : removedImages) {
+            for (ImageDTO imageDTO : removedImages) {
                 imageDTOs.remove(imageDTO);
 
             }
@@ -205,7 +202,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         fabSyncTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageDTOs.size() > 0) {
+                if (imageDTOs.size() > 0) {
                     showConfirmDialog(v);
                 } else {
                     Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_SHORT).show();
@@ -226,23 +223,25 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    if(imageDTOs.size() > 0) {
-                        progressDialog  = new ProgressDialog(v.getContext());
+                    if (imageDTOs.size() > 0) {
+                        progressDialog = new ProgressDialog(v.getContext());
                         progressDialog.setMessage(v.getContext().getText(R.string.updating));
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         SyncService syncService = new SyncService(v.getContext(), 1l);
                         syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
-                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
-                        Intent intent = new Intent(getBaseContext(), StartDayActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                , ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN, null, ScreenContants.IN_OUTLET, true);
+                        updateStatus(routeScheduleDetailId, ScreenContants.STATUS_STEP_INPROGRESS);
+                        Intent intent = new Intent(CaptureFirstOutletActivity.this, InOutletHomeActivity.class);
+                        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
                         startActivity(intent);
                         finish();
+
                     } else {
-                        Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_LONG);
+                        Toast.makeText(v.getContext(), getString(R.string.bancanchuphinhdedongbo), Toast.LENGTH_LONG).show();
                     }
                 } catch (SQLException e) {
                     ELog.d("Error when Sync Comfirm Working");
@@ -260,6 +259,17 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void updateStatus(Long routeScheduleDetailId, Integer status) {
+        try {
+            OutletEntity entity = repo.getOutletDAO().findByDetailId(routeScheduleDetailId);
+
+            entity.setStatus(status);
+            repo.getOutletDAO().update(entity);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
     }
 
     private void setInitialConfiguration() {
@@ -331,7 +341,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        if(imageDTOs.size() > 0) {
+        if (imageDTOs.size() > 0) {
             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
             changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                     , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);

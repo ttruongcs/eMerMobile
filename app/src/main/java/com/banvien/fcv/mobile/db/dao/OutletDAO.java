@@ -7,6 +7,7 @@ import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -146,5 +147,19 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
         }
 
         return rowSuccess;
+    }
+
+    public OutletEntity findByDetailId(Long routeScheduleDetailId) {
+        QueryBuilder<OutletEntity, String> queryBuilder = queryBuilder();
+        OutletEntity outletEntity = new OutletEntity();
+        try {
+            queryBuilder.where().eq("routeScheduleDetailId", routeScheduleDetailId);
+            PreparedQuery<OutletEntity> preparedQuery = queryBuilder.prepare();
+            outletEntity = queryForFirst(preparedQuery);
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return outletEntity;
     }
 }

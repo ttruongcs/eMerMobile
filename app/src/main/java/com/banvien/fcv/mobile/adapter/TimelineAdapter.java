@@ -357,6 +357,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                                 int which) {
                                             Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
                                             firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+                                            firstOutletIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
                                             v.getContext().startActivity(firstOutletIntent);
                                             dialog.dismiss();
                                         }

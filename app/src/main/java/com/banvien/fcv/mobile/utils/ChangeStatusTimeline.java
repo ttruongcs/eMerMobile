@@ -29,6 +29,13 @@ public class ChangeStatusTimeline {
         return false;
     }
 
+    /*
+    * parent: Tên cột trong db của node cha chứa node này
+    *         now: node hiện tại cần đổi trạng thái
+    *         next: các node sẽ được active trạng thái khi node này done, có thể mở nhiều node 1 lần
+    *         parentNext: node cha tiếp theo
+    *         isTotalDone: Nếu tất cả node con đã xong, muốn kích hoạt node cha tiếp theo, set trạng thái isTotalDone thành true
+    * */
     public boolean changeStatusToDone(String parent, String now, String[] next, String parentNext, boolean isTotalDone) {
         boolean isSuccess = false;
         try {
