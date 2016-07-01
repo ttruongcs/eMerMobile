@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/14/2016.
@@ -33,7 +33,7 @@ import butterknife.Bind;
 public class HomeActivity extends BaseDrawerActivity {
     private static final String TAG = "HomeActivity";
 
-    @Bind(R.id.rcvHomeAct)
+    @BindView(R.id.rcvHomeAct)
     RecyclerView recyclerView;
 
     private Repo repo;

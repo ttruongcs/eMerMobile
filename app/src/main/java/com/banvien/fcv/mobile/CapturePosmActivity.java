@@ -17,7 +17,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import java.sql.SQLException;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class CapturePosmActivity extends BaseDrawerActivity {
@@ -28,7 +28,7 @@ public class CapturePosmActivity extends BaseDrawerActivity {
     private static Long outletId;
     private static String captureType;
 
-    @Bind(R.id.posmList)
+    @BindView(R.id.posmList)
     RecyclerView recyclerView;
 
     @Override

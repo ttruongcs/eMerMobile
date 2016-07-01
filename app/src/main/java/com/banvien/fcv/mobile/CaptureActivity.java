@@ -7,7 +7,7 @@ import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class CaptureActivity extends BaseDrawerActivity {
@@ -19,19 +19,19 @@ public class CaptureActivity extends BaseDrawerActivity {
 
     static int counter = 0;
 
-    @Bind(R.id.btnOverview)
+    @BindView(R.id.btnOverview)
     Button btnOverview;
 
-    @Bind(R.id.btnTool)
+    @BindView(R.id.btnTool)
     Button btnTool;
 
-    @Bind(R.id.btnUniform)
+    @BindView(R.id.btnUniform)
     Button btnUniform;
 
-    @Bind(R.id.btnBefore)
+    @BindView(R.id.btnBefore)
     Button btnBefore;
 
-    @Bind(R.id.btnAfter)
+    @BindView(R.id.btnAfter)
     Button btnAfter;
 
     @Override

@@ -15,7 +15,7 @@ import com.banvien.fcv.mobile.R;
 
 import java.util.Calendar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**

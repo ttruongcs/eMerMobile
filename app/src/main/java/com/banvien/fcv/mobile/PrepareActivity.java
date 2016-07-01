@@ -20,20 +20,20 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class PrepareActivity extends BaseDrawerActivity {
 
     private static final String TAG = "PrepareActivity";
     private static final int COMPLETED = 100;
 
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
-    @Bind(R.id.textNumSuccess)
+    @BindView(R.id.textNumSuccess)
     TextView textNumSuccess;
 
-    @Bind(R.id.txtViewDateStartDay)
+    @BindView(R.id.txtViewDateStartDay)
     TextView txtViewDateStartDay;
 
     private Repo repo;

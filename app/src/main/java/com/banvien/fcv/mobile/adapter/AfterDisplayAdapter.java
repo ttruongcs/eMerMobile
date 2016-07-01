@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -106,16 +106,16 @@ public class AfterDisplayAdapter extends BaseAdapter {
 
     public class ItemHolder {
 
-        @Bind(R.id.tvBefore)
+        @BindView(R.id.tvBefore)
         TextView tvBefore;
 
-        @Bind(R.id.tvMHS)
+        @BindView(R.id.tvMHS)
         TextView productName;
 
-        @Bind(R.id.edMHS)
+        @BindView(R.id.edMHS)
         EditText editMHS;
 
-        @Bind(R.id.chHave)
+        @BindView(R.id.chHave)
         AppCompatCheckBox chHave;
 
         public ItemHolder(View itemView) {

@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,10 +79,10 @@ public class AddOutletAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.cbAddOutlet)
+        @BindView(R.id.cbAddOutlet)
         CheckBox cbAddOutlet;
 
-        @Bind(R.id.tvAddOutlet)
+        @BindView(R.id.tvAddOutlet)
         TextView tvAddOutlet;
 
         public ItemHolder(View itemView) {

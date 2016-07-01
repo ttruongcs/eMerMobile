@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 5/23/2016.
@@ -32,10 +32,10 @@ import butterknife.Bind;
 public class ComplainTypeActivity extends BaseDrawerActivity {
     private static final String TAG = "ComplainTypeActivity";
 
-    @Bind(R.id.rcvComplain)
+    @BindView(R.id.rcvComplain)
     RecyclerView recyclerView;
 
-    @Bind(R.id.btnComplain)
+    @BindView(R.id.btnComplain)
     Button btnSendComplaint;
 
     private RecyclerView.Adapter adapter;

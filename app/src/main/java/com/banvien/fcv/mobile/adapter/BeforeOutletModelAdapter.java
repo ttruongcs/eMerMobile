@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -85,25 +85,25 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.spinner)
+        @BindView(R.id.spinner)
         Spinner spinner;
 
-        @Bind(R.id.lvBeforeDisplay)
+        @BindView(R.id.lvBeforeDisplay)
         ListView listView;
 
-        @Bind(R.id.edFacing)
+        @BindView(R.id.edFacing)
         EditText edFacing;
 
-        @Bind(R.id.edEIE)
+        @BindView(R.id.edEIE)
         EditText edEIE;
 
-        @Bind(R.id.tvOutletModelName)
+        @BindView(R.id.tvOutletModelName)
         TextView tvOutletModelName;
 
-        @Bind(R.id.tvCountChecked)
+        @BindView(R.id.tvCountChecked)
         TextView tvCountChecked;
 
-        @Bind(R.id.tvCountTotal)
+        @BindView(R.id.tvCountTotal)
         TextView tvCountTotal;
 
         public ItemHolder(View itemView) {

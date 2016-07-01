@@ -13,7 +13,7 @@ import com.banvien.fcv.mobile.dto.RegisterInfoDTO;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -55,10 +55,10 @@ public class RegisterInfoAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.cbAddOutlet)
+        @BindView(R.id.cbAddOutlet)
         CheckBox cbCheck;
 
-        @Bind(R.id.tvAddOutlet)
+        @BindView(R.id.tvAddOutlet)
         TextView edTest;
 
         public ItemHolder(View itemView) {

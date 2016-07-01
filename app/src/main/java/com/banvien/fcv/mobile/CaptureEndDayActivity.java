@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class CaptureEndDayActivity extends BaseDrawerActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -41,10 +41,10 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
 
-    @Bind(R.id.btnTake)
+    @BindView(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.gridListImage)
+    @BindView(R.id.gridListImage)
     GridView gridListImage;
 
     @Override

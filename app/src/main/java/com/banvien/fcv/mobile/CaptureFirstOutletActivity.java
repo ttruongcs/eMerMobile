@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     private static Long outletId;
@@ -47,13 +47,13 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     private ImageAdapter adapter;
     private static ProgressDialog progressDialog;
 
-    @Bind(R.id.btnTake)
+    @BindView(R.id.btnTake)
     FloatingActionButton btnTake;
 
-    @Bind(R.id.gridListImage)
+    @BindView(R.id.gridListImage)
     GridView gridListImage;
 
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     FloatingActionButton fabSyncTask;
 
     @Override

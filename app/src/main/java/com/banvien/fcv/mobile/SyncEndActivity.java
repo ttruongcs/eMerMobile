@@ -18,25 +18,25 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class SyncEndActivity extends BaseDrawerActivity {
 
     private static ProgressDialog progressDialog;
     private Repo repo;
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
-    @Bind(R.id.textNumSuccess)
+    @BindView(R.id.textNumSuccess)
     TextView textNumSuccess;
 
-    @Bind(R.id.txtViewDateEndDay)
+    @BindView(R.id.txtViewDateEndDay)
     TextView txtViewDateEndDay;
 
-    @Bind(R.id.switcher)
+    @BindView(R.id.switcher)
     ViewSwitcher viewSwitcher;
 
-    @Bind(R.id.tvEndOutlet)
+    @BindView(R.id.tvEndOutlet)
     TextView tvEndOutlet;
 
 

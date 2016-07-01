@@ -16,7 +16,7 @@ import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import java.sql.SQLException;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class PosmActivity extends BaseDrawerActivity {
@@ -26,7 +26,7 @@ public class PosmActivity extends BaseDrawerActivity {
     private List<OutletMerDTO> mData;
     private static Long outletId;
 
-    @Bind(R.id.posmList)
+    @BindView(R.id.posmList)
     RecyclerView recyclerView;
 
     @Override

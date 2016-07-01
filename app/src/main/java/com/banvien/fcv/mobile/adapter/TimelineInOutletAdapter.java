@@ -34,7 +34,7 @@ import com.banvien.fcv.mobile.utils.ELog;
 import java.sql.SQLException;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -151,39 +151,39 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tvTimeline)
+        @BindView(R.id.tvTimeline)
         TextView tvTimeline;
 
-        @Bind(R.id.tvOrder)
+        @BindView(R.id.tvOrder)
         TextView tvOrder;
 
-        @Bind(R.id.rlv2)
+        @BindView(R.id.rlv2)
         RelativeLayout arrow;
 
         @Nullable
-        @Bind(R.id.view2)
+        @BindView(R.id.view2)
         View viewTop;
 
         @Nullable
-        @Bind(R.id.view)
+        @BindView(R.id.view)
         View viewBottom;
 
-        @Bind(R.id.lnTimeline)
+        @BindView(R.id.lnTimeline)
         LinearLayout linearLayout;
 
-        @Bind(R.id.tvTimelineDetail)
+        @BindView(R.id.tvTimelineDetail)
         TextView tvDetail;
 
-        @Bind(R.id.card_view)
+        @BindView(R.id.card_view)
         CardView cardView;
 
-        @Bind(R.id.stepCode)
+        @BindView(R.id.stepCode)
         TextView stepCode;
 
-        @Bind(R.id.outletId)
+        @BindView(R.id.outletId)
         TextView outletId;
 
-        @Bind(R.id.routeScheduleDetailId)
+        @BindView(R.id.routeScheduleDetailId)
         TextView routeScheduleDetailId;
 
         public ItemHolder(View itemView) {

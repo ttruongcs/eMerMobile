@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.utils.ELog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/22/2016.
@@ -18,7 +18,7 @@ import butterknife.Bind;
 public class CoverageInfoActivity extends BaseDrawerActivity {
     private final String TAG = "CoverageInfoActivity";
 
-    @Bind(R.id.btnFind)
+    @BindView(R.id.btnFind)
     ImageView btnFind;
 
     @Override

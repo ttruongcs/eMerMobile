@@ -27,7 +27,7 @@ import com.banvien.fcv.mobile.utils.ELog;
 import java.sql.SQLException;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -35,7 +35,7 @@ public class PrepareFragment extends BaseFragment {
     private static final String TAG = "HomeFragment";
     private static final int COMPLETED = 100;
 
-    @Bind(R.id.fabSyncTask)
+    @BindView(R.id.fabSyncTask)
     com.github.clans.fab.FloatingActionButton fabSync;
 
     private Repo repo;

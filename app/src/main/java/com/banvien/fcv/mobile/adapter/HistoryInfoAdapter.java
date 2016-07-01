@@ -12,7 +12,7 @@ import com.banvien.fcv.mobile.dto.HistoryDTO;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -57,13 +57,13 @@ public class HistoryInfoAdapter extends RecyclerView.Adapter {
 
     public class ItemHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tvMonth)
+        @BindView(R.id.tvMonth)
         TextView tvMonth;
 
-        @Bind(R.id.tvStatus)
+        @BindView(R.id.tvStatus)
         TextView tvStatus;
 
-        @Bind(R.id.tvEIENumber)
+        @BindView(R.id.tvEIENumber)
         TextView tvEIENumber;
 
         public ItemHolder(View itemView) {

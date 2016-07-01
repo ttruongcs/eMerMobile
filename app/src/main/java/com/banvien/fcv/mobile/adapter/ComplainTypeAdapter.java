@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -157,7 +157,7 @@ public class ComplainTypeAdapter extends RecyclerView.Adapter {
 
     public class ComplainTypeHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.cbComplain)
+        @BindView(R.id.cbComplain)
         CheckBox checkBox;
 
         public ComplainTypeHolder(View itemView) {
@@ -168,7 +168,7 @@ public class ComplainTypeAdapter extends RecyclerView.Adapter {
 
     public class ComplainHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.edComplain)
+        @BindView(R.id.edComplain)
         EditText editText;
 
         public ComplainHolder(View itemView) {

@@ -31,7 +31,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -75,13 +75,13 @@ public class PosmListAdapter extends RecyclerView.Adapter<PosmListAdapter.PosmHo
     }
 
     public class PosmHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.posmName)
+        @BindView(R.id.posmName)
         TextView posmName;
 
-        @Bind(R.id.imagePosm)
+        @BindView(R.id.imagePosm)
         ImageView imagePosm;
 
-        @Bind(R.id.posmValue)
+        @BindView(R.id.posmValue)
         CheckBox posmValue;
 
         public PosmHolder(View itemView) {

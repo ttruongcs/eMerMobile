@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
@@ -20,41 +18,41 @@ import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class ActionActivity extends BaseDrawerActivity {
     private static final String TAG = "ActionActivity";
     private static Long outletId;
     private Repo repo;
-    @Bind(R.id.outletName)
+    @BindView(R.id.outletName)
     TextView outletName;
 
-    @Bind(R.id.outletCode)
+    @BindView(R.id.outletCode)
     TextView outletCode;
 
-    @Bind(R.id.btnPOSM)
+    @BindView(R.id.btnPOSM)
     Button btnPOSM;
 
-    @Bind(R.id.outletAddress)
+    @BindView(R.id.outletAddress)
     TextView outletAddress;
 
-    @Bind(R.id.btnOrder)
+    @BindView(R.id.btnOrder)
     Button orderStep;
 
-    @Bind(R.id.btnCapture)
+    @BindView(R.id.btnCapture)
     Button btnCapture;
 
-    @Bind(R.id.btnAfter)
+    @BindView(R.id.btnAfter)
     Button btnAfter;
 
-    @Bind(R.id.btnComplaint)
+    @BindView(R.id.btnComplaint)
     Button btnComplain;
 
-    @Bind(R.id.btnBefore)
+    @BindView(R.id.btnBefore)
     Button btnBefore;
 
-    @Bind(R.id.btnGPS)
+    @BindView(R.id.btnGPS)
     Button btnGPS;
 
     @Override

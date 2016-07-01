@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.banvien.fcv.mobile.utils.DividerItemDecoration;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Linh Nguyen on 6/25/2016.
@@ -15,7 +15,7 @@ import butterknife.Bind;
 public class StatisticActivity extends BaseDrawerActivity {
     private static final String TAG = "StatisticActivity";
 
-    @Bind(R.id.rcvStatic)
+    @BindView(R.id.rcvStatic)
     RecyclerView recyclerView;
 
     RecyclerView.Adapter adapter;
