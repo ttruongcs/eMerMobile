@@ -21,6 +21,7 @@ import com.banvien.fcv.mobile.db.entities.QuestionContentEntity;
 import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.C;
+import com.banvien.fcv.mobile.utils.StringUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ViewHolder viewHolder = holder;
-        viewHolder.bindViews(data.get(position));
+        viewHolder.bindViews(position, data.get(position));
     }
 
     @Override
@@ -76,6 +77,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.txtQuestionText)
         public TextView txtQuestionText;
 
@@ -91,9 +93,14 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
         }
 
-        public void bindViews(final QuestionEntity questionEntity) {
-            txtQuestionText.setText(questionEntity.getQuestionText());
-            txtQuestionText.setVisibility(View.VISIBLE);
+        public void bindViews(int pos, final QuestionEntity questionEntity) {
+
+            if (StringUtils.isNotBlank(questionEntity.getQuestionText())) {
+                txtQuestionText.setText(questionEntity.getQuestionText().trim());
+                txtQuestionText.setVisibility(View.VISIBLE);
+            } else {
+                txtQuestionText.setVisibility(View.GONE);
+            }
 
             if (!TextUtils.isEmpty(questionEntity.getImagePath())) {
                 Glide.with(context).load(RestClient.API_BASE_URL + questionEntity.getImagePath().substring(1)).into(imageView);
@@ -148,8 +155,6 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
                 checkBox.setTag(questionEntity.getQuestionId());
 
-                txtQuestionText.setVisibility(View.GONE);
-
                 EditText editText = newEditText(1);
 
                 if (doSurveyAnswerEntity != null) {
@@ -159,6 +164,9 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 addListener(editText, true);
 
                 editText.setTag(questionEntity.getQuestionId());
+
+                txtQuestionText.setVisibility(View.GONE);
+                questionAnswerPane.setOrientation(LinearLayout.VERTICAL);
 
                 views.add(editText);
                 views.add(checkBox);
@@ -176,11 +184,16 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                 if (questionEntity.getQuestionContents() != null) {
                     for (QuestionContentEntity questionContentEntity : questionEntity.getQuestionContents()) {
                         String value = questionContentEntity.getValue();
-                        if (value == null) {
+                        if (StringUtils.isBlank(value)) {
                             value = questionContentEntity.getQuestionContentId().toString();
                         }
+                        String label = questionContentEntity.getLabel();
+                        if (StringUtils.isBlank(label)) {
+                            label = value;
+                        }
+
                         CheckBox checkBox = newCheckBox();
-                        checkBox.setText(questionContentEntity.getLabel());
+                        checkBox.setText(label);
 
                         if (C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionEntity.getType())) {
                             if (choiceSet != null && choiceSet.contains(value)) {
@@ -197,6 +210,7 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
                         views.add(checkBox);
                     }
                 }
+                questionAnswerPane.setOrientation(LinearLayout.VERTICAL);
             }else if (C.QUESTION_TYPE_FREE_TEXT.equals(questionEntity.getType())) {
 
                 EditText editText = newEditText(FREE_TEXT_ROWS);
@@ -310,7 +324,11 @@ public class DoSurveyAdapter extends RecyclerView.Adapter<DoSurveyAdapter.ViewHo
 
                     if (C.QUESTION_TYPE_MULTI_SELECT_CHOICE.equals(questionType)) {
                         if (!TextUtils.isEmpty(doSurveyAnswerEntity.getAnswer())) {
-                            List<String> aList = Arrays.asList(doSurveyAnswerEntity.getAnswer().split("\\|"));
+                            List<String> aList = new ArrayList<>();
+                            String[] temp = doSurveyAnswerEntity.getAnswer().split("\\|");
+                            for (String s : temp) {
+                                aList.add(s);
+                            }
                             if (isChecked) {
                                 if (!aList.contains(answerValue)) {
                                     aList.add(answerValue);
