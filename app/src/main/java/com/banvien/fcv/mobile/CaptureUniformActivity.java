@@ -54,6 +54,7 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.chuphinhdongphuc);
 
         routeScheduleDTO = getRouteSchedule();
         bindGallery();

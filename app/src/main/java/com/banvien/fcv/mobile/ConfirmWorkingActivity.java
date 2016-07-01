@@ -58,6 +58,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelistworkingday);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.xacnhanlamviec);
 
         bindGallery();
         bindEvents();

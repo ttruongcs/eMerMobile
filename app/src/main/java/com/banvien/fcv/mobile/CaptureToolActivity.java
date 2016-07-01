@@ -54,6 +54,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.chuphinhcongcudungcu);
 
         routeScheduleDTO = getRouteSchedule();
         bindGallery();
