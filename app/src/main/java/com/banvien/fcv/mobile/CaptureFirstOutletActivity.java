@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +21,6 @@ import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
-import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletFirstImagesDTO;
 import com.banvien.fcv.mobile.library.SyncService;
@@ -38,6 +36,7 @@ import java.util.Random;
 import butterknife.BindView;
 
 public class CaptureFirstOutletActivity extends BaseDrawerActivity {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static Long outletId;
     private static Long routeScheduleDetailId;
     private static String urlImage;
@@ -60,7 +59,6 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_first_image_list);
-        setInitialConfiguration();
         repo = new Repo(this);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
@@ -68,6 +66,12 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
+        }
+
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
         }
 
         bindGallery();
@@ -196,7 +200,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
 
@@ -260,14 +264,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         dialog.show();
     }
 
-    private void setInitialConfiguration() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
-    }
-
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -284,6 +281,9 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
             outletFirstImagesEntity.setPathImage(urlImage);
             try {
                 repo.getOutletFirstImagesDAO().addOutletFirstEntity(outletFirstImagesEntity);
+
+                bindGallery();
+
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
@@ -324,7 +324,6 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 
     @Override

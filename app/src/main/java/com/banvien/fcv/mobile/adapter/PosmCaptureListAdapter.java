@@ -49,10 +49,6 @@ public class PosmCaptureListAdapter extends RecyclerView.Adapter<PosmCaptureList
                 .round();
     }
 
-    public PosmCaptureListAdapter() {};
-
-
-
     @Override
     public PosmHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.posm_capture_item, parent, false);
@@ -103,6 +99,7 @@ public class PosmCaptureListAdapter extends RecyclerView.Adapter<PosmCaptureList
                         intent.putExtra(ScreenContants.KEY_POSM_ID, posmDTO.getPosmId());
                         intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletMerDTO.getOutletId());
                         intent.putExtra(ScreenContants.CAPTURE_TYPE, captureType);
+                        intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                         ELog.d("Error when capture POSM", String.valueOf(posmDTO.getPosmId()));
                         v.getContext().startActivity(intent);
                     }

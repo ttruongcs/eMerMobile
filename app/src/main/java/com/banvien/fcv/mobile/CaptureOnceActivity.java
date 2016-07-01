@@ -64,6 +64,12 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             ELog.d("Error when findById Outlet");
         }
 
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
+        }
+
         bindGallery();
     }
 
@@ -190,7 +196,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
     }
@@ -198,7 +204,7 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     // intiating camera
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -221,6 +227,8 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
             }
             try {
                 repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
+
+                bindGallery();
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
@@ -262,6 +270,5 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 }

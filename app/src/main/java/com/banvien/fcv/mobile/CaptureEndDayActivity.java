@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.banvien.fcv.mobile.adapter.ImageAdapter;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
-import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletEndDayImagesDTO;
@@ -36,7 +35,6 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     private static Long outletId;
     private static Long routeScheduleDetailId;
     private static String urlImage;
-    private static OutletEntity outlet;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
     private ImageAdapter adapter;
@@ -60,6 +58,12 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
             }
         } catch (SQLException e) {
             ELog.d("Error when findById Outlet");
+        }
+
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
         }
 
         bindGallery();
@@ -187,14 +191,14 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
     }
 
 
 
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -211,9 +215,12 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
             outletEndDayImagesEntity.setPathImage(urlImage);
             try {
                 repo.getOutletEndDayImagesDAO().addOutletEndDayImagesEntity(outletEndDayImagesEntity);
+
+                bindGallery();
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
+
         }
     }
 
@@ -235,7 +242,7 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                ELog.d(outlet.getCode(), "failed to create directory");
+                ELog.d("failed to create directory");
                 return null;
             }
         }
@@ -251,6 +258,5 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 }

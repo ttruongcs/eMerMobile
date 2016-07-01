@@ -222,6 +222,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                     overviewIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
                                     overviewIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
                                             , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    overviewIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                     v.getContext().startActivity(overviewIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:

@@ -64,6 +64,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), CaptureBeforeActivity.class);
+                intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 startActivity(intent);
             }
@@ -131,6 +132,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(getBaseContext(), CaptureBeforeActivity.class);
+                                intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                                 startActivity(intent);
                             }

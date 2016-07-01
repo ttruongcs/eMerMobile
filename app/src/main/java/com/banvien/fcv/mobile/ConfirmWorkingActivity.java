@@ -37,6 +37,7 @@ import butterknife.BindView;
  * Created by Linh Nguyen on 6/25/2016.
  */
 public class ConfirmWorkingActivity extends BaseDrawerActivity  {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static String urlImage;
     private Repo repo;
     private List<ImageDTO> imageDTOs;
@@ -59,12 +60,13 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         setContentView(R.layout.capturelistworkingday);
         repo = new Repo(this);
 
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
+        }
+
         bindGallery();
-        bindEvents();
-    }
-
-    private void bindEvents() {
-
     }
 
     private void bindGallery() {
@@ -190,7 +192,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
 
@@ -257,10 +259,8 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     }
 
 
-    // intiating camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -280,6 +280,8 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
 
             try {
                 repo.getConfirmWorkingDAO().create(confirmWorkingEntity);
+
+                bindGallery();
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             }
@@ -324,7 +326,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 
     @Override

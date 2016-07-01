@@ -2,7 +2,6 @@ package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Entity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.banvien.fcv.mobile.CaptureEndDayActivity;
-import com.banvien.fcv.mobile.CaptureFirstOutletActivity;
 import com.banvien.fcv.mobile.CaptureToolActivity;
 import com.banvien.fcv.mobile.CaptureUniformActivity;
 import com.banvien.fcv.mobile.ConfirmWorkingActivity;
@@ -34,8 +31,6 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
-import com.banvien.fcv.mobile.db.entities.OutletEntity;
-import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
@@ -228,6 +223,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 // START DAY
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCONGCUDUNGCU :
                                     Intent toolIntent = new Intent(v.getContext(), CaptureToolActivity.class);
+                                    toolIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                     v.getContext().startActivity(toolIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
@@ -239,6 +235,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
                                     Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);
+                                    uniformIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                     v.getContext().startActivity(uniformIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_THEMCUAHANGNEUMUON:
@@ -257,6 +254,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                 // END DAY
                                 case ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY :
                                     Intent captureEndDay = new Intent(v.getContext(), CaptureEndDayActivity.class);
+                                    captureEndDay.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                     v.getContext().startActivity(captureEndDay);
                                     break;
                                 case ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA :
@@ -338,6 +336,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(itemView.getContext(), ConfirmWorkingActivity.class);
+                    intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                     itemView.getContext().startActivity(intent);
                 }
             });

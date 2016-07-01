@@ -28,6 +28,7 @@ public class ScreenContants {
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";
     public static final String ROUTESCHEDULE_ID= "com.banvien.fcv.emer.routeschedule.id";
     public static final String KEY_SURVEY_TITLE = "com.banvien.fcv.emer.survey_title";
+    public static final String KEY_TAKE_PICTURE_ACTION = "com.banvien.fcv.emer.take_picture_action";
     public static final Integer OUTLET_MER_ACTIVE = 1;
     public static final String INCREASE_VALUE = "INCREASE";
     public static final String DECREASE_VALUE = "DECREASE";

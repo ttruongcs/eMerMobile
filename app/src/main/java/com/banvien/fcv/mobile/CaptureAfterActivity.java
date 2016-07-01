@@ -63,6 +63,13 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
             ELog.d("CaptureAfterActivity", "Error when find Outlet ");
         }
         routeScheduleDTO = getRouteSchedule();
+
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
+        }
+
         bindGallery();
     }
 
@@ -77,12 +84,13 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
     }
 
     private void bindGallery() {
-        List<CaptureAfterEntity> images = new ArrayList<>();
+        List<CaptureAfterEntity> images = null;
         try {
             images = this.repo.getCaptureAfterDAO().findByOutletId(outletId);
 
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
+            images = new ArrayList<>();
         }
 
         this.imageDTOs = loadGallery(images);
@@ -199,12 +207,12 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
     }
 
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -226,6 +234,9 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
 
             try {
                 repo.getCaptureAfterDAO().create(captureToolEntity);
+
+                bindGallery();
+
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             } catch (NullPointerException e) {
@@ -274,7 +285,6 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 
     @Override

@@ -63,6 +63,13 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
             ELog.d("CaptureBeforeActivity", "Error when find Outlet ");
         }
         routeScheduleDTO = getRouteSchedule();
+
+        boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
+        if (takePicAction) {
+            dispatchTakePictureIntent();
+            return;
+        }
+
         bindGallery();
     }
 
@@ -199,12 +206,12 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent(v);
+                dispatchTakePictureIntent();
             }
         });
     }
 
-    public void dispatchTakePictureIntent(View view) {
+    public void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getOutputMediaFileUri());
@@ -226,6 +233,8 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
 
             try {
                 repo.getCaptureBeforeDAO().create(captureBeforeEntity);
+
+                bindGallery();
             } catch (SQLException e) {
                 ELog.d("Error when capture image");
             } catch (NullPointerException e) {
@@ -274,7 +283,6 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bindGallery();
     }
 
     @Override

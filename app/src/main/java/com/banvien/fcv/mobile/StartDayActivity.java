@@ -199,6 +199,7 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
                                         Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
                                         firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                                         firstOutletIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
+                                        firstOutletIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                                         v.getContext().startActivity(firstOutletIntent);
                                         dialog.dismiss();
                                     }

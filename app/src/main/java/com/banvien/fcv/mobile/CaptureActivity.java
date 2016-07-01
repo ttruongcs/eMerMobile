@@ -15,7 +15,6 @@ public class CaptureActivity extends BaseDrawerActivity {
     private static Long outletId;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     public static final int MEDIA_TYPE_IMAGE = 1;
-    File CS185Pics;
 
     static int counter = 0;
 
