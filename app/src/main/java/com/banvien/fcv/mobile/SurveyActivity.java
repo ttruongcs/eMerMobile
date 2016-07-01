@@ -58,6 +58,7 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
                 Intent intent = new Intent(SurveyActivity.this, DoSurveyActivity.class);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
                 intent.putExtra(ScreenContants.KEY_SURVEY_ID, surveyEntity.getSurveyId());
+                intent.putExtra(ScreenContants.KEY_SURVEY_TITLE, surveyEntity.getName());
                 intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
                 startActivity(intent);
             }

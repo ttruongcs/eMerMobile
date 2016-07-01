@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import com.banvien.fcv.mobile.db.Repo;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,11 +48,15 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void setupToolbar() {
         setSupportActionBar(toolbar);
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public Toolbar getToolbar() {
