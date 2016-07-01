@@ -2,6 +2,7 @@ package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Entity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -33,6 +34,7 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.library.SyncService;
@@ -225,7 +227,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
                                     try {
-                                        showAlertBox(v);
+                                        ((StartDayActivity)activity).showAlertBox(v);
                                     } catch (SQLException e) {
                                         ELog.d("Error when go to choice first outlet");
                                     }
@@ -319,54 +321,6 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             dialog.show();
         }
 
-        private void showAlertBox(final View v) throws SQLException {
-            android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
-            builderSingle.setTitle("Chọn một cửa hàng: ");
-            List<OutletDTO> outletList = repo.getOutletDAO().findAll();
-            final ArrayAdapter<OutletDTO> arrayAdapter = new ArrayAdapter<OutletDTO>(
-                    v.getContext(),
-                    android.R.layout.select_dialog_singlechoice);
-            arrayAdapter.addAll(outletList);
-
-            builderSingle.setNegativeButton(
-                    "cancel",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-
-            builderSingle.setAdapter(
-                    arrayAdapter,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final OutletDTO outletDTO = arrayAdapter.getItem(which);
-                            android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
-                                    v.getContext());
-                            StringBuilder stringBuilder = new StringBuilder(outletDTO.getName());
-                            builderInner.setMessage(stringBuilder.toString());
-                            builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
-                            builderInner.setPositiveButton(
-                                    "Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(
-                                                DialogInterface dialog,
-                                                int which) {
-                                            Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
-                                            firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-                                            firstOutletIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
-                                            v.getContext().startActivity(firstOutletIntent);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            builderInner.show();
-                        }
-                    });
-            builderSingle.show();
-        }
 
         private void showConfirmDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);

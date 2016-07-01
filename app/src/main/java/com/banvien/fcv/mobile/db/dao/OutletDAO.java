@@ -162,4 +162,16 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
 
         return outletEntity;
     }
+
+    public long countAll() {
+        QueryBuilder<OutletEntity, String> queryBuilder = queryBuilder();
+
+        try {
+            return queryBuilder.countOf();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return 0;
+    }
 }
