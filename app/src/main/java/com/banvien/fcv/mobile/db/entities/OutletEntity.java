@@ -1,5 +1,7 @@
 package com.banvien.fcv.mobile.db.entities;
 
+import android.text.TextUtils;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -190,5 +192,40 @@ public class OutletEntity implements Serializable {
 
     public void setAuditedToday(Boolean auditedToday) {
         isAuditedToday = auditedToday;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if(name != null) {
+            stringBuilder.append(name);
+        }
+        String fullAddress = "";
+        stringBuilder.append(" - ").append(code).append("\n");
+        if(!(locationNo == null && street == null && ward == null && cityName == null)) {
+            stringBuilder.append("Địa chỉ: ");
+            if(locationNo != null && !TextUtils.isEmpty(locationNo)) {
+                stringBuilder.append(locationNo).append(", ");
+            }
+            if(street != null && !TextUtils.isEmpty(street)) {
+                stringBuilder.append(street).append(", ");
+            }
+            if(ward != null && !TextUtils.isEmpty(ward)) {
+                stringBuilder.append(ward).append(", ");
+            }
+            if(cityName != null && !TextUtils.isEmpty(cityName)) {
+                stringBuilder.append(cityName);
+            }
+            fullAddress = stringBuilder.toString();
+
+            if(fullAddress.substring(fullAddress.length() - 1).trim().equals(",")) {
+                fullAddress = fullAddress.substring(0, fullAddress.length() - 1);
+            }
+        }
+
+
+
+
+        return fullAddress;
     }
 }

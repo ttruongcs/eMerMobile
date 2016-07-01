@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
@@ -109,7 +110,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             itemHolder.arrow.setVisibility(View.VISIBLE);
 
         } else {
-            itemHolder.cardView.setAlpha(0.3f);
+            itemHolder.cardView.setAlpha(1f); //Todo: Change to 0.3f
             itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle_not_done);
             switch (holder.getItemViewType()) {
                 case HEADER_ITEM:
@@ -192,80 +193,86 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    repo = new Repo(v.getContext());
-                    try {
-                        StatusInOutletEntity statusInOutlet = repo.getStatusInOutletDAO().getConfigStatusInOutletHome(
-                                Long.valueOf(routeScheduleDetailId.getText().toString()));
+                    if(cardView.getAlpha() == 0.3f) {
+                        Toast.makeText(v.getContext(), v.getContext().getString(R.string.notyet_done), Toast.LENGTH_SHORT).show();
 
-                        switch (stepCode.getText().toString()) {
-                            // IN OUTLET
-                            case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
-                                OutletEntity outletEntity = repo.getOutletDAO().findById(Long.valueOf(outletId.getText().toString()));
-                                if(outletEntity.getLat() != null && outletEntity.getLg() != null) {
-                                    Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
-                                    mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                    mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                    } else if(cardView.getAlpha() == 1f) {
+                        repo = new Repo(v.getContext());
+                        try {
+                            StatusInOutletEntity statusInOutlet = repo.getStatusInOutletDAO().getConfigStatusInOutletHome(
+                                    Long.valueOf(routeScheduleDetailId.getText().toString()));
+
+                            switch (stepCode.getText().toString()) {
+                                // IN OUTLET
+                                case ScreenContants.HOME_STEP_INOUTLET_CHECKIN:
+                                    OutletEntity outletEntity = repo.getOutletDAO().findById(Long.valueOf(outletId.getText().toString()));
+                                    if(outletEntity.getLat() != null && outletEntity.getLg() != null) {
+                                        Intent mapsIntent = new Intent(v.getContext(), MapsActivity.class);
+                                        mapsIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                        mapsIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                                , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                        v.getContext().startActivity(mapsIntent);
+                                    } else {
+                                        showMapsDialog(v);
+                                    }
+
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
+                                    Intent overviewIntent = new Intent(v.getContext(), CaptureOverviewActivity.class);
+                                    overviewIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    overviewIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
                                             , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                    v.getContext().startActivity(mapsIntent);
-                                } else {
-                                    showMapsDialog(v);
-                                }
+                                    v.getContext().startActivity(overviewIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
+                                    // todo
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
+                                    Intent orderIntent = new Intent(v.getContext(), OrderActivity.class);
+                                    orderIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    orderIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    v.getContext().startActivity(orderIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:
+                                    Intent intent = new Intent(v.getContext(), SurveyActivity.class);
+                                    intent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    v.getContext().startActivity(intent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM:
+                                    // todo
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
+                                    Intent afterIntent = new Intent(v.getContext(), AfterDisplayActivity.class);
+                                    afterIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    afterIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    v.getContext().startActivity(afterIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
+                                    Intent beforeIntent = new Intent(v.getContext(), BeforeDisplayActivity.class);
+                                    beforeIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    beforeIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    v.getContext().startActivity(beforeIntent);
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
+                                    Intent historyIntent = new Intent(v.getContext(), RegisterHistoryActivity.class);
+                                    historyIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    v.getContext().startActivity(historyIntent);
+                                    break;
 
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_CHUPANHOVERVIEW:
-                                Intent overviewIntent = new Intent(v.getContext(), CaptureOverviewActivity.class);
-                                overviewIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                overviewIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                v.getContext().startActivity(overviewIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_GHINHANKHIEUNAI:
-                                // todo
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_HUTHANGDATHANG:
-                                Intent orderIntent = new Intent(v.getContext(), OrderActivity.class);
-                                orderIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                orderIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                v.getContext().startActivity(orderIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG:
-                                Intent intent = new Intent(v.getContext(), SurveyActivity.class);
-                                intent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                v.getContext().startActivity(intent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATPOSM:
-                                // todo
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYSAU:
-                                Intent afterIntent = new Intent(v.getContext(), AfterDisplayActivity.class);
-                                afterIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                afterIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                v.getContext().startActivity(afterIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_KHAOSATTRUNGBAYTRUOC:
-                                Intent beforeIntent = new Intent(v.getContext(), BeforeDisplayActivity.class);
-                                beforeIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
-                                        , Long.valueOf(routeScheduleDetailId.getText().toString()));
-                                beforeIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                v.getContext().startActivity(beforeIntent);
-                                break;
-                            case ScreenContants.HOME_STEP_INOUTLET_XEMTHONGTINDANGKYVALICHSUEIE:
-                                Intent historyIntent = new Intent(v.getContext(), RegisterHistoryActivity.class);
-                                historyIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
-                                v.getContext().startActivity(historyIntent);
-                                break;
-
-                            default:
-                                // todo
-                                break;
+                                default:
+                                    // todo
+                                    break;
+                            }
+                        } catch (SQLException e) {
+                            ELog.d("Message log :can find config In Outlet activity");
                         }
-                    } catch (SQLException e) {
-                        ELog.d("Message log :can find config In Outlet activity");
                     }
+
                 }
             });
         }
