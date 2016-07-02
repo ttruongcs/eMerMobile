@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.R;
@@ -51,6 +53,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private String totalFacing;
     private SharedPreferences sharedPreferenceBefores;
     private SharedPreferences.Editor editorBefore;
+    private ListView listView;
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
@@ -84,15 +87,41 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.before_display_item, null);
-        ItemHolder itemHolder = new ItemHolder(v);
+        final ItemHolder itemHolder = new ItemHolder(v);
         if(position == 0) {
             mhsCodes = itemHolder.loadMhs();
             edCount.setText(Integer.toString(mhsCodes.size()));
             totalFacing = itemHolder.loadTotalFacing();
         }
         itemHolder.bindViews(mData.get(position));
+        listView = (ListView) parent;
+
+        itemHolder.editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if(listView != null &&
+                            position <= listView.getLastVisiblePosition() &&
+                            position != mData.size() - 1) {  //audit object holds the data for the adapter
+                        listView.smoothScrollToPosition(position + 1);
+                        listView.postDelayed(new Runnable() {
+                            public void run() {
+                                TextView nextField = (TextView)itemHolder.editMHS.focusSearch(View.FOCUS_DOWN);
+                                if(nextField != null) {
+                                    nextField.requestFocus();
+                                }
+                            }
+                        }, 200);
+                        return true;
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return v;
     }
@@ -156,32 +185,32 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         private void bindEvents(final MProductDTO productDTO) {
-            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        try {
-                            int quantity = Integer.parseInt(v.getText().toString());
-                            if (quantity > 0) {
-                                mhsCodes.put(productDTO.getCode(), + quantity);
-                            } else if(quantity == 0) {
-                                mhsCodes.remove(productDTO.getCode());
-                            } else {
-
-                            }
-                            editorBefore.putInt(productDTO.getCode(), quantity);
-                            editorBefore.apply();
-                            addMhs(mhsCodes);
-                            calculateFacing(mhsCodes);
-                        } catch (NumberFormatException e) {
-
-                        }
-
-                        return true;
-                    }
-                    return false;
-                }
-            });
+//            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                        try {
+//                            int quantity = Integer.parseInt(v.getText().toString());
+//                            if (quantity > 0) {
+//                                mhsCodes.put(productDTO.getCode(), + quantity);
+//                            } else if(quantity == 0) {
+//                                mhsCodes.remove(productDTO.getCode());
+//                            } else {
+//
+//                            }
+//                            editorBefore.putInt(productDTO.getCode(), quantity);
+//                            editorBefore.apply();
+//                            addMhs(mhsCodes);
+//                            calculateFacing(mhsCodes);
+//                        } catch (NumberFormatException e) {
+//
+//                        }
+//
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
 
             editMHS.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override

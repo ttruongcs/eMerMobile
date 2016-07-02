@@ -149,7 +149,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
+        //    UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
 
         }
 
