@@ -533,6 +533,9 @@
     <string name="ghinhankhieunai">Ghi nhận khiếu nại</string>
     <string name="motaghinhankhieunai">Ghi nhận khiếu nại từ khách hàng, ...</string>
     <string name="stepghinhankhieunai">09</string>
+    <string name="dongbocuahang">Đồng Bộ Cửa Hàng</string>
+    <string name="motadongbocuahang">Đồng bộ cửa hàng khi đã hoàn thành các bước</string>
+    <string name="stepdongbocuahang">08</string>
 
 
 
@@ -632,6 +635,7 @@
     <string name="login_error_msg_empty_password">Vui lòng nhập Mật Khẩu</string>
     <string name="login_failed_msg">Tên Đăng Nhập/Mật Khẩu không đúng!</string>
     <string name="log_out">Đăng xuất</string>
+    <string name="user_profile">Thông tin đăng nhập</string>
 
     <string name="dialog_map_content">Cửa hàng hiện tại chưa có GPS, cần cập nhật lại GPS.</string>
     <string name="gps_update_title">Vị trí cửa hàng đã được cập nhật.</string>
