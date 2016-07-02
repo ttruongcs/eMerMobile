@@ -1,9 +1,7 @@
 package com.banvien.fcv.mobile.beanutil;
 
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
-import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.dto.StatusInOutletDTO;
-import com.banvien.fcv.mobile.dto.StatusStartDayDTO;
 
 /**
  * Created by Administrator on 4/4/2016.
@@ -20,6 +18,7 @@ public class StatusInOutletUtil {
         result.setKhaoSatTrungBayTruoc(item.getKhaoSatTrungBayTruoc());
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());
         result.setKhaoSat(item.getKhaoSat());
+        result.setDongBoCuaHang(item.getDongBoCuaHang());
         result.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
         return result;
     }
@@ -35,6 +34,7 @@ public class StatusInOutletUtil {
         result.setXemThongTinDangKyLichSuEIE(item.getXemThongTinDangKyLichSuEIE());
         result.setKhaoSat(item.getKhaoSat());
         result.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
+        result.setDongBoCuaHang(item.getDongBoCuaHang());
         return result;
     }
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import com.banvien.fcv.mobile.core.A;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.utils.K;
 
 public class BaseDrawerActivity extends BaseActivity {
@@ -55,6 +56,12 @@ public class BaseDrawerActivity extends BaseActivity {
             A.setPrincipal(null);
 
             Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        if(id == R.id.user_profile) {
+            Intent intent = new Intent(this, UserprofileActivity.class);
             startActivity(intent);
             finish();
         }

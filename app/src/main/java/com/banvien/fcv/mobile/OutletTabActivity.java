@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 
 import com.banvien.fcv.mobile.adapter.ViewPagerAdapter;
 import com.banvien.fcv.mobile.core.A;
@@ -37,7 +38,7 @@ public class OutletTabActivity extends BaseDrawerActivity {
 
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        setupToolbar();
 
     }
 
@@ -46,6 +47,12 @@ public class OutletTabActivity extends BaseDrawerActivity {
         super.onStart();
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected void setupToolbar() {
+        super.setupToolbar();
+        toolbar.setVisibility(View.GONE);
     }
 
     private void setupViewPager(ViewPager viewPager) {
