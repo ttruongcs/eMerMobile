@@ -1,13 +1,17 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +34,16 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.dto.TimelineInOutletDTO;
+import com.banvien.fcv.mobile.library.SyncOutletMerResultService;
+import com.banvien.fcv.mobile.library.UpdateService;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.StringUtils;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +60,8 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
     Repo repo;
     List<TimelineInOutletDTO> mData;
     Activity activity;
+    private static ProgressDialog progressDialog;
+    private static UpdatingTask updateTask = null;
 
     public TimelineInOutletAdapter(List<TimelineInOutletDTO> data, Activity activity) {
         this.mData = data;
@@ -187,7 +199,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         @BindView(R.id.routeScheduleDetailId)
         TextView routeScheduleDetailId;
 
-        public ItemHolder(View itemView) {
+        public ItemHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             cardView.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +276,9 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                     historyIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
                                     v.getContext().startActivity(historyIntent);
                                     break;
+                                case ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG:
+                                    startUpdate(itemView, Long.valueOf(outletId.getText().toString()));
+                                    break;
 
                                 default:
                                     // todo
@@ -301,5 +316,64 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             dialog.show();
 
         }
+    }
+
+    private class UpdatingTask extends AsyncTask<String, Void, String> {
+        private Context context;
+        private Long outletId;
+        private String errorMessage = null;
+
+        public UpdatingTask(Context context, Long outletId) {
+            this.context = context;
+            this.outletId = outletId;
+        }
+
+        protected void onPreExecute() {
+            progressDialog.setMessage(context.getText(R.string.updating));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(final String result) {
+            if (result != null && StringUtils.isNotBlank(result)) {
+                dismissProgressDialog();
+                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            } else {
+                if(errorMessage != null) {
+//                    MyUtils.showOKAlertDialog(parentActivity, errorMessage);
+                }else {
+                    Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
+        protected String doInBackground(final String... args) {
+            try {
+                SyncOutletMerResultService syncOutletMerResultService = new SyncOutletMerResultService(context, outletId);
+                if(errorMessage != null) {
+                    return null;
+                }
+            }catch (Exception e) {
+                Log.e("HomeActivity", e.getMessage(), e);
+                return null;
+            }
+            return "";
+        }
+    }
+
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+    private void startUpdatingTask(View v, Long outletId) {
+        updateTask = new UpdatingTask(v.getContext(), outletId);
+        updateTask.execute();
+    }
+
+    public void startUpdate(View v, Long outletId) {
+        startUpdatingTask(v, outletId);
     }
 }

@@ -19,6 +19,8 @@ public class StatusInOutletDTO implements Serializable {
     
     private Integer khaoSat;
 
+    private Integer dongBoCuaHang;
+
     private Long routeScheduleDetailId;
 
     public long get_id() {
@@ -91,5 +93,13 @@ public class StatusInOutletDTO implements Serializable {
 
     public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public Integer getDongBoCuaHang() {
+        return dongBoCuaHang;
+    }
+
+    public void setDongBoCuaHang(Integer dongBoCuaHang) {
+        this.dongBoCuaHang = dongBoCuaHang;
     }
 }

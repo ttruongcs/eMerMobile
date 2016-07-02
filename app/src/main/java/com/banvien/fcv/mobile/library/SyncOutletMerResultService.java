@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.beanutil.OutletUtil;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.CaptureBeforeEntity;
@@ -664,5 +665,13 @@ public class SyncOutletMerResultService {
 				new File(dir, children[i]).delete();
 			}
 		}
+	}
+
+	public void syncOneOuletService(Long outletId) throws SQLException, IOException {
+		OutletDTO outletDTO = OutletUtil.convertToDTO(repo.getOutletDAO().findById(outletId));
+		MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerResultDTO(outletDTO);
+		Call<Integer> callOutletMerResult = RestClient.getInstance()
+				.getHomeService().submitFirstOutletResult(mOutletMerResultDTO);
+		callOutletMerResult.execute().body();
 	}
 }

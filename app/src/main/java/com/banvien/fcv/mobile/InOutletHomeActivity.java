@@ -91,6 +91,10 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
                     , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, statusInOutlet.getKhaoSat(), outletId, routeScheduleDetailId);
 
+            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.dongbocuahang)
+                    , getString(R.string.motadongbocuahang), getString(R.string.stepdongbocuahang)
+                    , ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG, statusInOutlet.getKhaoSat(), outletId, routeScheduleDetailId);
+
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -99,6 +103,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
+            timelineDTOs.add(step8);
 
         } else {
             TimelineInOutletDTO step1 = new TimelineInOutletDTO(getString(R.string.checkin)
@@ -129,6 +134,10 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
                     , getString(R.string.motakhaosatdichvukhachhang), getString(R.string.stepkhaosatdichvukhachhang)
                     , ScreenContants.HOME_STEP_INOUTLET_KHAOSATDICHVUKHACHHANG, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
 
+            TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.dongbocuahang)
+                    , getString(R.string.motadongbocuahang), getString(R.string.stepdongbocuahang)
+                    , ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG, ScreenContants.STATUS_STEP_NOTYET, outletId, routeScheduleDetailId);
+
 
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
@@ -137,6 +146,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.add(step5);
             timelineDTOs.add(step6);
             timelineDTOs.add(step7);
+            timelineDTOs.add(step8);
         }
 
         if(timelineDTOs.size() > 0) {
