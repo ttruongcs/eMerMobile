@@ -17,7 +17,7 @@ public interface OutletService {
     @POST("/mobile/route/searchOutlet.html")
     Call<Map<String, Object>> searchOutlet(@Query("keyword") String keyword,
                                    @Query("merchandiserId") Long merchandiserId,
-                                   @Query("routeShceduleId")Long routeScheduleId,
+                                   @Query("routeScheduleId")Long routeScheduleId,
                                    @Query("regionId") Long regionId,
                                    @Query("distributorId") Long distributorId,
                                    @Query("dateCreated") Timestamp createdDate);
