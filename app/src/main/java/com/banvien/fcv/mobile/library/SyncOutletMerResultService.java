@@ -701,7 +701,7 @@ public class SyncOutletMerResultService {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					String dateString = sdf.format(date);
 					String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
-							+ outlet.getCode() + "/" + dateString + "/";
+							+ outletDTO.getCode() + "/" + dateString + "/";
 
 //					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
 //							[captureOverviewEntity.getPathImage().split("/").length - 1]);
@@ -720,7 +720,7 @@ public class SyncOutletMerResultService {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					String dateString = sdf.format(date);
 					String pathImageInServer = ScreenContants.CAPTURE_BEFORE_PATH
-							+ outlet.getCode() + "/" + dateString + "/";
+							+ outletDTO.getCode() + "/" + dateString + "/";
 					mOutletMerResultImageDTO.setNameImage(captureBeforeEntity.getPathImage().split("/")
 							[captureBeforeEntity.getPathImage().split("/").length - 1]);
 					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
@@ -737,7 +737,7 @@ public class SyncOutletMerResultService {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					String dateString = sdf.format(date);
 					String pathImageInServer = ScreenContants.CAPTURE_BEFORE_PATH
-							+ outlet.getCode() + "/" + dateString + "/";
+							+ outletDTO.getCode() + "/" + dateString + "/";
 					mOutletMerResultImageDTO.setNameImage(captureAfterEntity.getPathImage().split("/")
 							[captureAfterEntity.getPathImage().split("/").length - 1]);
 					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
