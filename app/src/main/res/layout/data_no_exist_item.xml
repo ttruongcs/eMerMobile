@@ -12,11 +12,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="108dp"
-        android:src="@drawable/smile" />
+        android:src="@drawable/checklist" />
 
     <LinearLayout
         android:id="@+id/layoutLetGo1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imgLetGo"
         android:gravity="center"
@@ -27,8 +27,6 @@
             android:id="@+id/lblLetGo1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/imgLetGo"
             android:layout_marginTop="6dp"
             android:layout_weight="0.80"

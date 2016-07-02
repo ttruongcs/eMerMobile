@@ -78,6 +78,7 @@ public class MapsActivity extends FragmentActivity  {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
          mapFragment = (CustomMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        googleMap = mapFragment.getMap();
         outletDTO = getOutlet(outletId);
 
         bindView();
@@ -104,16 +105,23 @@ public class MapsActivity extends FragmentActivity  {
 
     private void bindView() {
         mapFragment.setInfo(tvTime ,tvGps);
-        if(updateGps == 1) {
-            btnCheck.setText(getString(R.string.update));
-            btnAgree.setVisibility(View.INVISIBLE);
+        googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                btnCheck.setVisibility(View.VISIBLE);
+            //    btnAgree.setVisibility(View.VISIBLE);
+                if(updateGps == 1) {
+                    btnCheck.setText(getString(R.string.update));
+                    btnAgree.setVisibility(View.INVISIBLE);
 
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)btnCheck.getLayoutParams();
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
-            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-
-        }
+                }
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)btnCheck.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                btnCheck.setLayoutParams(layoutParams);
+            }
+        });
     }
 
 
@@ -134,23 +142,25 @@ public class MapsActivity extends FragmentActivity  {
             @Override
             public void onClick(final View v) {
                 if(updateGps == 0) {
-                    double lat = mapFragment.getLocation().getLatitude();
-                    double log = mapFragment.getLocation().getLongitude();
-
-                    Location locationA = new Location("point A");
-                    locationA.setLatitude(lat);
-                    locationA.setLongitude(log);
-                    Location locationB = new Location("point B");
-                    locationB.setLatitude(outletDTO.getLat());
-                    locationB.setLongitude(outletDTO.getLg());
-                    float distance = locationA.distanceTo(locationB) ;
-                    tvGps.setText("GPS: " + String.valueOf(lat) + "," + String.valueOf(log));
-                    if(distance >= ScreenContants.GPS_DISTANCE){
-                        Toast.makeText(v.getContext(), "Khoảng cách cần nhỏ hơn hoặc bằng " + ScreenContants.GPS_DISTANCE + " đơn vị", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(v.getContext(), "Khoảng cách hợp lệ", Toast.LENGTH_SHORT).show();
-                        isValid = true;
-                    }
+                    addOrUpdateGPS();
+                    changeStatus();
+//                    double lat = mapFragment.getLocation().getLatitude();
+//                    double log = mapFragment.getLocation().getLongitude();
+//
+//                    Location locationA = new Location("point A");
+//                    locationA.setLatitude(lat);
+//                    locationA.setLongitude(log);
+//                    Location locationB = new Location("point B");
+//                    locationB.setLatitude(outletDTO.getLat());
+//                    locationB.setLongitude(outletDTO.getLg());
+//                    float distance = locationA.distanceTo(locationB) ;
+//                    tvGps.setText("GPS: " + String.valueOf(lat) + "," + String.valueOf(log));
+//                    if(distance >= ScreenContants.GPS_DISTANCE){
+//                        Toast.makeText(v.getContext(), "Khoảng cách cần nhỏ hơn hoặc bằng " + ScreenContants.GPS_DISTANCE + " đơn vị", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(v.getContext(), "Khoảng cách hợp lệ", Toast.LENGTH_SHORT).show();
+//                        isValid = true;
+//                    }
                 } else {
                     final double lat = mapFragment.getLocation().getLatitude();
                     final double log = mapFragment.getLocation().getLongitude();
