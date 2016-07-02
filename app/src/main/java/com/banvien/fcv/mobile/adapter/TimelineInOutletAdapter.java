@@ -108,6 +108,11 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
 
 
         if (mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2) {
+            if(mData.get(position).getIsDone() == 2) {
+                itemHolder.arrow.setVisibility(View.INVISIBLE);
+            } else if(mData.get(position).getIsDone() == 1) {
+                itemHolder.arrow.setVisibility(View.VISIBLE);
+            }
             itemHolder.cardView.setAlpha(1f);
             itemHolder.tvOrder.setBackgroundResource(R.drawable.bg_circle);
             switch (holder.getItemViewType()) {
@@ -122,7 +127,6 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                     itemHolder.viewTop.setBackgroundResource(R.color.color_blog);
                     break;
             }
-            itemHolder.arrow.setVisibility(View.VISIBLE);
 
         } else {
             itemHolder.cardView.setAlpha(0.3f); //Todo: Change to 0.3f

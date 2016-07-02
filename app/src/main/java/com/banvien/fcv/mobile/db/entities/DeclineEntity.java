@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Linh Nguyen on 6/23/2016.
  */
-@DatabaseTable(tableName = "CaptureAfter")
+@DatabaseTable(tableName = "Decline")
 public class DeclineEntity {
     @DatabaseField(generatedId = true)
     private long _id;
@@ -63,5 +63,10 @@ public class DeclineEntity {
 
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

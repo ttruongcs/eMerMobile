@@ -35,7 +35,7 @@ public class DeclineDAO extends AndroidBaseDaoImpl<DeclineEntity, String> {
         try {
             List<DeclineEntity> entities = queryForAll();
             if(entities.size() > 0) {
-                return results;
+                return entities;
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);

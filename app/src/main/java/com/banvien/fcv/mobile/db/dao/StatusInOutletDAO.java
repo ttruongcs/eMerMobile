@@ -95,4 +95,43 @@ public class StatusInOutletDAO extends AndroidBaseDaoImpl<StatusInOutletEntity, 
 
         return result;
     }
+
+    public boolean updateStatus(String now, String[] next, Long routeScheduleDetailId, boolean hidden) {
+        boolean result = false;
+        UpdateBuilder<StatusInOutletEntity, String> updateBuilder = updateBuilder();
+
+        try {
+            updateBuilder.updateColumnValue(now, 2);
+            if(next != null && next.length > 0) {
+                if(next.length == 1) {
+                    updateBuilder.updateColumnValue(next[0], 1);
+                } else {
+                    for(int i=0 ; i < next.length; i++) {
+                        if(i == (next.length - 1)) {
+                            updateBuilder.updateColumnValue(next[i], 2);
+                        } else {
+                            if(hidden) {
+                                updateBuilder.updateColumnValue(next[i], 0);
+                            } else {
+                                updateBuilder.updateColumnValue(next[i], 2);
+                            }
+
+                        }
+
+                    }
+                }
+
+
+            }
+            updateBuilder.where().eq("routeScheduleDetailId", routeScheduleDetailId);
+            long countOf = updateBuilder.update();
+            if(countOf > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result;
+    }
 }

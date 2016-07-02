@@ -668,5 +668,6 @@
     <string name="dosurvey_not_yet_saved_exit_warning_msg">Bạn chưa lưu kết quả. Bạn có thật sự muốn thoát?</string>
     <string name="loading">Đang tải...</string>
     <string name="done">Xong</string>
+    <string name="note">Ghi chú</string>
 
 </resources>

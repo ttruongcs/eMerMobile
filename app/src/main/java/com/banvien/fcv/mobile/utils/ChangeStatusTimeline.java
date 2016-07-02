@@ -85,4 +85,53 @@ public class ChangeStatusTimeline {
         return isSuccess;
     }
 
+    public boolean changeStatusToDone(String parent, String now, String[] next, String parentNext, boolean isTotalDone, boolean hiddenMiddle) {
+        boolean isSuccess = false;
+        try {
+            switch (parent) {
+                case ScreenContants.PREPARE_DATE_COLUMN:
+                    if (!isTotalDone) {
+                        boolean isFinished = repo.getStartDayDAO().updateStatus(now, next);
+                        isSuccess = isFinished;
+                    } else if (next == null && isTotalDone == true) {
+                        boolean isStep1Success = repo.getStartDayDAO().updateStatus(now, next);
+                        if (isStep1Success) {
+                            boolean isStep2Success = repo.getStatusHomeDAO().updateStatus(parent, parentNext);
+                            isSuccess = isStep2Success;
+                        }
+                    }
+                    break;
+                case  ScreenContants.IN_OUTLET:
+                    if (!isTotalDone) {
+                        boolean isFinished = repo.getStatusInOutletDAO().updateStatus(now, next, routeScheduleDetailId, hiddenMiddle);
+                        isSuccess = isFinished;
+                    } else if (next == null && isTotalDone == true) {
+                        boolean isStep1Success = repo.getStatusInOutletDAO().updateStatus(now, next, routeScheduleDetailId);
+                        if (isStep1Success) {
+                            boolean isStep2Success = repo.getStatusHomeDAO().updateStatus(parent, parentNext);
+                            isSuccess = isStep2Success;
+                        }
+                    }
+                    break;
+                case ScreenContants.END_DATE_COLUMN:
+                    if (!isTotalDone) {
+                        boolean isFinished = repo.getStatusEndDayDAO().updateStatus(now, next);
+                        isSuccess = isFinished;
+                    } else if (next == null && isTotalDone == true) {
+                        boolean isStep1Success = repo.getStatusEndDayDAO().updateStatus(now, next);
+                        if (isStep1Success) {
+                            boolean isStep2Success = repo.getStatusHomeDAO().updateStatus(parent, parentNext);
+                            isSuccess = isStep2Success;
+                        }
+                    }
+                    break;
+            }
+
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return isSuccess;
+    }
+
 }
