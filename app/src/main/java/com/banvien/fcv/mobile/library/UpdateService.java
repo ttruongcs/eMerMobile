@@ -18,6 +18,7 @@ import com.banvien.fcv.mobile.beanutil.StatusHomeUtil;
 import com.banvien.fcv.mobile.beanutil.SurveyUtil;
 import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.DeclineEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -134,6 +135,7 @@ public class UpdateService {
         repo.getCaptureOverviewDAO().clearData();
         repo.getConfirmWorkingDAO().clearData();
         repo.getCaptureBeforeDAO().clearData();
+		repo.getDeclineDAO().clearData();
 		deleteFileImage();
 	}
 
@@ -190,6 +192,7 @@ public class UpdateService {
 				fillProduct(DataBinder.readProductList(merchandiserMetadata.get("products")));
 				fillHotzone(DataBinder.readHotzoneList(merchandiserMetadata.get("hotZoneDTOs")));
 				fillProductGroup(DataBinder.readProductgroupList(merchandiserMetadata.get("productGroups")));
+				fillDecline(DataBinder.readDeclineEntitys(merchandiserMetadata.get("declineMetadata")));
 				try {
 					saveSurveys(DataBinder.readSurvey(merchandiserMetadata.get("surveys")));
 				} catch (Exception e) {
@@ -239,6 +242,16 @@ public class UpdateService {
 					try {
 						ProductgroupEntity entity = ProductGroupUtil.convertToEntity(dto);
 						repo.getProductGroupDAO().addProdcutGroupEntity(entity);
+					} catch (SQLException e) {
+						ELog.d(e.getMessage(), e);
+					}
+				}
+			}
+
+			private void fillDecline(List<DeclineEntity> jDelines) {
+				for (DeclineEntity entity : jDelines) {
+					try {
+						repo.getDeclineDAO().addDecline(entity);
 					} catch (SQLException e) {
 						ELog.d(e.getMessage(), e);
 					}

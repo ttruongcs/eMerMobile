@@ -651,6 +651,7 @@ public class SyncOutletMerResultService {
 		repo.getShortageProductDAO().clearData();
 		repo.getCaptureOverviewDAO().clearData();
 		repo.getConfirmWorkingDAO().clearData();
+		repo.getDeclineDAO().clearData();
 		deleteFileImage();
 	}
 

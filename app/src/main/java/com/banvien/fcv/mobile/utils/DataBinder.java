@@ -1,5 +1,6 @@
 package com.banvien.fcv.mobile.utils;
 
+import com.banvien.fcv.mobile.db.entities.DeclineEntity;
 import com.banvien.fcv.mobile.dto.CatgroupDTO;
 import com.banvien.fcv.mobile.dto.ComplainTypeDTO;
 import com.banvien.fcv.mobile.dto.POSMDTO;
@@ -69,6 +70,18 @@ public class DataBinder {
         List<ProductgroupDTO> list = null;
         try {
             list = mapper.convertValue(object, new TypeReference<List<ProductgroupDTO>>() {
+            });
+        }catch (Exception e) {
+            ELog.e(e.getMessage(), e);
+            list = new ArrayList<>();
+        }
+        return list;
+    }
+
+    public static List<DeclineEntity> readDeclineEntitys(Object object) {
+        List<DeclineEntity> list = null;
+        try {
+            list = mapper.convertValue(object, new TypeReference<List<DeclineEntity>>() {
             });
         }catch (Exception e) {
             ELog.e(e.getMessage(), e);
