@@ -147,9 +147,10 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                     statusInOutletEntity.setKhaoSatTrungBaySau(ScreenContants.STATUS_STEP_NOTYET);
                     statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
                     statusInOutletEntity.setHutHangDatHang(ScreenContants.STATUS_STEP_NOTYET);
-                    statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setXemThongTinDangKyLichSuEIE(ScreenContants.STATUS_STEP_DONE);
                     statusInOutletEntity.setKhaoSat(ScreenContants.STATUS_STEP_NOTYET);
                     statusInOutletEntity.setDongBoCuaHang(ScreenContants.STATUS_STEP_NOTYET);
+                    statusInOutletEntity.setTinhTrangCuaHang(ScreenContants.STATUS_STEP_NOTYET);
                     statusInOutletEntity.setRouteScheduleDetailId(routeScheduleDetailId);
 
                     repo.getStatusInOutletDAO().addStatusHome(statusInOutletEntity);

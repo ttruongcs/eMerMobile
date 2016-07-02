@@ -28,6 +28,8 @@ public class StatusInOutletEntity implements Serializable {
     private Integer khaoSat;
     @DatabaseField
     private Integer dongBoCuaHang;
+    @DatabaseField
+    private Integer tinhTrangCuaHang;
 
     public long get_id() {
         return _id;
@@ -107,5 +109,13 @@ public class StatusInOutletEntity implements Serializable {
 
     public void setDongBoCuaHang(Integer dongBoCuaHang) {
         this.dongBoCuaHang = dongBoCuaHang;
+    }
+
+    public Integer getTinhTrangCuaHang() {
+        return tinhTrangCuaHang;
+    }
+
+    public void setTinhTrangCuaHang(Integer tinhTrangCuaHang) {
+        this.tinhTrangCuaHang = tinhTrangCuaHang;
     }
 }
