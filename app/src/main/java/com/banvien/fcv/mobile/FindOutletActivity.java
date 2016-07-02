@@ -157,14 +157,17 @@ public class FindOutletActivity extends BaseDrawerActivity {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 Timestamp createdDateTs = null;
                 try {
-                    Date parsedDate = dateFormat.parse(createdDate);
-                    createdDateTs = new Timestamp(parsedDate.getTime());
+                    if(!createdDate.equals("")) {
+                        Date parsedDate = dateFormat.parse(createdDate);
+                        createdDateTs = new Timestamp(parsedDate.getTime());
+                    }
+
 
                 } catch (ParseException e) {
                     ELog.d(e.getMessage(), e);
                 }
 
-                if (keyword != null) {
+                if (!keyword.equals("")) {
                     try {
 
                         Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()

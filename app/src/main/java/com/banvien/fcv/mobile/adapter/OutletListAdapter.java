@@ -109,7 +109,6 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                             if(outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)) {
                                 configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
                             }
-                            updateStatus(outletDTO, ScreenContants.DOING);
                             Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
                             intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
                             intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
@@ -118,23 +117,6 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
                     }
                 }
             });
-        }
-
-        private void updateStatus(OutletDTO outletDTO, String typeStatus) {
-            OutletEntity outletEntity = OutletUtil.convertToEntity(outletDTO);
-            if(typeStatus.equals(ScreenContants.DOING)) {
-                outletEntity.setStatus(ScreenContants.STATUS_STEP_INPROGRESS);
-            }
-
-            try {
-                int rowSuccess = repo.getOutletDAO().update(outletEntity);
-                if (rowSuccess == 0) {
-                    ELog.d("Can't update outlet");
-                }
-            } catch (SQLException e) {
-                ELog.d(e.getMessage(), e);
-            }
-
         }
 
         private void configStatusInOutlet(Long routeScheduleDetailId) {

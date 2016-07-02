@@ -42,6 +42,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
+        getSupportActionBar().setTitle(R.string.chamdientrungbaytaicuahang);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
         try {

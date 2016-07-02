@@ -55,6 +55,7 @@ public class RegisterHistoryActivity extends BaseDrawerActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_history);
+        getSupportActionBar().setTitle(R.string.xemthongtindangkyvalichsueie);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         data = new ArrayList<>();
         historyData = new ArrayList<>();

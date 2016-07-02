@@ -67,6 +67,7 @@ public class OrderActivity extends BaseDrawerActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        getSupportActionBar().setTitle(R.string.huthangdathang);
         repo = new Repo(this);
         sections = new ArrayList<>();
         products = new HashMap<>();

@@ -143,6 +143,7 @@ public class MapsActivity extends FragmentActivity  {
             public void onClick(final View v) {
                 if(updateGps == 0) {
                     addOrUpdateGPS();
+                    updateOutletStatus(outletDTO, ScreenContants.DOING);
                     changeStatus();
 //                    double lat = mapFragment.getLocation().getLatitude();
 //                    double log = mapFragment.getLocation().getLongitude();
@@ -197,6 +198,23 @@ public class MapsActivity extends FragmentActivity  {
                 }
             }
         });
+    }
+
+    private void updateOutletStatus(OutletDTO outletDTO, String typeStatus) {
+        OutletEntity outletEntity = OutletUtil.convertToEntity(outletDTO);
+        if(typeStatus.equals(ScreenContants.DOING)) {
+            outletEntity.setStatus(ScreenContants.STATUS_STEP_INPROGRESS);
+        }
+
+        try {
+            int rowSuccess = repo.getOutletDAO().update(outletEntity);
+            if (rowSuccess == 0) {
+                ELog.d("Can't update outlet");
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
     }
 
     private void showUpdateDialog() {
