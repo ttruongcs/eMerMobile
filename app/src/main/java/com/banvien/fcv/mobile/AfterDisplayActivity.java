@@ -108,7 +108,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
             afterDisplayDTOs = repo.getOutletMerDAO().findOutletModelAfterByOutletId(outletId);
 
             List<HotzoneEntity> hotzoneEntities = repo.getHotZoneDAO().queryForAll();
-            for(HotzoneEntity entity : hotzoneEntities) {
+            for (HotzoneEntity entity : hotzoneEntities) {
                 hotzoneDTOs.add(HotzoneUtil.convertToDTO(entity));
             }
         } catch (SQLException e) {
@@ -119,7 +119,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(repo != null) {
+        if (repo != null) {
             repo.release();
         }
     }
@@ -140,55 +140,35 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(this.getString(R.string.before_display_title));
-        builder.setMessage(this.getString(R.string.before_display_content));
+        try {
+            boolean isCaptured = repo.getCaptureAfterDAO().checkCaptured(outletId);
+            if (isCaptured == true) {
+                changeStatus();
+            } else {
+                AlertDialog.Builder captureBuilder = new AlertDialog.Builder(AfterDisplayActivity.this);
+                captureBuilder.setMessage(getString(R.string.dialog_after_content));
 
-        String positiveText = this.getString(R.string.accept);
-        builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    boolean isCaptured = repo.getCaptureAfterDAO().checkCaptured(outletId);
-                    if(isCaptured == true) {
-                        changeStatus();
-                    } else {
-                        AlertDialog.Builder captureBuilder = new AlertDialog.Builder(AfterDisplayActivity.this);
-                        captureBuilder.setMessage(getString(R.string.dialog_after_content));
-
-                        String positiveText = getString(R.string.capture);
-                        captureBuilder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getBaseContext(), CaptureAfterActivity.class);
-                                intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
-                                intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                                startActivity(intent);
-                            }
-                        });
-
-                        AlertDialog captureDialog = captureBuilder.create();
-                        captureDialog.show();
-
+                String positiveText = getString(R.string.capture);
+                captureBuilder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getBaseContext(), CaptureAfterActivity.class);
+                        intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
+                        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                        startActivity(intent);
                     }
-                } catch (SQLException e) {
-                    ELog.d(e.getMessage(), e);
-                }
+                });
+
+                AlertDialog captureDialog = captureBuilder.create();
+                captureDialog.show();
 
             }
-        });
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
 
-        String negativeText = this.getString(R.string.cancel);
-        builder.setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 }

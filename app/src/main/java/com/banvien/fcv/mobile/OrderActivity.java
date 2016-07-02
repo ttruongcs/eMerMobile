@@ -151,7 +151,7 @@ public class OrderActivity extends BaseDrawerActivity {
                         v.getContext().startActivity(whatsappIntent);
 
                     } else {
-                        Toast.makeText(v.getContext(), "Please choose items", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Bạn chưa chọn sản phẩm", Toast.LENGTH_SHORT).show();
                     }
 
 
