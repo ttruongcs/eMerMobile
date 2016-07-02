@@ -667,11 +667,11 @@ public class SyncOutletMerResultService {
 		}
 	}
 
-	public void syncOneOuletService(Long outletId) throws SQLException, IOException {
+	public Integer syncOneOuletService(Long outletId) throws SQLException, IOException {
 		OutletDTO outletDTO = OutletUtil.convertToDTO(repo.getOutletDAO().findById(outletId));
 		MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerResultDTO(outletDTO);
 		Call<Integer> callOutletMerResult = RestClient.getInstance()
 				.getHomeService().submitFirstOutletResult(mOutletMerResultDTO);
-		callOutletMerResult.execute().body();
+		return Integer.valueOf(callOutletMerResult.execute().body().toString());
 	}
 }

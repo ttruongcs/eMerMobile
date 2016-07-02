@@ -38,6 +38,7 @@ import com.banvien.fcv.mobile.library.SyncOutletMerResultService;
 import com.banvien.fcv.mobile.library.UpdateService;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.StringUtils;
+import com.j256.ormlite.stmt.query.In;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -277,6 +278,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                     v.getContext().startActivity(historyIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG:
+                                    progressDialog = new ProgressDialog(itemView.getContext());
                                     startUpdate(itemView, Long.valueOf(outletId.getText().toString()));
                                     break;
 
@@ -338,28 +340,27 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         protected void onPostExecute(final String result) {
             if (result != null && StringUtils.isNotBlank(result)) {
                 dismissProgressDialog();
-                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
             } else {
-                if(errorMessage != null) {
-//                    MyUtils.showOKAlertDialog(parentActivity, errorMessage);
-                }else {
-                    Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();
             }
 
         }
 
         protected String doInBackground(final String... args) {
+            String result = null;
             try {
                 SyncOutletMerResultService syncOutletMerResultService = new SyncOutletMerResultService(context, outletId);
-                if(errorMessage != null) {
-                    return null;
+                Integer success = syncOutletMerResultService.syncOneOuletService(outletId);
+                if(success == 1){
+                    result = "Success";
+                } else {
+                    errorMessage = "Fail";
                 }
             }catch (Exception e) {
-                Log.e("HomeActivity", e.getMessage(), e);
-                return null;
+                Log.e("InOutletActivity", e.getMessage(), e);
             }
-            return "";
+            return result;
         }
     }
 
