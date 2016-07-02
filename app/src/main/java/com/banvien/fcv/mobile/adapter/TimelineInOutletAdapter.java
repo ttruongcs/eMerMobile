@@ -154,6 +154,11 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         return mData.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public int containerHeight(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);

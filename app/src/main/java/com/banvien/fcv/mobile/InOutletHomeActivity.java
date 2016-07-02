@@ -32,6 +32,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
     private Repo repo;
     private Long outletId;
     private Long routeScheduleDetailId;
+    private Long loadAgain;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private StatusInOutletDTO statusInOutlet;
@@ -97,7 +98,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
 
             TimelineInOutletDTO step8 = new TimelineInOutletDTO(getString(R.string.dongbocuahang)
                     , getString(R.string.motadongbocuahang), getString(R.string.stepdongbocuahang)
-                    , ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG, statusInOutlet.getKhaoSat(), outletId, routeScheduleDetailId);
+                    , ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG, statusInOutlet.getDongBoCuaHang(), outletId, routeScheduleDetailId);
 
             timelineDTOs.add(step0);
             timelineDTOs.add(step1);

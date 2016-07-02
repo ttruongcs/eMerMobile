@@ -108,7 +108,7 @@ public class StatusInOutletDAO extends AndroidBaseDaoImpl<StatusInOutletEntity, 
                 } else {
                     for(int i=0 ; i < next.length; i++) {
                         if(i == (next.length - 1)) {
-                            updateBuilder.updateColumnValue(next[i], 2);
+                            updateBuilder.updateColumnValue(next[i], 1);
                         } else {
                             if(hidden) {
                                 updateBuilder.updateColumnValue(next[i], 0);
