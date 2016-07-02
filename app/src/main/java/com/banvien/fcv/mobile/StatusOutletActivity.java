@@ -78,9 +78,13 @@ public class StatusOutletActivity extends BaseDrawerActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo Save later
-                if(!keys.get("codeSelected").toString().equals(CODE_OTHER)) {
-
+                if(keys.get("codeSelected").toString().equals(CODE_OTHER)) {
+                    Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
+                    intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
+                    startActivity(intent);
+                    finish();
                 } else {
                     ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
                     String[] next = {ScreenContants.BEFORE_DISPLAY_COLUMN, ScreenContants.AFTER_DISPLAY_COLUMN
