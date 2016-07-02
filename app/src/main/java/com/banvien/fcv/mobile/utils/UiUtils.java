@@ -25,12 +25,16 @@ public class UiUtils {
 
         totalHeight = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 
-        if (totalHeight < maxHeight) {
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-        }
+//        if (totalHeight < maxHeight) {
+//            ViewGroup.LayoutParams params = listView.getLayoutParams();
+//            params.height = totalHeight;
+//            listView.setLayoutParams(params);
+//            listView.requestLayout();
+//        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
     public static int getHeightParamInPixel(ListView listView) {

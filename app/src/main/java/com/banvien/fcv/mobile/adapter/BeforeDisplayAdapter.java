@@ -110,7 +110,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             public void run() {
                                 TextView nextField = (TextView)itemHolder.editMHS.focusSearch(View.FOCUS_DOWN);
                                 if(nextField != null) {
-                                    nextField.requestFocus();
+                                    nextField.requestFocus(4);
                                 }
                             }
                         }, 200);
@@ -218,8 +218,9 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                     EditText numberInput;
                     numberInput = (EditText) v;
                     if (!hasFocus) {
+                        int quantity = 0;
                         try {
-                            int quantity = Integer.parseInt(numberInput.getText().toString());
+                            quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
                                 mhsCodes.put(productDTO.getCode(), + quantity);
                             } else if(quantity == 0) {
@@ -227,13 +228,14 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                             } else {
 
                             }
-                            editorBefore.putInt(productDTO.getCode(), quantity);
-                            editorBefore.apply();
-                            addMhs(mhsCodes);
-                            calculateFacing(mhsCodes);
-                        } catch (NumberFormatException e) {
 
+                        } catch (NumberFormatException e) {
+                            mhsCodes.remove(productDTO.getCode());
                         }
+                        editorBefore.putInt(productDTO.getCode(), quantity);
+                        editorBefore.apply();
+                        addMhs(mhsCodes);
+                        calculateFacing(mhsCodes);
 
                     }
                 }
@@ -246,9 +248,9 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.toString().equals("")) {
-                        editMHS.setText(Integer.toString(0));
-                    }
+//                    if(s.toString().equals("")) {
+//                        editMHS.setText(Integer.toString(0));
+//                    }
                 }
 
                 @Override

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.banvien.fcv.mobile.AfterDisplayActivity;
@@ -56,6 +57,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private SharedPreferences sharedPreferences;
     private TextView tvCountChecked;
     private Map<String, Boolean> numberChecked;
+    private ListView listView;
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences, TextView tvCountChecked) {
@@ -90,9 +92,9 @@ public class AfterDisplayAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.after_display_item, null);
-        ItemHolder itemHolder = new ItemHolder(v);
+        final ItemHolder itemHolder = new ItemHolder(v);
         if(position == 0) {
             mhsCodes = itemHolder.loadMhs();
             totalFacing = itemHolder.loadTotalFacing();
@@ -100,6 +102,32 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         itemHolder.bindViews(mData.get(position));
+        listView = (ListView) parent;
+
+        itemHolder.editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if(listView != null &&
+                            position <= listView.getLastVisiblePosition() &&
+                            position != mData.size() - 1) {  //audit object holds the data for the adapter
+                        listView.smoothScrollToPosition(position + 1);
+                        listView.postDelayed(new Runnable() {
+                            public void run() {
+                                TextView nextField = (TextView)itemHolder.editMHS.focusSearch(View.FOCUS_DOWN);
+                                if(nextField != null) {
+                                    nextField.requestFocus(4);
+                                }
+                            }
+                        }, 200);
+                        return true;
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return v;
     }
@@ -201,41 +229,41 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         private void bindEvents(final MProductDTO productDTO) {
-            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        try {
-                            int quantity = Integer.parseInt(v.getText().toString());
-                            if (quantity > 0) {
-                                AfterItemDTO afterItem = new AfterItemDTO();
-                                afterItem.setYesNo(1);
-                                afterItem.setNumberOfFace(quantity);
-                                mhsCodes.put(productDTO.getCode(),  afterItem);
-                                checkShortageExist(productDTO.getCode());
-                            } else if(quantity == 0) {
-                                mhsCodes.remove(productDTO.getCode());
-                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
-                                editor.apply();
-                            } else {
-
-                            }
-                            if(quantity > 0) {
-                                chHave.setChecked(Boolean.TRUE);
-                            } else {
-                                chHave.setChecked(Boolean.FALSE);
-                            }
-                            addMhs(mhsCodes, 1);
-                            calculateFacing(mhsCodes);
-                        } catch (NumberFormatException e) {
-
-                        }
-
-                        return true;
-                    }
-                    return false;
-                }
-            });
+//            editMHS.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                @Override
+//                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                        try {
+//                            int quantity = Integer.parseInt(v.getText().toString());
+//                            if (quantity > 0) {
+//                                AfterItemDTO afterItem = new AfterItemDTO();
+//                                afterItem.setYesNo(1);
+//                                afterItem.setNumberOfFace(quantity);
+//                                mhsCodes.put(productDTO.getCode(),  afterItem);
+//                                checkShortageExist(productDTO.getCode());
+//                            } else if(quantity == 0) {
+//                                mhsCodes.remove(productDTO.getCode());
+//                                editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+//                                editor.apply();
+//                            } else {
+//
+//                            }
+//                            if(quantity > 0) {
+//                                chHave.setChecked(Boolean.TRUE);
+//                            } else {
+//                                chHave.setChecked(Boolean.FALSE);
+//                            }
+//                            addMhs(mhsCodes, 1);
+//                            calculateFacing(mhsCodes);
+//                        } catch (NumberFormatException e) {
+//
+//                        }
+//
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
 
             editMHS.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -263,11 +291,14 @@ public class AfterDisplayAdapter extends BaseAdapter {
                             } else {
                                 chHave.setChecked(Boolean.FALSE);
                             }
-                            addMhs(mhsCodes, 1);
-                            calculateFacing(mhsCodes);
                         } catch (NumberFormatException e) {
-
+                            mhsCodes.remove(productDTO.getCode());
+                            chHave.setChecked(Boolean.FALSE);
+                            editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
+                            editor.apply();
                         }
+                        addMhs(mhsCodes, 1);
+                        calculateFacing(mhsCodes);
 
                     }
                 }
@@ -280,9 +311,9 @@ public class AfterDisplayAdapter extends BaseAdapter {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(s.toString().equals("")) {
-                        editMHS.setText(Integer.toString(0));
-                    }
+//                    if(s.toString().equals("")) {
+//                        editMHS.setText(Integer.toString(0));
+//                    }
                 }
 
                 @Override

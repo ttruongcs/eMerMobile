@@ -98,27 +98,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="5"
             android:background="@color/background">
             <ListView
                 android:id="@+id/lvBeforeDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="1dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:smoothScrollbar="true"
                 android:scrollingCache="false"
                 android:animationCache="false"
+                android:scrollbars="none"
                 />
         </LinearLayout>
-
-
-
-
 
         <LinearLayout
             android:layout_width="match_parent"

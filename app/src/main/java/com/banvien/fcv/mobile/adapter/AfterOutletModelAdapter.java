@@ -119,7 +119,6 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
             AfterDisplayAdapter adapter = new AfterDisplayAdapter(activity, productDTOs, edFacing
                     , repo, outletId, dto.getOutletModelId(), preferences, tvCountChecked);
             listView.setAdapter(adapter);
-            listView.setScrollbarFadingEnabled(false);
 
             listView.setOnTouchListener(new ListView.OnTouchListener() {
                 @Override
@@ -143,6 +142,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            listView.setEnabled(false);
             UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
         }
 

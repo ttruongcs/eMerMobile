@@ -60,6 +60,12 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         beforeDisplayDTOs = new ArrayList<>();
         hotzoneDTOs = new ArrayList<>();
         sharedPreferences = getSharedPreferences(ScreenContants.BeforePREFERENCES, MODE_PRIVATE);
+        bindDatas();
+        initRecyclerView();
+        bindEvents();
+    }
+
+    private void bindEvents() {
         fabTakeCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,8 +75,15 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
                 startActivity(intent);
             }
         });
-        bindDatas();
-        initRecyclerView();
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.requestFocus();
+                onBackPressed();
+
+            }
+        });
     }
 
     private void initRecyclerView() {

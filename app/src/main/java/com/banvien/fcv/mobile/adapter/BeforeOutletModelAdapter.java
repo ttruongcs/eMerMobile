@@ -124,7 +124,6 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
             BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
                     , repo, outletId, dto.getOutletModelId(), tvCountChecked);
-            listView.setScrollbarFadingEnabled(false);
             listView.setAdapter(adapter);
 
             listView.setOnTouchListener(new ListView.OnTouchListener() {
@@ -148,8 +147,8 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                     return true;
                 }
             });
-
-        //    UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
+            listView.setEnabled(false);
+            UiUtils.setListViewHeightBasedOnChildren(listView, UiUtils.getHeightParamInPixel(listView));
 
         }
 
