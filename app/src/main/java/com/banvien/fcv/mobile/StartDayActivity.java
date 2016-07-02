@@ -66,7 +66,7 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
         getSupportActionBar().setTitle(R.string.chuanbidaungay);
 
         reloadData();
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TimelineAdapter(timelineDTOs, this);
@@ -110,16 +110,11 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
                     , ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC, statusStartDay.getXacNhanLamViec());
 
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
-                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
-                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, statusStartDay.getChupHinhCuaHangDauTien());
-
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
             timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
-            timelineDTOs.add(step6);
         } else {
             TimelineDTO step1 = new TimelineDTO(getString(R.string.dongbodulieuphancong)
                     , getString(R.string.motadongbodulieuphancong), getString(R.string.stepdongbodulieuphancong)
@@ -141,16 +136,11 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
                     , getString(R.string.motaxacnhanlamviec), getString(R.string.stepxacnhanlamviec)
                     , ScreenContants.HOME_STEP_STARTDAY_XACNHANLAMVIEC, ScreenContants.STATUS_STEP_NOTYET);
 
-            TimelineDTO step6 = new TimelineDTO(getString(R.string.chuphinhcuahangdautien)
-                    , getString(R.string.motachuphinhcuahangdautien), getString(R.string.stepchuphinhcuahangdautien)
-                    , ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN, ScreenContants.STATUS_STEP_NOTYET);
-
             timelineDTOs.add(step1);
             timelineDTOs.add(step2);
             timelineDTOs.add(step3);
             timelineDTOs.add(step4);
             timelineDTOs.add(step5);
-            timelineDTOs.add(step6);
         }
 
         if(timelineDTOs.size() > 0) {

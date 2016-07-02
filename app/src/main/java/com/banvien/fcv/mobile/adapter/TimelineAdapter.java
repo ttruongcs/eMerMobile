@@ -26,6 +26,7 @@ import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.FindOutletSimpleActivity;
+import com.banvien.fcv.mobile.HomeActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.ScreenContants;
@@ -98,8 +99,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
         if (mData.get(position).getIsDone() == 1 || mData.get(position).getIsDone() == 2) {
             if(mData.get(position).getIsDone() == 2) {
-                itemHolder.arrow.setVisibility(View.GONE);
-            } else {
+                itemHolder.arrow.setVisibility(View.INVISIBLE);
+            } else if(mData.get(position).getIsDone() == 1) {
                 itemHolder.arrow.setVisibility(View.VISIBLE);
             }
             itemHolder.cardView.setAlpha(1f);
@@ -116,7 +117,6 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                     itemHolder.viewTop.setBackgroundResource(R.color.color_blog);
                     break;
             }
-
 
 
         } else {
@@ -358,11 +358,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                                , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
-                        Intent intent = new Intent(activity, StartDayActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
+                        Intent intent = new Intent(activity, HomeActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         activity.startActivity(intent);
-                        activity.finish();
+                        //activity.finish();
 
                     } catch (SQLException e) {
                         Log.e("TimelineAdapter", "Sync no image Error");

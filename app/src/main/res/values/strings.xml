@@ -514,7 +514,7 @@
     <string name="stepchupanhoverview">02</string>
     <string name="xemthongtindangkyvalichsueie">Thông Tin ĐK và Lịch Sử TB</string>
     <string name="motaxemthongtindangkyvalichsueie">Xem thông tin đăng ký, lịch sử EIE, ..</string>
-    <string name="stepxemthongtindangkyvalichsueie">03</string>
+    <string name="stepxemthongtindangkyvalichsueie">00</string>
     <string name="khaosattrungbaytruoc">Khảo Sát Trưng Bày Trước</string>
     <string name="motakhaosattrungbaytruoc">Khảo sát trưng bày trước</string>
     <string name="stepmotakhaosattrungbaytruoc">04</string>
@@ -651,7 +651,7 @@
     <string name="pass">Đạt</string>
     <string name="fail">Không đạt</string>
 
-    <string name="out_of_unfinished">Chúc mừng! Công việc \"chưa hoàn thành\" trong ngày đã hết.</string>
+    <string name="out_of_unfinished">Dữ liệu không tồn tại.</string>
     <string name="out_of_finished_content">Kiểm tra những công việc còn đang làm để hoàn tất công việc.</string>
     <string name="out_of_check">Kiểm tra</string>
 
