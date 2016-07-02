@@ -20,6 +20,7 @@ public class StatusInOutletUtil {
         result.setKhaoSat(item.getKhaoSat());
         result.setDongBoCuaHang(item.getDongBoCuaHang());
         result.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
+        result.setTinhTrangCuaHang(item.getTinhTrangCuaHang());
         return result;
     }
 
@@ -35,6 +36,7 @@ public class StatusInOutletUtil {
         result.setKhaoSat(item.getKhaoSat());
         result.setRouteScheduleDetailId(item.getRouteScheduleDetailId());
         result.setDongBoCuaHang(item.getDongBoCuaHang());
+        result.setTinhTrangCuaHang(item.getTinhTrangCuaHang());
         return result;
     }
 }

@@ -107,6 +107,7 @@ public class ScreenContants {
     public static final String HOME_STEP_INOUTLET_KHAOSATPOSM = "HOME_STEP_INOUTLET_KHAOSATPOSM";
     public static final String HOME_STEP_INOUTLET_GHINHANKHIEUNAI = "HOME_STEP_INOUTLET_GHINHANKHIEUNAI";
     public static final String HOME_STEP_INOUTLET_DONGBOCUAHANG = "HOME_STEP_INOUTLET_DONGBOCUAHANG";
+    public static final String HOME_STEP_INOUTLET_TINHTRANGCUAHANG = "HOME_STEP_INOUTLET_TINHTRANGCUAHANG";
 
             // ENDAY
     public static final String HOME_STEP_ENDDAY_CHUPHINHCUOINGAY = "HOME_STEP_ENDDAY_CHUPHINHCUOINGAY";
@@ -170,6 +171,7 @@ public class ScreenContants {
     public static final String SHORTAGE_PRODUCT_COLUMN = "hutHangDatHang";
     public static final String SURVEY_COLUMN = "khaoSat";
     public static final String CONFIRM_END_COLUMN = "ketThucCuoiNgay";
+    public static final String CHECK_OUTLET_COLUMN = "tinhTrangCuaHang";
 
 
 

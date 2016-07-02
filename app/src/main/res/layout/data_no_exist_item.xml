@@ -36,34 +36,15 @@
             android:textSize="20dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lnOutOfUnfinished"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:gravity="center"
-        android:layout_below="@+id/layoutLetGo1">
-        <TextView
-            android:id="@+id/txtLetGo2"
-            android:layout_width="0dp"
-            android:layout_weight=".8"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="6dp"
-            android:gravity="center_vertical|center"
-            android:text="@string/out_of_finished_content" />
-    </LinearLayout>
-
 
     <Button
         android:id="@+id/btnLetGo"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lnOutOfUnfinished"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
+        android:layout_below="@+id/layoutLetGo1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/out_of_check"
         android:textAllCaps="true"

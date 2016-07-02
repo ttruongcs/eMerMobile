@@ -294,7 +294,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     public void onBackPressed() {
         if(imageDTOs.size() > 0) {
             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this, routeScheduleDetailId);
-            String[] next = {ScreenContants.REGISTER_HISTORY_COLUMN, ScreenContants.BEFORE_DISPLAY_COLUMN};
+            String[] next = {ScreenContants.CHECK_OUTLET_COLUMN, ScreenContants.BEFORE_DISPLAY_COLUMN};
             changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                     , ScreenContants.CAPTURE_OVERVIEW_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
         }

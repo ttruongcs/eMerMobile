@@ -30,6 +30,7 @@ import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
+import com.banvien.fcv.mobile.StatusOutletActivity;
 import com.banvien.fcv.mobile.SurveyActivity;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
@@ -281,6 +282,13 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                                 case ScreenContants.HOME_STEP_INOUTLET_DONGBOCUAHANG:
                                     progressDialog = new ProgressDialog(itemView.getContext());
                                     startUpdate(itemView, Long.valueOf(outletId.getText().toString()));
+                                    break;
+                                case ScreenContants.HOME_STEP_INOUTLET_TINHTRANGCUAHANG:
+                                    Intent statusIntent = new Intent(v.getContext(), StatusOutletActivity.class);
+                                    statusIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL
+                                            , Long.valueOf(routeScheduleDetailId.getText().toString()));
+                                    statusIntent.putExtra(ScreenContants.KEY_OUTLET_ID, Long.valueOf(outletId.getText().toString()));
+                                    v.getContext().startActivity(statusIntent);
                                     break;
 
                                 default:
