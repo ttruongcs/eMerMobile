@@ -28,6 +28,8 @@ public class OutletDTO implements Serializable {
     private Integer status;
     private Long routeScheduleId;
     private Long routeScheduleDetailId;
+    private String note;
+    private Integer activeStatus;
 
     public long get_id() {
         return _id;
@@ -163,6 +165,22 @@ public class OutletDTO implements Serializable {
 
     public void setRouteScheduleDetailId(Long routeScheduleDetailId) {
         this.routeScheduleDetailId = routeScheduleDetailId;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
     }
 
     @Override

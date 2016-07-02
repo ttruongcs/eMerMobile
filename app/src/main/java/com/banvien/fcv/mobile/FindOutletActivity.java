@@ -16,8 +16,10 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.banvien.fcv.mobile.adapter.AddOutletAdapter;
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
+import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.dto.routeschedule.MRouteScheduleDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.DataBinder;
@@ -79,6 +81,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Repo repo;
     private Long routeScheduleId;
+    private UserPrincipal userPrincipal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
         repo = new Repo(this);
         getSupportActionBar().setTitle(R.string.find_outlet);
         routeScheduleId = findRouteSchedule();
+        userPrincipal = A.getPrincipal();
 
         bindViews();
         bindEvents();
@@ -99,7 +103,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
         try {
             RouteScheduleEntity route = repo.getRouteScheduleDAO().findRoute();
 
-            if(route != null) {
+            if (route != null) {
                 routeScheduleId = route.getRouteScheduleId();
             }
         } catch (SQLException e) {
@@ -160,10 +164,11 @@ public class FindOutletActivity extends BaseDrawerActivity {
                     ELog.d(e.getMessage(), e);
                 }
 
-                if(createdDateTs != null) {
+                if (keyword != null) {
                     try {
+
                         Call<Map<String, Object>> call = RestClient.getInstance().getOutletService()
-                                .searchOutlet(keyword, null, routeScheduleId, null, null, createdDateTs); //Todo Revise this
+                                .searchOutlet(keyword, userPrincipal.getUserId(), routeScheduleId, null, null, createdDateTs);
                         call.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
@@ -194,7 +199,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
 
     private void initRecycleview(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
         routeScheduleDetailDTOs = checkRouteExist(routeScheduleDetailDTOs);
-        if(routeScheduleDetailDTOs.size() > 0) {
+        if (routeScheduleDetailDTOs.size() > 0) {
             recyclerView.setHasFixedSize(true);
             recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext(), null));
             layoutManager = new MySpeedScrollManager(getBaseContext());
@@ -214,10 +219,10 @@ public class FindOutletActivity extends BaseDrawerActivity {
 
     private List<MRouteScheduleDetailDTO> checkRouteExist(List<MRouteScheduleDetailDTO> routeScheduleDetailDTOs) {
         List<MRouteScheduleDetailDTO> results = new ArrayList<>(routeScheduleDetailDTOs);
-        for(MRouteScheduleDetailDTO dto : routeScheduleDetailDTOs) {
+        for (MRouteScheduleDetailDTO dto : routeScheduleDetailDTOs) {
             try {
                 long countOf = repo.getOutletDAO().checkExist(dto.getOutlet().getOutletId());
-                if(countOf > 0) {
+                if (countOf > 0) {
                     results.remove(dto);
                 }
             } catch (SQLException e) {
@@ -234,7 +239,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
         edDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
+                if (hasFocus) {
                     DateDialog dialog = DateDialog.newInstance(v);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
@@ -251,7 +256,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(repo != null) {
+        if (repo != null) {
             repo.release();
         }
     }

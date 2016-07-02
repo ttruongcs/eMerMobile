@@ -49,6 +49,11 @@ public class OutletEntity implements Serializable {
     private Long routeScheduleId;
     @DatabaseField
     private Long routeScheduleDetailId;
+    @DatabaseField
+    private Integer activeStatus;
+    @DatabaseField
+    private String note;
+
 
     public long get_id() {
         return _id;
@@ -192,6 +197,22 @@ public class OutletEntity implements Serializable {
 
     public void setAuditedToday(Boolean auditedToday) {
         isAuditedToday = auditedToday;
+    }
+
+    public Integer getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Integer activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

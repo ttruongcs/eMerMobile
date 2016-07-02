@@ -174,4 +174,21 @@ public class OutletDAO extends AndroidBaseDaoImpl<OutletEntity, String> {
 
         return 0;
     }
+
+
+    public long updateDeclineStatus(long routeScheduleDetailId, String detailDecline, Integer idSelected) {
+        long rowSuccess = 0;
+        UpdateBuilder<OutletEntity, String> updateBuilder = updateBuilder();
+
+        try {
+            updateBuilder.updateColumnValue("note", detailDecline);
+            updateBuilder.updateColumnValue("activeStatus", idSelected);
+            updateBuilder.where().eq("routeScheduleDetailId", routeScheduleDetailId);
+            rowSuccess = updateBuilder.update();
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return rowSuccess;
+    }
 }
