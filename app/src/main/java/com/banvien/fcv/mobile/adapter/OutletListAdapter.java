@@ -103,16 +103,18 @@ public class OutletListAdapter extends RecyclerView.Adapter<OutletListAdapter.Ou
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if  (outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)
-                            || outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_INPROGRESS)) {
-                        if(outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)) {
-                            configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
+                    if(!outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_DONE)){
+                        if  (outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)
+                                || outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_INPROGRESS)) {
+                            if(outletDTO.getStatus().equals(ScreenContants.STATUS_STEP_NOTYET)) {
+                                configStatusInOutlet(outletDTO.getRouteScheduleDetailId());
+                            }
+                            updateStatus(outletDTO, ScreenContants.DOING);
+                            Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
+                            intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+                            intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
+                            view.getContext().startActivity(intent);
                         }
-                        updateStatus(outletDTO, ScreenContants.DOING);
-                        Intent intent = new Intent(view.getContext(), InOutletHomeActivity.class);
-                        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-                        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
-                        view.getContext().startActivity(intent);
                     }
                 }
             });

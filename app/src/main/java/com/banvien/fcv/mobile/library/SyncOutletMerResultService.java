@@ -669,9 +669,124 @@ public class SyncOutletMerResultService {
 
 	public Integer syncOneOuletService(Long outletId) throws SQLException, IOException {
 		OutletDTO outletDTO = OutletUtil.convertToDTO(repo.getOutletDAO().findById(outletId));
+		// Dong Bo Thong Tin Outlet
+		syncOneOutletMerImage(outletDTO);
+
+		// Dong Bo Thong Tin Hinh Anh Outlet
+		List<MOutletMerResultImageDTO> mOutletMerResultImageDTOns = new ArrayList<>();
+		mOutletMerResultImageDTOns.addAll(createListOutletImageOverview(outletDTO));
+		mOutletMerResultImageDTOns.addAll(createListOutletImageAfter(outletDTO));
+		mOutletMerResultImageDTOns.addAll(createListOutletImageBefore(outletDTO));
+		Call<Integer> callOutletMerResultImageInfo = RestClient.getInstance()
+				.getHomeService().submitOutletResultImageToServer(mOutletMerResultImageDTOns);
+		callOutletMerResultImageInfo.execute().body();
+
+		// Dong Bo Ket Qua Outlet Mer
 		MOutletMerResultDTO mOutletMerResultDTO = createMOutletMerResultDTO(outletDTO);
 		Call<Integer> callOutletMerResult = RestClient.getInstance()
 				.getHomeService().submitFirstOutletResult(mOutletMerResultDTO);
+
 		return Integer.valueOf(callOutletMerResult.execute().body().toString());
 	}
+
+
+	public void syncOneOutletMerImage(OutletDTO outletDTO) throws SQLException, IOException {
+		List<MOutletMerResultImageDTO> mOutletMerResultImageDTOns = new ArrayList<>();
+			List<CaptureOverviewEntity> captureOverviewEntityList = repo.getCaptureOverviewDAO().findByOutletId(outletDTO.getOutletId());
+			if(captureOverviewEntityList != null && captureOverviewEntityList.size() > 0){
+				for(CaptureOverviewEntity captureOverviewEntity : captureOverviewEntityList){
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = new MOutletMerResultImageDTO();
+
+					long date = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String dateString = sdf.format(date);
+					String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
+							+ outletDTO.getCode() + "/" + dateString + "/";
+
+//					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
+//							[captureOverviewEntity.getPathImage().split("/").length - 1]);
+					mOutletMerResultImageDTO.setNameImage(pathImageInServer);
+					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
+					mOutletMerResultImageDTO.setMobileImagePath(captureOverviewEntity.getPathImage());
+					mOutletMerResultImageDTOns.add(mOutletMerResultImageDTO);
+				}
+			}
+			List<CaptureBeforeEntity> captureBeforeEntityList = repo.getCaptureBeforeDAO().findByOutletId(outletDTO.getOutletId());
+			if(captureBeforeEntityList != null && captureBeforeEntityList.size() > 0){
+				for(CaptureBeforeEntity captureBeforeEntity : captureBeforeEntityList){
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = new MOutletMerResultImageDTO();
+
+					long date = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String dateString = sdf.format(date);
+					String pathImageInServer = ScreenContants.CAPTURE_BEFORE_PATH
+							+ outletDTO.getCode() + "/" + dateString + "/";
+					mOutletMerResultImageDTO.setNameImage(captureBeforeEntity.getPathImage().split("/")
+							[captureBeforeEntity.getPathImage().split("/").length - 1]);
+					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
+					mOutletMerResultImageDTO.setMobileImagePath(captureBeforeEntity.getPathImage());
+					mOutletMerResultImageDTOns.add(mOutletMerResultImageDTO);
+				}
+			}
+			List<CaptureAfterEntity> captureAfterEntityList = repo.getCaptureAfterDAO().findByOutletId(outletDTO.getOutletId());
+			if(captureAfterEntityList != null && captureAfterEntityList.size() > 0){
+				for(CaptureAfterEntity captureAfterEntity : captureAfterEntityList){
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = new MOutletMerResultImageDTO();
+
+					long date = System.currentTimeMillis();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					String dateString = sdf.format(date);
+					String pathImageInServer = ScreenContants.CAPTURE_BEFORE_PATH
+							+ outletDTO.getCode() + "/" + dateString + "/";
+					mOutletMerResultImageDTO.setNameImage(captureAfterEntity.getPathImage().split("/")
+							[captureAfterEntity.getPathImage().split("/").length - 1]);
+					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
+					mOutletMerResultImageDTO.setMobileImagePath(captureAfterEntity.getPathImage());
+					mOutletMerResultImageDTOns.add(mOutletMerResultImageDTO);
+				}
+			}
+
+
+		if(mOutletMerResultImageDTOns.size() > 0){
+
+			RequestBody requestFile =
+					RequestBody.create(MediaType.parse("multipart/form-data")
+							, new File(mOutletMerResultImageDTOns.get(0).getMobileImagePath()));
+
+			Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
+					.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTOns.get(0).getNameImage()
+							, mOutletMerResultImageDTOns.get(0).getImageUrl(), requestFile);
+
+
+			callOutletMerResult.enqueue(new IteratorCallback<ResponseBody>(mOutletMerResultImageDTOns, 0) {
+				@Override
+				public void onResponseArrive(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+				}
+
+				@Override
+				public Call getCall(Object object) {
+
+					MOutletMerResultImageDTO mOutletMerResultImageDTO = (MOutletMerResultImageDTO)object;
+
+					RequestBody requestFile =
+							RequestBody.create(MediaType.parse("multipart/form-data")
+									, new File(mOutletMerResultImageDTO.getMobileImagePath()));
+
+					return RestClient.getInstance()
+							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
+									, mOutletMerResultImageDTO.getImageUrl(), requestFile);
+				}
+
+				@Override
+				public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+				}
+			});
+
+		}
+	}
+
+
+
 }

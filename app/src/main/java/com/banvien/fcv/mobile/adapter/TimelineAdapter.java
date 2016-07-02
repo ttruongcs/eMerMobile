@@ -26,6 +26,7 @@ import com.banvien.fcv.mobile.CoverageInfoActivity;
 import com.banvien.fcv.mobile.EndDayActivity;
 import com.banvien.fcv.mobile.FindOutletActivity;
 import com.banvien.fcv.mobile.FindOutletSimpleActivity;
+import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.HomeActivity;
 import com.banvien.fcv.mobile.PrepareActivity;
 import com.banvien.fcv.mobile.R;
@@ -213,8 +214,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                     v.getContext().startActivity(startDayIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_INOUTLET :
-                                    Intent coverageActivity = new Intent(v.getContext(), CoverageInfoActivity.class);
-                                    v.getContext().startActivity(coverageActivity);
+                                    Intent outletTabActivity = new Intent(v.getContext(), OutletTabActivity.class);
+                                    v.getContext().startActivity(outletTabActivity);
                                     break;
                                 case ScreenContants.HOME_STEP_ENDDAY:
                                     Intent endDayIntent = new Intent(v.getContext(), EndDayActivity.class);

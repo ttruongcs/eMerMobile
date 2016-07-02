@@ -26,6 +26,7 @@ import com.banvien.fcv.mobile.BeforeDisplayActivity;
 import com.banvien.fcv.mobile.CaptureOverviewActivity;
 import com.banvien.fcv.mobile.MapsActivity;
 import com.banvien.fcv.mobile.OrderActivity;
+import com.banvien.fcv.mobile.OutletTabActivity;
 import com.banvien.fcv.mobile.R;
 import com.banvien.fcv.mobile.RegisterHistoryActivity;
 import com.banvien.fcv.mobile.ScreenContants;
@@ -347,6 +348,16 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         @Override
         protected void onPostExecute(final String result) {
             if (result != null && StringUtils.isNotBlank(result)) {
+                try {
+                    OutletEntity outletEntity = repo.getOutletDAO().findById(outletId);
+                    outletEntity.setStatus(ScreenContants.STATUS_STEP_DONE);
+                    repo.getOutletDAO().update(outletEntity);
+
+                    Intent outletIntent = new Intent(context, OutletTabActivity.class);
+                    context.startActivity(outletIntent);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 dismissProgressDialog();
                 Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
             } else {
