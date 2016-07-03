@@ -32,10 +32,10 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
     private Repo repo;
     private Long outletId;
     private Long routeScheduleDetailId;
-    private Long loadAgain;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private StatusInOutletDTO statusInOutlet;
+    private List<TimelineInOutletDTO> timelineDTOs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,25 +45,31 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         getSupportActionBar().setTitle(R.string.chamdientrungbaytaicuahang);
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = this.getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
+        timelineDTOs = new ArrayList<>();
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TimelineInOutletAdapter(timelineDTOs, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void reloadData() {
         try {
+            timelineDTOs.clear();
             StatusInOutletEntity statusInOutletEntity = repo.getStatusInOutletDAO().getConfigStatusInOutletHome(routeScheduleDetailId);
             if(statusInOutletEntity != null){
                 statusInOutlet = StatusInOutletUtil.convertToDTO(statusInOutletEntity);
             } else{
                 statusInOutlet = null;
             }
+            buildTreeStep();
         } catch (SQLException e) {
             ELog.d("Error when get CONFIG");
         }
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineInOutletAdapter(buildTreeStep(), this);
-        recyclerView.setAdapter(adapter);
     }
 
-    private List<TimelineInOutletDTO> buildTreeStep() {
-        List<TimelineInOutletDTO> timelineDTOs = new ArrayList<>();
+    private void buildTreeStep() {
         if(statusInOutlet != null){
             TimelineInOutletDTO step0 = new TimelineInOutletDTO(getString(R.string.xemthongtindangkyvalichsueie)
                     , getString(R.string.motaxemthongtindangkyvalichsueie), getString(R.string.stepxemthongtindangkyvalichsueie)
@@ -164,7 +170,14 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
         }
 
-        return timelineDTOs;
+    }
+
+    @Override
+    protected void onResume() {
+        reloadData();
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+        super.onResume();
+
     }
 
 }

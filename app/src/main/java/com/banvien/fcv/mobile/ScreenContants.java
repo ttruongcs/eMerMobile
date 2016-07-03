@@ -23,6 +23,7 @@ public class ScreenContants {
     public static final String KEY_OUTLET_ID = "com.banvien.fcv.emer.outletId";
     public static final String KEY_SURVEY_ID = "com.banvien.fcv.emer.surveyId";
     public static final String KEY_ROUTESCHEDULE_DETAIL = "com.banvien.fcv.emer.routeScheduleDetailId";
+    public static final String KEY_BACK_STATUS = "com.banvien.fcv.emer.keyBackStatus";
     public static final String KEY_POSM_ID = "com.banvien.fcv.emer.posmid";
     public static final String KEY_GPS_UPDATE = "com.banvien.fcv.emer.gpsUpdate";
     public static final String CAPTURE_TYPE = "com.banvien.fcv.emer.capture.type";

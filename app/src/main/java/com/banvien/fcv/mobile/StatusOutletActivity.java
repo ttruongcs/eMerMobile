@@ -33,6 +33,7 @@ import butterknife.BindView;
  */
 public class StatusOutletActivity extends BaseDrawerActivity {
     private final String TAG = "StatusOutletActivity";
+    private static final long LAST_POSITION = 9;
     private static final String CODE_OTHER = "5";
     private static long outletId;
     private static long routeScheduleDetailId;
@@ -85,25 +86,15 @@ public class StatusOutletActivity extends BaseDrawerActivity {
                     long rowUpdate = repo.getOutletDAO().updateDeclineStatus(routeScheduleDetailId, detailDecline, idSelected);
                     if(rowUpdate > 0) {
                         if(keys.get("codeSelected").toString().equals(CODE_OTHER)) {
-                            Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                            intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
-                            startActivity(intent);
-                            finish();
+                           //Nothing here
                         } else {
                             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
                             String[] next = {ScreenContants.BEFORE_DISPLAY_COLUMN, ScreenContants.AFTER_DISPLAY_COLUMN
                                     , ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN, ScreenContants.SYNC_OUTLET_COLUMN};
                             changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                                     , ScreenContants.CHECK_OUTLET_COLUMN, next, ScreenContants.END_DATE_COLUMN, false, true);
-                            Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-                            intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
-                            startActivity(intent);
-                            finish();
                         }
+                        onBackPressed();
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

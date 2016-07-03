@@ -56,6 +56,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
+        imageDTOs = new ArrayList<>();
         getSupportActionBar().setTitle(R.string.chupanhoverview);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         routeScheduleDetailId = getIntent().getLongExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, 0l);
@@ -68,7 +69,6 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
             return;
         }
 
-        bindGallery();
     }
 
     private RouteScheduleEntity getRouteSchedule() {
@@ -281,6 +281,7 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        bindGallery();
     }
 
     @Override
@@ -292,18 +293,18 @@ public class CaptureOverviewActivity extends BaseDrawerActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onPause() {
+        super.onPause();
         if(imageDTOs.size() > 0) {
             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this, routeScheduleDetailId);
             String[] next = {ScreenContants.CHECK_OUTLET_COLUMN, ScreenContants.BEFORE_DISPLAY_COLUMN};
             changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                     , ScreenContants.CAPTURE_OVERVIEW_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
         }
-        Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
-        startActivity(intent);
-        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
