@@ -137,6 +137,7 @@ public class UpdateService {
 		repo.getQuestionContentDAO().clearData();
 		repo.getQuestionDAO().clearData();
 		repo.getSurveyDAO().clearData();
+		repo.getCaptureAfterDAO().clearData();
 		deleteFileImage();
 	}
 

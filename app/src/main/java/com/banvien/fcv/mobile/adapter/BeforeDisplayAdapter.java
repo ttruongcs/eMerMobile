@@ -141,7 +141,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final MProductDTO productDTO) {
-
+            facingMaps.put(productDTO.getCode(), productDTO.getWeight().intValue());
             try {
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
@@ -236,7 +236,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         editorBefore.putInt(productDTO.getCode(), quantity);
                         editorBefore.apply();
                         addMhs(mhsCodes, productDTO.getWeight().intValue());
-                        calculateFacing(facingMaps);
+                        calculateFacing();
 
                     }
                 }
@@ -263,13 +263,12 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
-        private void calculateFacing(Map<String, Integer> facings) {
-            edCount.setText(Integer.toString(facings.size()));
+        private void calculateFacing() {
+            edCount.setText(Integer.toString(mhsCodes.size()));
             int sum = 0;
-            if(facings.size() > 0) {
-                for(String key : facings.keySet()) {
-                    sum += facings.get(key);
-
+            if(mhsCodes.size() > 0) {
+                for(String key : mhsCodes.keySet()) {
+                    sum += (mhsCodes.get(key) * facingMaps.get(key));
                 }
             } else {
                 sum = 0;
@@ -287,7 +286,6 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                 if(mhsCodes.size() > 0) {
                     for(String key : mhsCodes.keySet()) {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
-                        facingMaps.put(key,(mhsCodes.get(key) * weight));
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
                     repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue, ScreenContants.MHS_BEFORE, ScreenContants.MHS);

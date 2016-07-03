@@ -152,6 +152,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
 
         public void bindViews(final MProductDTO productDTO) {
             ELog.d("sizePref", String.valueOf(sharedPreferences.getAll().size()));
+            facingMaps.put(productDTO.getCode(), productDTO.getWeight().intValue());
             try {
                 ELog.d("productCode", productDTO.getCode());
                 productName.setText(productDTO.getName());
@@ -298,7 +299,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
                             editor.apply();
                         }
                         addMhs(mhsCodes, 1, productDTO.getWeight().intValue());
-                        calculateFacing(facingMaps);
+                        calculateFacing();
 
                     }
                 }
@@ -354,11 +355,11 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
-        private void calculateFacing(Map<String, Integer> facings) {
+        private void calculateFacing() {
             int sum = 0;
-            if(facings.size() > 0) {
-                for(String key : facings.keySet()) {
-                    sum += facings.get(key);
+            if(mhsCodes.size() > 0) {
+                for(String key : mhsCodes.keySet()) {
+                    sum += (mhsCodes.get(key).getNumberOfFace() * facingMaps.get(key));
                 }
             } else {
                 sum = 0;
@@ -376,7 +377,6 @@ public class AfterDisplayAdapter extends BaseAdapter {
                 if(mhsCodes.size() > 0) {
                     for(String key : mhsCodes.keySet()) {
                         mhsValue += key + ":" + mhsCodes.get(key).getNumberOfFace().toString() + ":" + yesNo.toString() + ",";
-                        facingMaps.put(key,(mhsCodes.get(key).getNumberOfFace()* weight));
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
                     repo.getOutletMerDAO().updateActualValueAfter(outletId, outletModelId, mhsValue, ScreenContants.MHS_AFTER, ScreenContants.MHS);
