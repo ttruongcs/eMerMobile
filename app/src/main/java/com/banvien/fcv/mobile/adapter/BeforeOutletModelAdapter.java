@@ -122,7 +122,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
             List<MProductDTO> productDTOs = convertToMHS(dto);
 
             tvCountTotal.setText(String.valueOf(productDTOs.size()));
-            BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing
+            BeforeDisplayAdapter adapter = new BeforeDisplayAdapter(activity, productDTOs, edFacing, edEIE
                     , repo, outletId, dto.getOutletModelId(), tvCountChecked);
             listView.setAdapter(adapter);
 
@@ -177,7 +177,7 @@ public class BeforeOutletModelAdapter extends RecyclerView.Adapter {
                 spinnerId.add(-1l);
 
                 for (HotZoneDTO hotzoneDTO : hotzoneDTOs) {
-                    spinnerName.add(hotzoneDTO.getCode());
+                    spinnerName.add(hotzoneDTO.getNote());
                     spinnerId.add(hotzoneDTO.getHotZoneId());
                     mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());
                 }

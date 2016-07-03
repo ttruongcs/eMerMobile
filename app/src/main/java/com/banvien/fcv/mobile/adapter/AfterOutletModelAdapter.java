@@ -171,7 +171,7 @@ public class AfterOutletModelAdapter extends RecyclerView.Adapter {
                 spinnerId.add(-1l);
 
                 for (HotZoneDTO hotzoneDTO : hotzoneDTOs) {
-                    spinnerName.add(hotzoneDTO.getCode());
+                    spinnerName.add(hotzoneDTO.getNote());
                     spinnerId.add(hotzoneDTO.getHotZoneId());
                     mapForSearch.put(hotzoneDTO.getCode(), hotzoneDTO.getCode());
                 }

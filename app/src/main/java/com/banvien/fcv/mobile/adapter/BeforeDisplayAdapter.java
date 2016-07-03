@@ -22,6 +22,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
+import com.banvien.fcv.mobile.utils.EIEUtil;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private EditText edFacing;
     private TextView edCount;
+    private EditText edEIE;
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
@@ -57,7 +59,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private Map<String, Integer> facingMaps = new HashMap<>();
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
-            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
+            , EditText edFacing, EditText edEIE, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
         this.activity = activity;
         this.mData = productDTOs;
         this.edFacing = edFacing;
@@ -65,6 +67,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         this.outletId = outletId;
         this.outletModelId = outletModelId;
         this.edCount = edCount;
+        this.edEIE = edEIE;
 
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
@@ -237,6 +240,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         editorBefore.apply();
                         addMhs(mhsCodes, productDTO.getWeight().intValue());
                         calculateFacing();
+                        checkEIE(30.0, 30.0, 40.0);
 
                     }
                 }
@@ -260,6 +264,12 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                 }
             });
 
+        }
+
+        private void checkEIE(Double hotzone, Double mhs, Double facing) {
+            if(EIEUtil.isPass(hotzone, mhs, facing)) {
+                // Change status EIE here
+            }
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
