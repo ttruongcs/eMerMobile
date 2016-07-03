@@ -51,13 +51,13 @@ public class AfterDisplayAdapter extends BaseAdapter {
     private EditText edFacing;
     private Long outletId;
     private Long outletModelId;
-    private String totalFacing;
     private SharedPreferences sharedPreferenceOrders;
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedPreferences;
     private TextView tvCountChecked;
     private Map<String, Boolean> numberChecked;
     private ListView listView;
+    private Map<String, Integer> facingMaps = new HashMap<>();
 
     public AfterDisplayAdapter(AfterDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, SharedPreferences preferences, TextView tvCountChecked) {
@@ -97,7 +97,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         final ItemHolder itemHolder = new ItemHolder(v);
         if(position == 0) {
             mhsCodes = itemHolder.loadMhs();
-            totalFacing = itemHolder.loadTotalFacing();
+            itemHolder.loadTotalFacing();
             tvCountChecked.setText(Integer.toString(numberChecked.size()));
         }
 
@@ -297,8 +297,8 @@ public class AfterDisplayAdapter extends BaseAdapter {
                             editor.putInt(productDTO.getCode(), Integer.valueOf(outletModelId.toString()));
                             editor.apply();
                         }
-                        addMhs(mhsCodes, 1);
-                        calculateFacing(mhsCodes);
+                        addMhs(mhsCodes, 1, productDTO.getWeight().intValue());
+                        calculateFacing(facingMaps);
 
                     }
                 }
@@ -354,11 +354,11 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
-        private void calculateFacing(Map<String, AfterItemDTO> mhsCodes) {
+        private void calculateFacing(Map<String, Integer> facings) {
             int sum = 0;
-            if(mhsCodes.size() > 0) {
-                for(String key : mhsCodes.keySet()) {
-                    sum += mhsCodes.get(key).getNumberOfFace();
+            if(facings.size() > 0) {
+                for(String key : facings.keySet()) {
+                    sum += facings.get(key);
                 }
             } else {
                 sum = 0;
@@ -369,13 +369,14 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         /*Add mhs with actual value: (code:quantity, code2:quantity,...)*/
-        private void addMhs(Map<String, AfterItemDTO> mhsCodes, Integer yesNo) {
+        private void addMhs(Map<String, AfterItemDTO> mhsCodes, Integer yesNo, Integer weight) {
             String mhsValue = "";
 
             try {
                 if(mhsCodes.size() > 0) {
                     for(String key : mhsCodes.keySet()) {
-                        mhsValue += key + ":" + mhsCodes.get(key).getNumberOfFace().toString()+ ":" + yesNo.toString() + ",";
+                        mhsValue += key + ":" + mhsCodes.get(key).getNumberOfFace().toString() + ":" + yesNo.toString() + ",";
+                        facingMaps.put(key,(mhsCodes.get(key).getNumberOfFace()* weight));
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
                     repo.getOutletMerDAO().updateActualValueAfter(outletId, outletModelId, mhsValue, ScreenContants.MHS_AFTER, ScreenContants.MHS);
@@ -390,7 +391,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         /*Add Facing to actualValue of this outletModel */
         private void addActualValue(int facing) {
             try {
-                repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId
+                repo.getOutletMerDAO().updateActualValueAfter(outletId, outletModelId
                         , String.valueOf(facing), ScreenContants.FACING_AFTER, ScreenContants.FACING);
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
@@ -398,7 +399,7 @@ public class AfterDisplayAdapter extends BaseAdapter {
         }
 
         /*Init total facing show on screen*/
-        public String loadTotalFacing() {
+        public void loadTotalFacing() {
             String result = null;
             try {
                 result = repo.getOutletMerDAO().findActualValueByDataType(ScreenContants.FACING_AFTER, outletId, outletModelId);
@@ -406,7 +407,6 @@ public class AfterDisplayAdapter extends BaseAdapter {
             } catch (SQLException e) {
                 ELog.d(e.getMessage(), e);
             }
-            return result;
         }
     }
 }

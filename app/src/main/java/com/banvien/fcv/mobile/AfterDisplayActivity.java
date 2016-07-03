@@ -75,6 +75,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
         fabTakeCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recyclerView.requestFocus();
                 Intent intent = new Intent(view.getContext(), CaptureAfterActivity.class);
                 intent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
                 intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);

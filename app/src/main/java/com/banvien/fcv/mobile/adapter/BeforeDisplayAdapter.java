@@ -54,6 +54,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private SharedPreferences sharedPreferenceBefores;
     private SharedPreferences.Editor editorBefore;
     private ListView listView;
+    private Map<String, Integer> facingMaps = new HashMap<>();
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
             , EditText edFacing, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
@@ -222,7 +223,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         try {
                             quantity = Integer.parseInt(numberInput.getText().toString());
                             if (quantity > 0) {
-                                mhsCodes.put(productDTO.getCode(), + quantity);
+                                mhsCodes.put(productDTO.getCode(), quantity);
                             } else if(quantity == 0) {
                                 mhsCodes.remove(productDTO.getCode());
                             } else {
@@ -234,8 +235,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         }
                         editorBefore.putInt(productDTO.getCode(), quantity);
                         editorBefore.apply();
-                        addMhs(mhsCodes);
-                        calculateFacing(mhsCodes);
+                        addMhs(mhsCodes, productDTO.getWeight().intValue());
+                        calculateFacing(facingMaps);
 
                     }
                 }
@@ -262,12 +263,12 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         /*Total facing equal total mhs which have quantity > 0*/
-        private void calculateFacing(Map<String, Integer> mhsCodes) {
-            edCount.setText(Integer.toString(mhsCodes.size()));
+        private void calculateFacing(Map<String, Integer> facings) {
+            edCount.setText(Integer.toString(facings.size()));
             int sum = 0;
-            if(mhsCodes.size() > 0) {
-                for(String key : mhsCodes.keySet()) {
-                    sum += mhsCodes.get(key);
+            if(facings.size() > 0) {
+                for(String key : facings.keySet()) {
+                    sum += facings.get(key);
 
                 }
             } else {
@@ -279,13 +280,14 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         /*Add mhs with actual value: (code:quantity,code2:quantity,...)*/
-        private void addMhs(Map<String, Integer> mhsCodes) {
+        private void addMhs(Map<String, Integer> mhsCodes, Integer weight) {
             String mhsValue = "";
 
             try {
                 if(mhsCodes.size() > 0) {
                     for(String key : mhsCodes.keySet()) {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
+                        facingMaps.put(key,(mhsCodes.get(key) * weight));
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
                     repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue, ScreenContants.MHS_BEFORE, ScreenContants.MHS);
