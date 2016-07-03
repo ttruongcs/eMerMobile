@@ -30,6 +30,7 @@ import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
+import com.banvien.fcv.mobile.utils.ImageUtils;
 import com.banvien.fcv.mobile.utils.IteratorCallback;
 
 import java.io.File;
@@ -766,7 +767,7 @@ public class SyncOutletMerResultService {
 		if(mOutletMerResultImageDTOns.size() > 0){
 
 			for(MOutletMerResultImageDTO mOutletMerResultImageDTO : mOutletMerResultImageDTOns) {
-				File file = savebitmap(mOutletMerResultImageDTO.getMobileImagePath());
+				File file = ImageUtils.savebitmap(mOutletMerResultImageDTO.getMobileImagePath());
 
 				RequestBody requestFile =
 						RequestBody.create(MediaType.parse("multipart/form-data")
@@ -781,24 +782,6 @@ public class SyncOutletMerResultService {
 			}
 
 		}
-	}
-
-	private File savebitmap(String filePath) {
-		File file = new File(filePath);
-		try {
-			// make a new bitmap from your file
-			Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-
-			OutputStream outStream = new FileOutputStream(file);
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outStream);
-			outStream.flush();
-			outStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Log.e("file", "" + file);
-		return file;
-
 	}
 
 }

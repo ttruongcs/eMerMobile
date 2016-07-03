@@ -11,7 +11,9 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.command.OutletMerResultCommand;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.dao.OutletFirstImagesDAO;
+import com.banvien.fcv.mobile.db.entities.CaptureAfterEntity;
 import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletFirstImagesEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
@@ -19,6 +21,7 @@ import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.TypeFile;
 import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
+import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MExhibitRegisterDetailDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
@@ -26,10 +29,13 @@ import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.FileUtils;
+import com.banvien.fcv.mobile.utils.ImageUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,13 +57,10 @@ public class SyncService {
 
 	private Context context;
 	private Repo repo;
-	private Long outletId;
-	private OutletDTO outlet;
 	private static final String TAG = "SyncService";
 
-	public SyncService(Context context, Long outletId, Repo repo) throws SQLException {
+	public SyncService(Context context, Repo repo) throws SQLException {
 		this.context = context;
-		this.outletId = outletId;
 		this.repo = repo;
 	}
 	/**
@@ -254,25 +257,52 @@ public class SyncService {
 		});
 	}
 
-	public void synConfirmEndDayInformation() throws SQLException {
-//		RouteScheduleEntity routeScheduleEntity = new RouteScheduleEntity();
-//		routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
-//		Call<Long> call = RestClient.getInstance()
-//				.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
-//						, new Timestamp(System.currentTimeMillis()), null, null, new MConfirmWorkingImageCommand());
-//
-//
-//		call.enqueue(new Callback<Long>() {
-//			@Override
-//			public void onResponse(Call<Long> call,
-//								   Response<Long> response) {
-//				Log.v("newDayDontHaveImage", "success");
-//			}
-//			@Override
-//			public void onFailure(Call<Long> call, Throwable t) {
-//				Log.e("DontHaveImage error:", t.getMessage());
-//			}
-//		});
+	public Long synConfirmEndDayInformation() throws SQLException, IOException {
+		RouteScheduleEntity routeScheduleEntity = repo.getRouteScheduleDAO().findRoute();
+		syncImageEndDay(routeScheduleEntity);
+		Call<Long> call = RestClient.getInstance()
+				.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
+						, null, routeScheduleEntity.getConfirmWoringId(), new Timestamp(System.currentTimeMillis()), new MConfirmWorkingImageCommand());
+
+		return Long.valueOf(call.execute().body().toString());
+	}
+
+	private void syncImageEndDay(RouteScheduleEntity routeScheduleEntity) throws SQLException, IOException {
+		List<OutletEndDayImagesEntity> outletEndDayImagesEntityList = repo.getOutletEndDayImagesDAO().findAll();
+		if(outletEndDayImagesEntityList != null && outletEndDayImagesEntityList.size() > 0){
+			for(OutletEndDayImagesEntity outletEndDayImagesEntity : outletEndDayImagesEntityList){
+
+				MConfirmWorkingImageCommand mConfirmWorkingImageCommand = new MConfirmWorkingImageCommand();
+				long date = System.currentTimeMillis();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				String dateString = sdf.format(date);
+
+				String pathImageInServer = ScreenContants.CAPTURE_ENDDAY + "/" + dateString + "/";
+
+				mConfirmWorkingImageCommand.setName(outletEndDayImagesEntity.getPathImage().split("/")
+						[outletEndDayImagesEntity.getPathImage().split("/").length - 1]);
+				mConfirmWorkingImageCommand.setPathImage(pathImageInServer);
+				mConfirmWorkingImageCommand.setType(ScreenContants.CAPTURE_END_DAY);
+
+				File fileExist = new File(outletEndDayImagesEntity.getPathImage());
+				if(fileExist.exists()){
+					File file = ImageUtils.savebitmap(outletEndDayImagesEntity.getPathImage());
+
+					RequestBody requestFile =
+							RequestBody.create(MediaType.parse("multipart/form-data")
+									, file);
+					Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
+							.getHomeService().uploadBeginImageDay(mConfirmWorkingImageCommand.getName()
+									, mConfirmWorkingImageCommand.getPathImage(), requestFile);
+					callOutletMerResult.execute().body();
+				}
+
+				Call<Long> callImageEndDay = RestClient.getInstance()
+						.getHomeService().uploadBeginDay(routeScheduleEntity.getRouteScheduleId()
+								, null, routeScheduleEntity.getConfirmWoringId(), new Timestamp(System.currentTimeMillis()), mConfirmWorkingImageCommand);
+				callImageEndDay.execute().body();
+			}
+		}
 	}
 
 

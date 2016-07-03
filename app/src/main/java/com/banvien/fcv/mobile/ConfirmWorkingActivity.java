@@ -226,7 +226,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
 //                        progressDialog.setMessage(v.getContext().getText(R.string.updating));
 //                        progressDialog.setCancelable(false);
 //                        progressDialog.show();
-                        SyncService syncService = new SyncService(v.getContext(), 1l, repo);
+                        SyncService syncService = new SyncService(v.getContext(), repo);
                         syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         String[] parentNext = {ScreenContants.IN_OUTLET, ScreenContants.END_DATE_COLUMN};

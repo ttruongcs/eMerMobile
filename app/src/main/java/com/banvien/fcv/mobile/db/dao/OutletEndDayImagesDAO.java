@@ -52,6 +52,20 @@ public class OutletEndDayImagesDAO extends AndroidBaseDaoImpl<OutletEndDayImages
         }
     }
 
+    public List<OutletEndDayImagesEntity> findAll() {
+        List<OutletEndDayImagesEntity> results = new ArrayList<>();
+
+        try {
+            List<OutletEndDayImagesEntity> entities = queryForAll();
+            if(entities.size() > 0) {
+                return entities;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+        return results;
+    }
+
     public List<OutletEndDayImagesDTO> findByRouteScheduleDetailId(Long routeScheduleDetailId) {
         List<OutletEndDayImagesDTO> results = new ArrayList<OutletEndDayImagesDTO>();
         try {

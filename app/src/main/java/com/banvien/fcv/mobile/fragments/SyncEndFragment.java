@@ -119,7 +119,7 @@ public class SyncEndFragment extends BaseFragment {
 
         protected Boolean doInBackground(final String... args) {
             try {
-                SyncService syncService = new SyncService(context, outletId, repo);
+                SyncService syncService = new SyncService(context, repo);
 //                Map<String, String> results = syncService.syncToServer(true);
 //                errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {

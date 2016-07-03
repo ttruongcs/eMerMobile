@@ -11,6 +11,7 @@ public class MConfirmWorkingImageCommand  {
     private String name;
     private String type;
     private String pathImage;
+    private String mobilePath;
 
     public String getName() {
         return name;
@@ -34,5 +35,13 @@ public class MConfirmWorkingImageCommand  {
 
     public void setPathImage(String pathImage) {
         this.pathImage = pathImage;
+    }
+
+    public String getMobilePath() {
+        return mobilePath;
+    }
+
+    public void setMobilePath(String mobilePath) {
+        this.mobilePath = mobilePath;
     }
 }

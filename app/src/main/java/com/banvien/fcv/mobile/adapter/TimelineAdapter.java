@@ -1,8 +1,11 @@
 package com.banvien.fcv.mobile.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -34,10 +37,12 @@ import com.banvien.fcv.mobile.ScreenContants;
 import com.banvien.fcv.mobile.StartDayActivity;
 import com.banvien.fcv.mobile.SyncEndActivity;
 import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.dto.TimelineDTO;
 import com.banvien.fcv.mobile.library.SyncService;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
+import com.banvien.fcv.mobile.utils.StringUtils;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -56,6 +61,8 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 
     List<TimelineDTO> mData;
     Activity activity;
+    private static ProgressDialog progressDialog;
+    private static UpdatingTask updateTask = null;
     Repo repo;
 
     public TimelineAdapter(List<TimelineDTO> data, Activity activity, Repo repo) {
@@ -288,26 +295,12 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    try {
-//                        try {
-//                            SyncService syncService = new SyncService(activity, 1l);
-//                            syncService.synConfirmEndDayInformation();
-//                        } catch (SQLException e) {
-//                            ELog.d("Error when Sync Comfirm Working"); //Todo Sync here
-//                        }
-                        SyncService syncService = new SyncService(activity, 1l, repo);
-                        syncService.synConfirmEndDayInformation();
+                        progressDialog = new ProgressDialog(itemView.getContext());
+                        updateTask = new UpdatingTask(itemView.getContext());
+                        updateTask.execute();
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
                                 , ScreenContants.CONFIRM_END_COLUMN, null, ScreenContants.END_DATE_COLUMN, true);
-//                        Intent intent = new Intent(activity, .class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); //Todo set status here
-//                        activity.startActivity(intent);
-//                        activity.finish();
-
-                    } catch (SQLException e) {
-                        Log.e("TimelineAdapter", "Sync no image Error");
-                    }
                 }
             });
 
@@ -346,12 +339,12 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 public void onClick(DialogInterface dialog, int which) {
                     try {
                         try {
-                            SyncService syncService = new SyncService(activity, 1l, repo);
+                            SyncService syncService = new SyncService(activity, repo);
                             syncService.synConfirmNewDayInformationDontHaveImage();
                         } catch (SQLException e) {
                             ELog.d("Error when Sync Comfirm Working");
                         }
-                        SyncService syncService = new SyncService(activity, 1l, repo);
+                        SyncService syncService = new SyncService(activity, repo);
                         syncService.synConfirmNewDayInformationDontHaveImage();
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         String[] parentNext = {ScreenContants.IN_OUTLET, ScreenContants.END_DATE_COLUMN};
@@ -373,6 +366,61 @@ public class TimelineAdapter extends RecyclerView.Adapter {
             dialog.show();
 
         }
+    }
 
+    private class UpdatingTask extends AsyncTask<String, Void, String> {
+        private Context context;
+        private String errorMessage = null;
+
+        public UpdatingTask(Context context) {
+            this.context = context;
+        }
+
+        protected void onPreExecute() {
+            progressDialog.setMessage(context.getText(R.string.updating));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            dismissProgressDialog();
+//                            Log.i("tag", "This'll run 3000 milliseconds later");
+//                        }
+//                    },
+//                    3000);
+        }
+
+        @Override
+        protected void onPostExecute(final String result) {
+            if (result != null && StringUtils.isNotBlank(result)) {
+                dismissProgressDialog();
+                Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+        protected String doInBackground(final String... args) {
+            String result = null;
+            try {
+                SyncService syncService = new SyncService(context, repo);
+                Long success = syncService.synConfirmEndDayInformation();
+                if(success != null){
+                    result = "Success";
+                } else {
+                    errorMessage = "Fail";
+                }
+            }catch (Exception e) {
+                Log.e("EndDayActivity", e.getMessage(), e);
+            }
+            return result;
+        }
+
+        private void dismissProgressDialog() {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
     }
 }

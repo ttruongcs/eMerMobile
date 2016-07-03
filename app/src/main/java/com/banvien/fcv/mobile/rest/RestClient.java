@@ -22,7 +22,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Created by hieu on 3/8/2016.
  */
 public final class RestClient {
-    public static final String API_BASE_URL = "http://www.banviengroup.com:86/";
+    public static final String API_BASE_URL = "http://emer.fcv-etools.com/";
     private static RestClient instance = new RestClient();
 
     private Retrofit retrofit;
@@ -59,12 +59,11 @@ public final class RestClient {
             }
         };
         httpBuilder.addInterceptor(requestInterceptor);
-        httpBuilder.connectTimeout(2, TimeUnit.MINUTES)
+        httpBuilder.connectTimeout(5, TimeUnit.MINUTES)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS);
 
         httpClient = httpBuilder.build();
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create(createObjectMapper()))
