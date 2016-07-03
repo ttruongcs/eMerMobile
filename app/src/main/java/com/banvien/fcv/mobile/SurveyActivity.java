@@ -76,6 +76,14 @@ public class SurveyActivity extends BaseDrawerActivity implements LoaderManager.
 
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
+    @Override
     public Loader<List<SurveyEntity>> onCreateLoader(int id, Bundle args) {
         Loader<List<SurveyEntity>> loader = null;
         try {

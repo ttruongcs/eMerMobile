@@ -1,25 +1,29 @@
 package com.banvien.fcv.mobile.utils;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.util.TypedValue;
-import android.view.View;
+import android.content.Context;
 
-import com.banvien.fcv.mobile.LoginActivity;
 import com.banvien.fcv.mobile.core.A;
+import com.banvien.fcv.mobile.db.Repo;
+import com.banvien.fcv.mobile.library.UpdateService;
 
 public class UserUtils {
-	
-	
-	/**
-	 * Convert Dp to Pixel
-	 */
-	public static void logOut(View v){
+
+	public static void logOut(Context context){
 		A.delc(K.PRINCIPAL_JSON);
 		A.setPrincipal(null);
 
-		Intent intent = new Intent(v.getContext(), LoginActivity.class);
-		v.getContext().startActivity(intent);
+		Repo repo = new Repo(context);
+		try {
+			UpdateService.clearData(repo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			repo.release();
+		}
+
+		A.prefEditor().clear().commit();
+
+
 	}
 	
 }

@@ -246,7 +246,7 @@ public class MapsActivity extends FragmentActivity  {
     }
 
     private void changeStatus() {
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
         String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
         changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                 , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);

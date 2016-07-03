@@ -288,7 +288,7 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     protected void onPause() {
         super.onPause();
         if(imageDTOs.size() > 0) {
-            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
             String[] next = {ScreenContants.CAPTURE_TOOL};
             changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                     , ScreenContants.CAPTURE_UNIFORM, next, ScreenContants.IN_OUTLET, false);

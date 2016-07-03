@@ -73,6 +73,14 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
         bindGallery();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void bindGallery() {
         List<OutletMerDTO> images = new ArrayList<>();
         try {

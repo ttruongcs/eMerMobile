@@ -47,8 +47,16 @@ public class HomeActivity extends BaseDrawerActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(timelineDTOs, this);
+        adapter = new TimelineAdapter(timelineDTOs, this, repo);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
     }
 
     private void reloadData() {

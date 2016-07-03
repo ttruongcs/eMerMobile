@@ -55,10 +55,18 @@ public class EndDayActivity extends BaseDrawerActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(buildTreeStep(), this);
+        adapter = new TimelineAdapter(buildTreeStep(), this, repo);
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+    
     private List<TimelineDTO> buildTreeStep() {
         List<TimelineDTO> timelineDTOs = new ArrayList<>();
         if(statusEndDay != null){

@@ -71,6 +71,14 @@ public class ActionActivity extends BaseDrawerActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
+    @Override
     protected void bindViews() {
         super.bindViews();
         orderStep.setOnClickListener(new View.OnClickListener() {

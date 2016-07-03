@@ -79,6 +79,14 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
         bindGallery();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void bindGallery() {
         List<OutletFirstImagesDTO> images = new ArrayList<>();
         try {
@@ -235,9 +243,9 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
                         progressDialog.setMessage(v.getContext().getText(R.string.updating));
                         progressDialog.setCancelable(false);
                         progressDialog.show();
-                        SyncService syncService = new SyncService(v.getContext(), 1l);
+                        SyncService syncService = new SyncService(v.getContext(), 1l, repo);
                         syncService.synConfirmNewDayInformation(progressDialog);
-                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext());
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                                 , ScreenContants.CONFIRM_WORKING_COLUMN, next, ScreenContants.IN_OUTLET, false);
@@ -331,7 +339,7 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     @Override
     public void onBackPressed() {
         if(imageDTOs.size() > 0) {
-            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
             changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                     , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
         }

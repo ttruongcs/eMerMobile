@@ -48,6 +48,14 @@ public class PosmActivity extends BaseDrawerActivity {
         setInitialConfiguration();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);
         setSupportActionBar(toolbar);

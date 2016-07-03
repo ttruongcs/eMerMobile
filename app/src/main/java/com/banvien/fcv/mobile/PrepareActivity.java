@@ -67,7 +67,7 @@ public class PrepareActivity extends BaseDrawerActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        UpdateService updateService = new UpdateService(v.getContext());
+                        UpdateService updateService = new UpdateService(v.getContext(), repo);
                         progressDialog  = new ProgressDialog(v.getContext());
                         progressDialog.setMessage(v.getContext().getText(R.string.updating));
                         progressDialog.setCancelable(false);
@@ -146,7 +146,7 @@ public class PrepareActivity extends BaseDrawerActivity {
         protected Map<String, String> doInBackground(final String... args) {
             Map<String, String> results = new Hashtable<>();
             try {
-                UpdateService updateService = new UpdateService(context);
+                UpdateService updateService = new UpdateService(context, repo);
 //                results = updateService.updateFromServer(true);
                 errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {

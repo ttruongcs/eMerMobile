@@ -54,5 +54,11 @@ public abstract class AndroidBaseDaoImpl<T, ID> extends BaseDaoImpl<T, ID>
     {
         return new OrmliteCursorLoader<T>(context, this, query);
     }
+
+    public void clearData() throws SQLException {
+        if(isTableExists()) {
+            deleteBuilder().delete();
+        }
+    }
 }
 
