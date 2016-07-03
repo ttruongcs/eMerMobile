@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.dto.UserPrincipal;
 import com.banvien.fcv.mobile.utils.K;
+import com.banvien.fcv.mobile.utils.UserUtils;
 
 public class BaseDrawerActivity extends BaseActivity {
 
@@ -52,8 +53,7 @@ public class BaseDrawerActivity extends BaseActivity {
             return true;
         }
         if(id == R.id.action_loggout) {
-            A.delc(K.PRINCIPAL_JSON);
-            A.setPrincipal(null);
+            UserUtils.logOut(this);
 
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

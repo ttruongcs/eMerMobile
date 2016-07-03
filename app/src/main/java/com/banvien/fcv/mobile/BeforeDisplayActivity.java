@@ -154,7 +154,7 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
     }
 
     private void changeStatus() {
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
         String[] next = {ScreenContants.AFTER_DISPLAY_COLUMN};
         changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                 , ScreenContants.BEFORE_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);

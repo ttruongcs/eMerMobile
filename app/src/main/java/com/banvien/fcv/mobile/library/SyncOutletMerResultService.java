@@ -54,10 +54,10 @@ public class SyncOutletMerResultService {
 	private OutletDTO outlet;
 	private static final String TAG = "SyncOutletService";
 
-	public SyncOutletMerResultService(Context context, Long outletId) throws SQLException {
+	public SyncOutletMerResultService(Context context, Long outletId, Repo repo) throws SQLException {
 		this.context = context;
 		this.outletId = outletId;
-		repo = new Repo(this.context);
+		this.repo = repo;
 	}
 	/**
 	 *

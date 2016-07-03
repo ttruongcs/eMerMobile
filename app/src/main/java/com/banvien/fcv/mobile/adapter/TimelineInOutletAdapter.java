@@ -66,10 +66,10 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
     private static ProgressDialog progressDialog;
     private static UpdatingTask updateTask = null;
 
-    public TimelineInOutletAdapter(List<TimelineInOutletDTO> data, Activity activity) {
+    public TimelineInOutletAdapter(List<TimelineInOutletDTO> data, Activity activity, Repo repo) {
         this.mData = data;
         this.activity = activity;
-
+        this.repo = repo;
     }
 
     @Override
@@ -378,7 +378,7 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
         protected String doInBackground(final String... args) {
             String result = null;
             try {
-                SyncOutletMerResultService syncOutletMerResultService = new SyncOutletMerResultService(context, outletId);
+                SyncOutletMerResultService syncOutletMerResultService = new SyncOutletMerResultService(context, outletId, repo);
                 Integer success = syncOutletMerResultService.syncOneOuletService(outletId);
                 if(success == 1){
                     result = "Success";

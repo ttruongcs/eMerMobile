@@ -41,7 +41,10 @@ public class UserprofileActivity extends BaseDrawerActivity {
         imgOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserUtils.logOut(v);
+                UserUtils.logOut(UserprofileActivity.this);
+                Intent intent = new Intent(UserprofileActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

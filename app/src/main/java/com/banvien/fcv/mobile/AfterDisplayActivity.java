@@ -125,7 +125,7 @@ public class AfterDisplayActivity extends BaseDrawerActivity {
     }
 
     private void changeStatus() {
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
         String[] next = {ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN};
         changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                 , ScreenContants.AFTER_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);

@@ -28,7 +28,6 @@ import com.banvien.fcv.mobile.db.entities.QuestionContentEntity;
 import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.db.entities.StatusEndDayEntity;
-import com.banvien.fcv.mobile.db.entities.StatusInOutletEntity;
 import com.banvien.fcv.mobile.db.entities.StatusStartDayEntity;
 import com.banvien.fcv.mobile.db.entities.SurveyEntity;
 import com.banvien.fcv.mobile.dto.ProductgroupDTO;
@@ -39,7 +38,6 @@ import com.banvien.fcv.mobile.dto.SurveyDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.MProductGroupDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.OutletModelDetailDTO;
 import com.banvien.fcv.mobile.rest.RestClient;
@@ -47,7 +45,6 @@ import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.ELog;
-import com.google.android.gms.analytics.ecommerce.Product;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -67,9 +64,9 @@ public class UpdateService {
 	private Repo repo;
 	private static final String TAG = "UpdateService";
 
-	public UpdateService(Context context) {
+	public UpdateService(Context context, Repo repo) {
 		this.context = context;
-		repo = new Repo(this.context);
+		this.repo = repo;
 	}
 	/**
 	 *
@@ -88,7 +85,7 @@ public class UpdateService {
 //				deleteOutletAllDatabase();
 			}
 
-			clearData();
+			clearData(repo);
 			configStatusHome();
             configStatusStartDay();
 			configStatusEndDay();
@@ -104,9 +101,9 @@ public class UpdateService {
 		return results;
 	}
 
-	private void clearData() throws SQLException {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
-		SharedPreferences sharedPreferenceBefores = context.getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
+	public static void clearData(Repo repo) throws SQLException {
+        SharedPreferences sharedPreferences = A.app().getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences sharedPreferenceBefores = A.app().getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 		SharedPreferences.Editor editorBefores  = sharedPreferenceBefores.edit();
         editor.clear();
@@ -136,10 +133,14 @@ public class UpdateService {
         repo.getConfirmWorkingDAO().clearData();
         repo.getCaptureBeforeDAO().clearData();
 		repo.getDeclineDAO().clearData();
+		repo.getDoSurveyAnswerDAO().clearData();
+		repo.getQuestionContentDAO().clearData();
+		repo.getQuestionDAO().clearData();
+		repo.getSurveyDAO().clearData();
 		deleteFileImage();
 	}
 
-	private void deleteFileImage() {
+	public static void deleteFileImage() {
 		File dir = new File(Environment.getExternalStorageDirectory() + ScreenContants.CAPTURE_FCV_IMAGE);
 		if (dir.isDirectory())
 		{
@@ -202,7 +203,7 @@ public class UpdateService {
 				try {
 					Integer numOutlet = buildMerPlans(DataBinder.readMAuditOutletPlanDTOList(result.get("auditOutletPlan")));
 					tvNumOutlet.setText(numOutlet.toString());
-                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(context);
+                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                     String[] next = {ScreenContants.ADD_OUTLET, ScreenContants.CAPTURE_UNIFORM};
                     changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                             , ScreenContants.START_DATE_SYNC, next, ScreenContants.IN_OUTLET, false);

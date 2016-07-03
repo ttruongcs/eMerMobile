@@ -185,7 +185,7 @@ public class PrepareFragment extends BaseFragment {
 
         protected Boolean doInBackground(final String... args) {
             try {
-                UpdateService updateService = new UpdateService(context);
+                UpdateService updateService = new UpdateService(context, repo);
 //                Map<String, String> results = updateService.updateFromServer(true);
 //                errorMessage = results.get("errorMessage");
                 if(errorMessage != null) {

@@ -69,6 +69,14 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         bindGallery();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void bindGallery() {
         List<OutletEndDayImagesDTO> images = new ArrayList<>();
         try {

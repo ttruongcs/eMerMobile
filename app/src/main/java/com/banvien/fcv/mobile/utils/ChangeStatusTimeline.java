@@ -14,12 +14,12 @@ public class ChangeStatusTimeline {
     private Repo repo;
     private Long routeScheduleDetailId;
 
-    public ChangeStatusTimeline(Context context) {
-        repo = new Repo(context);
+    public ChangeStatusTimeline(Repo repo) {
+        this.repo = repo;
     }
 
-    public ChangeStatusTimeline(Context context, Long detailId) {
-        repo = new Repo(context);
+    public ChangeStatusTimeline(Repo repo, Long detailId) {
+        this.repo = repo;
         this.routeScheduleDetailId = detailId;
     }
 

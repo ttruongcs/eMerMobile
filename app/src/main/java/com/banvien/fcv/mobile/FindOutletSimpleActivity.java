@@ -97,6 +97,14 @@ public class FindOutletSimpleActivity extends BaseDrawerActivity {
         bindEvents();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private Long findRouteSchedule() {
         Long routeScheduleId = null;
 

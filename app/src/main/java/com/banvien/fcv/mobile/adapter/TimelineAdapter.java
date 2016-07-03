@@ -54,13 +54,14 @@ public class TimelineAdapter extends RecyclerView.Adapter {
     private final int NORMAL_ITEM = 1;
     private final int FOOTER_ITEM = 2;
 
-    Repo repo;
     List<TimelineDTO> mData;
     Activity activity;
+    Repo repo;
 
-    public TimelineAdapter(List<TimelineDTO> data, Activity activity) {
+    public TimelineAdapter(List<TimelineDTO> data, Activity activity, Repo repo) {
         this.mData = data;
         this.activity = activity;
+        this.repo = repo;
 
     }
 
@@ -201,11 +202,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         Toast.makeText(v.getContext(), v.getContext().getString(R.string.notyet_done), Toast.LENGTH_SHORT).show();
 
                     } else if(cardView.getAlpha() == 1f) {
-                        repo = new Repo(v.getContext());
                         try {
-//                        StatusHomeEntity statusHome = repo.getStatusHomeDAO().getConfigStatusHome();
-//                        StatusStartDayEntity statusStartDay = repo.getStartDayDAO().getConfigStartDayHome();
-//                        StatusEndDayEntity statusEndDay = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
 
                             switch (stepCode.getText().toString()) {
                                 // HOME
@@ -298,9 +295,9 @@ public class TimelineAdapter extends RecyclerView.Adapter {
 //                        } catch (SQLException e) {
 //                            ELog.d("Error when Sync Comfirm Working"); //Todo Sync here
 //                        }
-                        SyncService syncService = new SyncService(activity, 1l);
+                        SyncService syncService = new SyncService(activity, 1l, repo);
                         syncService.synConfirmEndDayInformation();
-                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
                                 , ScreenContants.CONFIRM_END_COLUMN, null, ScreenContants.END_DATE_COLUMN, false);
 //                        Intent intent = new Intent(activity, .class);
@@ -349,14 +346,14 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                 public void onClick(DialogInterface dialog, int which) {
                     try {
                         try {
-                            SyncService syncService = new SyncService(activity, 1l);
+                            SyncService syncService = new SyncService(activity, 1l, repo);
                             syncService.synConfirmNewDayInformationDontHaveImage();
                         } catch (SQLException e) {
                             ELog.d("Error when Sync Comfirm Working");
                         }
-                        SyncService syncService = new SyncService(activity, 1l);
+                        SyncService syncService = new SyncService(activity, 1l, repo);
                         syncService.synConfirmNewDayInformationDontHaveImage();
-                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(itemView.getContext());
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                                 , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);

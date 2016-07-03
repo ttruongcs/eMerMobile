@@ -59,7 +59,7 @@ public class SyncEndActivity extends BaseDrawerActivity {
                     progressDialog.setMessage(v.getContext().getText(R.string.updating));
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    SyncOutletMerResultService syncService = new SyncOutletMerResultService(v.getContext(), 1l);
+                    SyncOutletMerResultService syncService = new SyncOutletMerResultService(v.getContext(), 1l, repo);
                     syncService.syncImageTool();
                     syncService.syncImageUniform();
                     syncService.syncOutletMerImage();
@@ -80,6 +80,14 @@ public class SyncEndActivity extends BaseDrawerActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
     }
 
 }

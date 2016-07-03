@@ -65,6 +65,14 @@ public class StatusOutletActivity extends BaseDrawerActivity {
         bindEvents();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void bindEvents() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,7 +100,7 @@ public class StatusOutletActivity extends BaseDrawerActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+                            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
                             String[] next = {ScreenContants.BEFORE_DISPLAY_COLUMN, ScreenContants.AFTER_DISPLAY_COLUMN
                                     , ScreenContants.SHORTAGE_PRODUCT_COLUMN, ScreenContants.SURVEY_COLUMN, ScreenContants.SYNC_OUTLET_COLUMN};
                             changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET

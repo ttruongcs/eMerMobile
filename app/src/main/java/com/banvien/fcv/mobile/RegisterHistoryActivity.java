@@ -67,6 +67,14 @@ public class RegisterHistoryActivity extends BaseDrawerActivity {
         initRecyclerViewHistory();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
     private void initRecyclerViewHistory() {
         HistoryDTO historyDTO = new HistoryDTO(1, 90, true);
 
