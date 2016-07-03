@@ -131,7 +131,11 @@ public class MapsActivity extends FragmentActivity  {
             public void onClick(View v) {
                 if (isValid == true) {
                     addOrUpdateGPS();
-                    changeStatus();
+                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
+                    String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
+                    changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                            , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                    onBackPressed();
                 } else {
                     Toast.makeText(v.getContext(), "Cần check hợp lệ trước khi đồng ý", Toast.LENGTH_SHORT).show();
                 }
@@ -144,7 +148,11 @@ public class MapsActivity extends FragmentActivity  {
                 if(updateGps == 0) {
                     addOrUpdateGPS();
                     updateOutletStatus(outletDTO, ScreenContants.DOING);
-                    changeStatus();
+                    ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
+                    String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
+                    changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                            , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                    onBackPressed();
 //                    double lat = mapFragment.getLocation().getLatitude();
 //                    double log = mapFragment.getLocation().getLongitude();
 //
@@ -228,7 +236,11 @@ public class MapsActivity extends FragmentActivity  {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 addOrUpdateGPS();
-                changeStatus();
+                ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
+                String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
+                changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                        , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                onBackPressed();
             }
         });
 
@@ -245,16 +257,6 @@ public class MapsActivity extends FragmentActivity  {
         dialog.show();
     }
 
-    private void changeStatus() {
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
-        String[] next = {ScreenContants.CAPTURE_OVERVIEW_COLUMN};
-        changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
-                , ScreenContants.CHECK_IN_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
-        Intent intent = new Intent(this, InOutletHomeActivity.class);
-        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
-        startActivity(intent);
-    }
 
     private void setInitialConfiguration() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.fcvtoolbar);

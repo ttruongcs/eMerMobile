@@ -669,5 +669,6 @@
     <string name="loading">Đang tải...</string>
     <string name="done">Xong</string>
     <string name="note">Ghi chú</string>
+    <string name="not_have_route">Không có lịch phân công</string>
 
 </resources>
