@@ -269,18 +269,21 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ConfirmWorkingEntity confirmWorkingEntity = new ConfirmWorkingEntity();
-            String filename = urlImage.substring(urlImage.lastIndexOf('/') + 1, urlImage.length());
-            confirmWorkingEntity.setPathImage(urlImage);
-            confirmWorkingEntity.setName(filename);
-            confirmWorkingEntity.setType(ScreenContants.CONFIRM_WORKING);
+            File file = new File(urlImage);
+            if(file.exists()) {
+                ConfirmWorkingEntity confirmWorkingEntity = new ConfirmWorkingEntity();
+                String filename = urlImage.substring(urlImage.lastIndexOf('/') + 1, urlImage.length());
+                confirmWorkingEntity.setPathImage(urlImage);
+                confirmWorkingEntity.setName(filename);
+                confirmWorkingEntity.setType(ScreenContants.CONFIRM_WORKING);
 
-            try {
-                repo.getConfirmWorkingDAO().create(confirmWorkingEntity);
+                try {
+                    repo.getConfirmWorkingDAO().create(confirmWorkingEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
         }
     }

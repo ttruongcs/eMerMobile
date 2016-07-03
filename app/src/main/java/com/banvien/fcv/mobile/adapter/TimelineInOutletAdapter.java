@@ -352,6 +352,14 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
             progressDialog.setMessage(context.getText(R.string.updating));
             progressDialog.setCancelable(false);
             progressDialog.show();
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            dismissProgressDialog();
+                            Log.i("tag", "This'll run 300 milliseconds later");
+                        }
+                    },
+                    3000);
         }
 
         @Override
@@ -367,7 +375,6 @@ public class TimelineInOutletAdapter extends RecyclerView.Adapter {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                dismissProgressDialog();
                 Toast.makeText(context, context.getText(R.string.update_successful), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(context, context.getText(R.string.update_failed), Toast.LENGTH_LONG).show();

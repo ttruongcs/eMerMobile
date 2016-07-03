@@ -15,6 +15,7 @@ import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
 import com.banvien.fcv.mobile.db.dao.DeclineDAO;
 import com.banvien.fcv.mobile.db.dao.DoSurveyAnswerDAO;
+import com.banvien.fcv.mobile.db.dao.EieDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -43,6 +44,7 @@ import com.banvien.fcv.mobile.db.entities.ComplainTypeEntity;
 import com.banvien.fcv.mobile.db.entities.ConfirmWorkingEntity;
 import com.banvien.fcv.mobile.db.entities.DeclineEntity;
 import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
+import com.banvien.fcv.mobile.db.entities.EieEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
@@ -113,6 +115,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private CaptureAfterDAO captureAfterDAO = null;
 	private DoSurveyAnswerDAO doSurveyAnswerDAO = null;
 	private DeclineDAO declineDAO = null;
+	private EieDAO eieDAO = null;
+
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -157,6 +161,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTableIfNotExists(connectionSource, QuestionEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, QuestionContentEntity.class);
 			TableUtils.createTableIfNotExists(connectionSource, DeclineEntity.class);
+			TableUtils.createTableIfNotExists(connectionSource, EieEntity.class);
 
 		} catch (SQLException e) {
 			Log.e(TAG, "Can't create database", e);
@@ -205,6 +210,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, QuestionEntity.class, true);
 			TableUtils.dropTable(connectionSource, QuestionContentEntity.class, true);
 			TableUtils.dropTable(connectionSource, DeclineEntity.class, true);
+			TableUtils.dropTable(connectionSource, EieEntity.class, true);
 
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
@@ -432,6 +438,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 
 		return declineDAO;
+	}
+
+
+	public EieDAO getEieDAO() throws SQLException {
+		if(null == eieDAO) {
+			eieDAO = new EieDAO(getConnectionSource(), EieEntity.class);
+		}
+
+		return eieDAO;
 	}
 
 

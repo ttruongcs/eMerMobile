@@ -3,6 +3,8 @@ package com.banvien.fcv.mobile.library;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.TextView;
@@ -30,7 +32,9 @@ import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.IteratorCallback;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -701,12 +705,11 @@ public class SyncOutletMerResultService {
 					long date = System.currentTimeMillis();
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					String dateString = sdf.format(date);
-					String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
+					String pathImageInServer = ScreenContants.CAPTURE_OVERVIEW
 							+ outletDTO.getCode() + "/" + dateString + "/";
 
-//					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
-//							[captureOverviewEntity.getPathImage().split("/").length - 1]);
-					mOutletMerResultImageDTO.setNameImage(pathImageInServer);
+					mOutletMerResultImageDTO.setNameImage(captureOverviewEntity.getPathImage().split("/")
+							[captureOverviewEntity.getPathImage().split("/").length - 1]);
 					mOutletMerResultImageDTO.setImageUrl(pathImageInServer);
 					mOutletMerResultImageDTO.setMobileImagePath(captureOverviewEntity.getPathImage());
 					mOutletMerResultImageDTOns.add(mOutletMerResultImageDTO);
@@ -737,7 +740,7 @@ public class SyncOutletMerResultService {
 					long date = System.currentTimeMillis();
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					String dateString = sdf.format(date);
-					String pathImageInServer = ScreenContants.CAPTURE_BEFORE_PATH
+					String pathImageInServer = ScreenContants.CAPTURE_AFTER_PATH
 							+ outletDTO.getCode() + "/" + dateString + "/";
 					mOutletMerResultImageDTO.setNameImage(captureAfterEntity.getPathImage().split("/")
 							[captureAfterEntity.getPathImage().split("/").length - 1]);
@@ -750,44 +753,40 @@ public class SyncOutletMerResultService {
 
 		if(mOutletMerResultImageDTOns.size() > 0){
 
-			RequestBody requestFile =
-					RequestBody.create(MediaType.parse("multipart/form-data")
-							, new File(mOutletMerResultImageDTOns.get(0).getMobileImagePath()));
+			for(MOutletMerResultImageDTO mOutletMerResultImageDTO : mOutletMerResultImageDTOns) {
+				File file = savebitmap(mOutletMerResultImageDTO.getMobileImagePath());
 
-			Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
-					.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTOns.get(0).getNameImage()
-							, mOutletMerResultImageDTOns.get(0).getImageUrl(), requestFile);
+				RequestBody requestFile =
+						RequestBody.create(MediaType.parse("multipart/form-data")
+								, file);
 
+				Call<ResponseBody> callOutletMerResult = RestClient.getInstance()
+						.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
+								, mOutletMerResultImageDTO.getImageUrl(), requestFile);
 
-			callOutletMerResult.enqueue(new IteratorCallback<ResponseBody>(mOutletMerResultImageDTOns, 0) {
-				@Override
-				public void onResponseArrive(Call<ResponseBody> call, Response<ResponseBody> response) {
+				callOutletMerResult.execute().body();
 
-				}
-
-				@Override
-				public Call getCall(Object object) {
-
-					MOutletMerResultImageDTO mOutletMerResultImageDTO = (MOutletMerResultImageDTO)object;
-
-					RequestBody requestFile =
-							RequestBody.create(MediaType.parse("multipart/form-data")
-									, new File(mOutletMerResultImageDTO.getMobileImagePath()));
-
-					return RestClient.getInstance()
-							.getHomeService().uploadBeginImageDay(mOutletMerResultImageDTO.getNameImage()
-									, mOutletMerResultImageDTO.getImageUrl(), requestFile);
-				}
-
-				@Override
-				public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-				}
-			});
+			}
 
 		}
 	}
 
+	private File savebitmap(String filePath) {
+		File file = new File(filePath);
+		try {
+			// make a new bitmap from your file
+			Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 
+			OutputStream outStream = new FileOutputStream(file);
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 20, outStream);
+			outStream.flush();
+			outStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Log.e("file", "" + file);
+		return file;
+
+	}
 
 }

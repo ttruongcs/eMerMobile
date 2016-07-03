@@ -286,16 +286,19 @@ public class CaptureFirstOutletActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            OutletFirstImagesEntity outletFirstImagesEntity = new OutletFirstImagesEntity();
-            outletFirstImagesEntity.setRouteScheduleDetailId(routeScheduleDetailId);
-            outletFirstImagesEntity.setPathImage(urlImage);
-            try {
-                repo.getOutletFirstImagesDAO().addOutletFirstEntity(outletFirstImagesEntity);
+            File file = new File(urlImage);
+            if(file.exists()) {
+                OutletFirstImagesEntity outletFirstImagesEntity = new OutletFirstImagesEntity();
+                outletFirstImagesEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+                outletFirstImagesEntity.setPathImage(urlImage);
+                try {
+                    repo.getOutletFirstImagesDAO().addOutletFirstEntity(outletFirstImagesEntity);
 
-                bindGallery();
+                    bindGallery();
 
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
         }
     }
