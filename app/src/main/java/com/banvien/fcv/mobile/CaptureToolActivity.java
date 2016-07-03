@@ -64,8 +64,7 @@ public class CaptureToolActivity extends BaseDrawerActivity {
             dispatchTakePictureIntent();
             return;
         }
-
-        bindGallery();
+        
     }
 
     private RouteScheduleEntity getRouteSchedule() {

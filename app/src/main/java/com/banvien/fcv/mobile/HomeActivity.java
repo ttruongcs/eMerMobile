@@ -33,6 +33,7 @@ public class HomeActivity extends BaseDrawerActivity {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private List<TimelineDTO> timelineDTOs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,26 +41,32 @@ public class HomeActivity extends BaseDrawerActivity {
         setContentView(R.layout.activity_home);
         repo = new Repo(this);
         repo.getDatabaseHelper().getWritableDatabase(); //Create database and table
+        timelineDTOs = new ArrayList<>();
         getSupportActionBar().setTitle(R.string.home);
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TimelineAdapter(timelineDTOs, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void reloadData() {
         try {
+            timelineDTOs.clear();
             StatusHomeEntity statusHomeEntity = repo.getStatusHomeDAO().getConfigStatusHome();
             if(statusHomeEntity != null){
                 statusHome = StatusHomeUtil.convertToDTO(statusHomeEntity);
             } else{
                 statusHome = null;
             }
+            buildTreeStep();
         } catch (SQLException e) {
             ELog.d("Error when get CONFIG!!");
         }
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(buildTreeStep(), this);
-        recyclerView.setAdapter(adapter);
     }
 
-    private List<TimelineDTO> buildTreeStep() {
-        List<TimelineDTO> timelineDTOs = new ArrayList<>();
+    private void buildTreeStep() {
         if(statusHome != null){
             TimelineDTO startDay = new TimelineDTO(getString(R.string.chuanbidaungay)
                     , getString(R.string.motachuanbidaungay), getString(R.string.stepchuabidaungay)
@@ -93,12 +100,13 @@ public class HomeActivity extends BaseDrawerActivity {
             timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
         }
 
-        return timelineDTOs;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        reloadData();
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
     }

@@ -218,9 +218,7 @@ public class StartDayActivity extends BaseDrawerActivity  {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
 //    @Override

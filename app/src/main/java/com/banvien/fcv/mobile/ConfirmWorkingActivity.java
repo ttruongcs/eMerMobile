@@ -59,6 +59,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelistworkingday);
         repo = new Repo(this);
+        imageDTOs = new ArrayList<>();
         getSupportActionBar().setTitle(R.string.xacnhanlamviec);
 
         boolean takePicAction = getIntent().getBooleanExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.FALSE);
@@ -66,8 +67,6 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
             dispatchTakePictureIntent();
             return;
         }
-
-        bindGallery();
     }
 
     private void bindGallery() {
@@ -324,6 +323,7 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
     @Override
     protected void onResume() {
         super.onResume();
+        bindGallery();
     }
 
     @Override

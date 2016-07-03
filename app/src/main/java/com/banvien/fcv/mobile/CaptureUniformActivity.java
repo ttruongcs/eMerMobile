@@ -65,8 +65,6 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
             dispatchTakePictureIntent();
             return;
         }
-
-        bindGallery();
     }
 
     private RouteScheduleEntity getRouteSchedule() {

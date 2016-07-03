@@ -39,8 +39,8 @@
             android:background="@drawable/triangle"
             android:rotation="270"
             android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/view"
-            android:layout_alignStart="@+id/view" />
+            android:layout_alignLeft="@+id/view2"
+            android:layout_alignStart="@+id/view2" />
 
 
     </RelativeLayout>
