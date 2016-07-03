@@ -20,6 +20,9 @@ public class ProductEntity implements Serializable {
     private String name;
     @DatabaseField
     private String code;
+    @DatabaseField
+    private Double weight;
+
 
     public long get_id() {
         return _id;
@@ -59,5 +62,13 @@ public class ProductEntity implements Serializable {
 
     public void setProductGroupId(Long productGroupId) {
         this.productGroupId = productGroupId;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }
