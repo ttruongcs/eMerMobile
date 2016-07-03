@@ -229,11 +229,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                                     v.getContext().startActivity(toolIntent);
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHCUAHANGDAUTIEN :
-                                    try {
-                                        ((StartDayActivity)activity).showAlertBox(v);
-                                    } catch (SQLException e) {
-                                        ELog.d("Error when go to choice first outlet");
-                                    }
+//                                    try {
+//                                        ((StartDayActivity)activity).showAlertBox(v);
+//                                    } catch (SQLException e) {
+//                                        ELog.d("Error when go to choice first outlet");
+//                                    }
                                     break;
                                 case ScreenContants.HOME_STEP_STARTDAY_CHUPHINHDONGPHUC:
                                     Intent uniformIntent = new Intent(v.getContext(), CaptureUniformActivity.class);

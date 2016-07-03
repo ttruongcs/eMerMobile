@@ -40,7 +40,7 @@ import butterknife.BindView;
 /**
  * Created by Linh Nguyen on 6/14/2016.
  */
-public class StartDayActivity extends BaseDrawerActivity implements LoaderManager.LoaderCallbacks<List<OutletEntity>> {
+public class StartDayActivity extends BaseDrawerActivity  {
     private static final String TAG = "StartDayActivity";
 
     @BindView(R.id.rcvHomeAct)
@@ -64,31 +64,32 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
         setContentView(R.layout.startdays_activity);
         repo = new Repo(this);
         getSupportActionBar().setTitle(R.string.chuanbidaungay);
+        timelineDTOs = new ArrayList<>();
 
-        reloadData();
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TimelineAdapter(timelineDTOs, this);
         recyclerView.setAdapter(adapter);
+
     }
 
     private void reloadData() {
         try {
+            timelineDTOs.clear();
             StatusStartDayEntity statusStartDayEntity = repo.getStartDayDAO().getConfigStartDayHome();
             if(statusStartDayEntity != null){
                 statusStartDay = StatusStartDayUtil.convertToDTO(statusStartDayEntity);
             } else{
                 statusStartDay = null;
             }
-            timelineDTOs = buildTreeStep();
+            buildTreeStep();
         } catch (SQLException e) {
             ELog.d("Error when get CONFIG");
         }
     }
 
-    private List<TimelineDTO> buildTreeStep() {
-        List<TimelineDTO> timelineDTOs = new ArrayList<>();
+    private void buildTreeStep() {
         if(statusStartDay != null){
             TimelineDTO step1 = new TimelineDTO(getString(R.string.dongbodulieuphancong)
                     , getString(R.string.motadongbodulieuphancong), getString(R.string.stepdongbodulieuphancong)
@@ -147,72 +148,71 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
             timelineDTOs.get(0).setHeader(true);
             timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
         }
-
-        return timelineDTOs;
     }
 
 
-    public void showAlertBox(final View v) throws SQLException {
-        builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
-        builderSingle.setTitle("Chọn một cửa hàng: ");
-        outletsSelect = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(
-                v.getContext(),
-                android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.addAll(outletsSelect);
-
-        builderSingle.setNegativeButton(
-                "cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builderSingle.setAdapter(
-                arrayAdapter,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final OutletEntity outletDTO = arrayAdapter.getItem(which);
-                        android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
-                                v.getContext());
-                        StringBuilder stringBuilder = new StringBuilder(outletDTO.getName());
-                        builderInner.setMessage(stringBuilder.toString());
-                        builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
-                        builderInner.setPositiveButton(
-                                "Ok",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int which) {
-                                        Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
-                                        firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
-                                        firstOutletIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
-                                        firstOutletIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
-                                        v.getContext().startActivity(firstOutletIntent);
-                                        dialog.dismiss();
-                                    }
-                                });
-                        builderInner.show();
-                    }
-                });
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(A.s(R.string.loading));
-        progressDialog.show();
-
-
-    }
+//    public void showAlertBox(final View v) throws SQLException {
+//        builderSingle = new android.support.v7.app.AlertDialog.Builder(v.getContext());
+//        builderSingle.setTitle("Chọn một cửa hàng: ");
+//        outletsSelect = new ArrayList<>();
+//        arrayAdapter = new ArrayAdapter<>(
+//                v.getContext(),
+//                android.R.layout.select_dialog_singlechoice);
+//        arrayAdapter.addAll(outletsSelect);
+//
+//        builderSingle.setNegativeButton(
+//                "cancel",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//        builderSingle.setAdapter(
+//                arrayAdapter,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        final OutletEntity outletDTO = arrayAdapter.getItem(which);
+//                        android.support.v7.app.AlertDialog.Builder builderInner = new android.support.v7.app.AlertDialog.Builder(
+//                                v.getContext());
+//                        StringBuilder stringBuilder = new StringBuilder(outletDTO.getName());
+//                        builderInner.setMessage(stringBuilder.toString());
+//                        builderInner.setTitle("Bạn đã chọn cửa hàng đầu tiên là :");
+//                        builderInner.setPositiveButton(
+//                                "Ok",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(
+//                                            DialogInterface dialog,
+//                                            int which) {
+//                                        Intent firstOutletIntent = new Intent(v.getContext(), CaptureFirstOutletActivity.class);
+//                                        firstOutletIntent.putExtra(ScreenContants.KEY_OUTLET_ID, outletDTO.getOutletId());
+//                                        firstOutletIntent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, outletDTO.getRouteScheduleDetailId());
+//                                        firstOutletIntent.putExtra(ScreenContants.KEY_TAKE_PICTURE_ACTION, Boolean.TRUE);
+//                                        v.getContext().startActivity(firstOutletIntent);
+//                                        dialog.dismiss();
+//                                    }
+//                                });
+//                        builderInner.show();
+//                    }
+//                });
+//        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+//
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage(A.s(R.string.loading));
+//        progressDialog.show();
+//
+//
+//    }
 
     @Override
     protected void onResume() {
-        super.onResume();
         reloadData();
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+        super.onResume();
+
     }
 
     @Override
@@ -223,36 +223,36 @@ public class StartDayActivity extends BaseDrawerActivity implements LoaderManage
         finish();
     }
 
-    @Override
-    public Loader<List<OutletEntity>> onCreateLoader(int id, Bundle args) {
-        Loader<List<OutletEntity>> loader = null;
-
-        try {
-            OutletDAO outletDAO = repo.getOutletDAO();
-            QueryBuilder<OutletEntity, String> queryBuilder = outletDAO.queryBuilder();
-
-            queryBuilder.orderBy("name", true);
-            loader = outletDAO.getResultSetLoader(this, queryBuilder.prepare());
-        } catch (SQLException e) {
-            ELog.d(e.getMessage(), e);
-        }
-
-        return loader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<OutletEntity>> loader, List<OutletEntity> data) {
-        if(loader != null && data != null) {
-            arrayAdapter.clear();
-            arrayAdapter.addAll(data);
-            arrayAdapter.notifyDataSetChanged();
-            builderSingle.show();
-        }
-        progressDialog.dismiss();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<OutletEntity>> loader) {
-        outletsSelect.clear();
-    }
+//    @Override
+//    public Loader<List<OutletEntity>> onCreateLoader(int id, Bundle args) {
+//        Loader<List<OutletEntity>> loader = null;
+//
+//        try {
+//            OutletDAO outletDAO = repo.getOutletDAO();
+//            QueryBuilder<OutletEntity, String> queryBuilder = outletDAO.queryBuilder();
+//
+//            queryBuilder.orderBy("name", true);
+//            loader = outletDAO.getResultSetLoader(this, queryBuilder.prepare());
+//        } catch (SQLException e) {
+//            ELog.d(e.getMessage(), e);
+//        }
+//
+//        return loader;
+//    }
+//
+//    @Override
+//    public void onLoadFinished(Loader<List<OutletEntity>> loader, List<OutletEntity> data) {
+//        if(loader != null && data != null) {
+//            arrayAdapter.clear();
+//            arrayAdapter.addAll(data);
+//            arrayAdapter.notifyDataSetChanged();
+//            builderSingle.show();
+//        }
+//        progressDialog.dismiss();
+//    }
+//
+//    @Override
+//    public void onLoaderReset(Loader<List<OutletEntity>> loader) {
+//        outletsSelect.clear();
+//    }
 }

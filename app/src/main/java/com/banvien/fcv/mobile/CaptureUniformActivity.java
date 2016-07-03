@@ -55,6 +55,7 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
+        imageDTOs = new ArrayList<>();
         getSupportActionBar().setTitle(R.string.chuphinhdongphuc);
 
         routeScheduleDTO = getRouteSchedule();
@@ -274,6 +275,7 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        bindGallery();
     }
 
     @Override
@@ -285,16 +287,18 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onPause() {
+        super.onPause();
         if(imageDTOs.size() > 0) {
             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(this);
             String[] next = {ScreenContants.CAPTURE_TOOL};
             changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
                     , ScreenContants.CAPTURE_UNIFORM, next, ScreenContants.IN_OUTLET, false);
         }
-        Intent intent = new Intent(getBaseContext(), StartDayActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
