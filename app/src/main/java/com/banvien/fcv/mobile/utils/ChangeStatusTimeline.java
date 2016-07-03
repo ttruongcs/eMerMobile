@@ -23,12 +23,6 @@ public class ChangeStatusTimeline {
         this.routeScheduleDetailId = detailId;
     }
 
-    public boolean changeStatusToDoing(String timeline, boolean isTotalDone) {
-
-
-        return false;
-    }
-
     /*
     * parent: Tên cột trong db của node cha chứa node này
     *         now: node hiện tại cần đổi trạng thái

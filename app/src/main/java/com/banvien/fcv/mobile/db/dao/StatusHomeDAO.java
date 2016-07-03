@@ -9,6 +9,7 @@ import com.banvien.fcv.mobile.dto.ProductgroupDTO;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RawRowMapper;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
@@ -62,17 +63,20 @@ public class StatusHomeDAO extends AndroidBaseDaoImpl<StatusHomeEntity, String> 
 
     public boolean updateStatus(String now, String next) {
         boolean result = false;
+        QueryBuilder<StatusHomeEntity, String> queryBuilder = queryBuilder();
         UpdateBuilder<StatusHomeEntity, String> updateBuilder = updateBuilder();
 
         try {
-            updateBuilder.updateColumnValue(now, 2);
-            if(next != null) {
-                updateBuilder.updateColumnValue(next, 1);
-            }
+            if (queryBuilder.where().eq(now, 2).countOf() <= 0) {
+                updateBuilder.updateColumnValue(now, 2);
+                if(next != null) {
+                    updateBuilder.updateColumnValue(next, 1);
+                }
 
-            long countOf = updateBuilder.update();
-            if(countOf > 0) {
-                result = true;
+                long countOf = updateBuilder.update();
+                if(countOf > 0) {
+                    result = true;
+                }
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);

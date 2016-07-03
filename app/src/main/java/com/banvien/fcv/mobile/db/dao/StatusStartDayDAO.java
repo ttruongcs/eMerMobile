@@ -43,16 +43,16 @@ public class StatusStartDayDAO extends AndroidBaseDaoImpl<StatusStartDayEntity, 
     public StatusStartDayEntity getConfigStartDayHome() {
         List<StatusStartDayEntity> result = new ArrayList<>();
         try {
-            result  = queryForAll();
+            result = queryForAll();
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);
         }
-        if(result.size() == 0) return null;
+        if (result.size() == 0) return null;
         return result.get(0);
     }
 
     public void clearData() throws SQLException {
-        if(isTableExists()) {
+        if (isTableExists()) {
             ELog.d("clear Data Status Start Day");
             deleteBuilder().delete();
         }
@@ -60,30 +60,34 @@ public class StatusStartDayDAO extends AndroidBaseDaoImpl<StatusStartDayEntity, 
 
     public boolean updateStatus(String now, String[] next) {
         boolean result = false;
+        QueryBuilder<StatusStartDayEntity, String> queryBuilder = queryBuilder();
         UpdateBuilder<StatusStartDayEntity, String> updateBuilder = updateBuilder();
 
         try {
-            updateBuilder.updateColumnValue(now, 2);
-            if(next != null && next.length > 0) {
-                if(next.length == 1) {
-                    updateBuilder.updateColumnValue(next[0], 1);
-                } else {
-                    for(int i=0 ; i < next.length; i++) {
-                        if(i == (next.length - 1)) {
-                            updateBuilder.updateColumnValue(next[i], 1);
-                        } else {
-                            updateBuilder.updateColumnValue(next[i], 2);
-                        }
+            if (queryBuilder.where().eq(now, 2).countOf() <= 0) {
+                updateBuilder.updateColumnValue(now, 2);
+                if (next != null && next.length > 0) {
+                    if (next.length == 1) {
+                        updateBuilder.updateColumnValue(next[0], 1);
+                    } else {
+                        for (int i = 0; i < next.length; i++) {
+                            if (i == (next.length - 1)) {
+                                updateBuilder.updateColumnValue(next[i], 1);
+                            } else {
+                                updateBuilder.updateColumnValue(next[i], 2);
+                            }
 
+                        }
                     }
+
+
                 }
 
+                long countOf = updateBuilder.update();
+                if (countOf > 0) {
+                    result = true;
+                }
 
-            }
-
-            long countOf = updateBuilder.update();
-            if(countOf > 0) {
-                result = true;
             }
         } catch (SQLException e) {
             ELog.d(e.getMessage(), e);

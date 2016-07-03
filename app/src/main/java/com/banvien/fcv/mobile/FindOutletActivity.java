@@ -182,6 +182,7 @@ public class FindOutletActivity extends BaseDrawerActivity {
 
                             @Override
                             public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                                Toast.makeText(getBaseContext(), getString(R.string.not_have_route), Toast.LENGTH_SHORT).show();
                                 ELog.d("Find outlet from API failed");
                             }
                         });

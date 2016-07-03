@@ -1,12 +1,16 @@
 package com.banvien.fcv.mobile;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.DeclineEntity;
+import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.MySpeedScrollManager;
@@ -37,6 +42,7 @@ public class StatusOutletActivity extends BaseDrawerActivity {
     private static final String CODE_OTHER = "5";
     private static long outletId;
     private static long routeScheduleDetailId;
+    private static boolean isDisabled = false;
 
     @BindView(R.id.lvOutletStatus)
     ListView listView;
@@ -64,6 +70,23 @@ public class StatusOutletActivity extends BaseDrawerActivity {
 
         initListView();
         bindEvents();
+
+        if (outletId != 0) {
+            try {
+                OutletEntity outletEntity = repo.getOutletDAO().findByDetailId(routeScheduleDetailId);
+                if (outletEntity != null && outletEntity.getNote() != null && outletEntity.getActiveStatus() != null) {
+                    isDisabled = true;
+                    listView.setSelector(new StateListDrawable());
+                    edStatus.setVisibility(View.VISIBLE);
+                    edStatus.setText(outletEntity.getNote());
+                    edStatus.setEnabled(false);
+                } else {
+                    isDisabled = false;
+                }
+            } catch (SQLException e) {
+                ELog.d(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
@@ -78,10 +101,16 @@ public class StatusOutletActivity extends BaseDrawerActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                keys.put("idSelected",mData.get(position).getDeclineMetadataId());
-                keys.put("codeSelected", mData.get(position).getCode());
-                edStatus.setVisibility(View.VISIBLE);
-                btnDone.setVisibility(View.VISIBLE);
+                if (!isDisabled) {
+                    keys.put("idSelected", mData.get(position).getDeclineMetadataId());
+                    keys.put("codeSelected", mData.get(position).getCode());
+                    edStatus.setVisibility(View.VISIBLE);
+                    btnDone.setVisibility(View.VISIBLE);
+                } else {
+                    view.setBackgroundColor(Color.BLUE);
+                    Toast.makeText(view.getContext(), "Không thể sửa tình trạng cửa hàng", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -92,9 +121,9 @@ public class StatusOutletActivity extends BaseDrawerActivity {
                     String detailDecline = edStatus.getText().toString().trim();
                     Integer idSelected = Integer.valueOf(keys.get("idSelected").toString());
                     long rowUpdate = repo.getOutletDAO().updateDeclineStatus(routeScheduleDetailId, detailDecline, idSelected);
-                    if(rowUpdate > 0) {
-                        if(keys.get("codeSelected").toString().equals(CODE_OTHER)) {
-                           //Nothing here
+                    if (rowUpdate > 0) {
+                        if (keys.get("codeSelected").toString().equals(CODE_OTHER)) {
+                            //Nothing here
                         } else {
                             ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
                             String[] next = {ScreenContants.BEFORE_DISPLAY_COLUMN, ScreenContants.AFTER_DISPLAY_COLUMN
