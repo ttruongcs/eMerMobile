@@ -50,7 +50,7 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineInOutletAdapter(timelineDTOs, this);
+        adapter = new TimelineInOutletAdapter(timelineDTOs, this, repo);
         recyclerView.setAdapter(adapter);
     }
 
@@ -68,6 +68,15 @@ public class InOutletHomeActivity extends BaseDrawerActivity {
             ELog.d("Error when get CONFIG");
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repo != null) {
+            repo.release();
+        }
+    }
+
 
     private void buildTreeStep() {
         if(statusInOutlet != null){
