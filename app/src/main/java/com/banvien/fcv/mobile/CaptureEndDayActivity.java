@@ -219,17 +219,19 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            OutletEndDayImagesEntity outletEndDayImagesEntity = new OutletEndDayImagesEntity();
-            outletEndDayImagesEntity.setRouteScheduleDetailId(routeScheduleDetailId);
-            outletEndDayImagesEntity.setPathImage(urlImage);
-            try {
-                repo.getOutletEndDayImagesDAO().addOutletEndDayImagesEntity(outletEndDayImagesEntity);
+            File file = new File(urlImage);
+            if(file.exists()) {
+                OutletEndDayImagesEntity outletEndDayImagesEntity = new OutletEndDayImagesEntity();
+                outletEndDayImagesEntity.setRouteScheduleDetailId(routeScheduleDetailId);
+                outletEndDayImagesEntity.setPathImage(urlImage);
+                try {
+                    repo.getOutletEndDayImagesDAO().addOutletEndDayImagesEntity(outletEndDayImagesEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
-
         }
     }
 

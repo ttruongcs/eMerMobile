@@ -216,20 +216,23 @@ public class CaptureUniformActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureUniformEntity uniformEntity = new CaptureUniformEntity();
-            uniformEntity.setPathImage(urlImage);
-            uniformEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            File file = new File(urlImage);
+            if(file.exists()) {
+                CaptureUniformEntity uniformEntity = new CaptureUniformEntity();
+                uniformEntity.setPathImage(urlImage);
+                uniformEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 
-            if(routeScheduleDTO != null) {
-                uniformEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
-            }
+                if(routeScheduleDTO != null) {
+                    uniformEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+                }
 
-            try {
-                repo.getCaptureUniformDAO().create(uniformEntity);
+                try {
+                    repo.getCaptureUniformDAO().create(uniformEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
         }
     }

@@ -223,23 +223,26 @@ public class CaptureAfterActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureAfterEntity captureToolEntity = new CaptureAfterEntity();
-            captureToolEntity.setPathImage(urlImage);
-            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            captureToolEntity.setOutletId(outletId);
-            if(routeScheduleDTO != null) {
-                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
-            }
+            File file = new File(urlImage);
+            if(file.exists()) {
+                CaptureAfterEntity captureToolEntity = new CaptureAfterEntity();
+                captureToolEntity.setPathImage(urlImage);
+                captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+                captureToolEntity.setOutletId(outletId);
+                if(routeScheduleDTO != null) {
+                    captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+                }
 
-            try {
-                repo.getCaptureAfterDAO().create(captureToolEntity);
+                try {
+                    repo.getCaptureAfterDAO().create(captureToolEntity);
 
-                bindGallery();
+                    bindGallery();
 
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
-            } catch (NullPointerException e) {
-                ELog.d("Outlet is not exist");
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                } catch (NullPointerException e) {
+                    ELog.d("Outlet is not exist");
+                }
             }
         }
     }

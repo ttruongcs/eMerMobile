@@ -5,6 +5,8 @@ import com.banvien.fcv.mobile.db.AndroidBaseDaoImpl;
 import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
@@ -36,9 +38,14 @@ public class DoSurveyAnswerDAO extends AndroidBaseDaoImpl<DoSurveyAnswerEntity, 
         }
     }
 
-    public List<DoSurveyAnswerEntity> find(Long outletId) {
+    public List<DoSurveyAnswerEntity> find(Long outletId, Long routeScheduleDetailId) {
         try {
-            return queryBuilder().where().eq("outletId", outletId).query();
+            QueryBuilder<DoSurveyAnswerEntity, Long> builder = queryBuilder();
+            Where where = builder.where().eq("outletId", outletId);
+            if (routeScheduleDetailId != null) {
+                where.and().eq("routeScheduleDetailId", routeScheduleDetailId);
+            }
+            return builder.query();
         } catch (SQLException e) {
             e.printStackTrace();
         }

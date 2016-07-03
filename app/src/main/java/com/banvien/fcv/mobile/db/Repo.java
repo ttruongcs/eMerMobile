@@ -13,6 +13,7 @@ import com.banvien.fcv.mobile.db.dao.ConfigDAO;
 import com.banvien.fcv.mobile.db.dao.ConfirmWorkingDAO;
 import com.banvien.fcv.mobile.db.dao.DeclineDAO;
 import com.banvien.fcv.mobile.db.dao.DoSurveyAnswerDAO;
+import com.banvien.fcv.mobile.db.dao.EieDAO;
 import com.banvien.fcv.mobile.db.dao.HotzoneDAO;
 import com.banvien.fcv.mobile.db.dao.OutletDAO;
 import com.banvien.fcv.mobile.db.dao.OutletEndDayImagesDAO;
@@ -164,6 +165,10 @@ public class Repo {
 
     public DeclineDAO getDeclineDAO() throws SQLException {
         return  databaseHelper.getDeclineDAO();
+    }
+
+    public EieDAO getEieDAO() throws SQLException {
+        return  databaseHelper.getEieDAO();
     }
 
     public void release() {

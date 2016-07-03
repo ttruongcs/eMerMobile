@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.library.UpdateService;
+import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
@@ -67,6 +69,11 @@ public class PrepareActivity extends BaseDrawerActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if(!CheckNetworkConnection.isConnectionAvailable(PrepareActivity.this)){
+                            Toast.makeText(PrepareActivity.this, A.s(R.string.sync_error_phone_connection), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
                         UpdateService updateService = new UpdateService(v.getContext(), repo);
                         progressDialog  = new ProgressDialog(v.getContext());
                         progressDialog.setMessage(v.getContext().getText(R.string.updating));
@@ -74,6 +81,7 @@ public class PrepareActivity extends BaseDrawerActivity {
                         progressDialog.show();
                         updateService.updateFromServer(true, progressDialog, textNumSuccess);
 //                        startUpdate();
+
                     }
                 });
 

@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class MSurveyResponseDTO implements Serializable {
     private Long questionId;
     private String answer;
+    private String extra;
 
     public Long getQuestionId() {
         return questionId;
@@ -27,5 +28,13 @@ public class MSurveyResponseDTO implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -58,6 +59,9 @@ public final class RestClient {
             }
         };
         httpBuilder.addInterceptor(requestInterceptor);
+        httpBuilder.connectTimeout(2, TimeUnit.MINUTES)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
 
         httpClient = httpBuilder.build();
 

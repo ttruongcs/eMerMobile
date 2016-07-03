@@ -14,7 +14,7 @@ public class UserUtils {
 
 		Repo repo = new Repo(context);
 		try {
-			UpdateService.clearData(repo);
+			DataUtils.clearData(repo, context);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
