@@ -174,6 +174,7 @@ public class ScreenContants {
     public static final String CONFIRM_END_COLUMN = "ketThucCuoiNgay";
     public static final String CHECK_OUTLET_COLUMN = "tinhTrangCuaHang";
     public static final String SYNC_OUTLET_COLUMN = "dongBoCuaHang";
+    public static final String CAPTURE_END_DAY = "chupAnhCuoiNgay";
 
 
 

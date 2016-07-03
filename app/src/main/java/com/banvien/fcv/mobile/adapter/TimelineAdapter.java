@@ -299,7 +299,7 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         syncService.synConfirmEndDayInformation();
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
                         changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
-                                , ScreenContants.CONFIRM_END_COLUMN, null, ScreenContants.END_DATE_COLUMN, false);
+                                , ScreenContants.CONFIRM_END_COLUMN, null, ScreenContants.END_DATE_COLUMN, true);
 //                        Intent intent = new Intent(activity, .class);
 //                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); //Todo set status here
 //                        activity.startActivity(intent);
@@ -354,10 +354,11 @@ public class TimelineAdapter extends RecyclerView.Adapter {
                         SyncService syncService = new SyncService(activity, 1l, repo);
                         syncService.synConfirmNewDayInformationDontHaveImage();
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
-                        String[] next = {ScreenContants.CAPTURE_FIRST_OUTLET_COLUMN};
+                        String[] parentNext = {ScreenContants.IN_OUTLET, ScreenContants.END_DATE_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                                , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
-                        Intent intent = new Intent(activity, HomeActivity.class);
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, null, parentNext, true);
+                        Intent intent = new Intent(itemView.getContext(), HomeActivity.class);
+                        itemView.getContext().startActivity(intent);
                         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         activity.startActivity(intent);
                         //activity.finish();

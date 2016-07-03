@@ -16,7 +16,8 @@ public class StatusEndDayEntity implements Serializable {
     private Integer chupAnhCuoiNgay;
     @DatabaseField
     private Integer dongBoCuoiNgay;
-    @DatabaseField Integer ketThucCuoiNgay;
+    @DatabaseField
+    private Integer ketThucCuoiNgay;
 
     public long get_id() {
         return _id;

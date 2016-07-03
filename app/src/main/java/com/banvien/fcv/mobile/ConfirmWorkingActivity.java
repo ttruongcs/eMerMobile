@@ -229,8 +229,9 @@ public class ConfirmWorkingActivity extends BaseDrawerActivity  {
                         SyncService syncService = new SyncService(v.getContext(), 1l, repo);
                         syncService.synConfirmNewDayInformation(progressDialog);
                         ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
+                        String[] parentNext = {ScreenContants.IN_OUTLET, ScreenContants.END_DATE_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.PREPARE_DATE_COLUMN
-                                , ScreenContants.CONFIRM_WORKING_COLUMN, null, ScreenContants.IN_OUTLET, true);
+                                , ScreenContants.CONFIRM_WORKING_COLUMN, null, parentNext, true);
                         Intent intent = new Intent(getBaseContext(), HomeActivity.class);
                         startActivity(intent);
                     } else {

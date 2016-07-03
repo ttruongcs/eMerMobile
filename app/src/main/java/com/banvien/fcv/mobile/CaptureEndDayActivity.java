@@ -20,6 +20,7 @@ import com.banvien.fcv.mobile.db.entities.OutletEndDayImagesEntity;
 import com.banvien.fcv.mobile.db.entities.RouteScheduleEntity;
 import com.banvien.fcv.mobile.dto.ImageDTO;
 import com.banvien.fcv.mobile.dto.OutletEndDayImagesDTO;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -50,6 +51,7 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
+        imageDTOs = new ArrayList<>();
         outletId = this.getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
         try {
             RouteScheduleEntity routeSchedule = repo.getRouteScheduleDAO().findRoute();
@@ -66,7 +68,6 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
             return;
         }
 
-        bindGallery();
     }
 
     @Override
@@ -264,7 +265,18 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
+        String[] next = {ScreenContants.CONFIRM_END_COLUMN};
+        String parent = null;
+        changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
+                , ScreenContants.CONFIRM_WORKING_COLUMN, next, parent, false);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        bindGallery();
     }
 }

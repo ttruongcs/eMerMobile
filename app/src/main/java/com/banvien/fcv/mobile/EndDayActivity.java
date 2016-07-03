@@ -36,12 +36,24 @@ public class EndDayActivity extends BaseDrawerActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private StatusEndDayDTO statusEndDay;
+    private List<TimelineDTO> timelineDTOs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enddays_activity);
         repo = new Repo(this);
+        timelineDTOs = new ArrayList<>();
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new TimelineAdapter(timelineDTOs, this, repo);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void reloadData() {
+        timelineDTOs.clear();
         try {
             StatusEndDayEntity statusEndDayEntity = repo.getStatusEndDayDAO().getConfigStatusEndDayHome();
             if(statusEndDayEntity != null){
@@ -49,14 +61,17 @@ public class EndDayActivity extends BaseDrawerActivity {
             } else{
                 statusEndDay = null;
             }
+            buildTreeStep();
         } catch (SQLException e) {
             ELog.d("Error when get CONFIG");
         }
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new TimelineAdapter(buildTreeStep(), this, repo);
-        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reloadData();
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
     }
 
     @Override
@@ -67,39 +82,38 @@ public class EndDayActivity extends BaseDrawerActivity {
         }
     }
     
-    private List<TimelineDTO> buildTreeStep() {
-        List<TimelineDTO> timelineDTOs = new ArrayList<>();
+    private void buildTreeStep() {
         if(statusEndDay != null){
             TimelineDTO step1 = new TimelineDTO(getString(R.string.chupanhcuoingay)
                     , getString(R.string.motachupanhcuoingay), getString(R.string.stepchupanhcuoingay)
                     , ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY, statusEndDay.getChupAnhCuoiNgay());
 
-            TimelineDTO step2 = new TimelineDTO(getString(R.string.dongboketqua)
-                    , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
-                    , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, statusEndDay.getDongBoCuoiNgay());
+//            TimelineDTO step2 = new TimelineDTO(getString(R.string.dongboketqua)
+//                    , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
+//                    , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, statusEndDay.getDongBoCuoiNgay());
 
             TimelineDTO step3 = new TimelineDTO(getString(R.string.ketthuccuoingay)
-                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongbocuoingay)
+                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongboketqua)
                     , ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY, statusEndDay.getKetThucCuoiNgay());
 
             timelineDTOs.add(step1);
-            timelineDTOs.add(step2);
+//            timelineDTOs.add(step2);
             timelineDTOs.add(step3);
         } else {
             TimelineDTO step1 = new TimelineDTO(getString(R.string.chupanhcuoingay)
                     , getString(R.string.motachupanhcuoingay), getString(R.string.stepchupanhcuoingay)
                     , ScreenContants.HOME_STEP_ENDDAY_CHUPHINHCUOINGAY, ScreenContants.STATUS_STEP_INPROGRESS);
 
-            TimelineDTO step2 = new TimelineDTO(getString(R.string.dongboketqua)
-                    , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
-                    , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, ScreenContants.STATUS_STEP_NOTYET);
+//            TimelineDTO step2 = new TimelineDTO(getString(R.string.dongboketqua)
+//                    , getString(R.string.motadongboketqua), getString(R.string.stepdongboketqua)
+//                    , ScreenContants.HOME_STEP_ENDDAY_DONGBOKETQUA, ScreenContants.STATUS_STEP_NOTYET);
 
             TimelineDTO step3 = new TimelineDTO(getString(R.string.ketthuccuoingay)
-                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongbocuoingay)
+                    , getString(R.string.dongbocuoingay), getString(R.string.stepdongboketqua)
                     , ScreenContants.HOME_STEP_ENĐAY_KETTHUCCUOINGAY, ScreenContants.STATUS_STEP_NOTYET);
 
             timelineDTOs.add(step1);
-            timelineDTOs.add(step2);
+//            timelineDTOs.add(step2);
             timelineDTOs.add(step3);
         }
 
@@ -108,6 +122,5 @@ public class EndDayActivity extends BaseDrawerActivity {
             timelineDTOs.get(timelineDTOs.size() - 1).setFooter(true);
         }
 
-        return timelineDTOs;
     }
 }

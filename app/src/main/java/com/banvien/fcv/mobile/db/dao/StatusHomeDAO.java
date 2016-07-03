@@ -80,4 +80,30 @@ public class StatusHomeDAO extends AndroidBaseDaoImpl<StatusHomeEntity, String> 
 
         return result;
     }
+
+    public boolean updateStatus(String now, String[] next) {
+        boolean result = false;
+        UpdateBuilder<StatusHomeEntity, String> updateBuilder = updateBuilder();
+
+        try {
+            updateBuilder.updateColumnValue(now, 2);
+            if(next != null && next.length > 0) {
+                for(int i = 0; i < next.length; i++) {
+                    updateBuilder.updateColumnValue(next[i], 1);
+                }
+
+            }
+
+            long countOf = updateBuilder.update();
+            if(countOf > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            ELog.d(e.getMessage(), e);
+        }
+
+        return result;
+    }
+
+
 }
