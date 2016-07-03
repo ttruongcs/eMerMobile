@@ -24,6 +24,7 @@ import com.banvien.fcv.mobile.dto.OutletDTO;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MConfirmWorkingImageCommand;
 import com.banvien.fcv.mobile.dto.getfromserver.MOutletMerResultImageDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResponseDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MSurveyResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDTO;
 import com.banvien.fcv.mobile.dto.syncdto.MOutletMerResultDetailDTO;
@@ -84,26 +85,37 @@ public class SyncOutletMerResultService {
 		return repo.getOutletDAO().findAll();
 	}
 
-	private List<MSurveyResultDTO> buildSurveyResult(Long outletId) throws SQLException {
-		Map<String, List<MSurveyResultDTO>> map = new HashMap<>();
-		List<DoSurveyAnswerEntity> doSurveyAnswerEntities = repo.getDoSurveyAnswerDAO().find(outletId);
-		for (DoSurveyAnswerEntity doSurveyAnswerEntity : doSurveyAnswerEntities) {
-			String key = doSurveyAnswerEntity.getSurveyId() + (doSurveyAnswerEntity.getRouteScheduleDetailId() != null? ("_" + doSurveyAnswerEntity.getRouteScheduleDetailId()) : "");
-			List<MSurveyResultDTO> mSurveyResultDTOs = map.get(key);
-			if (mSurveyResultDTOs == null) {
-				mSurveyResultDTOs = new ArrayList<>();
-				map.put(key, mSurveyResultDTOs);
+	private List<MSurveyResultDTO> buildSurveyResult(Long outletId, Long routeScheduleDetailId) throws SQLException {
+		Map<String, MSurveyResultDTO> map = new HashMap<>();
+		try {
+			List<DoSurveyAnswerEntity> doSurveyAnswerEntities = repo.getDoSurveyAnswerDAO().find(outletId, routeScheduleDetailId);
+
+			for (DoSurveyAnswerEntity doSurveyAnswerEntity : doSurveyAnswerEntities) {
+				String key = doSurveyAnswerEntity.getSurveyId() + (doSurveyAnswerEntity.getRouteScheduleDetailId() != null ? ("_" + doSurveyAnswerEntity.getRouteScheduleDetailId()) : "");
+				MSurveyResultDTO mSurveyResultDTO = map.get(key);
+				if (mSurveyResultDTO == null) {
+					mSurveyResultDTO = new MSurveyResultDTO();
+					mSurveyResultDTO.setSurveyId(doSurveyAnswerEntity.getSurveyId());
+					mSurveyResultDTO.setRouteScheduleDetailId(routeScheduleDetailId);
+					map.put(key, mSurveyResultDTO);
+				}
+
+				if (mSurveyResultDTO.getSurveyResponse() == null) {
+					mSurveyResultDTO.setSurveyResponse(new ArrayList<MSurveyResponseDTO>());
+				}
+
+				MSurveyResponseDTO m = new MSurveyResponseDTO();
+				m.setQuestionId(doSurveyAnswerEntity.getQuestionId());
+				m.setAnswer(doSurveyAnswerEntity.getAnswer());
+				m.setExtra(doSurveyAnswerEntity.getExtra());
+				mSurveyResultDTO.getSurveyResponse().add(m);
+
 			}
-
-			MSurveyResultDTO m = new MSurveyResultDTO();
-			m.setSurveyId(doSurveyAnswerEntity.getSurveyId());
-			m.setRouteScheduleDetailId(doSurveyAnswerEntity.getRouteScheduleDetailId());
-
-			mSurveyResultDTOs.add(m);
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		// TODO resolve sync result
-		return new ArrayList<>();
+
+		return new ArrayList<>(map.values());
 	}
 
 	private MOutletMerResultDTO createMOutletMerResultDTO(OutletDTO outlet) throws SQLException {
@@ -113,7 +125,7 @@ public class SyncOutletMerResultService {
 		mOutletMerResultDTO.setAuditDate(new Timestamp(System.currentTimeMillis()));
 		mOutletMerResultDTO.setActiveStatus(ScreenContants.OUTLET_MER_ACTIVE);
 		mOutletMerResultDTO.setRouteScheduleDetailId(outlet.getRouteScheduleDetailId());
-		mOutletMerResultDTO.setSurveyResult(buildSurveyResult(outlet.getOutletId()));
+		mOutletMerResultDTO.setSurveyResult(buildSurveyResult(outlet.getOutletId(), outlet.getRouteScheduleDetailId()));
 
 		List<OutletMerDTO> outletMerEntityList = repo.getOutletMerDAO().findByOutletId(outlet.getOutletId());
 		List<MOutletMerResultDetailDTO> outletMerResultDetailDTOs = new ArrayList<>();

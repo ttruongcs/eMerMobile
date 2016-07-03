@@ -51,6 +51,7 @@ public class DataUtils {
 		repo.getConfirmWorkingDAO().clearData();
 		repo.getCaptureBeforeDAO().clearData();
 		repo.getDeclineDAO().clearData();
+		repo.getEieDAO().clearData();
 		deleteFileImage();
 	}
 

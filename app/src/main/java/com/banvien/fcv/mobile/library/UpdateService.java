@@ -2,8 +2,6 @@ package com.banvien.fcv.mobile.library;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -19,7 +17,6 @@ import com.banvien.fcv.mobile.beanutil.SurveyUtil;
 import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.DeclineEntity;
-import com.banvien.fcv.mobile.db.entities.EieEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -36,7 +33,6 @@ import com.banvien.fcv.mobile.dto.QuestionContentDTO;
 import com.banvien.fcv.mobile.dto.QuestionDTO;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
 import com.banvien.fcv.mobile.dto.SurveyDTO;
-import com.banvien.fcv.mobile.dto.getfromserver.EIEHistoryDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
@@ -49,7 +45,6 @@ import com.banvien.fcv.mobile.utils.DataBinder;
 import com.banvien.fcv.mobile.utils.DataUtils;
 import com.banvien.fcv.mobile.utils.ELog;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -80,10 +75,6 @@ public class UpdateService {
 		String errorMessage = null;
 		String taskType = "STORE";
 		try{
-			//check connection
-			if(!CheckNetworkConnection.isConnectionAvailable(context)){
-				errorMessage = context.getString(R.string.sync_error_phone_connection);
-			}
 			if(forceDeleteDatabase) {
 //				deleteOutletAllDatabase();
 			}
