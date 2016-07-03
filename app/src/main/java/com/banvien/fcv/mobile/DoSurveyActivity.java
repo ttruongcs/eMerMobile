@@ -25,6 +25,7 @@ import com.banvien.fcv.mobile.db.dao.QuestionDAO;
 import com.banvien.fcv.mobile.db.entities.DoSurveyAnswerEntity;
 import com.banvien.fcv.mobile.db.entities.QuestionEntity;
 import com.banvien.fcv.mobile.utils.C;
+import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.DialogBuilder;
 import com.banvien.fcv.mobile.utils.ELog;
 import com.banvien.fcv.mobile.utils.IDGenerator;
@@ -150,6 +151,12 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
                 protected void onPostExecute(Boolean aBoolean) {
                     super.onPostExecute(aBoolean);
                     progressDialog.dismiss();
+                    if(success) {
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+                        String[] next = {ScreenContants.SYNC_OUTLET_COLUMN};
+                        changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                                , ScreenContants.SURVEY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                    }
                     Toast.makeText(DoSurveyActivity.this, A.s(success ? R.string.save_survey_success_msg : R.string.save_survey_failed_msg), Toast.LENGTH_LONG).show();
                 }
 
