@@ -17,6 +17,7 @@ public class ProductUtil {
         result.setProductGroupId(item.getProductGroupId());
         result.setCode(item.getCode());
         result.setName(item.getName());
+        result.setWeight(item.getWeight());
         return result;
     }
 
@@ -26,6 +27,7 @@ public class ProductUtil {
         entity.setProductGroupId(item.getProductGroupId());
         entity.setCode(item.getCode());
         entity.setName(item.getName());
+        entity.setWeight(item.getWeight());
         return entity;
     }
 }

@@ -14,6 +14,7 @@ public class MProductDTO implements Serializable {
     private Long productGroupId;
     private String code;
     private String name;
+    private Double weight;
 
     public Long getProductId() {
         return productId;
@@ -45,5 +46,13 @@ public class MProductDTO implements Serializable {
 
     public void setProductGroupId(Long productGroupId) {
         this.productGroupId = productGroupId;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }
