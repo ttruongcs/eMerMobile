@@ -267,13 +267,21 @@ public class CaptureEndDayActivity extends BaseDrawerActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(imageDTOs.size() > 0) {
+            ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
+            String[] next = {ScreenContants.CONFIRM_END_COLUMN};
+            String parent = null;
+            changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
+                    , ScreenContants.CAPTURE_END_DAY, next, parent, false);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo);
-        String[] next = {ScreenContants.CONFIRM_END_COLUMN};
-        String parent = null;
-        changeStatusTimeline.changeStatusToDone(ScreenContants.END_DATE_COLUMN
-                , ScreenContants.CONFIRM_WORKING_COLUMN, next, parent, false);
+
     }
 
     @Override
