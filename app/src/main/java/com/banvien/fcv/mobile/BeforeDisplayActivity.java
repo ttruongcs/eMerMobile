@@ -127,7 +127,11 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
         try {
             boolean isCaptured = repo.getCaptureBeforeDAO().checkCaptured(outletId);
             if (isCaptured == true) {
-                changeStatus();
+                ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
+                String[] next = {ScreenContants.AFTER_DISPLAY_COLUMN};
+                changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
+                        , ScreenContants.BEFORE_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
+                super.onBackPressed();
             } else {
                 AlertDialog.Builder captureBuilder = new AlertDialog.Builder(BeforeDisplayActivity.this);
                 captureBuilder.setMessage(getString(R.string.dialog_before_content));
@@ -154,18 +158,6 @@ public class BeforeDisplayActivity extends BaseDrawerActivity {
 
     }
 
-    private void changeStatus() {
-        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
-        String[] next = {ScreenContants.AFTER_DISPLAY_COLUMN};
-        changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
-                , ScreenContants.BEFORE_DISPLAY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
-        Intent intent = new Intent(getBaseContext(), InOutletHomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(ScreenContants.KEY_OUTLET_ID, outletId);
-        intent.putExtra(ScreenContants.KEY_ROUTESCHEDULE_DETAIL, routeScheduleDetailId);
-        startActivity(intent);
-        finish();
-    }
 
 
 }

@@ -22,6 +22,7 @@ public class HotzoneUtil {
         entity.set_id(item.getHotZoneId());
         entity.setCode(item.getCode());
         entity.setHotZoneId(item.getHotZoneId());
+        entity.setNote(item.getNote());
         return entity;
     }
 }

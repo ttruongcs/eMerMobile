@@ -57,6 +57,7 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
         setContentView(R.layout.capturelist);
         repo = new Repo(this);
         outletId = getIntent().getLongExtra(ScreenContants.KEY_OUTLET_ID, 0l);
+        imageDTOs = new ArrayList<>();
         try {
             outlet = repo.getOutletDAO().findById(outletId);
         } catch (SQLException e) {
@@ -70,7 +71,6 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
             return;
         }
 
-        bindGallery();
     }
 
     private RouteScheduleEntity getRouteSchedule() {
@@ -223,22 +223,25 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureBeforeEntity captureBeforeEntity = new CaptureBeforeEntity();
-            captureBeforeEntity.setPathImage(urlImage);
-            captureBeforeEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            captureBeforeEntity.setOutletId(outletId);
-            if(routeScheduleDTO != null) {
-                captureBeforeEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
-            }
+            File file = new File(urlImage);
+            if(file.exists()) {
+                CaptureBeforeEntity captureBeforeEntity = new CaptureBeforeEntity();
+                captureBeforeEntity.setPathImage(urlImage);
+                captureBeforeEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+                captureBeforeEntity.setOutletId(outletId);
+                if(routeScheduleDTO != null) {
+                    captureBeforeEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+                }
 
-            try {
-                repo.getCaptureBeforeDAO().create(captureBeforeEntity);
+                try {
+                    repo.getCaptureBeforeDAO().create(captureBeforeEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
-            } catch (NullPointerException e) {
-                ELog.d("Outlet is not exist");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                } catch (NullPointerException e) {
+                    ELog.d("Outlet is not exist");
+                }
             }
         }
     }
@@ -283,6 +286,7 @@ public class CaptureBeforeActivity extends BaseDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        bindGallery();
     }
 
     @Override

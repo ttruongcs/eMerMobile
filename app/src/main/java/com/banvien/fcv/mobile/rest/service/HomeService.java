@@ -63,4 +63,7 @@ public interface HomeService {
 
     @POST("/mobile/user/auth.html")
     Call<UserPrincipal> login(@Query("userName") String userName, @Query("password") String password);
+
+    @POST("/mobile/working/getEIE.html")
+    Call<Map<String, Object>> getEie();
 }

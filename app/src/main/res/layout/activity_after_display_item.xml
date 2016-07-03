@@ -163,7 +163,11 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:background="@drawable/full_border_transparent" />
+                android:background="@drawable/full_border_transparent"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
 
         </LinearLayout>
@@ -194,7 +198,11 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:background="@drawable/full_border_transparent"   />
+                android:background="@drawable/full_border_transparent"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
         </LinearLayout>
 

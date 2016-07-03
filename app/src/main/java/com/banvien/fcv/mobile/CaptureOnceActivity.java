@@ -224,21 +224,24 @@ public class CaptureOnceActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            OutletMerEntity outletMerEntity = new OutletMerEntity();
-            outletMerEntity.setOutletId(outletId);
-            outletMerEntity.setDataType(captureType);
-            outletMerEntity.setActualValue(urlImage);
-            outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
-            if (captureType == ScreenContants.IMAGE_AFTER
-                    || captureType == ScreenContants.IMAGE_BEFORE) {
-                outletMerEntity.setReferenceValue(posmId.toString());
-            }
-            try {
-                repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
+            File file = new File(urlImage);
+            if(file.exists()) {
+                OutletMerEntity outletMerEntity = new OutletMerEntity();
+                outletMerEntity.setOutletId(outletId);
+                outletMerEntity.setDataType(captureType);
+                outletMerEntity.setActualValue(urlImage);
+                outletMerEntity.setRouteScheduleDetailId(outlet.getRouteScheduleId());
+                if (captureType == ScreenContants.IMAGE_AFTER
+                        || captureType == ScreenContants.IMAGE_BEFORE) {
+                    outletMerEntity.setReferenceValue(posmId.toString());
+                }
+                try {
+                    repo.getOutletMerDAO().addOutletMerEntity(outletMerEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
         }
     }

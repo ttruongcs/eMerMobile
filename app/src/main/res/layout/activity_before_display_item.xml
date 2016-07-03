@@ -110,10 +110,7 @@
                 android:paddingTop="8dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:scrollingCache="false"
-                android:animationCache="false"
-                android:scrollbars="none"
-                />
+                android:scrollbars="none"  />
         </LinearLayout>
 
         <LinearLayout
@@ -142,7 +139,11 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:background="@drawable/full_border_transparent" />
+                android:background="@drawable/full_border_transparent"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
 
         </LinearLayout>
@@ -173,7 +174,11 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:background="@drawable/full_border_transparent"   />
+                android:background="@drawable/full_border_transparent"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
         </LinearLayout>
 

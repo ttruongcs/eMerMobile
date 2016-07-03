@@ -218,20 +218,23 @@ public class CaptureToolActivity extends BaseDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            CaptureToolEntity captureToolEntity = new CaptureToolEntity();
-            captureToolEntity.setPathImage(urlImage);
-            captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+            File file = new File(urlImage);
+            if(file.exists()) {
+                CaptureToolEntity captureToolEntity = new CaptureToolEntity();
+                captureToolEntity.setPathImage(urlImage);
+                captureToolEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 
-            if(routeScheduleDTO != null) {
-                captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
-            }
+                if(routeScheduleDTO != null) {
+                    captureToolEntity.setRouteScheduleId(routeScheduleDTO.getRouteScheduleId());
+                }
 
-            try {
-                repo.getCaptureToolDAO().create(captureToolEntity);
+                try {
+                    repo.getCaptureToolDAO().create(captureToolEntity);
 
-                bindGallery();
-            } catch (SQLException e) {
-                ELog.d("Error when capture image");
+                    bindGallery();
+                } catch (SQLException e) {
+                    ELog.d("Error when capture image");
+                }
             }
         }
     }

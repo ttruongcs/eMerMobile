@@ -19,6 +19,7 @@ import com.banvien.fcv.mobile.beanutil.SurveyUtil;
 import com.banvien.fcv.mobile.core.A;
 import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.db.entities.DeclineEntity;
+import com.banvien.fcv.mobile.db.entities.EieEntity;
 import com.banvien.fcv.mobile.db.entities.HotzoneEntity;
 import com.banvien.fcv.mobile.db.entities.OutletEntity;
 import com.banvien.fcv.mobile.db.entities.OutletMerEntity;
@@ -35,6 +36,7 @@ import com.banvien.fcv.mobile.dto.QuestionContentDTO;
 import com.banvien.fcv.mobile.dto.QuestionDTO;
 import com.banvien.fcv.mobile.dto.StatusHomeDTO;
 import com.banvien.fcv.mobile.dto.SurveyDTO;
+import com.banvien.fcv.mobile.dto.getfromserver.EIEHistoryDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.HotZoneDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MAuditOutletPlanDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
@@ -44,6 +46,7 @@ import com.banvien.fcv.mobile.rest.RestClient;
 import com.banvien.fcv.mobile.utils.ChangeStatusTimeline;
 import com.banvien.fcv.mobile.utils.CheckNetworkConnection;
 import com.banvien.fcv.mobile.utils.DataBinder;
+import com.banvien.fcv.mobile.utils.DataUtils;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.io.File;
@@ -85,11 +88,13 @@ public class UpdateService {
 //				deleteOutletAllDatabase();
 			}
 
-			clearData(repo);
+			DataUtils.clearData(repo, context);
 			configStatusHome();
             configStatusStartDay();
 			configStatusEndDay();
-
+			Call<Map<String,Object>> calEiE =
+					RestClient.getInstance().getHomeService().getEie();
+//			configEiE(calEiE);
 			Call<Map<String,Object>> callOutletDatas =
 					RestClient.getInstance().getHomeService().getDataInNewDays(A.getPrincipal().getUserId(), new Timestamp(System.currentTimeMillis() + 1));
 			results = getOutletDatas(callOutletDatas, progressDialog, textNumberOutlet);
@@ -101,57 +106,6 @@ public class UpdateService {
 		return results;
 	}
 
-	public static void clearData(Repo repo) throws SQLException {
-        SharedPreferences sharedPreferences = A.app().getSharedPreferences(ScreenContants.MyPREFERENCES, Context.MODE_PRIVATE);
-		SharedPreferences sharedPreferenceBefores = A.app().getSharedPreferences(ScreenContants.BeforePREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-		SharedPreferences.Editor editorBefores  = sharedPreferenceBefores.edit();
-        editor.clear();
-        editor.apply();
-		editorBefores.clear();
-		editorBefores.apply();
-		repo.getOutletEndDayImagesDAO().clearData();
-		repo.getStatusHomeDAO().clearData();
-		repo.getRouteScheduleDAO().clearData();
-		repo.getOutletFirstImagesDAO().clearData();
-		repo.getCaptureToolDAO().clearData();
-		repo.getCatgroupDAO().clearData();
-		repo.getComplainTypeDAO().clearData();
-		repo.getHotZoneDAO().clearData();
-		repo.getCaptureUniformDAO().clearData();
-		repo.getPosmDAO().clearData();
-		repo.getProductDAO().clearData();
-		repo.getProductGroupDAO().clearData();
-		repo.getStartDayDAO().clearData();
-		repo.getStatusEndDayDAO().clearData();
-		repo.getStatusInOutletDAO().clearData();
-		repo.getOutletMerDAO().clearData();
-		repo.getOutletRegisteredDAO().clearData();
-		repo.getOutletDAO().clearData();
-        repo.getShortageProductDAO().clearData();
-        repo.getCaptureOverviewDAO().clearData();
-        repo.getConfirmWorkingDAO().clearData();
-        repo.getCaptureBeforeDAO().clearData();
-		repo.getDeclineDAO().clearData();
-		repo.getDoSurveyAnswerDAO().clearData();
-		repo.getQuestionContentDAO().clearData();
-		repo.getQuestionDAO().clearData();
-		repo.getSurveyDAO().clearData();
-		deleteFileImage();
-	}
-
-	public static void deleteFileImage() {
-		File dir = new File(Environment.getExternalStorageDirectory() + ScreenContants.CAPTURE_FCV_IMAGE);
-		if (dir.isDirectory())
-		{
-			String[] children = dir.list();
-			for (int i = 0; i < children.length; i++)
-			{
-				new File(dir, children[i]).delete();
-			}
-		}
-	}
-
 	private void configStatusHome() throws SQLException {
 		StatusHomeDTO statusHomeDTO = new StatusHomeDTO();
 		statusHomeDTO.setChuanBiDauNgay(ScreenContants.STATUS_STEP_INPROGRESS);
@@ -159,8 +113,6 @@ public class UpdateService {
 		statusHomeDTO.setKetThucCuoiNgay(ScreenContants.STATUS_STEP_NOTYET);
 		repo.getStatusHomeDAO().addStatusHome(StatusHomeUtil.convertToEntity(statusHomeDTO));
 	}
-
-
 
 	private void configStatusEndDay() throws SQLException {
 		StatusEndDayEntity statusInOutletEntity = new StatusEndDayEntity();
@@ -180,8 +132,6 @@ public class UpdateService {
         statusStartDayEntity.setXacNhanLamViec(ScreenContants.STATUS_STEP_NOTYET);
         repo.getStartDayDAO().addStatusHome(statusStartDayEntity);
     }
-
-
 
 	private Map<String, String> getOutletDatas(Call<Map<String,Object>> call, final ProgressDialog progressDialog,final TextView tvNumOutlet){
 		final Map<String, String> mapResult = new Hashtable<>();

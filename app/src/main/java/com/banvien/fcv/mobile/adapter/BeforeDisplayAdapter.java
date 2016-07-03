@@ -22,6 +22,7 @@ import com.banvien.fcv.mobile.db.Repo;
 import com.banvien.fcv.mobile.dto.OutletMerDTO;
 import com.banvien.fcv.mobile.dto.ProductDTO;
 import com.banvien.fcv.mobile.dto.getfromserver.MProductDTO;
+import com.banvien.fcv.mobile.utils.EIEUtil;
 import com.banvien.fcv.mobile.utils.ELog;
 
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private EditText edFacing;
     private TextView edCount;
+    private EditText edEIE;
     private Long outletId;
     private Long outletModelId;
     private String totalFacing;
@@ -57,7 +59,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
     private Map<String, Integer> facingMaps = new HashMap<>();
 
     public BeforeDisplayAdapter(BeforeDisplayActivity activity, List<MProductDTO> productDTOs
-            , EditText edFacing, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
+            , EditText edFacing, EditText edEIE, Repo repo, Long outletId, Long outletModelId, TextView edCount) {
         this.activity = activity;
         this.mData = productDTOs;
         this.edFacing = edFacing;
@@ -65,6 +67,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         this.outletId = outletId;
         this.outletModelId = outletModelId;
         this.edCount = edCount;
+        this.edEIE = edEIE;
 
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mhsCodes = new HashMap<>();
@@ -141,7 +144,7 @@ public class BeforeDisplayAdapter extends BaseAdapter {
         }
 
         public void bindViews(final MProductDTO productDTO) {
-
+            facingMaps.put(productDTO.getCode(), productDTO.getWeight().intValue());
             try {
                 productName.setText(productDTO.getName());
                 if(mhsCodes.get(productDTO.getCode()) != null) {
@@ -236,7 +239,8 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                         editorBefore.putInt(productDTO.getCode(), quantity);
                         editorBefore.apply();
                         addMhs(mhsCodes, productDTO.getWeight().intValue());
-                        calculateFacing(facingMaps);
+                        calculateFacing();
+                        checkEIE(30.0, 30.0, 40.0);
 
                     }
                 }
@@ -262,14 +266,19 @@ public class BeforeDisplayAdapter extends BaseAdapter {
 
         }
 
-        /*Total facing equal total mhs which have quantity > 0*/
-        private void calculateFacing(Map<String, Integer> facings) {
-            edCount.setText(Integer.toString(facings.size()));
-            int sum = 0;
-            if(facings.size() > 0) {
-                for(String key : facings.keySet()) {
-                    sum += facings.get(key);
+        private void checkEIE(Double hotzone, Double mhs, Double facing) {
+            if(EIEUtil.isPass(hotzone, mhs, facing)) {
+                // Change status EIE here
+            }
+        }
 
+        /*Total facing equal total mhs which have quantity > 0*/
+        private void calculateFacing() {
+            edCount.setText(Integer.toString(mhsCodes.size()));
+            int sum = 0;
+            if(mhsCodes.size() > 0) {
+                for(String key : mhsCodes.keySet()) {
+                    sum += (mhsCodes.get(key) * facingMaps.get(key));
                 }
             } else {
                 sum = 0;
@@ -287,7 +296,6 @@ public class BeforeDisplayAdapter extends BaseAdapter {
                 if(mhsCodes.size() > 0) {
                     for(String key : mhsCodes.keySet()) {
                         mhsValue += key + ":" + mhsCodes.get(key).toString() + ",";
-                        facingMaps.put(key,(mhsCodes.get(key) * weight));
                     }
                     mhsValue = mhsValue.substring(0, mhsValue.length() - 1);
                     repo.getOutletMerDAO().updateActualValueBefore(outletId, outletModelId,mhsValue, ScreenContants.MHS_BEFORE, ScreenContants.MHS);
