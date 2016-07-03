@@ -160,7 +160,7 @@ public class DoSurveyActivity extends BaseDrawerActivity implements LoaderManage
                     super.onPostExecute(aBoolean);
                     progressDialog.dismiss();
                     if(success) {
-                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(getBaseContext(), routeScheduleDetailId);
+                        ChangeStatusTimeline changeStatusTimeline = new ChangeStatusTimeline(repo, routeScheduleDetailId);
                         String[] next = {ScreenContants.SYNC_OUTLET_COLUMN};
                         changeStatusTimeline.changeStatusToDone(ScreenContants.IN_OUTLET
                                 , ScreenContants.SURVEY_COLUMN, next, ScreenContants.END_DATE_COLUMN, false);
